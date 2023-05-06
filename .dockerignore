@@ -117,3 +117,29 @@ docker-compose*.yml
 # Documentation
 README.md
 *.md
+CHANGELOG.md
+LICENSE
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS generated files
+**/.DS_Store
+**/Thumbs.db
+**/.directory
+
+# Logs
+**/*.log
+**/logs
+
+# Runtime data
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
+
+# Coverage directory used by tools like istanbul
