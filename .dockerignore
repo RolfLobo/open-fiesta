@@ -143,3 +143,29 @@ LICENSE
 **/*.pid.lock
 
 # Coverage directory used by tools like istanbul
+**/coverage
+**/.nyc_output
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+**/__tests__
+**/test
+**/*.test.*
+**/*.spec.*
+**/jest.config.*
+**/jest.setup.*
+**/tsconfig.jest.json
+
+# Temporary folders
+**/tmp
+**/temp
+
+# Cache directories
+**/.cache
+**/tsconfig.tsbuildinfo
