@@ -26,3 +26,10 @@ jobs:
           conflict_comment: |
             Conflicts have been detected against the base branch. 
             Please resolve merge conflicts before merging.
+
+name: Auto Label Conflicts
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
