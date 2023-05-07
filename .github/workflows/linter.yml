@@ -31,3 +31,8 @@ jobs:
 
       - name: Run unimported
         run: npm run unimported
+
+name: Lint Code Base
+
+on:
+  pull_request:
