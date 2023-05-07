@@ -169,3 +169,18 @@ LICENSE
 # Cache directories
 **/.cache
 **/tsconfig.tsbuildinfo
+
+# Monitoring and deployment
+**/monitoring
+**/scripts
+**/docs
+**/theme_system
+
+# Development and IDE
+**/.kiro
+**/.vscode
+**/.github
+**/README.Docker.md
+**/docker-compose.prod.yml
+**/Dockerfile.ci
+**/Dockerfile.dev
