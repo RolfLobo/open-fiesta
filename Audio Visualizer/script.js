@@ -170,4 +170,30 @@ playPauseBtn.addEventListener('click', () => {
 });
 
 // Function to draw the visualizer
-function drawVisualizer(bufferLength, dataArray) {
+function drawVisualizer(bufferLength, dataArray) {
+    // Set the canvas size to match the window size for responsiveness
+    visualizerCanvas.width = visualizerCanvas.clientWidth;
+    visualizerCanvas.height = visualizerCanvas.clientHeight;
+    
+    // Clear the canvas
+    canvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+    
+    // Request the next frame
+    requestAnimationFrame(() => drawVisualizer(bufferLength, dataArray));
+    
+    // Get the frequency data
+    analyser.getByteFrequencyData(dataArray);
+
+    const barWidth = (visualizerCanvas.width / bufferLength) * 2;
+    let x = 0;
+    
+    for(let i = 0; i < bufferLength; i++) {
+        const barHeight = dataArray[i] * 1.5;
+        
+        // Simple color gradient based on bar height
+        const hue = i / bufferLength * 360;
+        canvasCtx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        
+        // Draw the bar
+        canvasCtx.fillRect(x, visualizerCanvas.height - barHeight, barWidth, barHeight);
+        
