@@ -144,4 +144,30 @@ function setupAudioContext() {
 // Function to handle the audio file upload
 audioUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file) {
+        const fileURL = URL.createObjectURL(file);
+        audioSource.src = fileURL;
+        playPauseBtn.disabled = false;
+        playPauseBtn.textContent = "Play";
+        isPlaying = false;
+        
+        // Set up the audio context once a file is loaded
+        setupAudioContext();
+    }
+});
+
+// Function to play or pause the audio
+playPauseBtn.addEventListener('click', () => {
+    if (audioSource.paused) {
+        audioSource.play();
+        playPauseBtn.textContent = "Pause";
+        isPlaying = true;
+    } else {
+        audioSource.pause();
+        playPauseBtn.textContent = "Play";
+        isPlaying = false;
+    }
+});
+
+// Function to draw the visualizer
+function drawVisualizer(bufferLength, dataArray) {
