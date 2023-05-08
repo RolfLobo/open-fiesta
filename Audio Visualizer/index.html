@@ -46,4 +46,18 @@
             <p>Upload an audio file (.mp3, .wav) to see a real-time visualization.</p>
         </header>
         <main>
-            <div class="controls">
+            <div class="controls">
+                <input type="file" id="audio-upload" accept="audio/*">
+                <button id="play-pause-btn" disabled>Play</button>
+            </div>
+            <canvas id="visualizer"></canvas>
+            <audio id="audio-source" style="display: none;"></audio>
+        </main>
+        <footer>
+            <p>&copy; 2024 Audio Visualizer</p>
+        </footer>
+    </div>
+    <!-- Link to our custom JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
