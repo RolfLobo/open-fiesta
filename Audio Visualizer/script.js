@@ -196,4 +196,24 @@ function drawVisualizer(bufferLength, dataArray) {
         
         // Draw the bar
         canvasCtx.fillRect(x, visualizerCanvas.height - barHeight, barWidth, barHeight);
-        
+        
+        x += barWidth + 1; // Add a small gap between bars
+    }
+}
+
+// Ensure the audio context starts on a user gesture
+document.addEventListener('click', () => {
+    if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+});
+
+// Handle window resize to keep the canvas responsive
+window.addEventListener('resize', () => {
+    if (isPlaying) {
+        // Redraw the visualizer if a song is playing
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        drawVisualizer(bufferLength, dataArray);
+    }
+});
