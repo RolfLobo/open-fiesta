@@ -206,4 +206,22 @@ button {
 
 button:hover:not(:disabled) {
     background-color: #3b3f8f;
-    transform: translateY(-2px);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #4a5568;
+    cursor: not-allowed;
+}
+
+#visualizer {
+    background-color: #1a202c;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+footer {
+    margin-top: 24px;
+    font-size: 0.875rem;
+    color: #a0aec0;
+}
