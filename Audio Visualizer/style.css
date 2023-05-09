@@ -154,4 +154,30 @@ header {
 h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--secondary-color);
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+p {
+    font-size: 1rem;
+    color: #a0aec0;
+}
+
+.controls {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+#audio-upload {
+    color: var(--text-color);
+    background-color: #4a5568;
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#audio-upload::-webkit-file-upload-button {
+    background-color: var(--primary-color);
