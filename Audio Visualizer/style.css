@@ -128,4 +128,30 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
-    justify-content: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    background-color: #2d3748;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
