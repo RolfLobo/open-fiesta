@@ -400,3 +400,29 @@ describe('OfflineDataLayer', () => {
       // First load to set sync time
       await offlineDataLayer.loadThreads(mockUserId, true);
       
+      // Mock time passage (more than 5 minutes)
+      const originalNow = Date.now;
+      const futureTime = Date.now() + 6 * 60 * 1000;
+      Date.now = jest.fn(() => futureTime);
+      
+      const isStale = await offlineDataLayer.isDataStale(mockUserId);
+      
+      expect(isStale).toBe(true);
+      
+      // Restore Date.now
+      Date.now = originalNow;
+    });
+
+    it('should return false for fresh data', async () => {
+      // First load to set sync time
+      await offlineDataLayer.loadThreads(mockUserId, true);
+      
+      const isStale = await offlineDataLayer.isDataStale(mockUserId);
+      
+      expect(isStale).toBe(false);
+    });
+
+    it('should return true when no sync time recorded', async () => {
+      const isStale = await offlineDataLayer.isDataStale('new-user');
+      
+      expect(isStale).toBe(true);
