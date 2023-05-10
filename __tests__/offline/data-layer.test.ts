@@ -374,3 +374,29 @@ describe('OfflineDataLayer', () => {
     it('should sync queued actions and refresh data', async () => {
       await offlineDataLayer.syncWithServer(mockUserId);
       
+      expect(mockOfflineManager.syncQueuedActions).toHaveBeenCalled();
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+    });
+
+    it('should throw error when offline', async () => {
+      mockOfflineManager.isOnline.mockReturnValue(false);
+      
+      await expect(offlineDataLayer.syncWithServer(mockUserId)).rejects.toThrow('Cannot sync while offline');
+    });
+
+    it('should handle sync errors', async () => {
+      mockOfflineManager.syncQueuedActions.mockRejectedValue(new Error('Sync failed'));
+      
+      await expect(offlineDataLayer.syncWithServer(mockUserId)).rejects.toThrow('Sync failed');
+    });
+  });
+
+  describe('isDataStale', () => {
+    it('should return true for stale data', async () => {
+      // Mock online status and successful fetch
+      mockOfflineManager.isOnline.mockReturnValue(true);
+      mockFetchThreads.mockResolvedValue([mockThread]);
+      
+      // First load to set sync time
+      await offlineDataLayer.loadThreads(mockUserId, true);
+      
