@@ -270,3 +270,29 @@ const mockFetchThreads = fetchThreads as jest.MockedFunction<typeof fetchThreads
 
 describe('OfflineDataLayer', () => {
   const mockUserId = 'test-user-123';
+  const mockThreads: ChatThread[] = [
+    {
+      id: 'thread-1',
+      title: 'Test Thread 1',
+      messages: [
+        { role: 'user', content: 'Hello', ts: Date.now() },
+        { role: 'assistant', content: 'Hi there!', ts: Date.now() + 1000 },
+      ],
+      createdAt: Date.now() - 86400000, // 1 day ago
+    },
+    {
+      id: 'thread-2',
+      title: 'Test Thread 2',
+      messages: [
+        { role: 'user', content: 'How are you?', ts: Date.now() },
+      ],
+      createdAt: Date.now() - 3600000, // 1 hour ago
+    },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    
+    // Default mock implementations
+    mockOfflineManager.isOnline.mockReturnValue(true);
+    mockOfflineManager.getCachedConversations.mockResolvedValue(mockThreads);
