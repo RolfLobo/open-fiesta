@@ -71,3 +71,12 @@ describe('Basic Offline Functionality', () => {
     expect(status).toHaveProperty('syncInProgress');
     expect(status).toHaveProperty('hasConflicts');
   });
+
+  it('should handle status listeners', () => {
+    const listener = jest.fn();
+    const unsubscribe = offlineManager.addStatusListener(listener);
+    
+    expect(typeof unsubscribe).toBe('function');
+    unsubscribe();
+  });
+});

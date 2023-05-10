@@ -252,3 +252,21 @@ describe('OfflineDataLayer', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import { offlineDataLayer } from '@/lib/offline/dataLayer';
+import { offlineManager } from '@/lib/offline/manager';
+import { fetchThreads } from '@/lib/db/threads';
+import type { ChatThread } from '@/lib/types';
+
+// Mock dependencies
+jest.mock('@/lib/offline/manager');
+jest.mock('@/lib/db/threads');
+
+const mockOfflineManager = offlineManager as jest.Mocked<typeof offlineManager>;
+const mockFetchThreads = fetchThreads as jest.MockedFunction<typeof fetchThreads>;
+
+describe('OfflineDataLayer', () => {
+  const mockUserId = 'test-user-123';
