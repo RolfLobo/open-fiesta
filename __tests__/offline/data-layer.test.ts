@@ -296,3 +296,29 @@ describe('OfflineDataLayer', () => {
     // Default mock implementations
     mockOfflineManager.isOnline.mockReturnValue(true);
     mockOfflineManager.getCachedConversations.mockResolvedValue(mockThreads);
+    mockOfflineManager.getCachedConversation.mockImplementation(async (id) => 
+      mockThreads.find(t => t.id === id) || null
+    );
+    mockOfflineManager.cacheConversation.mockResolvedValue();
+    mockOfflineManager.syncQueuedActions.mockResolvedValue();
+    
+    mockFetchThreads.mockResolvedValue(mockThreads);
+  });
+
+  describe('loadThreads', () => {
+    it('should load threads from server when online and data is stale', async () => {
+      const threads = await offlineDataLayer.loadThreads(mockUserId, true);
+      
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+      expect(mockOfflineManager.cacheConversation).toHaveBeenCalledTimes(mockThreads.length);
+      expect(threads).toEqual(mockThreads);
+    });
+
+    it('should load threads from cache when offline', async () => {
+      mockOfflineManager.isOnline.mockReturnValue(false);
+      
+      const threads = await offlineDataLayer.loadThreads(mockUserId);
+      
+      expect(mockFetchThreads).not.toHaveBeenCalled();
+      expect(mockOfflineManager.getCachedConversations).toHaveBeenCalled();
+      expect(threads).toEqual(mockThreads);
