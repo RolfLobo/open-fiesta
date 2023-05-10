@@ -348,3 +348,29 @@ describe('OfflineDataLayer', () => {
       const thread = await offlineDataLayer.getThread('thread-1');
       
       expect(mockOfflineManager.getCachedConversation).toHaveBeenCalledWith('thread-1');
+      expect(thread).toEqual(mockThreads[0]);
+    });
+
+    it('should fetch from server if not in cache and online', async () => {
+      mockOfflineManager.getCachedConversation.mockResolvedValue(null);
+      
+      const thread = await offlineDataLayer.getThread('thread-1', mockUserId);
+      
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+      expect(thread).toEqual(mockThreads[0]);
+    });
+
+    it('should return null if thread not found and offline', async () => {
+      mockOfflineManager.getCachedConversation.mockResolvedValue(null);
+      mockOfflineManager.isOnline.mockReturnValue(false);
+      
+      const thread = await offlineDataLayer.getThread('non-existent');
+      
+      expect(thread).toBeNull();
+    });
+  });
+
+  describe('syncWithServer', () => {
+    it('should sync queued actions and refresh data', async () => {
+      await offlineDataLayer.syncWithServer(mockUserId);
+      
