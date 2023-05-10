@@ -322,3 +322,29 @@ describe('OfflineDataLayer', () => {
       expect(mockFetchThreads).not.toHaveBeenCalled();
       expect(mockOfflineManager.getCachedConversations).toHaveBeenCalled();
       expect(threads).toEqual(mockThreads);
+    });
+
+    it('should fallback to cache when server request fails', async () => {
+      mockFetchThreads.mockRejectedValue(new Error('Network error'));
+      
+      const threads = await offlineDataLayer.loadThreads(mockUserId, true);
+      
+      expect(mockOfflineManager.getCachedConversations).toHaveBeenCalled();
+      expect(threads).toEqual(mockThreads);
+    });
+
+    it('should fetch from server if no cached data exists', async () => {
+      mockOfflineManager.getCachedConversations.mockResolvedValue([]);
+      
+      const threads = await offlineDataLayer.loadThreads(mockUserId);
+      
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+      expect(threads).toEqual(mockThreads);
+    });
+  });
+
+  describe('getThread', () => {
+    it('should return cached thread if available', async () => {
+      const thread = await offlineDataLayer.getThread('thread-1');
+      
+      expect(mockOfflineManager.getCachedConversation).toHaveBeenCalledWith('thread-1');
