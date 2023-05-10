@@ -39,3 +39,10 @@ describe('Basic Offline Functionality', () => {
     unsubscribe();
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import { offlineManager } from '@/lib/offline/manager';
+
+describe('Basic Offline Functionality', () => {
