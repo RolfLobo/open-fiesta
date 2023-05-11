@@ -478,3 +478,29 @@ describe('OfflineDataLayer', () => {
 
   describe('resolveConflicts', () => {
     it('should resolve conflicts by refreshing from server', async () => {
+      await offlineDataLayer.resolveConflicts(mockUserId);
+      
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+    });
+
+    it('should handle conflict resolution errors', async () => {
+      mockOfflineManager.isOnline.mockReturnValue(false);
+      
+      // Should not throw even when offline
+      await expect(offlineDataLayer.resolveConflicts(mockUserId)).resolves.toBeUndefined();
+    });
+  });
+
+  describe('clearCache', () => {
+    it('should clear all cached data', async () => {
+      // First load some data
+      await offlineDataLayer.loadThreads(mockUserId, true);
+      
+      await offlineDataLayer.clearCache();
+      
+      expect(mockOfflineManager.clearOfflineData).toHaveBeenCalled();
+      
+      // Verify sync times are cleared
+      const lastSync = await offlineDataLayer.getLastSyncTime();
+      expect(lastSync).toBeNull();
+    });
