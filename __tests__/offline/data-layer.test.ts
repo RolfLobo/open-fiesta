@@ -426,3 +426,28 @@ describe('OfflineDataLayer', () => {
       const isStale = await offlineDataLayer.isDataStale('new-user');
       
       expect(isStale).toBe(true);
+    });
+  });
+
+  describe('getLastSyncTime', () => {
+    it('should return null when no syncs recorded', async () => {
+      // Clear any existing sync times first
+      await offlineDataLayer.clearCache();
+      
+      const lastSync = await offlineDataLayer.getLastSyncTime();
+      
+      expect(lastSync).toBeNull();
+    });
+
+    it('should return most recent sync time', async () => {
+      const beforeSync = new Date();
+      
+      // Perform sync
+      await offlineDataLayer.loadThreads(mockUserId, true);
+      
+      const lastSync = await offlineDataLayer.getLastSyncTime();
+      
+      expect(lastSync).toBeInstanceOf(Date);
+      expect(lastSync!.getTime()).toBeGreaterThanOrEqual(beforeSync.getTime());
+    });
+  });
