@@ -365,3 +365,29 @@ const mockIDBRequest = {
 const mockObjectStore = {
   put: jest.fn(() => mockIDBRequest),
   get: jest.fn(() => mockIDBRequest),
+  getAll: jest.fn(() => mockIDBRequest),
+  delete: jest.fn(() => mockIDBRequest),
+  clear: jest.fn(() => mockIDBRequest),
+  createIndex: jest.fn(),
+  index: jest.fn(() => ({ getAll: jest.fn(() => mockIDBRequest) })),
+};
+
+const mockTransaction = {
+  objectStore: jest.fn(() => mockObjectStore),
+};
+
+const mockDatabase = {
+  transaction: jest.fn(() => mockTransaction),
+  objectStoreNames: { contains: jest.fn(() => false) },
+  createObjectStore: jest.fn(() => mockObjectStore),
+};
+
+const mockOpenRequest = {
+  ...mockIDBRequest,
+  onupgradeneeded: null as any,
+};
+
+// Set up IndexedDB mock once
+if (!window.indexedDB) {
+  Object.defineProperty(window, 'indexedDB', {
+    value: { open: jest.fn(() => mockOpenRequest) },
