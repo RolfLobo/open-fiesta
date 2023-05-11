@@ -451,3 +451,30 @@ describe('OfflineDataLayer', () => {
       expect(lastSync!.getTime()).toBeGreaterThanOrEqual(beforeSync.getTime());
     });
   });
+
+  describe('preloadForOffline', () => {
+    it('should preload data when online', async () => {
+      await offlineDataLayer.preloadForOffline(mockUserId);
+      
+      expect(mockFetchThreads).toHaveBeenCalledWith(mockUserId);
+      expect(mockOfflineManager.cacheConversation).toHaveBeenCalledTimes(mockThreads.length);
+    });
+
+    it('should not preload when offline', async () => {
+      mockOfflineManager.isOnline.mockReturnValue(false);
+      
+      await offlineDataLayer.preloadForOffline(mockUserId);
+      
+      expect(mockFetchThreads).not.toHaveBeenCalled();
+    });
+
+    it('should handle preload errors gracefully', async () => {
+      mockFetchThreads.mockRejectedValue(new Error('Preload failed'));
+      
+      // Should not throw
+      await expect(offlineDataLayer.preloadForOffline(mockUserId)).resolves.toBeUndefined();
+    });
+  });
+
+  describe('resolveConflicts', () => {
+    it('should resolve conflicts by refreshing from server', async () => {
