@@ -391,3 +391,28 @@ const mockOpenRequest = {
 if (!window.indexedDB) {
   Object.defineProperty(window, 'indexedDB', {
     value: { open: jest.fn(() => mockOpenRequest) },
+    writable: true,
+  });
+}
+
+describe('Offline Functionality Integration Tests', () => {
+  const mockUserId = 'test-user-123';
+  const mockChatId = 'test-chat-456';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    
+    // Mock navigator.onLine
+    Object.defineProperty(navigator, 'onLine', {
+      writable: true,
+      value: true,
+    });
+
+    // Simulate successful operations
+    mockIDBRequest.onsuccess = () => {
+      mockIDBRequest.result = [];
+    };
+    mockOpenRequest.onsuccess = () => {
+      mockOpenRequest.result = mockDatabase;
+    };
+  });
