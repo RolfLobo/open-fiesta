@@ -341,3 +341,27 @@ describe('Offline Functionality Integration Tests', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import { offlineManager } from '@/lib/offline/manager';
+import { offlineDataLayer } from '@/lib/offline/dataLayer';
+import { offlineChatActions } from '@/lib/offline/chatActionsOffline';
+import type { ChatMessage, ChatThread } from '@/lib/types';
+
+// Mock external dependencies
+jest.mock('@/lib/db/threads');
+jest.mock('@/lib/db/messages');
+
+// Mock IndexedDB globally to avoid redefinition issues
+const mockIDBRequest = {
+  result: null as any,
+  error: null,
+  onsuccess: null as any,
+  onerror: null as any,
+};
+
+const mockObjectStore = {
+  put: jest.fn(() => mockIDBRequest),
+  get: jest.fn(() => mockIDBRequest),

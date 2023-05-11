@@ -504,3 +504,5 @@ describe('OfflineDataLayer', () => {
       const lastSync = await offlineDataLayer.getLastSyncTime();
       expect(lastSync).toBeNull();
     });
+  });
+});
