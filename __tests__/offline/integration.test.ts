@@ -469,3 +469,29 @@ describe('Offline Functionality Integration Tests', () => {
 
       // Send message to the new thread
       const testMessage: ChatMessage = {
+        role: 'user',
+        content: 'First message in offline thread',
+        ts: Date.now(),
+      };
+
+      const mockUpdateUI = jest.fn();
+      await offlineChatActions.sendMessage(
+        mockUserId,
+        newThread.id,
+        testMessage,
+        mockUpdateUI
+      );
+
+      // Verify actions were queued
+      const status = await offlineManager.getStatus();
+      expect(status.queuedActionsCount).toBeGreaterThan(0);
+    });
+
+    it('should handle data synchronization after reconnection', async () => {
+      // Start offline
+      (navigator as any).onLine = false;
+
+      // Perform multiple offline actions
+      const thread = await offlineChatActions.createThread(
+        mockUserId,
+        'Multi-action Thread'
