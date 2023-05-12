@@ -416,3 +416,30 @@ describe('Offline Functionality Integration Tests', () => {
       mockOpenRequest.result = mockDatabase;
     };
   });
+
+  describe('End-to-End Offline Workflow', () => {
+    it('should handle complete offline message sending workflow', async () => {
+      // Simulate going offline
+      (navigator as any).onLine = false;
+
+      const testMessage: ChatMessage = {
+        role: 'user',
+        content: 'This is a test message sent while offline',
+        ts: Date.now(),
+      };
+
+      const mockUpdateUI = jest.fn();
+
+      // Send message while offline
+      await offlineChatActions.sendMessage(
+        mockUserId,
+        mockChatId,
+        testMessage,
+        mockUpdateUI
+      );
+
+      // Verify the message was queued
+      const status = await offlineManager.getStatus();
+      expect(status.queuedActionsCount).toBeGreaterThan(0);
+
+      // Simulate coming back online
