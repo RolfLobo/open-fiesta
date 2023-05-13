@@ -495,3 +495,29 @@ describe('Offline Functionality Integration Tests', () => {
       const thread = await offlineChatActions.createThread(
         mockUserId,
         'Multi-action Thread'
+      );
+
+      const messages: ChatMessage[] = [
+        { role: 'user', content: 'Message 1', ts: Date.now() },
+        { role: 'user', content: 'Message 2', ts: Date.now() + 1000 },
+        { role: 'user', content: 'Message 3', ts: Date.now() + 2000 },
+      ];
+
+      const mockUpdateUI = jest.fn();
+      for (const message of messages) {
+        await offlineChatActions.sendMessage(
+          mockUserId,
+          thread.id,
+          message,
+          mockUpdateUI
+        );
+      }
+
+      // Update thread title
+      const mockTitleUpdateUI = jest.fn();
+      await offlineChatActions.updateThreadTitle(
+        mockUserId,
+        thread.id,
+        'Updated Thread Title',
+        mockTitleUpdateUI
+      );
