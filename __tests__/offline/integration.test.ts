@@ -521,3 +521,28 @@ describe('Offline Functionality Integration Tests', () => {
         'Updated Thread Title',
         mockTitleUpdateUI
       );
+
+      // Verify multiple actions queued
+      const statusBeforeSync = await offlineManager.getStatus();
+      expect(statusBeforeSync.queuedActionsCount).toBeGreaterThan(3);
+
+      // Come back online and sync
+      (navigator as any).onLine = true;
+      await offlineManager.syncQueuedActions();
+
+      // Verify sync completed
+      const statusAfterSync = await offlineManager.getStatus();
+      expect(statusAfterSync.syncInProgress).toBe(false);
+    });
+  });
+
+  describe('Data Layer Integration', () => {
+    it('should seamlessly switch between online and offline data sources', async () => {
+      // Start online - should fetch from server
+      const onlineThreads = await offlineDataLayer.loadThreads(mockUserId);
+      expect(Array.isArray(onlineThreads)).toBe(true);
+
+      // Go offline - should use cached data
+      (navigator as any).onLine = false;
+      const offlineThreads = await offlineDataLayer.loadThreads(mockUserId);
+      expect(Array.isArray(offlineThreads)).toBe(true);
