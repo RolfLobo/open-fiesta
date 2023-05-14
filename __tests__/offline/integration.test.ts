@@ -546,3 +546,29 @@ describe('Offline Functionality Integration Tests', () => {
       (navigator as any).onLine = false;
       const offlineThreads = await offlineDataLayer.loadThreads(mockUserId);
       expect(Array.isArray(offlineThreads)).toBe(true);
+
+      // Come back online - should sync and refresh
+      (navigator as any).onLine = true;
+      await offlineDataLayer.syncWithServer(mockUserId);
+      
+      const syncedThreads = await offlineDataLayer.loadThreads(mockUserId);
+      expect(Array.isArray(syncedThreads)).toBe(true);
+    });
+
+    it('should handle data staleness detection', async () => {
+      // Fresh data should not be stale
+      await offlineDataLayer.loadThreads(mockUserId, true);
+      const isStaleInitially = await offlineDataLayer.isDataStale(mockUserId);
+      expect(isStaleInitially).toBe(false);
+
+      // Mock time passage
+      const originalNow = Date.now;
+      Date.now = jest.fn(() => originalNow() + 10 * 60 * 1000); // 10 minutes later
+
+      const isStaleAfterTime = await offlineDataLayer.isDataStale(mockUserId);
+      expect(isStaleAfterTime).toBe(true);
+
+      // Restore Date.now
+      Date.now = originalNow;
+    });
+  });
