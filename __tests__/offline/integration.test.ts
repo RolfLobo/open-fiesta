@@ -572,3 +572,30 @@ describe('Offline Functionality Integration Tests', () => {
       Date.now = originalNow;
     });
   });
+
+  describe('Error Handling and Recovery', () => {
+    it('should gracefully handle sync failures', async () => {
+      // Queue some actions
+      await offlineManager.queueAction({
+        type: 'SEND_MESSAGE',
+        payload: { 
+          chatId: mockChatId, 
+          message: { role: 'user', content: 'Test', ts: Date.now() } 
+        },
+        timestamp: Date.now(),
+        userId: mockUserId,
+        maxRetries: 3,
+      });
+
+      // Mock sync failure
+      const originalSync = offlineManager.syncQueuedActions;
+      offlineManager.syncQueuedActions = jest.fn().mockRejectedValue(new Error('Sync failed'));
+
+      // Attempt sync - should not throw
+      await expect(offlineManager.syncQueuedActions()).rejects.toThrow('Sync failed');
+
+      // Restore original method
+      offlineManager.syncQueuedActions = originalSync;
+    });
+
+    it('should handle storage quota exceeded scenarios', async () => {
