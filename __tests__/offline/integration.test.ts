@@ -677,3 +677,10 @@ describe('Offline Functionality Integration Tests', () => {
 
       const endTime = Date.now();
       const duration = endTime - startTime;
+
+      // Should complete within reasonable time
+      expect(duration).toBeLessThan(3000); // 3 seconds
+      expect(cachedThreads.length).toBe(testThreads.length);
+    });
+  });
+});

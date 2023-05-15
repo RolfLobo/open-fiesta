@@ -218,3 +218,22 @@ describe('OfflineManager', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import { offlineManager } from '@/lib/offline/manager';
+import { offlineStorage } from '@/lib/offline/storage';
+import type { ChatMessage } from '@/lib/types';
+
+// Mock IndexedDB
+const mockIDBRequest = {
+  result: null,
+  error: null,
+  onsuccess: null as any,
+  onerror: null as any,
+};
+
+const mockIDBTransaction = {
+  objectStore: jest.fn(() => ({
+    put: jest.fn(() => mockIDBRequest),
