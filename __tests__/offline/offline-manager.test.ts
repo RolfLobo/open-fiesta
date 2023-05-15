@@ -263,3 +263,29 @@ const mockIDBOpenRequest = {
 // Mock IndexedDB
 Object.defineProperty(window, 'indexedDB', {
   value: {
+    open: jest.fn(() => mockIDBOpenRequest),
+  },
+});
+
+// Mock navigator.onLine
+Object.defineProperty(navigator, 'onLine', {
+  writable: true,
+  value: true,
+});
+
+// Mock navigator.storage
+Object.defineProperty(navigator, 'storage', {
+  value: {
+    estimate: jest.fn(() => Promise.resolve({ usage: 1000, quota: 10000 })),
+  },
+});
+
+// Mock window events
+const mockAddEventListener = jest.fn();
+const mockRemoveEventListener = jest.fn();
+Object.defineProperty(window, 'addEventListener', { value: mockAddEventListener });
+Object.defineProperty(window, 'removeEventListener', { value: mockRemoveEventListener });
+
+describe('OfflineManager', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
