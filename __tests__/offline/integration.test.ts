@@ -651,3 +651,29 @@ describe('Offline Functionality Integration Tests', () => {
 
     it('should efficiently cache and retrieve conversations', async () => {
       const testThreads: ChatThread[] = [];
+      
+      // Create test threads
+      for (let i = 0; i < 50; i++) {
+        testThreads.push({
+          id: `thread-${i}`,
+          title: `Test Thread ${i}`,
+          messages: [
+            { role: 'user', content: `Message ${i}`, ts: Date.now() },
+            { role: 'assistant', content: `Response ${i}`, ts: Date.now() + 1000 },
+          ],
+          createdAt: Date.now() - (i * 1000),
+        });
+      }
+
+      const startTime = Date.now();
+
+      // Cache all threads
+      for (const thread of testThreads) {
+        await offlineManager.cacheConversation(thread);
+      }
+
+      // Retrieve all threads
+      const cachedThreads = await offlineManager.getCachedConversations();
+
+      const endTime = Date.now();
+      const duration = endTime - startTime;
