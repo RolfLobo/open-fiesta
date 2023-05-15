@@ -625,3 +625,29 @@ describe('Offline Functionality Integration Tests', () => {
       // Queue many actions
       const promises = [];
       for (let i = 0; i < 100; i++) {
+        promises.push(offlineManager.queueAction({
+          type: 'SEND_MESSAGE',
+          payload: { 
+            chatId: `chat-${i}`, 
+            message: { role: 'user', content: `Message ${i}`, ts: Date.now() } 
+          },
+          timestamp: Date.now(),
+          userId: mockUserId,
+          maxRetries: 3,
+        }));
+      }
+
+      await Promise.all(promises);
+
+      const endTime = Date.now();
+      const duration = endTime - startTime;
+
+      // Should complete within reasonable time (adjust threshold as needed)
+      expect(duration).toBeLessThan(5000); // 5 seconds
+
+      const status = await offlineManager.getStatus();
+      expect(status.queuedActionsCount).toBe(100);
+    });
+
+    it('should efficiently cache and retrieve conversations', async () => {
+      const testThreads: ChatThread[] = [];
