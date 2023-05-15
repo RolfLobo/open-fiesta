@@ -599,3 +599,29 @@ describe('Offline Functionality Integration Tests', () => {
     });
 
     it('should handle storage quota exceeded scenarios', async () => {
+      // Mock storage quota exceeded
+      Object.defineProperty(navigator, 'storage', {
+        value: {
+          estimate: jest.fn(() => Promise.resolve({ 
+            usage: 9500, 
+            quota: 10000 // 95% full
+          })),
+        },
+      });
+
+      const usage = await offlineManager.getStorageUsage();
+      expect(usage.percentage).toBeGreaterThan(90);
+
+      // In a real implementation, this would trigger cleanup
+      expect(usage.used).toBe(9500);
+      expect(usage.quota).toBe(10000);
+    });
+  });
+
+  describe('Performance and Optimization', () => {
+    it('should efficiently handle large numbers of queued actions', async () => {
+      const startTime = Date.now();
+
+      // Queue many actions
+      const promises = [];
+      for (let i = 0; i < 100; i++) {
