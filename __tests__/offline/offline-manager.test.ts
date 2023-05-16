@@ -289,3 +289,29 @@ Object.defineProperty(window, 'removeEventListener', { value: mockRemoveEventLis
 describe('OfflineManager', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Reset navigator.onLine
+    (navigator as any).onLine = true;
+    
+    // Simulate successful IndexedDB operations
+    mockIDBOpenRequest.onsuccess = () => {
+      mockIDBOpenRequest.result = mockIDBDatabase;
+    };
+    
+    mockIDBRequest.onsuccess = () => {
+      mockIDBRequest.result = [];
+    };
+  });
+
+  describe('Online/Offline Detection', () => {
+    it('should detect online status', () => {
+      expect(offlineManager.isOnline()).toBe(true);
+    });
+
+    it('should detect offline status', () => {
+      (navigator as any).onLine = false;
+      expect(offlineManager.isOnline()).toBe(false);
+    });
+
+    it('should register event listeners for online/offline events', () => {
+      expect(mockAddEventListener).toHaveBeenCalledWith('online', expect.any(Function));
+      expect(mockAddEventListener).toHaveBeenCalledWith('offline', expect.any(Function));
