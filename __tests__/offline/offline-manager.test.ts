@@ -367,3 +367,29 @@ describe('OfflineManager', () => {
     it('should handle message sending offline', async () => {
       const testMessage: ChatMessage = {
         role: 'user',
+        content: 'Test offline message',
+        ts: Date.now(),
+      };
+
+      const actionId = await offlineManager.sendMessageOffline(
+        'test-user',
+        'test-chat',
+        testMessage
+      );
+
+      expect(actionId).toBeDefined();
+    });
+
+    it('should handle thread creation offline', async () => {
+      const result = await offlineManager.createThreadOffline(
+        'test-user',
+        'Test Thread',
+        undefined,
+        'home'
+      );
+
+      expect(result.thread).toBeDefined();
+      expect(result.thread.title).toBe('Test Thread');
+      expect(result.actionId).toBeDefined();
+    });
+  });
