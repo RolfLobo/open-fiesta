@@ -341,3 +341,29 @@ describe('OfflineManager', () => {
       
       unsubscribe();
     });
+  });
+
+  describe('Action Queuing', () => {
+    it('should queue actions when offline', async () => {
+      const testMessage: ChatMessage = {
+        role: 'user',
+        content: 'Test message',
+        ts: Date.now(),
+      };
+
+      const actionId = await offlineManager.queueAction({
+        type: 'SEND_MESSAGE',
+        payload: { chatId: 'test-chat', message: testMessage },
+        timestamp: Date.now(),
+        userId: 'test-user',
+        threadId: 'test-chat',
+        maxRetries: 3,
+      });
+
+      expect(actionId).toBeDefined();
+      expect(typeof actionId).toBe('string');
+    });
+
+    it('should handle message sending offline', async () => {
+      const testMessage: ChatMessage = {
+        role: 'user',
