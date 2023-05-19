@@ -344,3 +344,29 @@ const mockObjectStore = {
   clear: jest.fn(() => new MockIDBRequest()),
   createIndex: jest.fn(),
   index: jest.fn(() => ({
+    getAll: jest.fn(() => new MockIDBRequest([])),
+  })),
+};
+
+const mockIDBTransaction = {
+  objectStore: jest.fn(() => mockObjectStore),
+};
+
+const mockIDBDatabase = {
+  transaction: jest.fn(() => mockIDBTransaction),
+  objectStoreNames: {
+    contains: jest.fn(() => false),
+  },
+  createObjectStore: jest.fn(() => mockObjectStore),
+};
+
+class MockIDBOpenRequest extends MockIDBRequest {
+  onupgradeneeded: ((event: any) => void) | null = null;
+
+  constructor() {
+    super(mockIDBDatabase);
+  }
+}
+
+// Mock IndexedDB
+const mockIndexedDB = {
