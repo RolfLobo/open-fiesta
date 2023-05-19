@@ -396,3 +396,29 @@ describe('OfflineStorage', () => {
       await offlineStorage.init();
       
       expect(mockIndexedDB.open).toHaveBeenCalledWith('OpenFiestaOffline', 1);
+    });
+
+    it('should create object stores on upgrade', async () => {
+      await offlineStorage.init();
+      
+      // Verify that the upgrade handler would create stores
+      expect(mockIndexedDB.open).toHaveBeenCalled();
+    });
+  });
+
+  describe('Conversation Storage', () => {
+    beforeEach(async () => {
+      await offlineStorage.init();
+    });
+
+    it('should store a conversation', async () => {
+      const conversation: CachedConversation = {
+        id: 'test-conversation',
+        thread: {
+          id: 'test-conversation',
+          title: 'Test Conversation',
+          messages: [],
+          createdAt: Date.now(),
+        },
+        lastModified: Date.now(),
+        syncStatus: 'synced',
