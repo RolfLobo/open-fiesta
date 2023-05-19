@@ -370,3 +370,29 @@ class MockIDBOpenRequest extends MockIDBRequest {
 
 // Mock IndexedDB
 const mockIndexedDB = {
+  open: jest.fn(() => new MockIDBOpenRequest()),
+};
+
+Object.defineProperty(window, 'indexedDB', {
+  value: mockIndexedDB,
+  writable: true,
+});
+
+// Mock navigator.storage
+Object.defineProperty(navigator, 'storage', {
+  value: {
+    estimate: jest.fn(() => Promise.resolve({ usage: 1000, quota: 10000 })),
+  },
+  writable: true,
+});
+
+describe('OfflineStorage', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('Initialization', () => {
+    it('should initialize the database', async () => {
+      await offlineStorage.init();
+      
+      expect(mockIndexedDB.open).toHaveBeenCalledWith('OpenFiestaOffline', 1);
