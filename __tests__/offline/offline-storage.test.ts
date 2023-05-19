@@ -311,3 +311,9 @@ describe('OfflineStorage', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import { offlineStorage } from '@/lib/offline/storage';
+import type { CachedConversation, OfflineQueueItem } from '@/lib/offline/types';

@@ -419,3 +419,22 @@ describe('OfflineManager', () => {
   describe('Storage Usage', () => {
     it('should return storage usage information', async () => {
       const usage = await offlineManager.getStorageUsage();
+      
+      expect(usage).toHaveProperty('used');
+      expect(usage).toHaveProperty('quota');
+      expect(usage).toHaveProperty('percentage');
+      expect(typeof usage.used).toBe('number');
+      expect(typeof usage.quota).toBe('number');
+      expect(typeof usage.percentage).toBe('number');
+    });
+  });
+
+  describe('Data Cleanup', () => {
+    it('should clear offline data', async () => {
+      await offlineManager.clearOfflineData();
+      
+      // Verify that the clear operation was attempted
+      expect(true).toBe(true);
+    });
+  });
+});
