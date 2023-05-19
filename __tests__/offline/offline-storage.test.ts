@@ -317,3 +317,30 @@ describe('OfflineStorage', () => {
 
 import { offlineStorage } from '@/lib/offline/storage';
 import type { CachedConversation, OfflineQueueItem } from '@/lib/offline/types';
+
+// Create a more complete IndexedDB mock
+class MockIDBRequest {
+  result: any = null;
+  error: any = null;
+  onsuccess: ((event: any) => void) | null = null;
+  onerror: ((event: any) => void) | null = null;
+
+  constructor(result?: any) {
+    this.result = result;
+    // Simulate async completion
+    setTimeout(() => {
+      if (this.onsuccess) {
+        this.onsuccess({ target: this });
+      }
+    }, 0);
+  }
+}
+
+const mockObjectStore = {
+  put: jest.fn(() => new MockIDBRequest()),
+  get: jest.fn(() => new MockIDBRequest()),
+  getAll: jest.fn(() => new MockIDBRequest([])),
+  delete: jest.fn(() => new MockIDBRequest()),
+  clear: jest.fn(() => new MockIDBRequest()),
+  createIndex: jest.fn(),
+  index: jest.fn(() => ({
