@@ -526,3 +526,29 @@ describe('OfflineStorage', () => {
     it('should retrieve queued actions', async () => {
       const queueItems: OfflineQueueItem[] = [
         {
+          id: 'action1',
+          type: 'SEND_MESSAGE',
+          payload: {},
+          timestamp: Date.now(),
+          retryCount: 0,
+          maxRetries: 3,
+          status: 'pending',
+        },
+      ];
+
+      mockIDBRequest.onsuccess = () => {
+        mockIDBRequest.result = queueItems;
+      };
+
+      const result = await offlineStorage.getQueuedActions();
+      
+      expect(result).toEqual(queueItems);
+    });
+
+    it('should update queue item', async () => {
+      const queueItem: OfflineQueueItem = {
+        id: 'test-action',
+        type: 'SEND_MESSAGE',
+        payload: {},
+        timestamp: Date.now(),
+        retryCount: 1,
