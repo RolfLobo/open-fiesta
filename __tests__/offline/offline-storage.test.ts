@@ -474,3 +474,29 @@ describe('OfflineStorage', () => {
           thread: { id: 'conv1', title: 'Conv 1', messages: [], createdAt: Date.now() },
           lastModified: Date.now(),
           syncStatus: 'synced',
+        },
+        {
+          id: 'conv2',
+          thread: { id: 'conv2', title: 'Conv 2', messages: [], createdAt: Date.now() },
+          lastModified: Date.now(),
+          syncStatus: 'pending',
+        },
+      ];
+
+      mockIDBRequest.onsuccess = () => {
+        mockIDBRequest.result = conversations;
+      };
+
+      const result = await offlineStorage.getAllConversations();
+      
+      expect(mockObjectStore.getAll).toHaveBeenCalled();
+      expect(result).toEqual(conversations);
+    });
+
+    it('should delete a conversation', async () => {
+      const conversationId = 'test-conversation';
+
+      await offlineStorage.deleteConversation(conversationId);
+      
+      expect(mockObjectStore.delete).toHaveBeenCalledWith(conversationId);
+    });
