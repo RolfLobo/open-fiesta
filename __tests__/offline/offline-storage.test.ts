@@ -448,3 +448,29 @@ describe('OfflineStorage', () => {
       };
 
       mockIDBRequest.onsuccess = () => {
+        mockIDBRequest.result = expectedConversation;
+      };
+
+      const result = await offlineStorage.getConversation(conversationId);
+      
+      expect(mockObjectStore.get).toHaveBeenCalledWith(conversationId);
+      expect(result).toEqual(expectedConversation);
+    });
+
+    it('should return null for non-existent conversation', async () => {
+      mockIDBRequest.onsuccess = () => {
+        mockIDBRequest.result = undefined;
+      };
+
+      const result = await offlineStorage.getConversation('non-existent');
+      
+      expect(result).toBeNull();
+    });
+
+    it('should retrieve all conversations', async () => {
+      const conversations: CachedConversation[] = [
+        {
+          id: 'conv1',
+          thread: { id: 'conv1', title: 'Conv 1', messages: [], createdAt: Date.now() },
+          lastModified: Date.now(),
+          syncStatus: 'synced',
