@@ -500,3 +500,29 @@ describe('OfflineStorage', () => {
       
       expect(mockObjectStore.delete).toHaveBeenCalledWith(conversationId);
     });
+  });
+
+  describe('Queue Management', () => {
+    beforeEach(async () => {
+      await offlineStorage.init();
+    });
+
+    it('should add action to queue', async () => {
+      const queueItem: OfflineQueueItem = {
+        id: 'test-action',
+        type: 'SEND_MESSAGE',
+        payload: { chatId: 'test', message: { role: 'user', content: 'test', ts: Date.now() } },
+        timestamp: Date.now(),
+        retryCount: 0,
+        maxRetries: 3,
+        status: 'pending',
+      };
+
+      await offlineStorage.addToQueue(queueItem);
+      
+      expect(mockObjectStore.put).toHaveBeenCalledWith(queueItem);
+    });
+
+    it('should retrieve queued actions', async () => {
+      const queueItems: OfflineQueueItem[] = [
+        {
