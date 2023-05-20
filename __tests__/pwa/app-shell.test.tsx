@@ -172,3 +172,8 @@ describe('AppShell', () => {
     });
   });
 });
+import React from 'react';
+import { render, screen, waitFor, act } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import AppShell from '@/components/pwa/AppShell';
+import { setupPWAMocks } from './test-utils';

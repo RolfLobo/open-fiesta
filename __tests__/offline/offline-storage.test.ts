@@ -604,3 +604,23 @@ describe('OfflineStorage', () => {
       };
 
       await expect(offlineStorage.init()).rejects.toThrow();
+    });
+
+    it('should handle storage operation errors', async () => {
+      await offlineStorage.init();
+      
+      mockIDBRequest.onerror = () => {
+        mockIDBRequest.error = new Error('Storage error');
+      };
+
+      const conversation: CachedConversation = {
+        id: 'test',
+        thread: { id: 'test', title: 'Test', messages: [], createdAt: Date.now() },
+        lastModified: Date.now(),
+        syncStatus: 'synced',
+      };
+
+      await expect(offlineStorage.storeConversation(conversation)).rejects.toThrow();
+    });
+  });
+});
