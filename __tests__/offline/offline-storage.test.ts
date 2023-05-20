@@ -552,3 +552,29 @@ describe('OfflineStorage', () => {
         payload: {},
         timestamp: Date.now(),
         retryCount: 1,
+        maxRetries: 3,
+        status: 'failed',
+        error: 'Network error',
+      };
+
+      await offlineStorage.updateQueueItem(queueItem);
+      
+      expect(mockObjectStore.put).toHaveBeenCalledWith(queueItem);
+    });
+
+    it('should remove action from queue', async () => {
+      const actionId = 'test-action';
+
+      await offlineStorage.removeFromQueue(actionId);
+      
+      expect(mockObjectStore.delete).toHaveBeenCalledWith(actionId);
+    });
+
+    it('should clear entire queue', async () => {
+      await offlineStorage.clearQueue();
+      
+      expect(mockObjectStore.clear).toHaveBeenCalled();
+    });
+  });
+
+  describe('Storage Usage', () => {
