@@ -578,3 +578,29 @@ describe('OfflineStorage', () => {
   });
 
   describe('Storage Usage', () => {
+    it('should return storage usage when supported', async () => {
+      const usage = await offlineStorage.getStorageUsage();
+      
+      expect(usage).toEqual({ used: 1000, quota: 10000 });
+      expect(navigator.storage.estimate).toHaveBeenCalled();
+    });
+
+    it('should return zero usage when not supported', async () => {
+      // Mock unsupported storage API
+      Object.defineProperty(navigator, 'storage', {
+        value: undefined,
+      });
+
+      const usage = await offlineStorage.getStorageUsage();
+      
+      expect(usage).toEqual({ used: 0, quota: 0 });
+    });
+  });
+
+  describe('Error Handling', () => {
+    it('should handle database initialization errors', async () => {
+      mockIDBOpenRequest.onerror = () => {
+        mockIDBOpenRequest.error = new Error('Database error');
+      };
+
+      await expect(offlineStorage.init()).rejects.toThrow();
