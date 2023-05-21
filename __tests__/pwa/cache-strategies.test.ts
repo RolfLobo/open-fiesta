@@ -362,3 +362,16 @@ describe('Cache Strategies', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import {
+  getCacheManager,
+  DEFAULT_CACHE_STRATEGIES,
+  CacheUtils,
+} from '../../lib/cache-strategies';
+
+describe('Cache Strategies', () => {
+  let mockCache: any;
+  let mockCaches: any;

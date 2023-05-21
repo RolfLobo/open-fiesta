@@ -334,3 +334,15 @@ describe('AppShell', () => {
   });
 
   it('should apply custom className', async () => {
+    render(
+      <AppShell className="custom-class">
+        <div data-testid="app-content">App Content</div>
+      </AppShell>
+    );
+
+    await waitFor(() => {
+      const appShell = screen.getByTestId('app-content').closest('.app-shell');
+      expect(appShell).toHaveClass('custom-class');
+    });
+  });
+});
