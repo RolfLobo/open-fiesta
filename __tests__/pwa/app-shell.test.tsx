@@ -308,3 +308,29 @@ describe('AppShell', () => {
 
     // Fast-forward time
     jest.advanceTimersByTime(3000);
+
+    await waitFor(() => {
+      expect(mockSetIsLoading).toHaveBeenCalledWith(false);
+    });
+
+    jest.useRealTimers();
+  });
+
+  it('should disable launch screen when showLaunchScreen is false', () => {
+    const mockSetIsLoading = jest.fn();
+    const mockUseState = jest.spyOn(React, 'useState');
+    mockUseState
+      .mockReturnValueOnce([true, mockSetIsLoading]) // isLoading
+      .mockReturnValueOnce([false, jest.fn()]) // isStandaloneMode
+      .mockReturnValueOnce([true, jest.fn()]); // isHydrated
+
+    render(
+      <AppShell showLaunchScreen={false}>
+        <div>App Content</div>
+      </AppShell>
+    );
+
+    expect(mockSetIsLoading).toHaveBeenCalledWith(false);
+  });
+
+  it('should apply custom className', async () => {
