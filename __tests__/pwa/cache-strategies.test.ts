@@ -402,3 +402,29 @@ describe('Cache Strategies', () => {
         estimate: jest.fn().mockResolvedValue({
           quota: 1000000,
           usage: 500000,
+        }),
+      },
+      writable: true,
+    });
+
+    // Mock fetch
+    global.fetch = jest.fn().mockResolvedValue(
+      new Response('test content', {
+        status: 200,
+        headers: { 'content-length': '12' },
+      })
+    );
+  });
+
+  describe('CacheManager', () => {
+    it('should get cache status', async () => {
+      const manager = getCacheManager();
+      
+      mockCache.keys.mockResolvedValue([
+        new Request('https://example.com/test1'),
+        new Request('https://example.com/test2'),
+      ]);
+
+      mockCache.match.mockImplementation((request: Request) => {
+        return Promise.resolve(
+          new Response('test', {
