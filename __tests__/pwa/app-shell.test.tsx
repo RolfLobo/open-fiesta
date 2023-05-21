@@ -282,3 +282,29 @@ describe('AppShell', () => {
       <AppShell>
         <div data-testid="app-content">App Content</div>
       </AppShell>
+    );
+
+    await waitFor(() => {
+      const appShell = screen.getByTestId('app-content').closest('.app-shell');
+      expect(appShell).toHaveClass('browser-mode');
+    });
+  });
+
+  it('should handle custom launch screen duration', async () => {
+    jest.useFakeTimers();
+    
+    const mockSetIsLoading = jest.fn();
+    const mockUseState = jest.spyOn(React, 'useState');
+    mockUseState
+      .mockReturnValueOnce([true, mockSetIsLoading]) // isLoading
+      .mockReturnValueOnce([false, jest.fn()]) // isStandaloneMode
+      .mockReturnValueOnce([true, jest.fn()]); // isHydrated
+
+    render(
+      <AppShell showLaunchScreen={true} launchScreenDuration={3000}>
+        <div>App Content</div>
+      </AppShell>
+    );
+
+    // Fast-forward time
+    jest.advanceTimersByTime(3000);
