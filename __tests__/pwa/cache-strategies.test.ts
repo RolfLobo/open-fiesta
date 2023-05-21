@@ -375,3 +375,30 @@ import {
 describe('Cache Strategies', () => {
   let mockCache: any;
   let mockCaches: any;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Mock cache instance
+    mockCache = {
+      keys: jest.fn().mockResolvedValue([]),
+      match: jest.fn().mockResolvedValue(null),
+      put: jest.fn().mockResolvedValue(undefined),
+      delete: jest.fn().mockResolvedValue(true),
+    };
+
+    // Mock caches API
+    mockCaches = {
+      keys: jest.fn().mockResolvedValue(['cache1', 'cache2']),
+      open: jest.fn().mockResolvedValue(mockCache),
+      delete: jest.fn().mockResolvedValue(true),
+    };
+
+    (global as any).caches = mockCaches;
+
+    // Mock navigator.storage
+    Object.defineProperty(navigator, 'storage', {
+      value: {
+        estimate: jest.fn().mockResolvedValue({
+          quota: 1000000,
+          usage: 500000,
