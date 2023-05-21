@@ -177,3 +177,30 @@ import { render, screen, waitFor, act } from '@testing-library/react';
 import { jest } from '@jest/globals';
 import AppShell from '@/components/pwa/AppShell';
 import { setupPWAMocks } from './test-utils';
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: jest.fn(() => false),
+}));
+
+// Mock LaunchScreen component
+jest.mock('@/components/ui/LaunchScreen', () => {
+  return function MockLaunchScreen() {
+    return <div data-testid="launch-screen">Launch Screen</div>;
+  };
+});
+
+// Mock Loading component
+jest.mock('@/components/ui/Loading', () => {
+  return function MockLoading() {
+    return <div data-testid="loading">Loading...</div>;
+  };
+});
+
+describe('AppShell', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    setupPWAMocks();
+  });
+
+  it('should render children after hydration', async () => {
