@@ -256,3 +256,29 @@ describe('AppShell', () => {
     
     // Restore useState
     mockUseState.mockRestore();
+  });
+
+  it('should apply standalone mode classes', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    render(
+      <AppShell>
+        <div data-testid="app-content">App Content</div>
+      </AppShell>
+    );
+
+    await waitFor(() => {
+      const appShell = screen.getByTestId('app-content').closest('.app-shell');
+      expect(appShell).toHaveClass('standalone-mode');
+    });
+  });
+
+  it('should apply browser mode classes when not standalone', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(false);
+
+    render(
+      <AppShell>
+        <div data-testid="app-content">App Content</div>
+      </AppShell>
