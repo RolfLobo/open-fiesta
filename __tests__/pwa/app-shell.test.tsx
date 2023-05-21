@@ -230,3 +230,29 @@ describe('AppShell', () => {
     );
 
     expect(screen.getByTestId('loading')).toBeInTheDocument();
+    
+    // Restore useState
+    mockUseState.mockRestore();
+  });
+
+  it('should show launch screen in standalone mode', async () => {
+    // Mock isStandalone to return true
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    const mockUseState = jest.spyOn(React, 'useState');
+    mockUseState
+      .mockReturnValueOnce([true, jest.fn()]) // isLoading
+      .mockReturnValueOnce([true, jest.fn()]) // isStandaloneMode
+      .mockReturnValueOnce([true, jest.fn()]); // isHydrated
+
+    render(
+      <AppShell showLaunchScreen={true}>
+        <div>App Content</div>
+      </AppShell>
+    );
+
+    expect(screen.getByTestId('launch-screen')).toBeInTheDocument();
+    
+    // Restore useState
+    mockUseState.mockRestore();
