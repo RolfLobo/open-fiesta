@@ -204,3 +204,29 @@ describe('AppShell', () => {
   });
 
   it('should render children after hydration', async () => {
+    render(
+      <AppShell>
+        <div data-testid="app-content">App Content</div>
+      </AppShell>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('app-content')).toBeInTheDocument();
+    });
+  });
+
+  it('should show loading state during hydration', () => {
+    // Mock useState to simulate loading state
+    const mockUseState = jest.spyOn(React, 'useState');
+    mockUseState
+      .mockReturnValueOnce([true, jest.fn()]) // isLoading
+      .mockReturnValueOnce([false, jest.fn()]) // isStandaloneMode
+      .mockReturnValueOnce([false, jest.fn()]); // isHydrated
+
+    render(
+      <AppShell>
+        <div>App Content</div>
+      </AppShell>
+    );
+
+    expect(screen.getByTestId('loading')).toBeInTheDocument();
