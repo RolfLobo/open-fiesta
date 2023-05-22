@@ -428,3 +428,29 @@ describe('Cache Strategies', () => {
       mockCache.match.mockImplementation((request: Request) => {
         return Promise.resolve(
           new Response('test', {
+            headers: { 'content-length': '4' },
+          })
+        );
+      });
+
+      const status = await manager.getStatus();
+
+      expect(status).toHaveLength(2);
+      expect(status[0]).toMatchObject({
+        name: 'cache1',
+        entryCount: 2,
+        size: expect.any(Number),
+        quota: {
+          used: 500000,
+          available: 1000000,
+          percentage: 50,
+        },
+      });
+    });
+
+    it('should cleanup caches', async () => {
+      const manager = getCacheManager();
+      
+      // Should not throw
+      await manager.cleanup();
+    });
