@@ -506,3 +506,29 @@ describe('Cache Strategies', () => {
       await manager.warmCache(urls);
 
       expect(global.fetch).toHaveBeenCalledTimes(urls.length);
+      expect(mockCache.put).toHaveBeenCalledTimes(urls.length);
+    });
+
+    it('should get cache size', async () => {
+      const manager = getCacheManager();
+      
+      mockCache.keys.mockResolvedValue([new Request('https://example.com/test')]);
+      mockCache.match.mockResolvedValue(
+        new Response('test content', {
+          headers: { 'content-length': '12' },
+        })
+      );
+
+      const size = await manager.getCacheSize('test-cache');
+
+      expect(size).toBe(12);
+    });
+
+    it('should delete cache entry', async () => {
+      const manager = getCacheManager();
+      
+      const result = await manager.deleteCacheEntry('test-cache', 'https://example.com/test');
+
+      expect(mockCache.delete).toHaveBeenCalledWith('https://example.com/test');
+      expect(result).toBe(true);
+    });
