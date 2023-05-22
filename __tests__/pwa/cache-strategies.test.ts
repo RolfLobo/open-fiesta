@@ -454,3 +454,29 @@ describe('Cache Strategies', () => {
       // Should not throw
       await manager.cleanup();
     });
+
+    it('should clear expired entries', async () => {
+      const manager = getCacheManager();
+      
+      const oldDate = new Date(Date.now() - 1000 * 60 * 60 * 25); // 25 hours ago
+      mockCache.keys.mockResolvedValue([new Request('https://example.com/old')]);
+      mockCache.match.mockResolvedValue(
+        new Response('old content', {
+          headers: { date: oldDate.toISOString() },
+        })
+      );
+
+      // Mock cache names to include a cache that matches our strategy
+      mockCaches.keys.mockResolvedValue(['static-assets-cache']);
+
+      await manager.clearExpired();
+
+      // The cache should be checked for expired entries
+      expect(mockCache.keys).toHaveBeenCalled();
+      expect(mockCache.match).toHaveBeenCalled();
+    });
+
+    it('should enforce quota limits', async () => {
+      const manager = getCacheManager();
+      
+      // Mock high quota usage
