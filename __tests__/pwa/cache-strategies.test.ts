@@ -532,3 +532,29 @@ describe('Cache Strategies', () => {
       expect(mockCache.delete).toHaveBeenCalledWith('https://example.com/test');
       expect(result).toBe(true);
     });
+
+    it('should handle missing caches API gracefully', async () => {
+      delete (global as any).caches;
+      
+      const manager = getCacheManager();
+      
+      const status = await manager.getStatus();
+      expect(status).toEqual([]);
+      
+      const size = await manager.getCacheSize('test');
+      expect(size).toBe(0);
+      
+      const deleted = await manager.deleteCacheEntry('test', 'url');
+      expect(deleted).toBe(false);
+    });
+
+    it('should handle missing storage API gracefully', async () => {
+      // Create a new manager instance that will check for storage
+      const manager = getCacheManager();
+      
+      // Mock the storage check to return false
+      const originalNavigator = global.navigator;
+      (global as any).navigator = {};
+      
+      // Should not throw
+      await manager.enforceQuota();
