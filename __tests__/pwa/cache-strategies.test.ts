@@ -480,3 +480,29 @@ describe('Cache Strategies', () => {
       const manager = getCacheManager();
       
       // Mock high quota usage
+      (navigator.storage.estimate as jest.Mock).mockResolvedValue({
+        quota: 1000000,
+        usage: 900000, // 90% usage
+      });
+
+      mockCache.keys.mockResolvedValue([
+        new Request('https://example.com/test1'),
+        new Request('https://example.com/test2'),
+      ]);
+
+      // Mock cache names to include a cache that allows purging
+      mockCaches.keys.mockResolvedValue(['static-assets-cache']);
+
+      await manager.enforceQuota();
+
+      // Should attempt to delete some entries
+      expect(mockCache.delete).toHaveBeenCalled();
+    });
+
+    it('should warm cache with URLs', async () => {
+      const manager = getCacheManager();
+      const urls = ['https://example.com/test1.js', 'https://example.com/test2.css'];
+
+      await manager.warmCache(urls);
+
+      expect(global.fetch).toHaveBeenCalledTimes(urls.length);
