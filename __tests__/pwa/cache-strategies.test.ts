@@ -610,3 +610,29 @@ describe('Cache Strategies', () => {
     });
 
     it('should identify non-cacheable responses', () => {
+      const nonCacheableResponse = new Response('test', { 
+        status: 404,
+        headers: { 'cache-control': 'no-store' },
+      });
+      Object.defineProperty(nonCacheableResponse, 'type', { value: 'basic' });
+      
+      expect(CacheUtils.isCacheable(nonCacheableResponse)).toBe(false);
+    });
+
+    it('should create cache key from request', () => {
+      const request = new Request('https://example.com/test?_t=123&v=456&param=value');
+      const key = CacheUtils.createCacheKey(request);
+      
+      // The function should return a string (exact format depends on URL implementation)
+      expect(typeof key).toBe('string');
+      expect(key).toContain('example.com');
+    });
+
+    it('should add timestamp to response', () => {
+      const originalResponse = new Response('test', {
+        status: 200,
+        headers: { 'content-type': 'text/plain' },
+      });
+      
+      const timestampedResponse = CacheUtils.addTimestamp(originalResponse);
+      
