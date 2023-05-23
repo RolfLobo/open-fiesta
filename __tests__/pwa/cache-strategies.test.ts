@@ -636,3 +636,29 @@ describe('Cache Strategies', () => {
       
       const timestampedResponse = CacheUtils.addTimestamp(originalResponse);
       
+      expect(timestampedResponse.headers.get('sw-cached-at')).toBeTruthy();
+      expect(timestampedResponse.headers.get('content-type')).toBe('text/plain');
+      expect(timestampedResponse.status).toBe(200);
+    });
+
+    it('should check if response is expired', () => {
+      const oldDate = new Date(Date.now() - 1000 * 60 * 60 * 25); // 25 hours ago
+      const response = new Response('test', {
+        headers: { 'sw-cached-at': oldDate.toISOString() },
+      });
+      
+      const isExpired = CacheUtils.isExpired(response, 60 * 60 * 24); // 24 hours max age
+      
+      expect(isExpired).toBe(true);
+    });
+
+    it('should check if response is not expired', () => {
+      const recentDate = new Date(Date.now() - 1000 * 60 * 60 * 12); // 12 hours ago
+      const response = new Response('test', {
+        headers: { 'sw-cached-at': recentDate.toISOString() },
+      });
+      
+      const isExpired = CacheUtils.isExpired(response, 60 * 60 * 24); // 24 hours max age
+      
+      expect(isExpired).toBe(false);
+    });
