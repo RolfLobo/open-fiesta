@@ -662,3 +662,29 @@ describe('Cache Strategies', () => {
       
       expect(isExpired).toBe(false);
     });
+
+    it('should handle response without timestamp', () => {
+      const response = new Response('test');
+      
+      const isExpired = CacheUtils.isExpired(response, 60 * 60 * 24);
+      
+      expect(isExpired).toBe(false);
+    });
+  });
+
+  describe('Error Handling', () => {
+    it('should handle cache operation errors gracefully', async () => {
+      // Mock caches.keys to throw an error
+      mockCaches.keys.mockRejectedValue(new Error('Cache error'));
+      
+      const manager = getCacheManager();
+      
+      // Should not throw
+      await manager.clearExpired();
+      
+      // Reset mock
+      mockCaches.keys.mockResolvedValue(['cache1', 'cache2']);
+    });
+
+    it('should handle fetch errors during cache warming', async () => {
+      (global.fetch as jest.Mock).mockRejectedValue(new Error('Network error'));
