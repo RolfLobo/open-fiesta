@@ -584,3 +584,29 @@ describe('Cache Strategies', () => {
 
     it('should have HTML pages strategy', () => {
       const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'html-pages');
+      expect(strategy).toBeDefined();
+      expect(strategy?.handler).toBe('StaleWhileRevalidate');
+    });
+
+    it('should have fonts strategy', () => {
+      const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'fonts');
+      expect(strategy).toBeDefined();
+      expect(strategy?.handler).toBe('CacheFirst');
+    });
+
+    it('should have images strategy', () => {
+      const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'images');
+      expect(strategy).toBeDefined();
+      expect(strategy?.handler).toBe('StaleWhileRevalidate');
+    });
+  });
+
+  describe('CacheUtils', () => {
+    it('should identify cacheable responses', () => {
+      const cacheableResponse = new Response('test', { status: 200 });
+      Object.defineProperty(cacheableResponse, 'type', { value: 'basic' });
+      
+      expect(CacheUtils.isCacheable(cacheableResponse)).toBe(true);
+    });
+
+    it('should identify non-cacheable responses', () => {
