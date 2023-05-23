@@ -558,3 +558,29 @@ describe('Cache Strategies', () => {
       
       // Should not throw
       await manager.enforceQuota();
+      
+      // Restore navigator
+      (global as any).navigator = originalNavigator;
+    });
+  });
+
+  describe('Default Cache Strategies', () => {
+    it('should have correct number of strategies', () => {
+      expect(DEFAULT_CACHE_STRATEGIES).toHaveLength(5);
+    });
+
+    it('should have static assets strategy', () => {
+      const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'static-assets');
+      expect(strategy).toBeDefined();
+      expect(strategy?.handler).toBe('CacheFirst');
+      expect(strategy?.urlPattern).toBeInstanceOf(RegExp);
+    });
+
+    it('should have API calls strategy', () => {
+      const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'api-calls');
+      expect(strategy).toBeDefined();
+      expect(strategy?.handler).toBe('NetworkFirst');
+    });
+
+    it('should have HTML pages strategy', () => {
+      const strategy = DEFAULT_CACHE_STRATEGIES.find(s => s.name === 'html-pages');
