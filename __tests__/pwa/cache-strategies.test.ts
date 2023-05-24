@@ -714,3 +714,15 @@ describe('Cache Strategies', () => {
         new Response('test', { headers: {} }) // No content-length
       );
       
+      // Mock blob() to simulate error
+      const mockBlob = jest.fn().mockRejectedValue(new Error('Blob error'));
+      Response.prototype.blob = mockBlob;
+      
+      const manager = getCacheManager();
+      const size = await manager.getCacheSize('test-cache');
+      
+      // Should return 0 on error
+      expect(size).toBe(0);
+    });
+  });
+});

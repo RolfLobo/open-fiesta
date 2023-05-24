@@ -207,3 +207,16 @@ describe('InstallBanner', () => {
     jest.useRealTimers();
   });
 });
+import React from 'react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import InstallBanner from '@/components/pwa/InstallBanner';
+import { setupPWAMocks, createMockBeforeInstallPromptEvent } from './test-utils';
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: jest.fn(() => false),
+}));
+
+describe('InstallBanner', () => {
+  let mockBeforeInstallPromptEvent: ReturnType<typeof createMockBeforeInstallPromptEvent>;
