@@ -247,3 +247,29 @@ describe('InstallBanner', () => {
 
     // Fast-forward time to show banner with act
     act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Install Open Fiesta for a better experience')).toBeInTheDocument();
+    });
+
+    jest.useRealTimers();
+  });
+
+  it('should handle permanent dismissal', async () => {
+    jest.useFakeTimers();
+    const onDismiss = jest.fn();
+    render(<InstallBanner onDismiss={onDismiss} />);
+    
+    // Simulate beforeinstallprompt event
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
+
+    // Fast-forward past the 2-second delay
