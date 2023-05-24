@@ -688,3 +688,29 @@ describe('Cache Strategies', () => {
 
     it('should handle fetch errors during cache warming', async () => {
       (global.fetch as jest.Mock).mockRejectedValue(new Error('Network error'));
+      
+      const manager = getCacheManager();
+      
+      // Should not throw
+      await manager.warmCache(['https://example.com/test']);
+    });
+
+    it('should handle quota estimation errors', async () => {
+      // Temporarily replace the estimate function
+      const originalEstimate = navigator.storage.estimate;
+      (navigator.storage as any).estimate = jest.fn().mockRejectedValue(new Error('Storage error'));
+      
+      const manager = getCacheManager();
+      
+      // Should not throw
+      await manager.enforceQuota();
+      
+      // Restore original function
+      (navigator.storage as any).estimate = originalEstimate;
+    });
+
+    it('should handle cache size calculation errors', async () => {
+      mockCache.match.mockResolvedValue(
+        new Response('test', { headers: {} }) // No content-length
+      );
+      
