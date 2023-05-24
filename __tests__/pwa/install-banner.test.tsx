@@ -220,3 +220,30 @@ jest.mock('@/lib/pwa-config', () => ({
 
 describe('InstallBanner', () => {
   let mockBeforeInstallPromptEvent: ReturnType<typeof createMockBeforeInstallPromptEvent>;
+
+  beforeEach(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+    jest.clearAllMocks();
+    
+    setupPWAMocks();
+    mockBeforeInstallPromptEvent = createMockBeforeInstallPromptEvent();
+  });
+
+  it('should render install banner after delay', async () => {
+    jest.useFakeTimers();
+    
+    render(<InstallBanner />);
+    
+    // Simulate beforeinstallprompt event with act
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
+
+    // Fast-forward time to show banner with act
+    act(() => {
