@@ -402,3 +402,17 @@ describe('InstallBanner', () => {
         beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
       });
     }
+
+    // Fast-forward past the 2-second delay
+    act(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    await waitFor(() => {
+      const banner = document.querySelector('.fixed');
+      expect(banner).toBeInTheDocument();
+    });
+    
+    jest.useRealTimers();
+  });
+});

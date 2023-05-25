@@ -111,3 +111,16 @@ describe('InstallPrompt', () => {
     expect(installButton).toBeDisabled();
   });
 });
+import React from 'react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import InstallPrompt from '@/components/pwa/InstallPrompt';
+import { setupPWAMocks, createMockBeforeInstallPromptEvent } from './test-utils';
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: jest.fn(() => false),
+}));
+
+describe('InstallPrompt', () => {
+  let mockBeforeInstallPromptEvent: ReturnType<typeof createMockBeforeInstallPromptEvent>;
