@@ -124,3 +124,29 @@ jest.mock('@/lib/pwa-config', () => ({
 
 describe('InstallPrompt', () => {
   let mockBeforeInstallPromptEvent: ReturnType<typeof createMockBeforeInstallPromptEvent>;
+
+  beforeEach(() => {
+    // Clear session storage
+    sessionStorage.clear();
+    
+    // Reset mocks
+    jest.clearAllMocks();
+    
+    setupPWAMocks();
+    mockBeforeInstallPromptEvent = createMockBeforeInstallPromptEvent();
+  });
+
+  it('should render install prompt when installable', () => {
+    render(<InstallPrompt />);
+    
+    // Simulate beforeinstallprompt event
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+    }
+
+    expect(screen.getByText('Install Open Fiesta')).toBeInTheDocument();
+    expect(screen.getByText('Get the app experience')).toBeInTheDocument();
+    expect(screen.getByText('Faster loading')).toBeInTheDocument();
