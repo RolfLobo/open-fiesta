@@ -377,3 +377,28 @@ describe('InstallBanner', () => {
     }
 
     // Fast-forward past the 2-second delay
+    act(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    await waitFor(() => {
+      const banner = document.querySelector('.fixed');
+      expect(banner).toBeInTheDocument();
+    });
+    
+    jest.useRealTimers();
+  });
+
+  it('should render with bottom variant when specified', async () => {
+    jest.useFakeTimers();
+    render(<InstallBanner variant="bottom" />);
+    
+    // Simulate beforeinstallprompt event to make banner visible
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
