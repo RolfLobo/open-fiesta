@@ -299,3 +299,29 @@ describe('InstallBanner', () => {
     // Simulate beforeinstallprompt event and show banner
     const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
       .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
+
+    // Fast-forward past the 2-second delay
+    act(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Later')).toBeInTheDocument();
+    });
+
+    const laterButton = screen.getByText('Later');
+    fireEvent.click(laterButton);
+
+    expect(sessionStorage.getItem('pwa-banner-session-dismissed')).toBe('true');
+    expect(onDismiss).toHaveBeenCalled();
+    
+    jest.useRealTimers();
+  });
+
+  it('should track installation events', async () => {
