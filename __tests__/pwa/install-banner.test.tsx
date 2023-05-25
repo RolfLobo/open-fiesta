@@ -273,3 +273,29 @@ describe('InstallBanner', () => {
     }
 
     // Fast-forward past the 2-second delay
+    act(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    // Wait for banner to appear
+    await waitFor(() => {
+      expect(screen.getByText('Install Open Fiesta for a better experience')).toBeInTheDocument();
+    });
+
+    const dismissButton = screen.getByLabelText('Dismiss permanently');
+    fireEvent.click(dismissButton);
+
+    expect(localStorage.getItem('pwa-banner-dismissed')).toBe('true');
+    expect(onDismiss).toHaveBeenCalled();
+    
+    jest.useRealTimers();
+  });
+
+  it('should handle session dismissal', async () => {
+    jest.useFakeTimers();
+    const onDismiss = jest.fn();
+    render(<InstallBanner onDismiss={onDismiss} />);
+    
+    // Simulate beforeinstallprompt event and show banner
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
