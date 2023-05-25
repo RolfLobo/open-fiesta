@@ -351,3 +351,29 @@ describe('InstallBanner', () => {
     const installButton = screen.getByText('Install');
     
     jest.useRealTimers();
+    fireEvent.click(installButton);
+
+    await waitFor(() => {
+      expect(window.gtag).toHaveBeenCalledWith('event', 'pwa_install_prompt', {
+        event_category: 'PWA',
+        event_label: 'accepted',
+        custom_parameter_1: 'banner',
+      });
+    });
+  });
+
+  it('should render with top variant by default', async () => {
+    jest.useFakeTimers();
+    render(<InstallBanner />);
+    
+    // Simulate beforeinstallprompt event to make banner visible
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
+
+    // Fast-forward past the 2-second delay
