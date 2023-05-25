@@ -325,3 +325,29 @@ describe('InstallBanner', () => {
   });
 
   it('should track installation events', async () => {
+    jest.useFakeTimers();
+    render(<InstallBanner />);
+    
+    // Simulate beforeinstallprompt event and show banner
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+      });
+    }
+
+    // Fast-forward past the 2-second delay
+    act(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    // Wait for banner to appear and find install button
+    await waitFor(() => {
+      expect(screen.getByText('Install Open Fiesta for a better experience')).toBeInTheDocument();
+    });
+
+    const installButton = screen.getByText('Install');
+    
+    jest.useRealTimers();
