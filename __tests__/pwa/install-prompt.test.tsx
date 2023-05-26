@@ -202,3 +202,25 @@ describe('InstallPrompt', () => {
   });
 
   it('should show loading state during installation', async () => {
+    const slowPrompt = {
+      ...mockBeforeInstallPromptEvent,
+      prompt: jest.fn(() => new Promise(resolve => setTimeout(resolve, 100))),
+    };
+
+    render(<InstallPrompt />);
+    
+    // Simulate beforeinstallprompt event
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      beforeInstallPromptHandler(slowPrompt);
+    }
+
+    const installButton = screen.getByRole('button', { name: /install/i });
+    fireEvent.click(installButton);
+
+    expect(screen.getByText('Installing...')).toBeInTheDocument();
+    expect(installButton).toBeDisabled();
+  });
+});
