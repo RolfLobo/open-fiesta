@@ -160,3 +160,30 @@ describe('Browser Configuration', () => {
 /**
  * @jest-environment node
  */
+
+import fs from 'fs';
+import path from 'path';
+
+describe('PWA Manifest', () => {
+  let manifest: any;
+
+  beforeAll(() => {
+    const manifestPath = path.join(process.cwd(), 'public', 'manifest.json');
+    const manifestContent = fs.readFileSync(manifestPath, 'utf-8');
+    manifest = JSON.parse(manifestContent);
+  });
+
+  it('should have required PWA manifest fields', () => {
+    expect(manifest).toHaveProperty('name');
+    expect(manifest).toHaveProperty('short_name');
+    expect(manifest).toHaveProperty('description');
+    expect(manifest).toHaveProperty('start_url');
+    expect(manifest).toHaveProperty('display');
+    expect(manifest).toHaveProperty('background_color');
+    expect(manifest).toHaveProperty('theme_color');
+    expect(manifest).toHaveProperty('icons');
+  });
+
+  it('should have correct basic properties', () => {
+    expect(manifest.name).toBe('Open Fiesta - AI Chat Platform');
+    expect(manifest.short_name).toBe('Open Fiesta');
