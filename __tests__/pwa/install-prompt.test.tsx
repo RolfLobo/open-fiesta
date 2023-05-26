@@ -150,3 +150,29 @@ describe('InstallPrompt', () => {
     expect(screen.getByText('Install Open Fiesta')).toBeInTheDocument();
     expect(screen.getByText('Get the app experience')).toBeInTheDocument();
     expect(screen.getByText('Faster loading')).toBeInTheDocument();
+    expect(screen.getByText('Works offline')).toBeInTheDocument();
+    expect(screen.getByText('Push notifications')).toBeInTheDocument();
+  });
+
+  it('should handle install button click', async () => {
+    const onInstall = jest.fn();
+    render(<InstallPrompt onInstall={onInstall} />);
+    
+    // Simulate beforeinstallprompt event
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+    }
+
+    const installButton = screen.getByRole('button', { name: /install/i });
+    fireEvent.click(installButton);
+
+    await waitFor(() => {
+      expect(mockBeforeInstallPromptEvent.prompt).toHaveBeenCalled();
+    });
+  });
+
+  it('should handle dismiss button click', () => {
+    const onDismiss = jest.fn();
