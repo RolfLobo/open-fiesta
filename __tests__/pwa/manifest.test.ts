@@ -213,3 +213,29 @@ describe('PWA Manifest', () => {
   });
 
   it('should have shortcuts configuration', () => {
+    expect(Array.isArray(manifest.shortcuts)).toBe(true);
+    expect(manifest.shortcuts.length).toBeGreaterThan(0);
+
+    manifest.shortcuts.forEach((shortcut: any) => {
+      expect(shortcut).toHaveProperty('name');
+      expect(shortcut).toHaveProperty('short_name');
+      expect(shortcut).toHaveProperty('description');
+      expect(shortcut).toHaveProperty('url');
+      expect(shortcut).toHaveProperty('icons');
+      expect(Array.isArray(shortcut.icons)).toBe(true);
+    });
+  });
+
+  it('should have screenshots for app stores', () => {
+    expect(Array.isArray(manifest.screenshots)).toBe(true);
+    expect(manifest.screenshots.length).toBeGreaterThan(0);
+
+    const formFactors = manifest.screenshots.map((screenshot: any) => screenshot.form_factor);
+    expect(formFactors).toContain('wide');
+    expect(formFactors).toContain('narrow');
+
+    manifest.screenshots.forEach((screenshot: any) => {
+      expect(screenshot).toHaveProperty('src');
+      expect(screenshot).toHaveProperty('sizes');
+      expect(screenshot).toHaveProperty('type');
+      expect(screenshot).toHaveProperty('form_factor');
