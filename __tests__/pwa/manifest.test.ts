@@ -187,3 +187,29 @@ describe('PWA Manifest', () => {
   it('should have correct basic properties', () => {
     expect(manifest.name).toBe('Open Fiesta - AI Chat Platform');
     expect(manifest.short_name).toBe('Open Fiesta');
+    expect(manifest.start_url).toBe('/');
+    expect(manifest.display).toBe('standalone');
+    expect(manifest.background_color).toBe('#000000');
+    expect(manifest.theme_color).toBe('#000000');
+  });
+
+  it('should have proper icon configuration', () => {
+    expect(Array.isArray(manifest.icons)).toBe(true);
+    expect(manifest.icons.length).toBeGreaterThan(0);
+
+    // Check required icon sizes
+    const iconSizes = manifest.icons.map((icon: any) => icon.sizes);
+    expect(iconSizes).toContain('192x192');
+    expect(iconSizes).toContain('512x512');
+
+    // Check icon properties
+    manifest.icons.forEach((icon: any) => {
+      expect(icon).toHaveProperty('src');
+      expect(icon).toHaveProperty('sizes');
+      expect(icon).toHaveProperty('type');
+      expect(icon).toHaveProperty('purpose');
+      expect(icon.purpose).toContain('any');
+    });
+  });
+
+  it('should have shortcuts configuration', () => {
