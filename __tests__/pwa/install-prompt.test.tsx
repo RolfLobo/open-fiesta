@@ -176,3 +176,29 @@ describe('InstallPrompt', () => {
 
   it('should handle dismiss button click', () => {
     const onDismiss = jest.fn();
+    render(<InstallPrompt onDismiss={onDismiss} />);
+    
+    // Simulate beforeinstallprompt event
+    const beforeInstallPromptHandler = (window.addEventListener as jest.Mock).mock.calls
+      .find(call => call[0] === 'beforeinstallprompt')?.[1];
+    
+    if (beforeInstallPromptHandler) {
+      beforeInstallPromptHandler(mockBeforeInstallPromptEvent);
+    }
+
+    const dismissButton = screen.getByLabelText('Dismiss install prompt');
+    fireEvent.click(dismissButton);
+
+    expect(onDismiss).toHaveBeenCalled();
+    expect(sessionStorage.getItem('pwa-install-dismissed')).toBe('true');
+  });
+
+  it('should not render when already dismissed', () => {
+    sessionStorage.setItem('pwa-install-dismissed', 'true');
+    
+    render(<InstallPrompt />);
+    
+    expect(screen.queryByText('Install Open Fiesta')).not.toBeInTheDocument();
+  });
+
+  it('should show loading state during installation', async () => {
