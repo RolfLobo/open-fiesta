@@ -265,3 +265,29 @@ describe('PWA Manifest', () => {
     expect(typeof manifest.edge_side_panel.preferred_width).toBe('number');
   });
 });
+
+describe('PWA Icon Generation', () => {
+  const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
+
+  it('should have generated all required icon sizes', () => {
+    iconSizes.forEach(size => {
+      const iconPath = path.join(process.cwd(), 'public', 'icons', `icon-${size}x${size}.svg`);
+      expect(fs.existsSync(iconPath)).toBe(true);
+    });
+  });
+
+  it('should have generated shortcut icons', () => {
+    const shortcutIcons = ['shortcut-new-chat.svg', 'shortcut-settings.svg'];
+    
+    shortcutIcons.forEach(iconName => {
+      const iconPath = path.join(process.cwd(), 'public', 'icons', iconName);
+      expect(fs.existsSync(iconPath)).toBe(true);
+    });
+  });
+
+  it('should have generated screenshot placeholders', () => {
+    const screenshots = ['desktop-wide.svg', 'mobile-narrow.svg'];
+    
+    screenshots.forEach(screenshotName => {
+      const screenshotPath = path.join(process.cwd(), 'public', 'screenshots', screenshotName);
+      expect(fs.existsSync(screenshotPath)).toBe(true);
