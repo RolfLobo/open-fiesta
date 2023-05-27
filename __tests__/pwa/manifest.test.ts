@@ -291,3 +291,28 @@ describe('PWA Icon Generation', () => {
     screenshots.forEach(screenshotName => {
       const screenshotPath = path.join(process.cwd(), 'public', 'screenshots', screenshotName);
       expect(fs.existsSync(screenshotPath)).toBe(true);
+    });
+  });
+
+  it('should have valid SVG content in icons', () => {
+    const iconPath = path.join(process.cwd(), 'public', 'icons', 'icon-192x192.svg');
+    const iconContent = fs.readFileSync(iconPath, 'utf-8');
+    
+    expect(iconContent).toContain('<svg');
+    expect(iconContent).toContain('width="192"');
+    expect(iconContent).toContain('height="192"');
+    expect(iconContent).toContain('</svg>');
+  });
+});
+
+describe('Browser Configuration', () => {
+  it('should have browserconfig.xml for Microsoft tiles', () => {
+    const browserconfigPath = path.join(process.cwd(), 'public', 'browserconfig.xml');
+    expect(fs.existsSync(browserconfigPath)).toBe(true);
+    
+    const browserconfigContent = fs.readFileSync(browserconfigPath, 'utf-8');
+    expect(browserconfigContent).toContain('<browserconfig>');
+    expect(browserconfigContent).toContain('<msapplication>');
+    expect(browserconfigContent).toContain('<TileColor>#000000</TileColor>');
+  });
+});
