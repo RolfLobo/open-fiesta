@@ -239,3 +239,29 @@ describe('PWA Manifest', () => {
       expect(screenshot).toHaveProperty('sizes');
       expect(screenshot).toHaveProperty('type');
       expect(screenshot).toHaveProperty('form_factor');
+      expect(screenshot).toHaveProperty('label');
+    });
+  });
+
+  it('should have proper categories', () => {
+    expect(Array.isArray(manifest.categories)).toBe(true);
+    expect(manifest.categories).toContain('productivity');
+    expect(manifest.categories).toContain('utilities');
+  });
+
+  it('should have correct scope and orientation', () => {
+    expect(manifest.scope).toBe('/');
+    expect(manifest.orientation).toBe('portrait-primary');
+    expect(manifest.lang).toBe('en');
+  });
+
+  it('should prefer web app over related applications', () => {
+    expect(manifest.prefer_related_applications).toBe(false);
+  });
+
+  it('should have Edge side panel configuration', () => {
+    expect(manifest).toHaveProperty('edge_side_panel');
+    expect(manifest.edge_side_panel).toHaveProperty('preferred_width');
+    expect(typeof manifest.edge_side_panel.preferred_width).toBe('number');
+  });
+});
