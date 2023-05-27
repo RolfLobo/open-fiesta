@@ -147,3 +147,28 @@ describe('PWA Components Basic Tests', () => {
       const AppShell = require('@/components/pwa/AppShell');
       expect(AppShell).toBeDefined();
       expect(AppShell.default).toBeDefined();
+      expect(typeof AppShell.default).toBe('function');
+    });
+
+    it('should export PWAManager component', () => {
+      const PWAManager = require('@/components/pwa/PWAManager');
+      expect(PWAManager).toBeDefined();
+      expect(PWAManager.default).toBeDefined();
+      expect(typeof PWAManager.default).toBe('function');
+    });
+
+    it('should export StandaloneDetector components', () => {
+      const StandaloneDetector = require('@/components/pwa/StandaloneDetector');
+      expect(StandaloneDetector).toBeDefined();
+      expect(StandaloneDetector.StandaloneProvider).toBeDefined();
+      expect(StandaloneDetector.useStandalone).toBeDefined();
+      expect(StandaloneDetector.StandaloneUI).toBeDefined();
+    });
+
+    it('should export PWAErrorBoundary component', () => {
+      const PWAErrorBoundary = require('@/components/pwa/PWAErrorBoundary');
+      expect(PWAErrorBoundary).toBeDefined();
+      expect(PWAErrorBoundary.PWAErrorBoundary).toBeDefined();
+      expect(typeof PWAErrorBoundary.PWAErrorBoundary).toBe('function');
+    });
+  });
