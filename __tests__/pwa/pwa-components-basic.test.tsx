@@ -121,3 +121,29 @@ describe('PWA Components Basic Tests', () => {
   });
 });
 import { jest } from '@jest/globals';
+
+// Basic tests for PWA components that don't require complex mocking
+describe('PWA Components Basic Tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('Component Exports', () => {
+    it('should export InstallPrompt component', () => {
+      const InstallPrompt = require('@/components/pwa/InstallPrompt');
+      expect(InstallPrompt).toBeDefined();
+      expect(InstallPrompt.default).toBeDefined();
+      expect(typeof InstallPrompt.default).toBe('function');
+    });
+
+    it('should export InstallBanner component', () => {
+      const InstallBanner = require('@/components/pwa/InstallBanner');
+      expect(InstallBanner).toBeDefined();
+      expect(InstallBanner.default).toBeDefined();
+      expect(typeof InstallBanner.default).toBe('function');
+    });
+
+    it('should export AppShell component', () => {
+      const AppShell = require('@/components/pwa/AppShell');
+      expect(AppShell).toBeDefined();
+      expect(AppShell.default).toBeDefined();
