@@ -172,3 +172,30 @@ describe('PWA Components Basic Tests', () => {
       expect(typeof PWAErrorBoundary.PWAErrorBoundary).toBe('function');
     });
   });
+
+  describe('Utility Exports', () => {
+    it('should export usePWAUI hook', () => {
+      const usePWAUI = require('@/lib/hooks/usePWAUI');
+      expect(usePWAUI).toBeDefined();
+      expect(usePWAUI.usePWAUI).toBeDefined();
+      expect(typeof usePWAUI.usePWAUI).toBe('function');
+    });
+
+    it('should export PWA styles utilities', () => {
+      const pwaStyles = require('@/lib/pwa-styles');
+      expect(pwaStyles).toBeDefined();
+      expect(pwaStyles.injectPWAStyles).toBeDefined();
+      expect(pwaStyles.pwaClasses).toBeDefined();
+      expect(typeof pwaStyles.injectPWAStyles).toBe('function');
+    });
+  });
+
+  describe('PWA Configuration', () => {
+    it('should have PWA config functions', () => {
+      const pwaConfig = require('@/lib/pwa-config');
+      expect(pwaConfig.isPWAEnabled).toBeDefined();
+      expect(pwaConfig.isStandalone).toBeDefined();
+      expect(pwaConfig.canInstall).toBeDefined();
+      expect(pwaConfig.getInstallSource).toBeDefined();
+      expect(typeof pwaConfig.isPWAEnabled).toBe('function');
+      expect(typeof pwaConfig.isStandalone).toBe('function');
