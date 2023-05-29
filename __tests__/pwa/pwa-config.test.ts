@@ -344,3 +344,12 @@ describe('PWA Configuration', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import {
+  getPWAConfig,
+  getServiceWorkerConfig,
+  getPushNotificationConfig,
+  isPWAEnabled,

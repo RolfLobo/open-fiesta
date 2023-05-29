@@ -225,3 +225,20 @@ describe('PWA Components Basic Tests', () => {
     it('should have proper prop interfaces', () => {
       // Basic validation that components accept expected props
       const InstallPrompt = require('@/components/pwa/InstallPrompt').default;
+      const InstallBanner = require('@/components/pwa/InstallBanner').default;
+      
+      // These should not throw TypeScript compilation errors
+      expect(typeof InstallPrompt).toBe('function');
+      expect(typeof InstallBanner).toBe('function');
+    });
+  });
+
+  describe('Error Boundary', () => {
+    it('should export PWAErrorBoundary class component', () => {
+      const { PWAErrorBoundary } = require('@/components/pwa/PWAErrorBoundary');
+      expect(PWAErrorBoundary).toBeDefined();
+      expect(PWAErrorBoundary.prototype.render).toBeDefined();
+      expect(PWAErrorBoundary.prototype.componentDidCatch).toBeDefined();
+    });
+  });
+});
