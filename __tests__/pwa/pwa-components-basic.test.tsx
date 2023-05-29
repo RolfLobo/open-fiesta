@@ -199,3 +199,29 @@ describe('PWA Components Basic Tests', () => {
       expect(pwaConfig.getInstallSource).toBeDefined();
       expect(typeof pwaConfig.isPWAEnabled).toBe('function');
       expect(typeof pwaConfig.isStandalone).toBe('function');
+    });
+
+    it('should have PWA feature detection', () => {
+      const pwaConfig = require('@/lib/pwa-config');
+      expect(pwaConfig.PWAFeatures).toBeDefined();
+      expect(pwaConfig.PWAFeatures.serviceWorker).toBeDefined();
+      expect(pwaConfig.PWAFeatures.pushNotifications).toBeDefined();
+      expect(pwaConfig.PWAFeatures.standalone).toBeDefined();
+      expect(pwaConfig.PWAFeatures.installable).toBeDefined();
+    });
+  });
+
+  describe('Component Structure Validation', () => {
+    it('should have proper TypeScript interfaces', () => {
+      // Test that components can be imported without TypeScript errors
+      expect(() => {
+        require('@/components/pwa/InstallPrompt');
+        require('@/components/pwa/InstallBanner');
+        require('@/components/pwa/AppShell');
+        require('@/components/pwa/PWAManager');
+      }).not.toThrow();
+    });
+
+    it('should have proper prop interfaces', () => {
+      // Basic validation that components accept expected props
+      const InstallPrompt = require('@/components/pwa/InstallPrompt').default;
