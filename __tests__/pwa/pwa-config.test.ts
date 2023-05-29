@@ -353,3 +353,28 @@ import {
   getServiceWorkerConfig,
   getPushNotificationConfig,
   isPWAEnabled,
+  isServiceWorkerSupported,
+  isPushNotificationSupported,
+  isStandalone,
+  canInstall,
+  getInstallSource,
+  PWAFeatures,
+  DEFAULT_MANIFEST,
+} from '../../lib/pwa-config';
+
+// Mock environment variables
+const mockEnv = {
+  NEXT_PUBLIC_PWA_NAME: 'Test PWA App',
+  NEXT_PUBLIC_PWA_SHORT_NAME: 'Test App',
+  NEXT_PUBLIC_PWA_THEME_COLOR: '#ff0000',
+  NEXT_PUBLIC_PWA_BACKGROUND_COLOR: '#00ff00',
+  NEXT_PUBLIC_PWA_DISPLAY: 'fullscreen',
+  NEXT_PUBLIC_PWA_START_URL: '/test',
+  NEXT_PUBLIC_PWA_SCOPE: '/test',
+  NEXT_PUBLIC_PWA_DISABLE_DEV: 'false',
+  NEXT_PUBLIC_SW_UPDATE_CHECK_INTERVAL: '30000',
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY: 'test-public-key',
+  VAPID_PRIVATE_KEY: 'test-private-key',
+  VAPID_SUBJECT: 'mailto:test@example.com',
+  NODE_ENV: 'test',
+};
