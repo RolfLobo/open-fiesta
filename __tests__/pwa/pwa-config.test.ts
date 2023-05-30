@@ -378,3 +378,30 @@ const mockEnv = {
   VAPID_SUBJECT: 'mailto:test@example.com',
   NODE_ENV: 'test',
 };
+
+describe('PWA Configuration', () => {
+  let originalEnv: NodeJS.ProcessEnv;
+
+  beforeEach(() => {
+    originalEnv = process.env;
+    process.env = { ...originalEnv, ...mockEnv };
+    
+    // Reset window properties
+    delete (window as any).deferredPrompt;
+    delete (window as any).navigator;
+    
+    // Mock navigator
+    Object.defineProperty(window, 'navigator', {
+      value: {
+        serviceWorker: {},
+        standalone: false,
+      },
+      writable: true,
+    });
+
+    // Mock window.matchMedia
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation(query => ({
+        matches: false,
+        media: query,
