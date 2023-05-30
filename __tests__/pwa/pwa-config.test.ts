@@ -561,3 +561,29 @@ describe('PWA Configuration', () => {
       Object.defineProperty(document, 'referrer', {
         value: 'android-app://com.example.app',
         writable: true,
+      });
+      
+      expect(isStandalone()).toBe(true);
+    });
+
+    it('should return false when not in standalone mode', () => {
+      // Reset all standalone indicators
+      (window.matchMedia as jest.Mock).mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+      (window.navigator as any).standalone = false;
+      Object.defineProperty(document, 'referrer', {
+        value: 'https://example.com',
+        writable: true,
+      });
+      
+      expect(isStandalone()).toBe(false);
+    });
+  });
