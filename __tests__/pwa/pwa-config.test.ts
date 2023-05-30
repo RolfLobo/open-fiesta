@@ -587,3 +587,29 @@ describe('PWA Configuration', () => {
       expect(isStandalone()).toBe(false);
     });
   });
+
+  describe('canInstall', () => {
+    it('should return true when deferredPrompt is available', () => {
+      (window as any).deferredPrompt = {};
+      
+      expect(canInstall()).toBe(true);
+    });
+
+    it('should return false when deferredPrompt is not available', () => {
+      expect(canInstall()).toBe(false);
+    });
+  });
+
+  describe('getInstallSource', () => {
+    it('should return "installed" when app is standalone', () => {
+      (window.matchMedia as jest.Mock).mockImplementation(query => ({
+        matches: query === '(display-mode: standalone)',
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+      
