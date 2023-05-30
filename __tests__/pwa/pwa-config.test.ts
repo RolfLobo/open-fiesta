@@ -483,3 +483,29 @@ describe('PWA Configuration', () => {
         vapidPublicKey: 'test-public-key',
         vapidPrivateKey: 'test-private-key',
         vapidSubject: 'mailto:test@example.com',
+      });
+    });
+  });
+
+  describe('isPWAEnabled', () => {
+    it('should return true when PWA is enabled', () => {
+      expect(isPWAEnabled()).toBe(true);
+    });
+
+    it('should return false when disabled in development', () => {
+      process.env.NODE_ENV = 'development';
+      process.env.NEXT_PUBLIC_PWA_DISABLE_DEV = 'true';
+      
+      expect(isPWAEnabled()).toBe(false);
+    });
+
+    it('should return true in production even when disable dev is true', () => {
+      process.env.NODE_ENV = 'production';
+      process.env.NEXT_PUBLIC_PWA_DISABLE_DEV = 'true';
+      
+      expect(isPWAEnabled()).toBe(true);
+    });
+  });
+
+  describe('isServiceWorkerSupported', () => {
+    it('should return true when service worker is supported', () => {
