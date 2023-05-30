@@ -431,3 +431,29 @@ describe('PWA Configuration', () => {
         display: 'fullscreen',
         startUrl: '/test',
         scope: '/test',
+        disableInDev: false,
+      });
+    });
+
+    it('should return default values when environment variables are not set', () => {
+      // Clear PWA-specific env vars but keep NODE_ENV
+      const cleanEnv = { NODE_ENV: originalEnv.NODE_ENV };
+      process.env = cleanEnv;
+      
+      const config = getPWAConfig();
+      
+      expect(config).toEqual({
+        name: 'Open Fiesta - AI Chat Platform',
+        shortName: 'Open Fiesta',
+        themeColor: '#000000',
+        backgroundColor: '#000000',
+        display: 'standalone',
+        startUrl: '/',
+        scope: '/',
+        disableInDev: false, // Default when env var is not set
+      });
+    });
+  });
+
+  describe('getServiceWorkerConfig', () => {
+    it('should return service worker configuration', () => {
