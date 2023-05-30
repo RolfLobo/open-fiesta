@@ -457,3 +457,29 @@ describe('PWA Configuration', () => {
 
   describe('getServiceWorkerConfig', () => {
     it('should return service worker configuration', () => {
+      const config = getServiceWorkerConfig();
+      
+      expect(config).toEqual({
+        updateCheckInterval: 30000,
+        skipWaiting: true,
+        clientsClaim: true,
+      });
+    });
+
+    it('should return default update check interval when not set', () => {
+      delete process.env.NEXT_PUBLIC_SW_UPDATE_CHECK_INTERVAL;
+      
+      const config = getServiceWorkerConfig();
+      
+      expect(config.updateCheckInterval).toBe(60000);
+    });
+  });
+
+  describe('getPushNotificationConfig', () => {
+    it('should return push notification configuration', () => {
+      const config = getPushNotificationConfig();
+      
+      expect(config).toEqual({
+        vapidPublicKey: 'test-public-key',
+        vapidPrivateKey: 'test-private-key',
+        vapidSubject: 'mailto:test@example.com',
