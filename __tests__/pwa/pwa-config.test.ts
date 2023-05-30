@@ -405,3 +405,29 @@ describe('PWA Configuration', () => {
       value: jest.fn().mockImplementation(query => ({
         matches: false,
         media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  describe('getPWAConfig', () => {
+    it('should return configuration from environment variables', () => {
+      const config = getPWAConfig();
+      
+      expect(config).toEqual({
+        name: 'Test PWA App',
+        shortName: 'Test App',
+        themeColor: '#ff0000',
+        backgroundColor: '#00ff00',
+        display: 'fullscreen',
+        startUrl: '/test',
+        scope: '/test',
