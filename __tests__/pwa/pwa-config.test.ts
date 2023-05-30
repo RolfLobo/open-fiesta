@@ -509,3 +509,28 @@ describe('PWA Configuration', () => {
 
   describe('isServiceWorkerSupported', () => {
     it('should return true when service worker is supported', () => {
+      expect(isServiceWorkerSupported()).toBe(true);
+    });
+
+    it('should return false when service worker is not supported', () => {
+      delete (window.navigator as any).serviceWorker;
+      
+      expect(isServiceWorkerSupported()).toBe(false);
+    });
+  });
+
+  describe('isPushNotificationSupported', () => {
+    it('should return true when push notifications are supported', () => {
+      (window as any).PushManager = {};
+      (window as any).Notification = {};
+      
+      expect(isPushNotificationSupported()).toBe(true);
+    });
+
+    it('should return false when push notifications are not supported', () => {
+      delete (window as any).PushManager;
+      delete (window as any).Notification;
+      
+      expect(isPushNotificationSupported()).toBe(false);
+    });
+  });
