@@ -534,3 +534,30 @@ describe('PWA Configuration', () => {
       expect(isPushNotificationSupported()).toBe(false);
     });
   });
+
+  describe('isStandalone', () => {
+    it('should return true when app is in standalone mode', () => {
+      (window.matchMedia as jest.Mock).mockImplementation(query => ({
+        matches: query === '(display-mode: standalone)',
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+      
+      expect(isStandalone()).toBe(true);
+    });
+
+    it('should return true when navigator.standalone is true', () => {
+      (window.navigator as any).standalone = true;
+      
+      expect(isStandalone()).toBe(true);
+    });
+
+    it('should return true when referrer includes android-app', () => {
+      Object.defineProperty(document, 'referrer', {
+        value: 'android-app://com.example.app',
+        writable: true,
