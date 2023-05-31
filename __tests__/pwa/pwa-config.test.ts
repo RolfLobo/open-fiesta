@@ -639,3 +639,29 @@ describe('PWA Configuration', () => {
       
       expect(getInstallSource()).toBe('installable');
     });
+
+    it('should return "browser" when app is in browser mode', () => {
+      // Reset all indicators
+      (window.matchMedia as jest.Mock).mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+      (window.navigator as any).standalone = false;
+      Object.defineProperty(document, 'referrer', {
+        value: 'https://example.com',
+        writable: true,
+      });
+      delete (window as any).deferredPrompt;
+      
+      expect(getInstallSource()).toBe('browser');
+    });
+  });
+
+  describe('PWAFeatures', () => {
+    it('should provide feature detection functions', () => {
