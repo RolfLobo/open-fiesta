@@ -613,3 +613,29 @@ describe('PWA Configuration', () => {
         dispatchEvent: jest.fn(),
       }));
       
+      expect(getInstallSource()).toBe('installed');
+    });
+
+    it('should return "installable" when app can be installed', () => {
+      // Reset standalone mode first
+      (window.matchMedia as jest.Mock).mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+      (window.navigator as any).standalone = false;
+      Object.defineProperty(document, 'referrer', {
+        value: 'https://example.com',
+        writable: true,
+      });
+      
+      // Then set deferredPrompt
+      (window as any).deferredPrompt = {};
+      
+      expect(getInstallSource()).toBe('installable');
+    });
