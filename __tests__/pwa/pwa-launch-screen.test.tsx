@@ -158,3 +158,16 @@ describe('PWALaunchScreen', () => {
     mockThemeContext.theme.mode = 'dark';
   });
 });
+import React from 'react';
+import { render, screen, waitFor, act } from '@testing-library/react';
+import { jest } from '@jest/globals';
+
+// Create a mock theme context
+const mockThemeContext = {
+  theme: {
+    mode: 'dark' as const,
+    accent: 'crimson' as const,
+    font: 'geist' as const,
+    background: 'gradient' as const,
+    badgePair: 'gold-green' as const,
+    chatInputStyle: 'default' as const,
