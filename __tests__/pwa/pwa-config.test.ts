@@ -665,3 +665,28 @@ describe('PWA Configuration', () => {
 
   describe('PWAFeatures', () => {
     it('should provide feature detection functions', () => {
+      expect(typeof PWAFeatures.serviceWorker).toBe('function');
+      expect(typeof PWAFeatures.pushNotifications).toBe('function');
+      expect(typeof PWAFeatures.standalone).toBe('function');
+      expect(typeof PWAFeatures.installable).toBe('function');
+    });
+  });
+
+  describe('DEFAULT_MANIFEST', () => {
+    it('should provide default manifest configuration', () => {
+      expect(DEFAULT_MANIFEST).toEqual({
+        name: 'Open Fiesta - AI Chat Platform',
+        short_name: 'Open Fiesta',
+        description: 'A powerful AI chat platform supporting multiple models with offline capabilities',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#000000',
+        theme_color: '#000000',
+        orientation: 'portrait-primary',
+        scope: '/',
+        lang: 'en',
+        categories: ['productivity', 'utilities', 'education'],
+      });
+    });
+  });
+});

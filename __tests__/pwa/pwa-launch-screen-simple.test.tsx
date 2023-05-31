@@ -38,3 +38,4 @@ describe('PWALaunchScreen Simple Tests', () => {
     expect(isStandalone()).toBe(true);
   });
 });
+import { jest } from '@jest/globals';
