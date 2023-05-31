@@ -39,3 +39,29 @@ describe('PWALaunchScreen Simple Tests', () => {
   });
 });
 import { jest } from '@jest/globals';
+
+// Simple test to verify PWA Launch Screen functionality
+describe('PWALaunchScreen Simple Tests', () => {
+  it('should export PWALaunchScreen component', () => {
+    // Mock the theme context to avoid provider issues
+    jest.doMock('@/lib/themeContext', () => ({
+      useTheme: () => ({
+        theme: { mode: 'dark' },
+      }),
+    }));
+
+    jest.doMock('@/lib/pwa-config', () => ({
+      isStandalone: () => true,
+    }));
+
+    // Test that the component can be imported
+    const PWALaunchScreen = require('@/components/pwa/PWALaunchScreen');
+    expect(PWALaunchScreen).toBeDefined();
+    expect(PWALaunchScreen.default).toBeDefined();
+  });
+
+  it('should have correct component structure', () => {
+    // Test component props interface
+    const componentFile = require('@/components/pwa/PWALaunchScreen');
+    expect(typeof componentFile.default).toBe('function');
+  });
