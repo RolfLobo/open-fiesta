@@ -223,3 +223,29 @@ describe('PWALaunchScreen', () => {
 
   it('should render with custom title and subtitle', () => {
     render(
+      <PWALaunchScreen 
+        title="Custom App" 
+        subtitle="Custom Subtitle" 
+      />
+    );
+
+    expect(screen.getByText('Custom App')).toBeInTheDocument();
+    expect(screen.getByText('Custom Subtitle')).toBeInTheDocument();
+  });
+
+  it('should animate progress bar', async () => {
+    render(<PWALaunchScreen duration={1000} />);
+
+    // Initially should show "Initializing..."
+    expect(screen.getByText('Initializing...')).toBeInTheDocument();
+
+    // Advance time to show different loading states
+    jest.advanceTimersByTime(300);
+    await waitFor(() => {
+      expect(screen.getByText('Loading components...')).toBeInTheDocument();
+    });
+
+    jest.advanceTimersByTime(300);
+    await waitFor(() => {
+      expect(screen.getByText('Almost ready...')).toBeInTheDocument();
+    });
