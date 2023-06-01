@@ -171,3 +171,29 @@ const mockThemeContext = {
     background: 'gradient' as const,
     badgePair: 'gold-green' as const,
     chatInputStyle: 'default' as const,
+  },
+  setMode: jest.fn(),
+  setAccent: jest.fn(),
+  setFont: jest.fn(),
+  setBackground: jest.fn(),
+  setBadgePair: jest.fn(),
+  toggleMode: jest.fn(),
+  resetTheme: jest.fn(),
+  updateTheme: jest.fn(),
+  isLoading: false,
+  isInitialized: true,
+};
+
+// Mock the entire theme context module
+jest.mock('@/lib/themeContext', () => {
+  const React = require('react');
+  const ThemeContext = React.createContext(null);
+  
+  return {
+    useTheme: () => mockThemeContext,
+    ThemeProvider: ({ children }: { children: React.ReactNode }) => 
+      React.createElement(ThemeContext.Provider, { value: mockThemeContext }, children),
+  };
+});
+
+// Mock PWA config
