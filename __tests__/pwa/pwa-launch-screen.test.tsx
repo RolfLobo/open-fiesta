@@ -197,3 +197,29 @@ jest.mock('@/lib/themeContext', () => {
 });
 
 // Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: jest.fn(() => true),
+}));
+
+// Import the actual component after mocking dependencies
+import PWALaunchScreen from '@/components/pwa/PWALaunchScreen';
+
+describe('PWALaunchScreen', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should render launch screen with default props', () => {
+    render(<PWALaunchScreen />);
+
+    expect(screen.getByText('Open Fiesta')).toBeInTheDocument();
+    expect(screen.getByText('AI Chat Platform')).toBeInTheDocument();
+  });
+
+  it('should render with custom title and subtitle', () => {
+    render(
