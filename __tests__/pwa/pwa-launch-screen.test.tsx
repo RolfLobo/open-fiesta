@@ -249,3 +249,29 @@ describe('PWALaunchScreen', () => {
     await waitFor(() => {
       expect(screen.getByText('Almost ready...')).toBeInTheDocument();
     });
+
+    jest.advanceTimersByTime(400);
+    await waitFor(() => {
+      expect(screen.getByText('Welcome!')).toBeInTheDocument();
+    });
+  });
+
+  it('should call onComplete after duration', async () => {
+    const onComplete = jest.fn();
+    render(<PWALaunchScreen duration={1000} onComplete={onComplete} />);
+
+    // Fast-forward past the duration + fade out time
+    jest.advanceTimersByTime(1300);
+
+    await waitFor(() => {
+      expect(onComplete).toHaveBeenCalled();
+    });
+  });
+
+  it('should not render when not in standalone mode', () => {
+    const { isStandalone } = require('@/lib/pwa-config');
+    isStandalone.mockReturnValue(false);
+
+    const { container } = render(<PWALaunchScreen />);
+    expect(container.firstChild).toBeNull();
+  });
