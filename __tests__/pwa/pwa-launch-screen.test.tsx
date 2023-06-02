@@ -275,3 +275,28 @@ describe('PWALaunchScreen', () => {
     const { container } = render(<PWALaunchScreen />);
     expect(container.firstChild).toBeNull();
   });
+
+  it('should fade out after duration', async () => {
+    render(<PWALaunchScreen duration={1000} />);
+
+    const launchScreen = screen.getByText('Open Fiesta').closest('div');
+    expect(launchScreen).toHaveClass('opacity-100');
+
+    // Fast-forward to when it should start fading
+    jest.advanceTimersByTime(1000);
+
+    await waitFor(() => {
+      expect(launchScreen).toHaveClass('opacity-0');
+    });
+  });
+
+  it('should render logo when logoSrc is provided', () => {
+    render(<PWALaunchScreen logoSrc="/test-logo.svg" />);
+
+    const logo = screen.getByAltText('Open Fiesta');
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveAttribute('src', '/test-logo.svg');
+  });
+
+  it('should apply custom className', () => {
+    render(<PWALaunchScreen className="custom-launch-screen" />);
