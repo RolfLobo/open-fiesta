@@ -377,3 +377,29 @@ import PWAManager from '@/components/pwa/PWAManager';
 jest.mock('@/components/pwa/StandaloneDetector', () => ({
   StandaloneProvider: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="standalone-provider">{children}</div>
+  ),
+}));
+
+jest.mock('@/components/pwa/InstallPrompt', () => {
+  return function MockInstallPrompt({ onInstall, onDismiss }: any) {
+    return (
+      <div data-testid="install-prompt">
+        <button onClick={onInstall}>Install</button>
+        <button onClick={onDismiss}>Dismiss</button>
+      </div>
+    );
+  };
+});
+
+jest.mock('@/components/pwa/InstallBanner', () => {
+  return function MockInstallBanner({ onInstall, onDismiss, variant }: any) {
+    return (
+      <div data-testid="install-banner" data-variant={variant}>
+        <button onClick={onInstall}>Install Banner</button>
+        <button onClick={onDismiss}>Dismiss Banner</button>
+      </div>
+    );
+  };
+});
+
+jest.mock('@/components/pwa/PWALaunchScreen', () => {
