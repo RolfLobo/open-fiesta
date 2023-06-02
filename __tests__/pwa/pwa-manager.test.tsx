@@ -368,3 +368,12 @@ describe('PWAManager', () => {
     });
   });
 });
+import React from 'react';
+import { render, screen, waitFor, act } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import PWAManager from '@/components/pwa/PWAManager';
+
+// Mock all PWA components
+jest.mock('@/components/pwa/StandaloneDetector', () => ({
+  StandaloneProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="standalone-provider">{children}</div>

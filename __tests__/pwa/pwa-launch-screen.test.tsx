@@ -300,3 +300,21 @@ describe('PWALaunchScreen', () => {
 
   it('should apply custom className', () => {
     render(<PWALaunchScreen className="custom-launch-screen" />);
+
+    const launchScreen = screen.getByText('Open Fiesta').closest('div');
+    expect(launchScreen).toHaveClass('custom-launch-screen');
+  });
+
+  it('should handle light theme', () => {
+    // Temporarily override the theme for this test
+    mockThemeContext.theme.mode = 'light';
+
+    render(<PWALaunchScreen />);
+
+    // Should render without errors in light mode
+    expect(screen.getByText('Open Fiesta')).toBeInTheDocument();
+    
+    // Reset to dark mode for other tests
+    mockThemeContext.theme.mode = 'dark';
+  });
+});
