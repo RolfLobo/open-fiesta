@@ -455,3 +455,28 @@ describe('PWAManager', () => {
 
     expect(screen.getByTestId('app-content')).toBeInTheDocument();
     expect(screen.getByTestId('standalone-provider')).toBeInTheDocument();
+  });
+
+  it('should not render PWA components when PWA is disabled', async () => {
+    const { isPWAEnabled } = await import('@/lib/pwa-config');
+    (isPWAEnabled as jest.Mock).mockReturnValue(false);
+
+    render(
+      <PWAManager>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.getByTestId('app-content')).toBeInTheDocument();
+    expect(screen.queryByTestId('standalone-provider')).not.toBeInTheDocument();
+  });
+
+  it('should show launch screen in standalone mode', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    render(
+      <PWAManager showLaunchScreen={true}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
