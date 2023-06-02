@@ -429,3 +429,29 @@ jest.mock('@/lib/pwa-config', () => ({
 jest.mock('@/lib/pwa-styles', () => ({
   injectPWAStyles: jest.fn(),
 }));
+
+// Mock gtag
+Object.defineProperty(window, 'gtag', {
+  value: jest.fn(),
+  writable: true,
+});
+
+describe('PWAManager', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should render children when PWA is enabled', async () => {
+    render(
+      <PWAManager>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.getByTestId('app-content')).toBeInTheDocument();
+    expect(screen.getByTestId('standalone-provider')).toBeInTheDocument();
