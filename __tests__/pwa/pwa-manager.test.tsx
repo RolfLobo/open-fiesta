@@ -480,3 +480,30 @@ describe('PWAManager', () => {
         <div data-testid="app-content">App Content</div>
       </PWAManager>
     );
+
+    expect(screen.getByTestId('pwa-launch-screen')).toBeInTheDocument();
+  });
+
+  it('should hide launch screen after duration', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    render(
+      <PWAManager showLaunchScreen={true} launchScreenDuration={1000}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.getByTestId('pwa-launch-screen')).toBeInTheDocument();
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('pwa-launch-screen')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should show install prompt after delay when not standalone', async () => {
