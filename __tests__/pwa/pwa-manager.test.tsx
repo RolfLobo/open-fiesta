@@ -533,3 +533,28 @@ describe('PWAManager', () => {
     );
 
     expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('install-banner')).toBeInTheDocument();
+    });
+  });
+
+  it('should not show install components in standalone mode', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    render(
+      <PWAManager showInstallPrompt={true} showInstallBanner={true}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
