@@ -507,3 +507,29 @@ describe('PWAManager', () => {
   });
 
   it('should show install prompt after delay when not standalone', async () => {
+    render(
+      <PWAManager showInstallPrompt={true} installPromptDelay={2000}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.queryByTestId('install-prompt')).not.toBeInTheDocument();
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('install-prompt')).toBeInTheDocument();
+    });
+  });
+
+  it('should show install banner after delay when not standalone', async () => {
+    render(
+      <PWAManager showInstallBanner={true}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
