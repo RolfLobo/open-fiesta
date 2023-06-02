@@ -403,3 +403,29 @@ jest.mock('@/components/pwa/InstallBanner', () => {
 });
 
 jest.mock('@/components/pwa/PWALaunchScreen', () => {
+  return function MockPWALaunchScreen({ onComplete, duration }: any) {
+    React.useEffect(() => {
+      const timer = setTimeout(() => {
+        onComplete?.();
+      }, duration || 100);
+      return () => clearTimeout(timer);
+    }, [onComplete, duration]);
+    
+    return <div data-testid="pwa-launch-screen">Launch Screen</div>;
+  };
+});
+
+jest.mock('@/components/pwa/ServiceWorkerUpdate', () => ({
+  ServiceWorkerUpdate: () => <div data-testid="service-worker-update">SW Update</div>,
+}));
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isPWAEnabled: jest.fn(() => true),
+  isStandalone: jest.fn(() => false),
+}));
+
+// Mock PWA styles
+jest.mock('@/lib/pwa-styles', () => ({
+  injectPWAStyles: jest.fn(),
+}));
