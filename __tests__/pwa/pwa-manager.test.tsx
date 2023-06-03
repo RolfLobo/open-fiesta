@@ -636,3 +636,30 @@ describe('PWAManager', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('install-prompt')).toBeInTheDocument();
+      expect(screen.getByTestId('install-banner')).toBeInTheDocument();
+    });
+
+    // Dismiss prompt
+    const dismissPromptButton = screen.getByText('Dismiss');
+    act(() => {
+      dismissPromptButton.click();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-prompt')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should render banner with correct variant', async () => {
+    render(
+      <PWAManager showInstallBanner={true} bannerVariant="bottom">
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward to show banner
+    act(() => {
