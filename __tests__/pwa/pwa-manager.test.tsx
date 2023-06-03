@@ -611,3 +611,28 @@ describe('PWAManager', () => {
     });
 
     await waitFor(() => {
+      expect(screen.getByTestId('install-banner')).toBeInTheDocument();
+    });
+
+    // Click install
+    const installButton = screen.getByText('Install Banner');
+    act(() => {
+      installButton.click();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should handle dismissal of install components', async () => {
+    render(
+      <PWAManager showInstallPrompt={true} showInstallBanner={true} installPromptDelay={100}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward to show components
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
