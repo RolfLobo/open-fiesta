@@ -663,3 +663,29 @@ describe('PWAManager', () => {
 
     // Fast-forward to show banner
     act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    await waitFor(() => {
+      const banner = screen.getByTestId('install-banner');
+      expect(banner).toHaveAttribute('data-variant', 'bottom');
+    });
+  });
+
+  it('should inject PWA styles on mount', () => {
+    const { injectPWAStyles } = require('@/lib/pwa-styles');
+    
+    render(
+      <PWAManager>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(injectPWAStyles).toHaveBeenCalled();
+  });
+
+  it('should always render ServiceWorkerUpdate component', () => {
+    render(
+      <PWAManager>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
