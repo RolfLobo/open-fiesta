@@ -558,3 +558,30 @@ describe('PWAManager', () => {
     act(() => {
       jest.advanceTimersByTime(5000);
     });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-prompt')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should handle install from prompt', async () => {
+    render(
+      <PWAManager showInstallPrompt={true} installPromptDelay={100}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward to show prompt
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('install-prompt')).toBeInTheDocument();
+    });
+
+    // Click install
+    const installButton = screen.getByText('Install');
+    act(() => {
+      installButton.click();
