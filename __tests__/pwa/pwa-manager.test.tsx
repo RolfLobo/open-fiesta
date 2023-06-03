@@ -585,3 +585,29 @@ describe('PWAManager', () => {
     const installButton = screen.getByText('Install');
     act(() => {
       installButton.click();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-prompt')).not.toBeInTheDocument();
+    });
+
+    // Should track installation
+    expect(window.gtag).toHaveBeenCalledWith('event', 'pwa_install_success', {
+      event_category: 'PWA',
+      event_label: 'user_initiated',
+    });
+  });
+
+  it('should handle install from banner', async () => {
+    render(
+      <PWAManager showInstallBanner={true}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward to show banner
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    await waitFor(() => {
