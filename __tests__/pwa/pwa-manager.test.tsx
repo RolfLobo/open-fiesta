@@ -715,3 +715,26 @@ describe('PWAManager', () => {
     act(() => {
       jest.advanceTimersByTime(5000);
     });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-prompt')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should disable install banner when showInstallBanner is false', async () => {
+    render(
+      <PWAManager showInstallBanner={false}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('install-banner')).not.toBeInTheDocument();
+    });
+  });
+});

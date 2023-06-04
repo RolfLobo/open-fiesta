@@ -228,3 +228,5 @@ describe('PWA Styles', () => {
     });
   });
 });
+import { jest } from '@jest/globals';
+import { injectPWAStyles, pwaClasses, PWA_CSS_VARIABLES, PWA_BASE_STYLES } from '@/lib/pwa-styles';
