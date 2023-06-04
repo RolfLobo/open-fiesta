@@ -282,3 +282,30 @@ describe('PWA Styles', () => {
     it('should not inject styles if they already exist', () => {
       const existingStyle = { id: 'pwa-styles' };
       mockGetElementById.mockReturnValue(existingStyle);
+
+      injectPWAStyles();
+
+      expect(mockCreateElement).not.toHaveBeenCalled();
+      expect(mockAppendChild).not.toHaveBeenCalled();
+    });
+
+    it('should handle server-side rendering gracefully', () => {
+      // Mock document as undefined (SSR environment)
+      const originalDocument = global.document;
+      (global as any).document = undefined;
+
+      expect(() => {
+        injectPWAStyles();
+      }).not.toThrow();
+
+      // Restore document
+      (global as any).document = originalDocument;
+    });
+  });
+
+  describe('PWA_CSS_VARIABLES', () => {
+    it('should contain safe area inset variables', () => {
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-top');
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-bottom');
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-left');
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-right');
