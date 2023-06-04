@@ -689,3 +689,29 @@ describe('PWAManager', () => {
       <PWAManager>
         <div data-testid="app-content">App Content</div>
       </PWAManager>
+    );
+
+    expect(screen.getByTestId('service-worker-update')).toBeInTheDocument();
+  });
+
+  it('should disable launch screen when showLaunchScreen is false', () => {
+    render(
+      <PWAManager showLaunchScreen={false}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    expect(screen.queryByTestId('pwa-launch-screen')).not.toBeInTheDocument();
+  });
+
+  it('should disable install prompt when showInstallPrompt is false', async () => {
+    render(
+      <PWAManager showInstallPrompt={false} installPromptDelay={100}>
+        <div data-testid="app-content">App Content</div>
+      </PWAManager>
+    );
+
+    // Fast-forward time
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
