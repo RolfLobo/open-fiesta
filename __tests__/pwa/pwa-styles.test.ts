@@ -230,3 +230,30 @@ describe('PWA Styles', () => {
 });
 import { jest } from '@jest/globals';
 import { injectPWAStyles, pwaClasses, PWA_CSS_VARIABLES, PWA_BASE_STYLES } from '@/lib/pwa-styles';
+
+// Mock document
+const mockAppendChild = jest.fn();
+const mockGetElementById = jest.fn();
+const mockCreateElement = jest.fn(() => ({
+  id: '',
+  textContent: '',
+}));
+
+Object.defineProperty(document, 'head', {
+  value: {
+    appendChild: mockAppendChild,
+  },
+  writable: true,
+});
+
+Object.defineProperty(document, 'getElementById', {
+  value: mockGetElementById,
+  writable: true,
+});
+
+Object.defineProperty(document, 'createElement', {
+  value: mockCreateElement,
+  writable: true,
+});
+
+describe('PWA Styles', () => {
