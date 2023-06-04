@@ -334,3 +334,30 @@ describe('PWA Styles', () => {
       expect(PWA_BASE_STYLES).toContain('.pwa-display-minimal-ui');
       expect(PWA_BASE_STYLES).toContain('.pwa-display-browser');
     });
+
+    it('should contain orientation styles', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-orientation-portrait');
+      expect(PWA_BASE_STYLES).toContain('.pwa-orientation-landscape');
+    });
+
+    it('should contain app shell styles', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-app-shell');
+      expect(PWA_BASE_STYLES).toContain('.pwa-app-shell-header');
+      expect(PWA_BASE_STYLES).toContain('.pwa-app-shell-main');
+      expect(PWA_BASE_STYLES).toContain('.pwa-app-shell-footer');
+    });
+
+    it('should contain animation keyframes', () => {
+      expect(PWA_BASE_STYLES).toContain('@keyframes pwa-slide-up');
+      expect(PWA_BASE_STYLES).toContain('@keyframes pwa-slide-down');
+      expect(PWA_BASE_STYLES).toContain('@keyframes pwa-fade-in');
+      expect(PWA_BASE_STYLES).toContain('@keyframes pwa-scale-in');
+    });
+
+    it('should contain safe area utilities', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-top');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-bottom');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-left');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-right');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-x');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-y');
