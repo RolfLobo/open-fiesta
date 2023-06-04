@@ -257,3 +257,28 @@ Object.defineProperty(document, 'createElement', {
 });
 
 describe('PWA Styles', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('injectPWAStyles', () => {
+    it('should inject PWA styles into document head', () => {
+      mockGetElementById.mockReturnValue(null);
+      
+      const mockStyleElement = {
+        id: '',
+        textContent: '',
+      };
+      mockCreateElement.mockReturnValue(mockStyleElement);
+
+      injectPWAStyles();
+
+      expect(mockCreateElement).toHaveBeenCalledWith('style');
+      expect(mockStyleElement.id).toBe('pwa-styles');
+      expect(mockStyleElement.textContent).toBe(PWA_CSS_VARIABLES + PWA_BASE_STYLES);
+      expect(mockAppendChild).toHaveBeenCalledWith(mockStyleElement);
+    });
+
+    it('should not inject styles if they already exist', () => {
+      const existingStyle = { id: 'pwa-styles' };
+      mockGetElementById.mockReturnValue(existingStyle);
