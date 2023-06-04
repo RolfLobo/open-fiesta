@@ -309,3 +309,28 @@ describe('PWA Styles', () => {
       expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-bottom');
       expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-left');
       expect(PWA_CSS_VARIABLES).toContain('--pwa-safe-area-inset-right');
+    });
+
+    it('should contain viewport variables', () => {
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-viewport-height');
+      expect(PWA_CSS_VARIABLES).toContain('--pwa-viewport-width');
+    });
+
+    it('should support dynamic viewport units', () => {
+      expect(PWA_CSS_VARIABLES).toContain('100dvh');
+      expect(PWA_CSS_VARIABLES).toContain('100dvw');
+    });
+  });
+
+  describe('PWA_BASE_STYLES', () => {
+    it('should contain standalone mode styles', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-standalone');
+      expect(PWA_BASE_STYLES).toContain('overscroll-behavior: none');
+    });
+
+    it('should contain display mode styles', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-display-standalone');
+      expect(PWA_BASE_STYLES).toContain('.pwa-display-fullscreen');
+      expect(PWA_BASE_STYLES).toContain('.pwa-display-minimal-ui');
+      expect(PWA_BASE_STYLES).toContain('.pwa-display-browser');
+    });
