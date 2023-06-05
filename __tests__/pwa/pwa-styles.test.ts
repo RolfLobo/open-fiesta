@@ -387,3 +387,29 @@ describe('PWA Styles', () => {
   describe('pwaClasses', () => {
     it('should export all PWA class names', () => {
       expect(pwaClasses.standalone).toBe('pwa-standalone');
+      expect(pwaClasses.appShell).toBe('pwa-app-shell');
+      expect(pwaClasses.launchScreen).toBe('pwa-launch-screen');
+      expect(pwaClasses.installPrompt).toBe('pwa-install-prompt');
+      expect(pwaClasses.installBanner).toBe('pwa-install-banner');
+    });
+
+    it('should export safe area class names', () => {
+      expect(pwaClasses.safeTop).toBe('pwa-safe-top');
+      expect(pwaClasses.safeBottom).toBe('pwa-safe-bottom');
+      expect(pwaClasses.safeLeft).toBe('pwa-safe-left');
+      expect(pwaClasses.safeRight).toBe('pwa-safe-right');
+      expect(pwaClasses.safeX).toBe('pwa-safe-x');
+      expect(pwaClasses.safeY).toBe('pwa-safe-y');
+      expect(pwaClasses.safeAll).toBe('pwa-safe-all');
+    });
+
+    it('should export viewport class names', () => {
+      expect(pwaClasses.hScreen).toBe('pwa-h-screen');
+      expect(pwaClasses.minHScreen).toBe('pwa-min-h-screen');
+      expect(pwaClasses.maxHScreen).toBe('pwa-max-h-screen');
+      expect(pwaClasses.wScreen).toBe('pwa-w-screen');
+    });
+
+    it('should export animation class names', () => {
+      expect(pwaClasses.animateSlideUp).toBe('pwa-animate-slide-up');
+      expect(pwaClasses.animateSlideDown).toBe('pwa-animate-slide-down');
