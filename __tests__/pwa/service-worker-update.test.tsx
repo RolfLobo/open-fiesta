@@ -329,3 +329,29 @@ describe('ServiceWorkerUpdate Component', () => {
 
     expect(screen.getByText(/A new version of the app is ready/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Later' })).toBeInTheDocument();
+  });
+
+  it('should handle update button click', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Trigger update available
+    act(() => {
+      const updateEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    const updateButton = screen.getByRole('button', { name: 'Update' });
+    fireEvent.click(updateButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Updating...')).toBeInTheDocument();
+    });
+
+    expect(mockOnUpdate).toHaveBeenCalled();
