@@ -361,3 +361,29 @@ describe('PWA Styles', () => {
       expect(PWA_BASE_STYLES).toContain('.pwa-safe-right');
       expect(PWA_BASE_STYLES).toContain('.pwa-safe-x');
       expect(PWA_BASE_STYLES).toContain('.pwa-safe-y');
+      expect(PWA_BASE_STYLES).toContain('.pwa-safe-all');
+    });
+
+    it('should contain viewport utilities', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-h-screen');
+      expect(PWA_BASE_STYLES).toContain('.pwa-min-h-screen');
+      expect(PWA_BASE_STYLES).toContain('.pwa-max-h-screen');
+      expect(PWA_BASE_STYLES).toContain('.pwa-w-screen');
+    });
+
+    it('should contain touch optimizations', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-touch-manipulation');
+      expect(PWA_BASE_STYLES).toContain('.pwa-no-select');
+      expect(PWA_BASE_STYLES).toContain('.pwa-no-tap-highlight');
+    });
+
+    it('should contain performance optimizations', () => {
+      expect(PWA_BASE_STYLES).toContain('.pwa-will-change-transform');
+      expect(PWA_BASE_STYLES).toContain('.pwa-will-change-opacity');
+      expect(PWA_BASE_STYLES).toContain('.pwa-gpu-accelerated');
+    });
+  });
+
+  describe('pwaClasses', () => {
+    it('should export all PWA class names', () => {
+      expect(pwaClasses.standalone).toBe('pwa-standalone');
