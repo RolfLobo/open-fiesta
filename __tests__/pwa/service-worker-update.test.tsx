@@ -303,3 +303,29 @@ describe('ServiceWorkerUpdate Component', () => {
   });
 
   afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should not render when no update is available', () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    expect(screen.queryByText('App Update Available')).not.toBeInTheDocument();
+  });
+
+  it('should render when update is available', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Simulate service worker update event
+    act(() => {
+      const updateEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(/A new version of the app is ready/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument();
