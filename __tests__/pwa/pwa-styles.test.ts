@@ -413,3 +413,29 @@ describe('PWA Styles', () => {
     it('should export animation class names', () => {
       expect(pwaClasses.animateSlideUp).toBe('pwa-animate-slide-up');
       expect(pwaClasses.animateSlideDown).toBe('pwa-animate-slide-down');
+      expect(pwaClasses.animateFadeIn).toBe('pwa-animate-fade-in');
+      expect(pwaClasses.animateScaleIn).toBe('pwa-animate-scale-in');
+    });
+
+    it('should export touch optimization class names', () => {
+      expect(pwaClasses.touchManipulation).toBe('pwa-touch-manipulation');
+      expect(pwaClasses.noSelect).toBe('pwa-no-select');
+      expect(pwaClasses.noTapHighlight).toBe('pwa-no-tap-highlight');
+    });
+
+    it('should export performance optimization class names', () => {
+      expect(pwaClasses.willChangeTransform).toBe('pwa-will-change-transform');
+      expect(pwaClasses.willChangeOpacity).toBe('pwa-will-change-opacity');
+      expect(pwaClasses.gpuAccelerated).toBe('pwa-gpu-accelerated');
+    });
+  });
+
+  describe('CSS content validation', () => {
+    it('should have valid CSS syntax in variables', () => {
+      // Basic validation - should not contain syntax errors
+      expect(PWA_CSS_VARIABLES).not.toContain(';;');
+      expect(PWA_CSS_VARIABLES).toMatch(/:root\s*{/);
+      expect(PWA_CSS_VARIABLES).toContain('}');
+    });
+
+    it('should have valid CSS syntax in base styles', () => {
