@@ -439,3 +439,22 @@ describe('PWA Styles', () => {
     });
 
     it('should have valid CSS syntax in base styles', () => {
+      // Basic validation - should not contain syntax errors
+      expect(PWA_BASE_STYLES).not.toContain(';;');
+      expect(PWA_BASE_STYLES).toMatch(/\.[a-zA-Z-]+\s*{/);
+      expect(PWA_BASE_STYLES).toContain('}');
+    });
+
+    it('should use CSS custom properties correctly', () => {
+      expect(PWA_CSS_VARIABLES).toMatch(/--[a-zA-Z-]+:/);
+      expect(PWA_BASE_STYLES).toMatch(/var\(--[a-zA-Z-]+\)/);
+    });
+
+    it('should use proper CSS selectors', () => {
+      expect(PWA_BASE_STYLES).toMatch(/\.[a-zA-Z-]+/); // Class selectors
+      expect(PWA_BASE_STYLES).toMatch(/@keyframes [a-zA-Z-]+/); // Keyframe selectors
+      // Note: @supports is in CSS_VARIABLES, not BASE_STYLES
+      expect(PWA_CSS_VARIABLES).toMatch(/@supports/); // Feature queries
+    });
+  });
+});
