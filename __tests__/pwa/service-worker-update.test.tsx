@@ -277,3 +277,29 @@ describe('ServiceWorkerUpdate Component', () => {
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ServiceWorkerUpdate } from '../../components/pwa/ServiceWorkerUpdate';
+
+// Mock the service worker manager
+jest.mock('../../lib/service-worker', () => ({
+  getServiceWorkerManager: () => ({
+    skipWaiting: jest.fn().mockResolvedValue(undefined),
+  }),
+}));
+
+describe('ServiceWorkerUpdate Component', () => {
+  let mockOnUpdate: jest.Mock;
+  let mockOnDismiss: jest.Mock;
+
+  beforeEach(() => {
+    mockOnUpdate = jest.fn();
+    mockOnDismiss = jest.fn();
+
+    // Mock window.location.reload
+    Object.defineProperty(window, 'location', {
+      value: {
+        reload: jest.fn(),
+      },
+      writable: true,
+    });
+  });
+
+  afterEach(() => {
