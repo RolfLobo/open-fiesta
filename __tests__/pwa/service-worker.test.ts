@@ -367,3 +367,29 @@ jest.mock('../../lib/pwa-config', () => ({
     clientsClaim: true,
   }),
   isPWAEnabled: () => true,
+}));
+
+describe('Service Worker Manager', () => {
+  let mockRegistration: Partial<ServiceWorkerRegistration>;
+  let mockServiceWorker: Partial<ServiceWorker>;
+
+  beforeEach(() => {
+    // Reset mocks
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+    jest.useFakeTimers();
+
+    // Mock service worker
+    mockServiceWorker = {
+      state: 'activated',
+      postMessage: jest.fn(),
+      addEventListener: jest.fn(),
+    };
+
+    // Mock registration
+    mockRegistration = {
+      active: mockServiceWorker as ServiceWorker,
+      waiting: null,
+      installing: null,
+      update: jest.fn().mockResolvedValue(undefined),
+      unregister: jest.fn().mockResolvedValue(true),
