@@ -537,3 +537,7 @@ describe('ServiceWorkerUpdate Component', () => {
 
     await waitFor(() => {
       const updatingButton = screen.getByRole('button', { name: 'Updating...' });
+      expect(updatingButton).toBeDisabled();
+    });
+  });
+});

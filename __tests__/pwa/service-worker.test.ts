@@ -346,3 +346,24 @@ describe('Service Worker Manager', () => {
     });
   });
 });
+/**
+ * @jest-environment jsdom
+ */
+
+import {
+  getServiceWorkerManager,
+  registerServiceWorker,
+  unregisterServiceWorker,
+  isServiceWorkerActive,
+  getServiceWorkerStatus,
+} from '../../lib/service-worker';
+import { getCacheManager } from '../../lib/cache-strategies';
+
+// Mock the PWA config
+jest.mock('../../lib/pwa-config', () => ({
+  getServiceWorkerConfig: () => ({
+    updateCheckInterval: 1000, // Short interval for testing
+    skipWaiting: true,
+    clientsClaim: true,
+  }),
+  isPWAEnabled: () => true,
