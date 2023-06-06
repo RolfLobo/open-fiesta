@@ -511,3 +511,29 @@ describe('ServiceWorkerUpdate Component', () => {
         detail: { type: 'available' },
       });
       window.dispatchEvent(updateEvent2);
+    });
+
+    // Should still show the update notification
+    expect(screen.getByText('App Update Available')).toBeInTheDocument();
+  });
+
+  it('should disable update button while updating', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Trigger update available
+    act(() => {
+      const updateEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    const updateButton = screen.getByRole('button', { name: 'Update' });
+    fireEvent.click(updateButton);
+
+    await waitFor(() => {
+      const updatingButton = screen.getByRole('button', { name: 'Updating...' });
