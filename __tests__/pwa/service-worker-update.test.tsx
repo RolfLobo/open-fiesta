@@ -459,3 +459,28 @@ describe('ServiceWorkerUpdate Component', () => {
 
     const updateButton = screen.getByRole('button', { name: 'Update' });
     await act(async () => {
+      fireEvent.click(updateButton);
+    });
+
+    // Wait for error to be logged
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to update service worker:',
+        expect.any(Error),
+      );
+    });
+
+    // Should reset updating state
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument();
+    });
+
+    consoleSpy.mockRestore();
+  });
+
+  it('should cleanup event listeners on unmount', () => {
+    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+
+    const { unmount } = render(<ServiceWorkerUpdate />);
+
+    unmount();
