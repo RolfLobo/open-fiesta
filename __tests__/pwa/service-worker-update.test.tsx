@@ -433,3 +433,29 @@ describe('ServiceWorkerUpdate Component', () => {
     await waitFor(() => {
       expect(window.location.reload).toHaveBeenCalled();
     });
+  });
+
+  it('should handle service worker update error', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+    // Mock the service worker manager to throw an error BEFORE rendering
+    const { getServiceWorkerManager } = require('../../lib/service-worker');
+    const mockManager = getServiceWorkerManager();
+    mockManager.skipWaiting = jest.fn().mockRejectedValue(new Error('Update failed'));
+
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Trigger update available
+    act(() => {
+      const updateEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    const updateButton = screen.getByRole('button', { name: 'Update' });
+    await act(async () => {
