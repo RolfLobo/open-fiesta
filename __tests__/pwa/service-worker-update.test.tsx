@@ -484,3 +484,30 @@ describe('ServiceWorkerUpdate Component', () => {
     const { unmount } = render(<ServiceWorkerUpdate />);
 
     unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('sw-update', expect.any(Function));
+
+    removeEventListenerSpy.mockRestore();
+  });
+
+  it('should handle multiple update events correctly', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // First update available
+    act(() => {
+      const updateEvent1 = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent1);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    // Second update available (should not change state)
+    act(() => {
+      const updateEvent2 = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent2);
