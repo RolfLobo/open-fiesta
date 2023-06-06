@@ -406,3 +406,30 @@ describe('ServiceWorkerUpdate Component', () => {
 
     expect(mockOnDismiss).toHaveBeenCalled();
   });
+
+  it('should reload page when update is applied', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Trigger update available first
+    act(() => {
+      const updateAvailableEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateAvailableEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    // Trigger update applied
+    act(() => {
+      const updateAppliedEvent = new CustomEvent('sw-update', {
+        detail: { type: 'applied' },
+      });
+      window.dispatchEvent(updateAppliedEvent);
+    });
+
+    await waitFor(() => {
+      expect(window.location.reload).toHaveBeenCalled();
+    });
