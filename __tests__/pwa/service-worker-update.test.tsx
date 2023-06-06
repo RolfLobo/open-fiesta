@@ -381,3 +381,28 @@ describe('ServiceWorkerUpdate Component', () => {
 
     expect(mockOnDismiss).toHaveBeenCalled();
   });
+
+  it('should handle close button click', async () => {
+    render(<ServiceWorkerUpdate onUpdate={mockOnUpdate} onDismiss={mockOnDismiss} />);
+
+    // Trigger update available
+    act(() => {
+      const updateEvent = new CustomEvent('sw-update', {
+        detail: { type: 'available' },
+      });
+      window.dispatchEvent(updateEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('App Update Available')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    fireEvent.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('App Update Available')).not.toBeInTheDocument();
+    });
+
+    expect(mockOnDismiss).toHaveBeenCalled();
+  });
