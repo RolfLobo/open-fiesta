@@ -575,3 +575,29 @@ describe('Service Worker Manager', () => {
           addEventListener: jest.fn(),
         };
         mockRegistration.installing = installingWorker as ServiceWorker;
+        
+        updateFoundCallback();
+        
+        // Simulate state change to installed
+        const stateChangeCallback = (installingWorker.addEventListener as jest.Mock).mock.calls
+          .find(call => call[0] === 'statechange')?.[1];
+        
+        if (stateChangeCallback) {
+          installingWorker.state = 'installed';
+          stateChangeCallback();
+          
+          expect(window.dispatchEvent).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'sw-update',
+              detail: { type: 'available' },
+            })
+          );
+        }
+      }
+    });
+  });
+
+  describe('Utility Functions', () => {
+    it('should register service worker using utility function', async () => {
+      const registration = await registerServiceWorker();
+      
