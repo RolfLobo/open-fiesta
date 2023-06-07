@@ -445,3 +445,28 @@ describe('Service Worker Manager', () => {
       (navigator.serviceWorker.register as jest.Mock).mockRejectedValue(error);
       
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+      
+      const manager = getServiceWorkerManager();
+      const registration = await manager.register();
+
+      expect(registration).toBeNull();
+      expect(consoleSpy).toHaveBeenCalledWith('Service Worker registration failed:', error);
+      
+      consoleSpy.mockRestore();
+    });
+
+    it('should unregister service worker', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      const result = await manager.unregister();
+
+      expect(mockRegistration.unregister).toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('should update service worker', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      await manager.update();
