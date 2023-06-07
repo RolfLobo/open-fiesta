@@ -601,3 +601,29 @@ describe('Service Worker Manager', () => {
     it('should register service worker using utility function', async () => {
       const registration = await registerServiceWorker();
       
+      expect(navigator.serviceWorker.register).toHaveBeenCalled();
+      expect(registration).toBe(mockRegistration);
+    });
+
+    it('should unregister service worker using utility function', async () => {
+      await registerServiceWorker();
+      const result = await unregisterServiceWorker();
+      
+      expect(result).toBe(true);
+    });
+
+    it('should check if service worker is active', async () => {
+      const isActive = await isServiceWorkerActive();
+      
+      expect(isActive).toBe(true);
+    });
+
+    it('should get service worker status', async () => {
+      const status = await getServiceWorkerStatus();
+      
+      expect(status).toEqual({
+        supported: true,
+        registered: true,
+        active: true,
+        waiting: false,
+        installing: false,
