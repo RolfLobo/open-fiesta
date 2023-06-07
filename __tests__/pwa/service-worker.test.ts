@@ -549,3 +549,29 @@ describe('Service Worker Manager', () => {
       
       await manager.warmCache(urls);
       
+      expect(global.fetch).toHaveBeenCalledTimes(urls.length);
+    });
+
+    it('should get cache manager', () => {
+      const manager = getServiceWorkerManager();
+      const cacheManager = manager.getCacheManager();
+
+      expect(cacheManager).toBeDefined();
+      expect(typeof cacheManager.getStatus).toBe('function');
+    });
+
+    it('should handle update events', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.register();
+
+      // Simulate updatefound event
+      const updateFoundCallback = (mockRegistration.addEventListener as jest.Mock).mock.calls
+        .find(call => call[0] === 'updatefound')?.[1];
+      
+      if (updateFoundCallback) {
+        const installingWorker = {
+          ...mockServiceWorker,
+          state: 'installing',
+          addEventListener: jest.fn(),
+        };
+        mockRegistration.installing = installingWorker as ServiceWorker;
