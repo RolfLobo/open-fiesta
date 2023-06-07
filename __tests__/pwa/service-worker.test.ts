@@ -523,3 +523,29 @@ describe('Service Worker Manager', () => {
     });
 
     it('should get cache status', async () => {
+      const manager = getServiceWorkerManager();
+      const status = await manager.getCacheStatus();
+
+      expect(Array.isArray(status)).toBe(true);
+    });
+
+    it('should cleanup caches', async () => {
+      const manager = getServiceWorkerManager();
+      
+      // Should not throw
+      await manager.cleanupCaches();
+    });
+
+    it('should warm cache with URLs', async () => {
+      const manager = getServiceWorkerManager();
+      const urls = ['https://example.com/api/test', '/static/image.png'];
+      
+      // Mock fetch for cache warming
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        clone: () => ({ ok: true, status: 200 }),
+      });
+      
+      await manager.warmCache(urls);
+      
