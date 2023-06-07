@@ -496,3 +496,30 @@ describe('Service Worker Manager', () => {
       expect(caches.keys).toHaveBeenCalled();
       expect(cacheNames).toEqual(['cache1', 'cache2']);
     });
+
+    it('should clear specific cache', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.clearCache('cache1');
+
+      expect(caches.delete).toHaveBeenCalledWith('cache1');
+    });
+
+    it('should clear all caches', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.clearCache();
+
+      expect(caches.keys).toHaveBeenCalled();
+      expect(caches.delete).toHaveBeenCalledWith('cache1');
+      expect(caches.delete).toHaveBeenCalledWith('cache2');
+    });
+
+    it('should get registration', async () => {
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      const registration = await manager.getRegistration();
+
+      expect(registration).toBe(mockRegistration);
+    });
+
+    it('should get cache status', async () => {
