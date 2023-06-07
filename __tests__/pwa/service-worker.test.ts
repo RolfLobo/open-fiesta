@@ -470,3 +470,29 @@ describe('Service Worker Manager', () => {
       await manager.register();
       
       await manager.update();
+
+      expect(mockRegistration.update).toHaveBeenCalled();
+    });
+
+    it('should skip waiting for new service worker', async () => {
+      const waitingWorker = {
+        ...mockServiceWorker,
+        postMessage: jest.fn(),
+      };
+      mockRegistration.waiting = waitingWorker as ServiceWorker;
+      
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      await manager.skipWaiting();
+
+      expect(waitingWorker.postMessage).toHaveBeenCalledWith({ type: 'SKIP_WAITING' });
+    });
+
+    it('should get cache names', async () => {
+      const manager = getServiceWorkerManager();
+      const cacheNames = await manager.getCacheNames();
+
+      expect(caches.keys).toHaveBeenCalled();
+      expect(cacheNames).toEqual(['cache1', 'cache2']);
+    });
