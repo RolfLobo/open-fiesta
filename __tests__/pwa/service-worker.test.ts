@@ -419,3 +419,29 @@ describe('Service Worker Manager', () => {
         put: jest.fn().mockResolvedValue(undefined),
         delete: jest.fn().mockResolvedValue(true),
       }),
+    };
+
+    // Mock window events
+    window.dispatchEvent = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  describe('ServiceWorkerManager', () => {
+    it('should register service worker successfully', async () => {
+      const manager = getServiceWorkerManager();
+      const registration = await manager.register();
+
+      expect(navigator.serviceWorker.register).toHaveBeenCalledWith('/sw.js', {
+        scope: '/',
+      });
+      expect(registration).toBe(mockRegistration);
+    });
+
+    it('should handle registration failure', async () => {
+      const error = new Error('Registration failed');
+      (navigator.serviceWorker.register as jest.Mock).mockRejectedValue(error);
+      
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
