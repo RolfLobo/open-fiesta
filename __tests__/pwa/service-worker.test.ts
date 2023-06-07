@@ -393,3 +393,29 @@ describe('Service Worker Manager', () => {
       installing: null,
       update: jest.fn().mockResolvedValue(undefined),
       unregister: jest.fn().mockResolvedValue(true),
+      addEventListener: jest.fn(),
+    };
+
+    // Mock navigator.serviceWorker
+    Object.defineProperty(window, 'navigator', {
+      value: {
+        serviceWorker: {
+          register: jest.fn().mockResolvedValue(mockRegistration),
+          getRegistration: jest.fn().mockResolvedValue(mockRegistration),
+          addEventListener: jest.fn(),
+          controller: mockServiceWorker,
+        },
+      },
+      writable: true,
+    });
+
+    // Mock caches API
+    (global as any).caches = {
+      keys: jest.fn().mockResolvedValue(['cache1', 'cache2']),
+      delete: jest.fn().mockResolvedValue(true),
+      open: jest.fn().mockResolvedValue({
+        keys: jest.fn().mockResolvedValue([]),
+        match: jest.fn().mockResolvedValue(null),
+        put: jest.fn().mockResolvedValue(undefined),
+        delete: jest.fn().mockResolvedValue(true),
+      }),
