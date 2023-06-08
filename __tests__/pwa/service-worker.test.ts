@@ -627,3 +627,29 @@ describe('Service Worker Manager', () => {
         active: true,
         waiting: false,
         installing: false,
+      });
+    });
+
+    it('should handle unsupported service worker', async () => {
+      delete (window.navigator as any).serviceWorker;
+      
+      const status = await getServiceWorkerStatus();
+      
+      expect(status).toEqual({
+        supported: false,
+        registered: false,
+        active: false,
+        waiting: false,
+        installing: false,
+      });
+    });
+  });
+
+  describe('Error Handling', () => {
+    it('should handle service worker not supported', async () => {
+      delete (window.navigator as any).serviceWorker;
+      
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+      
+      const manager = getServiceWorkerManager();
+      const registration = await manager.register();
