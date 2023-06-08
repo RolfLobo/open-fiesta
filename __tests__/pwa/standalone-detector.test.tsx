@@ -312,3 +312,30 @@ const TestComponent = () => {
   if (isLoading) {
     return <div data-testid="loading">Loading...</div>;
   }
+
+  return (
+    <div>
+      <div data-testid="standalone">{isStandalone ? 'true' : 'false'}</div>
+      <div data-testid="install-source">{installSource}</div>
+    </div>
+  );
+};
+
+describe('StandaloneDetector', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Reset mocks to default values
+    mockIsStandalone.mockReturnValue(false);
+    mockGetInstallSource.mockReturnValue('browser');
+
+    // Mock matchMedia
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: jest.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
