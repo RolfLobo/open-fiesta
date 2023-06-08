@@ -287,3 +287,28 @@ import {
 } from '@/components/pwa/StandaloneDetector';
 
 // Create mock functions
+const mockIsStandalone = jest.fn(() => false);
+const mockGetInstallSource = jest.fn(() => 'browser');
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: mockIsStandalone,
+  getInstallSource: mockGetInstallSource,
+}));
+
+// Mock gtag
+// @ts-ignore
+if (!window.gtag) {
+  Object.defineProperty(window, 'gtag', {
+    value: jest.fn(),
+    writable: true,
+  });
+}
+
+// Test component that uses the hook
+const TestComponent = () => {
+  const { isStandalone, installSource, isLoading } = useStandalone();
+
+  if (isLoading) {
+    return <div data-testid="loading">Loading...</div>;
+  }
