@@ -653,3 +653,29 @@ describe('Service Worker Manager', () => {
       
       const manager = getServiceWorkerManager();
       const registration = await manager.register();
+
+      expect(registration).toBeNull();
+      // Console log is suppressed in test environment
+      expect(consoleSpy).not.toHaveBeenCalled();
+      
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle update failure gracefully', async () => {
+      const error = new Error('Update failed');
+      mockRegistration.update = jest.fn().mockRejectedValue(error);
+      
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      await expect(manager.update()).rejects.toThrow('Update failed');
+    });
+
+    it('should handle skip waiting when no waiting worker', async () => {
+      mockRegistration.waiting = null;
+      
+      const manager = getServiceWorkerManager();
+      await manager.register();
+      
+      // Should not throw
+      await manager.skipWaiting();
