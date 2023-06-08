@@ -679,3 +679,18 @@ describe('Service Worker Manager', () => {
       
       // Should not throw
       await manager.skipWaiting();
+    });
+
+    it('should handle cache operations when not supported', async () => {
+      delete (global as any).caches;
+      
+      const manager = getServiceWorkerManager();
+      
+      const cacheNames = await manager.getCacheNames();
+      expect(cacheNames).toEqual([]);
+      
+      // Should not throw
+      await manager.clearCache();
+    });
+  });
+});
