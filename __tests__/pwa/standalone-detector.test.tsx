@@ -365,3 +365,29 @@ describe('StandaloneDetector', () => {
       mockGetInstallSource.mockClear();
       mockIsStandalone.mockReturnValue(true);
       mockGetInstallSource.mockReturnValue('installed');
+
+      render(
+        <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('standalone')).toHaveTextContent('true');
+      });
+    });
+
+    it('should add CSS classes to body in standalone mode', async () => {
+      mockIsStandalone.mockReturnValue(true);
+      mockGetInstallSource.mockReturnValue('installed');
+
+      render(
+        <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('standalone')).toHaveTextContent('true');
+        expect(document.body).toHaveClass('pwa-standalone');
+        expect(document.documentElement).toHaveClass('pwa-standalone');
