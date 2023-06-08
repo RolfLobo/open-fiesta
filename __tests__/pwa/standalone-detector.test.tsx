@@ -339,3 +339,29 @@ describe('StandaloneDetector', () => {
         addListener: jest.fn(),
         removeListener: jest.fn(),
         addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
+  });
+
+  describe('StandaloneProvider', () => {
+    it('should provide standalone context', async () => {
+      render(
+        <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('standalone')).toHaveTextContent('false');
+        expect(screen.getByTestId('install-source')).toHaveTextContent('browser');
+      });
+    });
+
+    it('should detect standalone mode', async () => {
+      // Clear and reset mocks
+      mockIsStandalone.mockClear();
+      mockGetInstallSource.mockClear();
+      mockIsStandalone.mockReturnValue(true);
+      mockGetInstallSource.mockReturnValue('installed');
