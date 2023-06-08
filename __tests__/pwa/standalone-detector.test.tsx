@@ -391,3 +391,29 @@ describe('StandaloneDetector', () => {
         expect(screen.getByTestId('standalone')).toHaveTextContent('true');
         expect(document.body).toHaveClass('pwa-standalone');
         expect(document.documentElement).toHaveClass('pwa-standalone');
+      });
+    });
+
+    it('should remove CSS classes when not in standalone mode', async () => {
+      mockIsStandalone.mockReturnValue(false);
+      mockGetInstallSource.mockReturnValue('browser');
+
+      // First add the classes
+      document.body.classList.add('pwa-standalone');
+      document.documentElement.classList.add('pwa-standalone');
+
+      render(
+        <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        expect(document.body).not.toHaveClass('pwa-standalone');
+        expect(document.documentElement).not.toHaveClass('pwa-standalone');
+      });
+    });
+
+    it('should track PWA mode detection', async () => {
+      render(
+        <StandaloneProvider>
