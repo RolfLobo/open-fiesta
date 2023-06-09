@@ -521,3 +521,29 @@ describe('StandaloneDetector', () => {
       } else {
         // If not loading, should be in a normal div
         expect(content).toBeInTheDocument();
+      }
+    });
+  });
+
+  describe('useStandalone hook', () => {
+    it('should throw error when used outside provider', () => {
+      // Suppress console.error for this test
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      let thrownError: unknown = null;
+      const ThrowingComponent = () => {
+        try {
+          useStandalone();
+        } catch (e) {
+          thrownError = e;
+        }
+        return null;
+      };
+      render(<ThrowingComponent />);
+      expect(thrownError).not.toBeNull();
+      if (thrownError && typeof thrownError === 'object' && 'message' in thrownError) {
+        expect((thrownError as Error).message).toBe(
+          'useStandalone must be used within a StandaloneProvider',
+        );
+      } else {
+        throw new Error('Expected an error with a message property');
