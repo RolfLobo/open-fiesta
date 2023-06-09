@@ -167,3 +167,22 @@ export default {
   createMockBeforeInstallPromptEvent,
   simulatePWAEvent,
 };
+import React from 'react';
+import { render, RenderOptions } from '@testing-library/react';
+import { jest } from '@jest/globals';
+
+// Mock theme configuration
+const mockTheme = {
+  mode: 'dark' as const,
+  accent: 'crimson' as const,
+  font: 'geist' as const,
+  background: 'gradient' as const,
+  badgePair: 'gold-green' as const,
+  chatInputStyle: 'default' as const,
+};
+
+// Mock theme context value
+const mockThemeContextValue = {
+  theme: mockTheme,
+  setMode: jest.fn(),
+  setAccent: jest.fn(),

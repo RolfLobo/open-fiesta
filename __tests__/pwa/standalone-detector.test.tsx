@@ -547,3 +547,9 @@ describe('StandaloneDetector', () => {
         );
       } else {
         throw new Error('Expected an error with a message property');
+      }
+
+      consoleSpy.mockRestore();
+    });
+  });
+});
