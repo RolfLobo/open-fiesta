@@ -211,3 +211,30 @@ const MockThemeProvider = ({ children }: { children: React.ReactNode }) => {
     isLoading: false,
     isInitialized: true,
   };
+
+  // Create a mock context provider
+  const React = require('react');
+  const ThemeContext = React.createContext(mockContext);
+  
+  return React.createElement(ThemeContext.Provider, { value: mockContext }, children);
+};
+
+// Mock theme context
+export const mockThemeContext = {
+  useTheme: jest.fn(() => mockThemeContextValue),
+  ThemeProvider: MockThemeProvider,
+};
+
+// Mock PWA config
+export const mockPWAConfig = {
+  isStandalone: jest.fn(() => false),
+  canInstall: jest.fn(() => false),
+  getInstallSource: jest.fn(() => 'browser'),
+  isPWAEnabled: jest.fn(() => true),
+  isServiceWorkerSupported: jest.fn(() => true),
+  isPushNotificationSupported: jest.fn(() => false),
+};
+
+// Mock window properties for PWA tests
+export const setupPWAMocks = () => {
+  // Mock matchMedia
