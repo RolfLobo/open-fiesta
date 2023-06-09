@@ -442,3 +442,30 @@ describe('StandaloneDetector', () => {
         writable: true,
         value: jest.fn(() => mockMediaQuery),
       });
+
+      render(
+        <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      // Simulate display mode change
+      const changeHandler = mockMediaQuery.addEventListener.mock.calls.find(
+        (call) => call[0] === 'change',
+      )?.[1];
+
+      if (typeof changeHandler === 'function') {
+        changeHandler();
+      }
+
+      // Should re-check standalone mode
+      await waitFor(() => {
+        expect(screen.getByTestId('standalone')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('StandaloneUI', () => {
+    it('should render with standalone className when in standalone mode', async () => {
+      mockIsStandalone.mockReturnValue(true);
+      mockGetInstallSource.mockReturnValue('installed');
