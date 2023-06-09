@@ -417,3 +417,28 @@ describe('StandaloneDetector', () => {
     it('should track PWA mode detection', async () => {
       render(
         <StandaloneProvider>
+          <TestComponent />
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        expect((window as any).gtag).toHaveBeenCalledWith('event', 'pwa_mode_detected', {
+          event_category: 'PWA',
+          event_label: 'browser',
+          custom_parameter_1: 'browser',
+        });
+      });
+    });
+
+    it('should handle display mode changes', async () => {
+      const mockMediaQuery = {
+        matches: false,
+        media: '(display-mode: standalone)',
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      };
+
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        value: jest.fn(() => mockMediaQuery),
+      });
