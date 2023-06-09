@@ -186,3 +186,28 @@ const mockThemeContextValue = {
   theme: mockTheme,
   setMode: jest.fn(),
   setAccent: jest.fn(),
+  setFont: jest.fn(),
+  setBackground: jest.fn(),
+  setBadgePair: jest.fn(),
+  toggleMode: jest.fn(),
+  resetTheme: jest.fn(),
+  updateTheme: jest.fn(),
+  isLoading: false,
+  isInitialized: true,
+};
+
+// Mock theme provider for tests
+const MockThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const mockContext = {
+    theme: mockTheme,
+    setMode: jest.fn(),
+    setAccent: jest.fn(),
+    setFont: jest.fn(),
+    setBackground: jest.fn(),
+    setBadgePair: jest.fn(),
+    toggleMode: jest.fn(),
+    resetTheme: jest.fn(),
+    updateTheme: jest.fn(),
+    isLoading: false,
+    isInitialized: true,
+  };
