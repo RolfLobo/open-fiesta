@@ -469,3 +469,29 @@ describe('StandaloneDetector', () => {
     it('should render with standalone className when in standalone mode', async () => {
       mockIsStandalone.mockReturnValue(true);
       mockGetInstallSource.mockReturnValue('installed');
+
+      render(
+        <StandaloneProvider>
+          <StandaloneUI standaloneClassName="standalone-class" browserClassName="browser-class">
+            <div data-testid="content">Content</div>
+          </StandaloneUI>
+        </StandaloneProvider>,
+      );
+
+      await waitFor(() => {
+        const container = screen.getByTestId('content').parentElement as HTMLElement;
+        expect(container.className).toBe('standalone-class');
+      });
+    });
+
+    it('should render with browser className when not in standalone mode', async () => {
+      mockIsStandalone.mockReturnValue(false);
+      mockGetInstallSource.mockReturnValue('browser');
+
+      render(
+        <StandaloneProvider>
+          <StandaloneUI standaloneClassName="standalone-class" browserClassName="browser-class">
+            <div data-testid="content">Content</div>
+          </StandaloneUI>
+        </StandaloneProvider>,
+      );
