@@ -386,3 +386,29 @@ import usePWAUI from '@/lib/hooks/usePWAUI';
 
 // Mock PWA config
 jest.mock('@/lib/pwa-config', () => ({
+  isStandalone: jest.fn(() => false),
+  getInstallSource: jest.fn(() => 'browser'),
+}));
+
+// Mock window properties
+const mockMatchMedia = jest.fn();
+const mockAddEventListener = jest.fn();
+const mockRemoveEventListener = jest.fn();
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: mockMatchMedia,
+});
+
+Object.defineProperty(window, 'addEventListener', {
+  writable: true,
+  value: mockAddEventListener,
+});
+
+Object.defineProperty(window, 'removeEventListener', {
+  writable: true,
+  value: mockRemoveEventListener,
+});
+
+Object.defineProperty(window, 'innerHeight', {
+  writable: true,
