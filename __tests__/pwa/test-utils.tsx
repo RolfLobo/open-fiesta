@@ -290,3 +290,29 @@ export const setupPWAMocks = () => {
   Object.defineProperty(window, 'gtag', {
     value: jest.fn(),
     writable: true,
+  });
+};
+
+// Custom render function with providers
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <MockThemeProvider>
+      {children}
+    </MockThemeProvider>
+  );
+};
+
+const customRender = (
+  ui: React.ReactElement,
+  options?: Omit<RenderOptions, 'wrapper'>,
+) => render(ui, { wrapper: AllTheProviders, ...options });
+
+export * from '@testing-library/react';
+export { customRender as render };
+
+// Helper to create mock beforeinstallprompt event
+export const createMockBeforeInstallPromptEvent = () => ({
+  preventDefault: jest.fn(),
+  prompt: jest.fn().mockResolvedValue(undefined),
+  userChoice: Promise.resolve({ outcome: 'accepted' as const, platform: 'web' }),
+  platforms: ['web'],
