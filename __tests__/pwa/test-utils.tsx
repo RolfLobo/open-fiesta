@@ -263,3 +263,30 @@ export const setupPWAMocks = () => {
     writable: true,
     value: jest.fn(),
   });
+
+  // Mock sessionStorage
+  Object.defineProperty(window, 'sessionStorage', {
+    value: {
+      getItem: jest.fn(),
+      setItem: jest.fn(),
+      removeItem: jest.fn(),
+      clear: jest.fn(),
+    },
+    writable: true,
+  });
+
+  // Mock localStorage
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: jest.fn(),
+      setItem: jest.fn(),
+      removeItem: jest.fn(),
+      clear: jest.fn(),
+    },
+    writable: true,
+  });
+
+  // Mock gtag
+  Object.defineProperty(window, 'gtag', {
+    value: jest.fn(),
+    writable: true,
