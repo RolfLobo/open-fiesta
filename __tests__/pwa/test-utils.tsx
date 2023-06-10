@@ -238,3 +238,28 @@ export const mockPWAConfig = {
 // Mock window properties for PWA tests
 export const setupPWAMocks = () => {
   // Mock matchMedia
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation(query => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+
+  // Mock addEventListener
+  Object.defineProperty(window, 'addEventListener', {
+    writable: true,
+    value: jest.fn(),
+  });
+
+  // Mock removeEventListener
+  Object.defineProperty(window, 'removeEventListener', {
+    writable: true,
+    value: jest.fn(),
+  });
