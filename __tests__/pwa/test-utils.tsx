@@ -316,3 +316,23 @@ export const createMockBeforeInstallPromptEvent = () => ({
   prompt: jest.fn().mockResolvedValue(undefined),
   userChoice: Promise.resolve({ outcome: 'accepted' as const, platform: 'web' }),
   platforms: ['web'],
+});
+
+// Helper to simulate PWA events
+export const simulatePWAEvent = (eventType: string, handler?: Function) => {
+  const mockEvent = createMockBeforeInstallPromptEvent();
+  
+  if (handler) {
+    handler(mockEvent);
+  }
+  
+  return mockEvent;
+};
+
+export default {
+  mockThemeContext,
+  mockPWAConfig,
+  setupPWAMocks,
+  createMockBeforeInstallPromptEvent,
+  simulatePWAEvent,
+};

@@ -379,3 +379,10 @@ describe('usePWAUI', () => {
     expect(mockRemoveEventListener).toHaveBeenCalledWith('appinstalled', expect.any(Function));
   });
 });
+
+import { renderHook, act, waitFor } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import usePWAUI from '@/lib/hooks/usePWAUI';
+
+// Mock PWA config
+jest.mock('@/lib/pwa-config', () => ({
