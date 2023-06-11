@@ -437,3 +437,30 @@ Object.defineProperty(window, 'getComputedStyle', {
 describe('usePWAUI', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Setup default matchMedia mock
+    mockMatchMedia.mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }));
+  });
+
+  it('should return initial PWA UI state', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.isStandalone).toBe(false);
+      expect(result.current.installSource).toBe('browser');
+      expect(result.current.displayMode).toBe('browser');
+      expect(result.current.orientation).toBe('portrait');
+      expect(result.current.isInstallable).toBe(false);
+    });
+  });
+
+  it('should detect standalone mode', async () => {
