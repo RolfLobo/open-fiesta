@@ -489,3 +489,30 @@ describe('usePWAUI', () => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
     }));
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.displayMode).toBe('fullscreen');
+    });
+  });
+
+  it('should detect minimal-ui display mode', async () => {
+    mockMatchMedia.mockImplementation((query: string) => ({
+      matches: query === '(display-mode: minimal-ui)',
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.displayMode).toBe('minimal-ui');
+    });
+  });
+
+  it('should detect landscape orientation', async () => {
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      value: 400,
