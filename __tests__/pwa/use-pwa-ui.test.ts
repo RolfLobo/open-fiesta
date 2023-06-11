@@ -412,3 +412,28 @@ Object.defineProperty(window, 'removeEventListener', {
 
 Object.defineProperty(window, 'innerHeight', {
   writable: true,
+  value: 800,
+});
+
+Object.defineProperty(window, 'innerWidth', {
+  writable: true,
+  value: 400,
+});
+
+// Mock getComputedStyle
+Object.defineProperty(window, 'getComputedStyle', {
+  writable: true,
+  value: jest.fn(() => ({
+    getPropertyValue: jest.fn((prop: string) => {
+      if (prop === 'env(safe-area-inset-top)') return '20px';
+      if (prop === 'env(safe-area-inset-bottom)') return '10px';
+      if (prop === 'env(safe-area-inset-left)') return '0px';
+      if (prop === 'env(safe-area-inset-right)') return '0px';
+      return '0px';
+    }),
+  })),
+});
+
+describe('usePWAUI', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
