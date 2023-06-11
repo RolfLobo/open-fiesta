@@ -516,3 +516,28 @@ describe('usePWAUI', () => {
     Object.defineProperty(window, 'innerHeight', {
       writable: true,
       value: 400,
+    });
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      value: 800,
+    });
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.orientation).toBe('landscape');
+    });
+  });
+
+  it('should detect safe area insets', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.safeAreaInsets).toEqual({
+        top: 20,
+        bottom: 10,
+        left: 0,
+        right: 0,
+      });
+    });
+  });
