@@ -464,3 +464,28 @@ describe('usePWAUI', () => {
   });
 
   it('should detect standalone mode', async () => {
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    mockMatchMedia.mockImplementation((query: string) => ({
+      matches: query === '(display-mode: standalone)',
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.isStandalone).toBe(true);
+      expect(result.current.displayMode).toBe('standalone');
+    });
+  });
+
+  it('should detect fullscreen display mode', async () => {
+    mockMatchMedia.mockImplementation((query: string) => ({
+      matches: query === '(display-mode: fullscreen)',
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
