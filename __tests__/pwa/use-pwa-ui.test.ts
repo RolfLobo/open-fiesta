@@ -620,3 +620,29 @@ describe('usePWAUI', () => {
     });
 
     // Simulate beforeinstallprompt event
+    act(() => {
+      const beforeInstallPromptHandler = mockAddEventListener.mock.calls.find(
+        (call) => call[0] === 'beforeinstallprompt',
+      )?.[1];
+      if (beforeInstallPromptHandler) {
+        beforeInstallPromptHandler({ preventDefault: jest.fn() });
+      }
+    });
+
+    await waitFor(() => {
+      expect(result.current.shouldShowInstallPrompt()).toBe(true);
+    });
+  });
+
+  it('should generate responsive classes', async () => {
+    // Set up portrait orientation
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      value: 800,
+    });
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      value: 400,
+    });
+
+    const { isStandalone } = await import('@/lib/pwa-config');
