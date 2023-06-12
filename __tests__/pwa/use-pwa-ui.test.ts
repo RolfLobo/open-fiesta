@@ -594,3 +594,29 @@ describe('usePWAUI', () => {
     // Restore original getComputedStyle
     window.getComputedStyle = originalGetComputedStyle;
   });
+
+  it('should calculate viewport height for browser mode', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      const viewportHeight = result.current.getViewportHeight();
+      expect(viewportHeight).toBe('100vh');
+    });
+  });
+
+  it('should determine when to show install prompt', async () => {
+    // Clear any existing deferredPrompt
+    (window as any).deferredPrompt = null;
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.shouldShowInstallPrompt()).toBe(false);
+    });
+
+    // Make it installable by setting deferredPrompt and triggering event
+    act(() => {
+      (window as any).deferredPrompt = { prompt: jest.fn() };
+    });
+
+    // Simulate beforeinstallprompt event
