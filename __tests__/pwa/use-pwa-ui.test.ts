@@ -672,3 +672,29 @@ describe('usePWAUI', () => {
     // Verify event listeners are added (with passive option)
     expect(mockAddEventListener).toHaveBeenCalledWith('orientationchange', expect.any(Function), {
       passive: true,
+    });
+    expect(mockAddEventListener).toHaveBeenCalledWith('resize', expect.any(Function), {
+      passive: true,
+    });
+
+    // Simulate orientation change
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      value: 400,
+    });
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      value: 800,
+    });
+
+    const orientationHandler = mockAddEventListener.mock.calls.find(
+      (call) => call[0] === 'orientationchange',
+    )?.[1];
+
+    if (orientationHandler) {
+      act(() => {
+        orientationHandler();
+      });
+    }
+
+    await waitFor(() => {
