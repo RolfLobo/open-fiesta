@@ -698,3 +698,29 @@ describe('usePWAUI', () => {
     }
 
     await waitFor(() => {
+      expect(result.current.orientation).toBe('landscape');
+    });
+  });
+
+  it('should handle beforeinstallprompt events', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    const mockEvent = { preventDefault: jest.fn() };
+    const beforeInstallPromptHandler = mockAddEventListener.mock.calls.find(
+      (call) => call[0] === 'beforeinstallprompt',
+    )?.[1];
+
+    if (beforeInstallPromptHandler) {
+      act(() => {
+        beforeInstallPromptHandler(mockEvent);
+      });
+    }
+
+    await waitFor(() => {
+      expect(result.current.isInstallable).toBe(true);
+    });
+  });
+
+  it('should handle appinstalled events', async () => {
+    // Set up initial installable state
+    (window as any).deferredPrompt = { prompt: jest.fn() };
