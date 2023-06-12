@@ -541,3 +541,30 @@ describe('usePWAUI', () => {
       });
     });
   });
+
+  it('should detect installable state', async () => {
+    // Mock deferredPrompt
+    (window as any).deferredPrompt = { prompt: jest.fn() };
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.isInstallable).toBe(true);
+    });
+  });
+
+  it('should provide standalone styles', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      const styles = result.current.getStandaloneStyles();
+      expect(styles).toEqual({
+        paddingTop: 20,
+        paddingBottom: 10,
+        paddingLeft: 0,
+        paddingRight: 0,
+      });
+    });
+  });
+
+  it('should calculate viewport height for standalone mode', async () => {
