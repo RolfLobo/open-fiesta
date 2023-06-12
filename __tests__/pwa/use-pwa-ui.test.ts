@@ -724,3 +724,28 @@ describe('usePWAUI', () => {
   it('should handle appinstalled events', async () => {
     // Set up initial installable state
     (window as any).deferredPrompt = { prompt: jest.fn() };
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      expect(result.current.isInstallable).toBe(true);
+    });
+
+    const appInstalledHandler = mockAddEventListener.mock.calls.find(
+      (call) => call[0] === 'appinstalled',
+    )?.[1];
+
+    if (appInstalledHandler) {
+      act(() => {
+        (window as any).deferredPrompt = null;
+        appInstalledHandler();
+      });
+    }
+
+    await waitFor(() => {
+      expect(result.current.isInstallable).toBe(false);
+    });
+  });
+
+  it('should clean up event listeners on unmount', () => {
+    const { unmount } = renderHook(() => usePWAUI());
