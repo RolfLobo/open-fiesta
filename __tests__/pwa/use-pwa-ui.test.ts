@@ -749,3 +749,15 @@ describe('usePWAUI', () => {
 
   it('should clean up event listeners on unmount', () => {
     const { unmount } = renderHook(() => usePWAUI());
+
+    unmount();
+
+    expect(mockRemoveEventListener).toHaveBeenCalledWith('orientationchange', expect.any(Function));
+    expect(mockRemoveEventListener).toHaveBeenCalledWith('resize', expect.any(Function));
+    expect(mockRemoveEventListener).toHaveBeenCalledWith(
+      'beforeinstallprompt',
+      expect.any(Function),
+    );
+    expect(mockRemoveEventListener).toHaveBeenCalledWith('appinstalled', expect.any(Function));
+  });
+});

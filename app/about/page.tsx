@@ -199,3 +199,18 @@ export default function AboutPage() {
   )
 }
 
+
+import type { Metadata } from "next"
+import { IBM_Plex_Mono } from "next/font/google"
+import Script from "next/script"
+import Link from "next/link"
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+})
+
+export const metadata: Metadata = {
+  title: "About — Open Fiesta",
+  description:
