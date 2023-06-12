@@ -568,3 +568,29 @@ describe('usePWAUI', () => {
   });
 
   it('should calculate viewport height for standalone mode', async () => {
+    // Set the mock before using the hook
+    const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    // Mock getComputedStyle to return safe area insets
+    const originalGetComputedStyle = window.getComputedStyle;
+    window.getComputedStyle = jest.fn(() => ({
+      getPropertyValue: (prop: string) => {
+        if (prop === 'env(safe-area-inset-top)') return '20px';
+        if (prop === 'env(safe-area-inset-bottom)') return '10px';
+        if (prop === 'env(safe-area-inset-left)') return '0px';
+        if (prop === 'env(safe-area-inset-right)') return '0px';
+        return '0px';
+      },
+    })) as any;
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      const viewportHeight = result.current.getViewportHeight();
+      expect(viewportHeight).toBe('calc(100vh - 30px)'); // 20 + 10
+    });
+
+    // Restore original getComputedStyle
+    window.getComputedStyle = originalGetComputedStyle;
+  });
