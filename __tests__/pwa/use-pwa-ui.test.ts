@@ -646,3 +646,29 @@ describe('usePWAUI', () => {
     });
 
     const { isStandalone } = await import('@/lib/pwa-config');
+    (isStandalone as jest.Mock).mockReturnValue(true);
+
+    mockMatchMedia.mockImplementation((query: string) => ({
+      matches: query === '(display-mode: standalone)',
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    }));
+
+    const { result } = renderHook(() => usePWAUI());
+
+    await waitFor(() => {
+      const classes = result.current.getResponsiveClasses();
+      expect(classes).toContain('pwa-standalone');
+      expect(classes).toContain('pwa-display-standalone');
+      expect(classes).toContain('pwa-orientation-portrait');
+      expect(classes).toContain('pwa-has-notch');
+    });
+  });
+
+  it('should handle orientation change events', async () => {
+    const { result } = renderHook(() => usePWAUI());
+
+    // Verify event listeners are added (with passive option)
+    expect(mockAddEventListener).toHaveBeenCalledWith('orientationchange', expect.any(Function), {
+      passive: true,
