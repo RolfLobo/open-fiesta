@@ -240,3 +240,29 @@ export default function AboutPage() {
       {/* Breadcrumbs JSON-LD for richer SERP */}
       <Script id="about-breadcrumbs" type="application/ld+json">
         {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://openfiesta.app/",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "About",
+              item: "https://openfiesta.app/about",
+            },
+          ],
+        })}
+      </Script>
+      {/* Background vignette / gradient */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_120%,rgba(244,63,94,0.18)_0%,rgba(244,63,94,0.06)_35%,transparent_70%)]" />
+
+      <section className="mx-auto w-full max-w-5xl px-6 py-14 sm:px-8 sm:py-16 md:py-20">
+        {/* Page label + Home breadcrumb */}
+        <p className="text-[10px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
+          <Link href="/" className="hover:text-zinc-200 transition underline underline-offset-4 decoration-zinc-700/60 hover:decoration-zinc-400">Home</Link>
+          <span className="mx-2 text-zinc-600">/</span>
