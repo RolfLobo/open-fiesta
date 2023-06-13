@@ -318,3 +318,29 @@ export default function AboutPage() {
         </ul>
 
         {/* Features */}
+        <div className="mt-12">
+          <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">What makes Open Fiesta different</h2>
+          <ul className="space-y-2 text-zinc-300/90 text-sm sm:text-base">
+            <li className="flex gap-3"><span className="text-zinc-500">→</span> Compare answers from multiple models in a single view</li>
+            <li className="flex gap-3"><span className="text-zinc-500">→</span> Organize by projects; keep context flowing</li>
+            <li className="flex gap-3"><span className="text-zinc-500">→</span> Works with OpenRouter, Gemini, and more providers</li>
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div className="mt-12">
+          <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">FAQ</h2>
+          <div className="space-y-6 text-zinc-300/90 text-sm sm:text-base">
+            <div>
+              <p className="text-zinc-200 mb-1">What is Open Fiesta?</p>
+              <p>Open Fiesta is an AI chat app that lets you compare responses from <strong>300+ models</strong> in one UI.</p>
+            </div>
+            <div>
+              <p className="text-zinc-200 mb-1">Is Open Fiesta free?</p>
+              <p>There’s a free experience with limitations. You can connect your own API keys for full power and control.</p>
+            </div>
+            <div>
+              <p className="text-zinc-200 mb-1">Which models are supported?</p>
+              <p>OpenAI, Claude, Gemini, Perplexity, DeepSeek, Grok, and many more via OpenRouter and native providers.</p>
+            </div>
+            <div>
