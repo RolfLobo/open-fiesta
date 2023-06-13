@@ -344,3 +344,29 @@ export default function AboutPage() {
               <p>OpenAI, Claude, Gemini, Perplexity, DeepSeek, Grok, and many more via OpenRouter and native providers.</p>
             </div>
             <div>
+              <p className="text-zinc-200 mb-1">How is it different from a single-model chat?</p>
+              <p>It’s built for side‑by‑side comparison, fast iteration, and project organization—so you can pick the best answer quickly.</p>
+            </div>
+            <div>
+              <p className="text-zinc-200 mb-1">Who built Open Fiesta?</p>
+              <p>Open Fiesta is built by Niladri Hazra. See the contact links above or our <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/press">Press</a> page.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ JSON-LD */}
+        <Script id="about-faq" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "What is Open Fiesta?",
+                acceptedAnswer: { "@type": "Answer", text: "Open Fiesta is an AI chat app that lets you compare responses from 300+ models in one UI." }
+              },
+              {
+                "@type": "Question",
+                name: "Is Open Fiesta free?",
+                acceptedAnswer: { "@type": "Answer", text: "There’s a free experience with limitations. You can connect your own API keys for full power and control." }
+              },
