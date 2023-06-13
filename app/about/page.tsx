@@ -266,3 +266,29 @@ export default function AboutPage() {
         <p className="text-[10px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
           <Link href="/" className="hover:text-zinc-200 transition underline underline-offset-4 decoration-zinc-700/60 hover:decoration-zinc-400">Home</Link>
           <span className="mx-2 text-zinc-600">/</span>
+          <span>About</span>
+        </p>
+
+        {/* Title */}
+        <h1 className="text-zinc-100 text-3xl sm:text-4xl md:text-5xl leading-tight mb-4">
+          Open Fiesta
+        </h1>
+        <p className="text-zinc-300/90 text-sm sm:text-base leading-relaxed max-w-3xl">
+          Chat with and compare <span className="font-semibold text-zinc-100">300+ AI models</span> — OpenAI, Claude,
+          Gemini, Perplexity, DeepSeek, Grok, and more — side‑by‑side in one place.
+          Built for creators, builders, and teams who want faster, clearer answers.
+        </p>
+
+        {/* Divider */}
+        <div className="my-10 h-px w-full bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
+
+        {/* Founder */}
+        <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Built by Niladri Hazra</h2>
+        <p className="text-zinc-300/90 text-sm sm:text-base leading-relaxed max-w-3xl mb-4">
+          Hi, I’m Niladri. I’m building Open Fiesta to make multi‑model workflows simple and fast.
+          Follow along on X and GitHub, and feel free to reach out.
+        </p>
+
+        {/* Contacts */}
+        <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
+          <li>
