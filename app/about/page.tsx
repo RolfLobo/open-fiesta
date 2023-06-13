@@ -292,3 +292,29 @@ export default function AboutPage() {
         {/* Contacts */}
         <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
           <li>
+            <a
+              className="inline-flex w-full items-center justify-between rounded border border-zinc-800 bg-zinc-900/40 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-900 hover:border-zinc-700 transition"
+              href="https://x.com/byteHumi" target="_blank" rel="noreferrer"
+            >
+              X / @byteHumi <span className="text-zinc-500">↗</span>
+            </a>
+          </li>
+          <li>
+            <a
+              className="inline-flex w-full items-center justify-between rounded border border-zinc-800 bg-zinc-900/40 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-900 hover:border-zinc-700 transition"
+              href="https://github.com/NiladriHazra/Open-Fiesta" target="_blank" rel="noreferrer"
+            >
+              GitHub <span className="text-zinc-500">↗</span>
+            </a>
+          </li>
+          <li>
+            <a
+              className="inline-flex w-full items-center justify-between rounded border border-zinc-800 bg-zinc-900/40 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-900 hover:border-zinc-700 transition"
+              href="mailto:niladrivit@gmail.com"
+            >
+              Email
+            </a>
+          </li>
+        </ul>
+
+        {/* Features */}
