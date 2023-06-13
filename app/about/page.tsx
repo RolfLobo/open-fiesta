@@ -214,3 +214,29 @@ const ibmMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "About — Open Fiesta",
   description:
+    "Learn about Open Fiesta, the AI chat that lets you compare 300+ models in one place. Built by Niladri Hazra.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About — Open Fiesta",
+    description:
+      "Learn about Open Fiesta, the AI chat that lets you compare 300+ models in one place.",
+    url: "https://openfiesta.app/about",
+    siteName: "Open Fiesta",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Open Fiesta" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About — Open Fiesta",
+    description:
+      "Learn about Open Fiesta, the AI chat that lets you compare 300+ models in one place.",
+    images: ["/og.png"],
+  },
+}
+
+export default function AboutPage() {
+  return (
+    <main className={`relative min-h-screen overflow-hidden bg-[#0a0a0a] pb-24 ${ibmMono.className}`}>
+      {/* Breadcrumbs JSON-LD for richer SERP */}
+      <Script id="about-breadcrumbs" type="application/ld+json">
+        {JSON.stringify({
