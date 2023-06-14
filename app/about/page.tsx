@@ -370,3 +370,29 @@ export default function AboutPage() {
                 name: "Is Open Fiesta free?",
                 acceptedAnswer: { "@type": "Answer", text: "There’s a free experience with limitations. You can connect your own API keys for full power and control." }
               },
+              {
+                "@type": "Question",
+                name: "Which models are supported?",
+                acceptedAnswer: { "@type": "Answer", text: "OpenAI, Claude, Gemini, Perplexity, DeepSeek, Grok, and many more via OpenRouter and native providers." }
+              },
+              {
+                "@type": "Question",
+                name: "How is it different from a single-model chat?",
+                acceptedAnswer: { "@type": "Answer", text: "It’s built for side-by-side comparison, fast iteration, and project organization—so you can pick the best answer quickly." }
+              },
+              {
+                "@type": "Question",
+                name: "Who built Open Fiesta?",
+                acceptedAnswer: { "@type": "Answer", text: "Open Fiesta is built by Niladri Hazra. See the contact links on the About page or the Press page for more." }
+              }
+            ]
+          })}
+        </Script>
+
+        {/* Press */}
+        <div className="mt-12">
+          <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Press & media</h2>
+          <p className="text-zinc-300/90 text-sm sm:text-base">
+            Looking to cover Open Fiesta? See our <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/press">Press</a> page for brand assets and a short boilerplate.
+          </p>
+        </div>
