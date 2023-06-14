@@ -396,3 +396,8 @@ export default function AboutPage() {
             Looking to cover Open Fiesta? See our <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/press">Press</a> page for brand assets and a short boilerplate.
           </p>
         </div>
+      </section>
+    </main>
+  )
+}
+

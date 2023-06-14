@@ -129,3 +129,24 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+
+import { NextRequest } from 'next/server';
+import { ENHANCEMENT_SYSTEM_PROMPT } from '@/lib/prompts/enhancers';
+
+export async function POST(req: NextRequest) {
+  try {
+    const { prompt } = await req.json();
+
+    if (!prompt || typeof prompt !== 'string') {
+      return new Response(JSON.stringify({ error: 'Missing or invalid prompt' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    console.log('Enhancing prompt with GPT-4.1 Nano (fallback: Llama4 Scout):', prompt.substring(0, 100) + '...');
+
+    // Prepare messages for enhancement
+    const messages = [
+      { role: 'system', content: ENHANCEMENT_SYSTEM_PROMPT },
+      { role: 'user', content: `Please enhance this prompt: "${prompt}"` }
