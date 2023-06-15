@@ -296,3 +296,30 @@ export async function POST(req: NextRequest) {
         }
       }
     }
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-goog-api-key': apiKey,
+      },
+      body: JSON.stringify({
+        // Ensure there is at least one user message; Gemini requires user/model roles in contents
+        contents:
+          contents.length > 0
+            ? contents
+            : [{ role: 'user', parts: [{ text: 'Please respond to the instruction.' }] }],
+        ...(systemParts.length > 0 ? { systemInstruction: { parts: systemParts } } : {}),
+        generationConfig: {
+          response_mime_type: 'text/plain',
+          // Encourage non-empty responses
+          maxOutputTokens: 2048,
+          temperature: 0.7,
+        },
+      }),
+    });
+
+    const data: unknown = await resp.json();
+    if (!resp.ok) {
+      const errStr = (() => {
