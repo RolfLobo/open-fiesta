@@ -228,3 +228,29 @@ export async function POST(req: NextRequest) {
     let enhancedPrompt = '';
 
     if (typeof data === 'string') {
+      enhancedPrompt = data;
+    } else if (data && typeof data.text === 'string') {
+      enhancedPrompt = data.text;
+    } else if (data && typeof data.content === 'string') {
+      enhancedPrompt = data.content;
+    } else if (data && Array.isArray(data.choices)) {
+      const choices = data.choices;
+      const all = choices
+        .map((c: { message?: { content?: string } }) => (typeof c?.message?.content === 'string' ? c.message.content : ''))
+        .filter(Boolean);
+      enhancedPrompt = all.join('\n\n') || '';
+    }
+
+    if (!enhancedPrompt || enhancedPrompt.trim() === '') {
+      throw new Error('No enhanced prompt received');
+    }
+
+    return new Response(JSON.stringify({ 
+      enhancedPrompt: enhancedPrompt.trim() 
+    }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    console.error('Prompt enhancement error:', error);
+    return new Response(JSON.stringify({ 
