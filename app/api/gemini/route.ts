@@ -245,3 +245,29 @@ export async function POST(req: NextRequest) {
     type InMsg = { role?: unknown; content?: unknown };
     type GeminiPart = { text?: string; inline_data?: { mime_type: string; data: string } };
     type GeminiContent = { role: 'user' | 'model' | 'system'; parts: GeminiPart[] };
+
+    const toRole = (r: unknown): 'user' | 'model' | 'system' => {
+      const role = typeof r === 'string' ? r : '';
+      if (role === 'assistant') return 'model';
+      if (role === 'user' || role === 'system') return role;
+      return 'user';
+    };
+
+    let contents: GeminiContent[] = (Array.isArray(messages) ? (messages as InMsg[]) : []).map(
+      (m) => ({
+        role: toRole(m.role),
+        parts: [{ text: typeof m?.content === 'string' ? m.content : String(m?.content ?? '') }],
+      }),
+    );
+
+    // Extract a system prompt (from project custom prompt) into systemInstruction
+    const systemParts: GeminiPart[] = [];
+    contents = contents.filter((c) => {
+      if (c.role === 'system') {
+        for (const p of c.parts) {
+          if (typeof p?.text === 'string' && p.text.trim()) {
+            systemParts.push({ text: p.text });
+          }
+        }
+        return false; // remove from contents
+      }
