@@ -323,3 +323,29 @@ export async function POST(req: NextRequest) {
     const data: unknown = await resp.json();
     if (!resp.ok) {
       const errStr = (() => {
+        const d = data as
+          | { error?: { message?: unknown } }
+          | Record<string, unknown>
+          | string
+          | null
+          | undefined;
+        if (typeof d === 'string') return d;
+        if (d && typeof d === 'object') {
+          if ('error' in d && d.error && typeof (d as { error?: unknown }).error === 'object') {
+            const maybe = (d as { error?: { message?: unknown } }).error;
+            const m =
+              maybe && typeof maybe === 'object' && 'message' in maybe
+                ? (maybe as { message?: unknown }).message
+                : undefined;
+            return typeof m === 'string' ? m : JSON.stringify(m);
+          }
+          try {
+            return JSON.stringify(d);
+          } catch {
+            return 'Unknown error';
+          }
+        }
+        return 'Unknown error';
+      })();
+      const errObj = errStr;
+      if (resp.status === 429) {
