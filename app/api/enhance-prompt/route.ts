@@ -176,3 +176,29 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify(requestBody)
       });
+
+      if (!response.ok) {
+        throw new Error('Primary model failed');
+      }
+    } catch {
+      // Fallback to Llama4 Scout model
+      console.log('Falling back to Llama4 Scout model');
+      const baseUrl = 'https://text.pollinations.ai/openai';
+      const textUrl = `${baseUrl}?token=${encodeURIComponent(apiKey)}`;
+
+      const requestBody = {
+        messages,
+        model: 'llamascout',
+        stream: false,
+        max_tokens: 1000
+      };
+
+      response = await fetch(textUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'User-Agent': 'Open-Fiesta/1.0'
+        },
+        body: JSON.stringify(requestBody)
+      });
+    }
