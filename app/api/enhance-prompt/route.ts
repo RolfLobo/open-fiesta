@@ -202,3 +202,29 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify(requestBody)
       });
     }
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'Unknown error');
+      console.error('API Error:', response.status, response.statusText, errorText);
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    }
+
+    const responseText = await response.text();
+    console.log('API Response:', responseText.substring(0, 200) + '...');
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      // If not JSON, treat as plain text response
+      data = { text: responseText };
+    }
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    // Extract the enhanced prompt from the response using the same logic as open-provider
+    let enhancedPrompt = '';
+
+    if (typeof data === 'string') {
