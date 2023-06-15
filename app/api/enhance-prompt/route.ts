@@ -254,3 +254,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Prompt enhancement error:', error);
     return new Response(JSON.stringify({ 
+      error: 'Failed to enhance prompt. Please try again.' 
+    }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}

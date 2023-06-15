@@ -226,3 +226,22 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ error: message }), { status: 500 });
   }
 }
+
+import { NextRequest } from 'next/server';
+
+export async function POST(req: NextRequest) {
+  try {
+    const { messages, model, apiKey: apiKeyFromBody, imageDataUrl } = await req.json();
+    const apiKey = apiKeyFromBody || process.env.GEMINI_API_KEY;
+    const usedKeyType = apiKeyFromBody ? 'user' : process.env.GEMINI_API_KEY ? 'shared' : 'none';
+    if (!apiKey)
+      return new Response(JSON.stringify({ error: 'Missing Gemini API key' }), { status: 400 });
+    const allowed = new Set(['gemini-2.5-flash', 'gemini-2.5-pro']);
+    const requested = typeof model === 'string' ? model : 'gemini-2.5-flash';
+    const geminiModel = allowed.has(requested) ? requested : 'gemini-2.5-flash';
+
+    // Convert OpenAI-style messages to Gemini contents
+    // Gemini expects: { contents: [{ role, parts: [{ text }] }, ...] }
+    type InMsg = { role?: unknown; content?: unknown };
+    type GeminiPart = { text?: string; inline_data?: { mime_type: string; data: string } };
+    type GeminiContent = { role: 'user' | 'model' | 'system'; parts: GeminiPart[] };
