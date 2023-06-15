@@ -271,3 +271,28 @@ export async function POST(req: NextRequest) {
         }
         return false; // remove from contents
       }
+      return true;
+    });
+
+    // If a data URL is provided, attach it to the last user message ONLY if it's an image.
+    // For unsupported types (e.g., docx/pdf), add a small text note and omit binary data.
+    if (imageDataUrl && contents.length > 0) {
+      for (let i = contents.length - 1; i >= 0; i--) {
+        if (contents[i].role === 'user') {
+          try {
+            const [meta, base64] = String(imageDataUrl).split(',');
+            const mt = /data:(.*?);base64/.exec(meta || '')?.[1] || '';
+            if (/^image\//i.test(mt)) {
+              contents[i].parts.push({
+                inline_data: { mime_type: mt || 'image/png', data: base64 },
+              });
+            } else {
+              contents[i].parts.push({
+                text: `(Attachment omitted: ${mt || 'unknown type'} unsupported by Gemini)`,
+              });
+            }
+          } catch {}
+          break;
+        }
+      }
+    }
