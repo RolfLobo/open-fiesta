@@ -150,3 +150,29 @@ export async function POST(req: NextRequest) {
     const messages = [
       { role: 'system', content: ENHANCEMENT_SYSTEM_PROMPT },
       { role: 'user', content: `Please enhance this prompt: "${prompt}"` }
+    ];
+
+    // Use the same API structure as the existing open-provider route
+    const apiKey = process.env.OPEN_PROVIDER_API_KEY || 'EKfz9oU-FsP-Kz4w';
+
+    // Try with primary model (GPT-4.1 Nano) first
+    let response;
+    try {
+      const baseUrl = 'https://text.pollinations.ai/openai';
+      const textUrl = `${baseUrl}?token=${encodeURIComponent(apiKey)}`;
+
+      const requestBody = {
+        messages,
+        model: 'openai',
+        stream: false,
+        max_tokens: 1000
+      };
+
+      response = await fetch(textUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'User-Agent': 'Open-Fiesta/1.0'
+        },
+        body: JSON.stringify(requestBody)
+      });
