@@ -375,3 +375,29 @@ export async function POST(req: NextRequest) {
       return texts.join('\n');
     };
     let text = extractText(data) ?? '';
+    if (!text) {
+      const cand = (data as { candidates?: unknown[] } | null)?.candidates?.[0] as
+        | { content?: { parts?: unknown[] }; finishReason?: unknown; safetyRatings?: unknown[] }
+        | undefined;
+      const parts = (cand?.content as { parts?: unknown[] } | undefined)?.parts ?? [];
+      if (Array.isArray(parts) && parts.length) {
+        const collected = parts
+          .map((p) =>
+            typeof (p as { text?: unknown })?.text === 'string'
+              ? String((p as { text?: unknown }).text)
+              : '',
+          )
+          .filter(Boolean);
+        text = collected.join('\n');
+      }
+    }
+    if (!text) {
+      const cand = (data as { candidates?: unknown[] } | null)?.candidates?.[0] as
+        | { finishReason?: unknown; safetyRatings?: unknown[] }
+        | undefined;
+      const finish =
+        (cand as { finishReason?: unknown } | undefined)?.finishReason ||
+        (data as { finishReason?: unknown } | undefined)?.finishReason;
+      const blockReason =
+        (data as { promptFeedback?: { blockReason?: unknown } } | undefined)?.promptFeedback
+          ?.blockReason ||
