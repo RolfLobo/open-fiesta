@@ -401,3 +401,29 @@ export async function POST(req: NextRequest) {
       const blockReason =
         (data as { promptFeedback?: { blockReason?: unknown } } | undefined)?.promptFeedback
           ?.blockReason ||
+        (Array.isArray(
+          (cand as { safetyRatings?: Array<{ category?: unknown }> } | undefined)?.safetyRatings,
+        )
+          ? (cand as { safetyRatings?: Array<{ category?: unknown }> }).safetyRatings?.[0]?.category
+          : undefined);
+      const blocked = finish && String(finish).toLowerCase().includes('safety');
+      if (blocked || blockReason) {
+        text = `Gemini blocked the content due to safety settings${blockReason ? ` (reason: ${blockReason})` : ''}. Try rephrasing your prompt.`;
+      }
+    }
+    if (!text) {
+      const hint =
+        'Gemini returned an empty message. This can happen on shared quota. Try again, rephrase, or add your own Gemini API key in Settings.';
+      text = hint;
+    }
+    // Token estimation similar to open-provider: ~4 chars per token
+    const estimateTokens = (s: string) => {
+      const t = (s || '').replace(/\s+/g, ' ').trim();
+      return t.length > 0 ? Math.ceil(t.length / 4) : 0;
+    };
+    // messages may contain non-strings; coerce and sum
+    const inputArray = Array.isArray(messages)
+      ? (messages as Array<{ role?: unknown; content?: unknown }>)
+      : [];
+    const perMessage = inputArray.map((m, idx) => ({
+      index: idx,
