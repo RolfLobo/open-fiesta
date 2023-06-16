@@ -349,3 +349,29 @@ export async function POST(req: NextRequest) {
       })();
       const errObj = errStr;
       if (resp.status === 429) {
+        const text =
+          usedKeyType === 'user'
+            ? 'Your Gemini API key hit a rate limit. Please retry after a moment or upgrade your plan/limits.'
+            : 'This model hit a shared rate limit. Add your own Gemini API key for FREE in Settings for higher limits and reliability.';
+        return Response.json({ text, error: errObj, code: 429, provider: 'gemini', usedKeyType });
+      }
+      return new Response(JSON.stringify({ error: errObj, raw: data }), { status: resp.status });
+    }
+
+    // Extract text
+    const extractText = (d: unknown): string => {
+      const candidates = (d as { candidates?: unknown[] } | null)?.candidates;
+      if (!Array.isArray(candidates) || candidates.length === 0) return '';
+      const cand = candidates[0] as { content?: { parts?: unknown[] } } | undefined;
+      const parts = cand?.content?.parts;
+      if (!Array.isArray(parts)) return '';
+      const texts = parts
+        .map((p) =>
+          typeof (p as { text?: unknown })?.text === 'string'
+            ? String((p as { text?: unknown }).text)
+            : '',
+        )
+        .filter(Boolean);
+      return texts.join('\n');
+    };
+    let text = extractText(data) ?? '';
