@@ -269,3 +269,29 @@ export async function POST(req: NextRequest) {
     if (imageDataUrl && contents.length > 0) {
       for (let i = contents.length - 1; i >= 0; i--) {
         if (contents[i].role === 'user') {
+          try {
+            const [meta, base64] = String(imageDataUrl).split(',');
+            const mt = /data:(.*?);base64/.exec(meta || '')?.[1] || '';
+            if (/^image\//i.test(mt)) {
+              contents[i].parts.push({
+                inline_data: { mime_type: mt || 'image/png', data: base64 },
+              });
+            } else {
+              contents[i].parts.push({
+                text: `(Attachment omitted: ${mt || 'unknown type'} unsupported by Gemini)`,
+              });
+            }
+          } catch {}
+          break;
+        }
+      }
+    }
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(geminiModel)}:generateContent`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-goog-api-key': apiKey,
+      },
+      body: JSON.stringify({
