@@ -243,3 +243,29 @@ export async function POST(req: NextRequest) {
       if (role === 'user' || role === 'system') return role;
       return 'user';
     };
+
+    let contents: GeminiContent[] = (Array.isArray(messages) ? (messages as InMsg[]) : []).map(
+      (m) => ({
+        role: toRole(m.role),
+        parts: [{ text: typeof m?.content === 'string' ? m.content : String(m?.content ?? '') }],
+      }),
+    );
+
+    // Extract system message(s) into systemInstruction; Gemini only accepts user/model roles in contents
+    const systemParts: GeminiPart[] = [];
+    contents = contents.filter((c) => {
+      if (c.role === 'system') {
+        for (const p of c.parts) {
+          if (typeof p?.text === 'string' && p.text.trim()) {
+            systemParts.push({ text: p.text });
+          }
+        }
+        return false;
+      }
+      return true;
+    });
+
+    // Attach data URL to last user message only if it's an image; otherwise add a note.
+    if (imageDataUrl && contents.length > 0) {
+      for (let i = contents.length - 1; i >= 0; i--) {
+        if (contents[i].role === 'user') {
