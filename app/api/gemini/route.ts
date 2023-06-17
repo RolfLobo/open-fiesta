@@ -453,3 +453,5 @@ export async function POST(req: NextRequest) {
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Unknown error';
     return new Response(JSON.stringify({ error: message }), { status: 500 });
+  }
+}

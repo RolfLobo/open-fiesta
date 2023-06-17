@@ -219,3 +219,27 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ error: message }), { status: 500 });
   }
 }
+
+import { NextRequest } from 'next/server';
+
+// Dedicated endpoint for Gemini 2.5 Pro
+export async function POST(req: NextRequest) {
+  try {
+    const { messages, apiKey: apiKeyFromBody, imageDataUrl } = await req.json();
+    const apiKey = apiKeyFromBody || process.env.GEMINI_API_KEY;
+    const usedKeyType = apiKeyFromBody ? 'user' : process.env.GEMINI_API_KEY ? 'shared' : 'none';
+    if (!apiKey)
+      return new Response(JSON.stringify({ error: 'Missing Gemini API key' }), { status: 400 });
+    const geminiModel = 'gemini-2.5-pro';
+
+    // Convert OpenAI-style messages to Gemini contents
+    type InMsg = { role?: unknown; content?: unknown };
+    type GeminiPart = { text?: string; inline_data?: { mime_type: string; data: string } };
+    type GeminiContent = { role: 'user' | 'model' | 'system'; parts: GeminiPart[] };
+
+    const toRole = (r: unknown): 'user' | 'model' | 'system' => {
+      const role = typeof r === 'string' ? r : '';
+      if (role === 'assistant') return 'model';
+      if (role === 'user' || role === 'system') return role;
+      return 'user';
+    };
