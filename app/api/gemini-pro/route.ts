@@ -321,3 +321,29 @@ export async function POST(req: NextRequest) {
           | undefined;
         if (typeof d === 'string') return d;
         if (d && typeof d === 'object') {
+          if ('error' in d && d.error && typeof (d as { error?: unknown }).error === 'object') {
+            const maybe = (d as { error?: { message?: unknown } }).error;
+            const m =
+              maybe && typeof maybe === 'object' && 'message' in maybe
+                ? (maybe as { message?: unknown }).message
+                : undefined;
+            return typeof m === 'string' ? m : JSON.stringify(m);
+          }
+          try {
+            return JSON.stringify(d);
+          } catch {
+            return 'Unknown error';
+          }
+        }
+        return 'Unknown error';
+      })();
+      if (resp.status === 429) {
+        const text =
+          'This model hit a shared rate limit. Add your own Gemini API key for FREE in Settings for higher limits and reliability.';
+        return Response.json({ text, error: errStr, code: 429, provider: 'gemini' });
+      }
+      return new Response(JSON.stringify({ error: errStr, raw: data }), { status: resp.status });
+    }
+
+    // Normalize response to plain text
+    const cand = (data as { candidates?: unknown[] } | null)?.candidates?.[0] as
