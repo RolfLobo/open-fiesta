@@ -425,3 +425,19 @@ export async function POST(req: NextRequest) {
     const total = perMessage.reduce((sum, x) => sum + x.tokens, 0);
 
     return Response.json({
+      text,
+      raw: data,
+      provider: 'gemini',
+      usedKeyType,
+      tokens: {
+        by: 'messages',
+        total,
+        perMessage,
+        model: geminiModel,
+      },
+    });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Unknown error';
+    return new Response(JSON.stringify({ error: message }), { status: 500 });
+  }
+}

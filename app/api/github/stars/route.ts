@@ -31,3 +31,12 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false }, { status: 200 });
   }
 }
+
+import { NextResponse } from 'next/server';
+
+// GET /api/github/stars?owner=NiladriHazra&repo=Open-Fiesta
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const owner = searchParams.get('owner') || 'NiladriHazra';
+    const repo = searchParams.get('repo') || 'Open-Fiesta';
