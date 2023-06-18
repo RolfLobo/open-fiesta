@@ -399,3 +399,29 @@ export async function POST(req: NextRequest) {
     }
     if (!text) {
       // Final fallback: return a clear hint instead of raw candidate JSON
+      const hint =
+        'Gemini Pro returned an empty message. This can happen on shared quota. Try again, rephrase, or add your own Gemini API key in Settings.';
+      text = hint;
+    }
+    // Token estimation similar to other providers
+    const estimateTokens = (s: string) => {
+      const t = (s || '').replace(/\s+/g, ' ').trim();
+      return t.length > 0 ? Math.ceil(t.length / 4) : 0;
+    };
+    const inputArray = Array.isArray(messages)
+      ? (messages as Array<{ role?: unknown; content?: unknown }>)
+      : [];
+    const perMessage = inputArray.map((m, idx) => ({
+      index: idx,
+      role: typeof m?.role === 'string' ? String(m.role) : 'user',
+      chars:
+        typeof m?.content === 'string'
+          ? (m.content as string).length
+          : String(m?.content ?? '').length,
+      tokens: estimateTokens(
+        typeof m?.content === 'string' ? (m.content as string) : String(m?.content ?? ''),
+      ),
+    }));
+    const total = perMessage.reduce((sum, x) => sum + x.tokens, 0);
+
+    return Response.json({
