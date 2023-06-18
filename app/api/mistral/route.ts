@@ -185,3 +185,30 @@ export async function POST(req: NextRequest) {
     // Sanitize and validate messages
     type InMsg = { role?: unknown; content?: unknown };
     type OutMsg = { role: 'user' | 'assistant' | 'system'; content: string };
+
+    const sanitize = (msgs: unknown[]): OutMsg[] => {
+      return msgs
+        .filter((m): m is InMsg => typeof m === 'object' && m !== null)
+        .map((m): OutMsg | null => {
+          const role =
+            typeof m.role === 'string' && ['user', 'assistant', 'system'].includes(m.role)
+              ? (m.role as 'user' | 'assistant' | 'system')
+              : 'user';
+          const content = typeof m.content === 'string' ? m.content : '';
+          return content ? { role, content } : null;
+        })
+        .filter((m): m is OutMsg => m !== null);
+    };
+
+    const sanitizedMessages = sanitize((messages as unknown[]) || []);
+
+    // Keep last 10 messages to avoid overly long histories
+    const trimmedMessages =
+      sanitizedMessages.length > 10 ? sanitizedMessages.slice(-10) : sanitizedMessages;
+
+    // Ensure we have at least one message
+    if (trimmedMessages.length === 0) {
+      trimmedMessages.push({ role: 'user', content: 'Hello' });
+    }
+
+    // Handle image attachment if provided (for multimodal models like Pixtral)
