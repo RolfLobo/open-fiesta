@@ -238,3 +238,29 @@ export async function POST(req: NextRequest) {
       model: model,
       messages: processedMessages,
       max_tokens: 2048,
+      temperature: 0.7,
+      stream: false,
+    };
+
+    console.log(`Making request to Mistral API for model: ${model}`, {
+      endpoint: 'https://api.mistral.ai/v1/chat/completions',
+      messageCount: processedMessages.length,
+      tokensEstimate: totalTokensEstimate,
+    });
+
+    // Make the API call to the Mistral endpoint
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+        'User-Agent': 'Open-Fiesta/1.0',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Mistral API error (${response.status}):`, errorText);
+
+      return new Response(
