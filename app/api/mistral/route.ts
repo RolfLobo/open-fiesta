@@ -212,3 +212,29 @@ export async function POST(req: NextRequest) {
     }
 
     // Handle image attachment if provided (for multimodal models like Pixtral)
+    const processedMessages = trimmedMessages;
+    if (imageDataUrl && trimmedMessages.length > 0) {
+      const lastMessage = trimmedMessages[trimmedMessages.length - 1];
+      if (lastMessage.role === 'user') {
+        // For Pixtral models that support vision
+        if (model.includes('pixtral')) {
+          // Mistral uses a different format for images - we'll include it in content for now
+          lastMessage.content += '\n\n[Image attached - supported by Pixtral models]';
+        } else {
+          lastMessage.content +=
+            '\n\n[Image attached - processing capabilities depend on the selected model]';
+        }
+      }
+    }
+
+    // Calculate token estimates
+    const totalTokensEstimate = processedMessages.reduce(
+      (sum, msg) => sum + estimateTokens(msg.content),
+      0,
+    );
+
+    // Prepare the request body for the Mistral API
+    const requestBody = {
+      model: model,
+      messages: processedMessages,
+      max_tokens: 2048,
