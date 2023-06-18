@@ -373,3 +373,29 @@ export async function POST(req: NextRequest) {
               return JSON.stringify(p);
             } catch {
               return '';
+            }
+          })();
+          return typeof s === 'string' ? s : '';
+        })
+        .filter(Boolean)
+        .join('\n');
+    }
+    if (!text) {
+      const finish =
+        (cand as { finishReason?: unknown } | undefined)?.finishReason ||
+        (data as { finishReason?: unknown } | undefined)?.finishReason;
+      const blockReason =
+        (data as { promptFeedback?: { blockReason?: unknown } } | undefined)?.promptFeedback
+          ?.blockReason ||
+        (Array.isArray(
+          (cand as { safetyRatings?: Array<{ category?: unknown }> } | undefined)?.safetyRatings,
+        )
+          ? (cand as { safetyRatings?: Array<{ category?: unknown }> }).safetyRatings?.[0]?.category
+          : undefined);
+      const blocked = finish && String(finish).toLowerCase().includes('safety');
+      if (blocked || blockReason) {
+        text = `Gemini Pro blocked the content due to safety settings${blockReason ? ` (reason: ${blockReason})` : ''}. Try rephrasing your prompt.`;
+      }
+    }
+    if (!text) {
+      // Final fallback: return a clear hint instead of raw candidate JSON
