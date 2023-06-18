@@ -347,3 +347,29 @@ export async function POST(req: NextRequest) {
 
     // Normalize response to plain text
     const cand = (data as { candidates?: unknown[] } | null)?.candidates?.[0] as
+      | { content?: { parts?: unknown[] }; finishReason?: unknown; safetyRatings?: unknown[] }
+      | undefined;
+    const parts = (cand?.content as { parts?: unknown[] } | undefined)?.parts ?? [];
+    let text = '';
+    if (Array.isArray(parts)) {
+      const collected = parts
+        .map((p) =>
+          typeof (p as { text?: unknown })?.text === 'string'
+            ? String((p as { text?: unknown }).text)
+            : '',
+        )
+        .filter(Boolean);
+      text = collected.join('\n');
+    }
+    if (!text && Array.isArray(parts) && parts.length) {
+      // If no simple text, try to stringify meaningful structure
+      text = parts
+        .map((p) => {
+          const pp = p as { text?: unknown; inline_data?: unknown };
+          if (typeof pp?.text === 'string') return String(pp.text);
+          if (pp?.inline_data) return '[inline data]';
+          const s = (() => {
+            try {
+              return JSON.stringify(p);
+            } catch {
+              return '';
