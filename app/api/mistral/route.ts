@@ -264,3 +264,29 @@ export async function POST(req: NextRequest) {
       console.error(`Mistral API error (${response.status}):`, errorText);
 
       return new Response(
+        JSON.stringify({
+          error: `Mistral API error: ${response.status} ${response.statusText}`,
+          details: errorText,
+          code: response.status,
+        }),
+        { status: response.status },
+      );
+    }
+
+    const data = await response.json();
+
+    // Extract the response text from Mistral's response format
+    let text = '';
+    if (data.choices && data.choices.length > 0 && data.choices[0].message) {
+      text = data.choices[0].message.content || '';
+    } else if (data.message) {
+      text = data.message;
+    } else if (data.text) {
+      text = data.text;
+    } else if (typeof data === 'string') {
+      text = data;
+    }
+
+    // Ensure we have some response
+    if (!text || text.trim() === '') {
+      text = 'No response generated. Please try again with a different prompt.';
