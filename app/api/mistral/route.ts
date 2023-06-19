@@ -290,3 +290,29 @@ export async function POST(req: NextRequest) {
     // Ensure we have some response
     if (!text || text.trim() === '') {
       text = 'No response generated. Please try again with a different prompt.';
+    }
+
+    // Token reporting for response
+    const tokensPayload = {
+      by: 'messages' as const,
+      total: totalTokensEstimate,
+      model: model,
+    };
+
+    return Response.json({
+      text: text.trim(),
+      raw: data,
+      provider: 'mistral',
+      usedKeyType,
+      tokens: tokensPayload,
+    });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Mistral provider error:', error);
+
+    return new Response(
+      JSON.stringify({
+        error: `Mistral provider error: ${message}`,
+        provider: 'mistral',
+      }),
+      { status: 500 },
