@@ -208,3 +208,13 @@ export async function POST(req: NextRequest) {
 
     return Response.json(formatted);
   } catch (e: unknown) {
+    const err = e as Error;
+    if (err?.name === 'AbortError') {
+      if (process.env.DEBUG_OLLAMA === '1') console.log('Ollama request timed out');
+      return new Response(JSON.stringify({ error: 'Ollama request timed out', provider: 'ollama', code: 504 }), { status: 504 });
+    }
+    const message = err?.message || 'Unknown error';
+    if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama error:`, message);
+    return new Response(JSON.stringify({ error: message, provider: 'ollama' }), { status: 500 });
+  }
+}
