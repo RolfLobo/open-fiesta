@@ -130,3 +130,29 @@ export async function POST(req: NextRequest) {
 
     // For each model, create a separate request with its own timeout/controller
     const results = await Promise.allSettled(
+      modelList.map(async (mdl: string) => {
+        const ollamaMessages = messages.map((msg: { role: string; content: string }) => ({
+          role: msg.role,
+          content: msg.content
+        }));
+
+        const requestBody = {
+          model: mdl,
+          messages: ollamaMessages,
+          stream: false
+        };
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama request timeout triggered for model ${mdl}`);
+          controller.abort();
+        }, 180000); // 3 minutes per request
+
+        try {
+          const response = await fetch(`${ollamaUrl}/api/chat`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            signal: controller.signal,
