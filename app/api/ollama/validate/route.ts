@@ -195,3 +195,30 @@ export async function POST(req: NextRequest) {
 
     // For Ollama, we get the base URL from the request body (user settings) or environment or default to localhost
     const ollamaUrl = baseUrl || process.env.OLLAMA_URL || 'http://localhost:11434';
+
+    // First, test basic connectivity to the Ollama instance
+    let pingTimeoutId: NodeJS.Timeout | null = null;
+    const pingController = new AbortController();
+
+    try {
+      if (process.env.DEBUG_OLLAMA === '1') console.log(`Testing connectivity to Ollama at: ${ollamaUrl}`);
+      pingTimeoutId = setTimeout(() => {
+        if (process.env.DEBUG_OLLAMA === '1') console.log('Ollama ping timeout triggered');
+        pingController.abort();
+      }, 15000); // 15 seconds for debugging
+
+      let pingResponse;
+      try {
+        pingResponse = await fetch(`${ollamaUrl}/`, {
+          method: 'GET',
+          signal: pingController.signal,
+        });
+      } catch (_err) {
+        // Network error, DNS, CORS, etc.
+        return NextResponse.json({
+          ok: false,
+          error: 'Cannot connect to Ollama instance',
+          details: 'fetch failed',
+          status: 502
+        }, { status: 502 });
+      }
