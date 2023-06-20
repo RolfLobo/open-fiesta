@@ -248,3 +248,28 @@ export async function POST(req: NextRequest) {
         ok: false,
         error: 'Cannot connect to Ollama instance',
         details: err instanceof Error ? err.message : 'Unknown connection error',
+        status: 502
+      }, { status: 502 });
+    } finally {
+      if (pingTimeoutId) {
+        clearTimeout(pingTimeoutId);
+      }
+    }
+
+    // Query Ollama models endpoint to check if the model exists
+    let timeoutId: NodeJS.Timeout | null = null;
+    const controller = new AbortController();
+
+    try {
+      timeoutId = setTimeout(() => {
+        if (process.env.DEBUG_OLLAMA === '1') console.log('Ollama models fetch timeout triggered');
+        controller.abort();
+      }, 15000); // 15 seconds for debugging
+
+      const res = await fetch(`${ollamaUrl}/api/tags`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+        signal: controller.signal,
+      });
