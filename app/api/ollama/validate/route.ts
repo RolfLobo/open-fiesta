@@ -222,3 +222,29 @@ export async function POST(req: NextRequest) {
           status: 502
         }, { status: 502 });
       }
+
+      if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama ping response status: ${pingResponse.status}`);
+
+      if (!pingResponse.ok) {
+        const errorText = await pingResponse.text();
+        return NextResponse.json({
+          ok: false,
+          error: 'Cannot connect to Ollama instance',
+          details: errorText || pingResponse.statusText,
+          status: pingResponse.status
+        }, { status: 502 });
+      }
+    } catch (pingError) {
+      const err = pingError as Error;
+      if (err?.name === 'AbortError') {
+        return NextResponse.json({
+          ok: false,
+          error: 'Cannot connect to Ollama instance',
+          details: 'Connection timeout - Ollama instance not responding. Check network connectivity and Ollama configuration.',
+          status: 504
+        }, { status: 504 });
+      }
+      return NextResponse.json({
+        ok: false,
+        error: 'Cannot connect to Ollama instance',
+        details: err instanceof Error ? err.message : 'Unknown connection error',
