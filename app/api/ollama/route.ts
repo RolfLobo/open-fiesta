@@ -182,3 +182,29 @@ export async function POST(req: NextRequest) {
           } else if (data.response) {
             text = data.response;
           } else {
+            text = 'No response from Ollama';
+          }
+
+          return { model: mdl, text, raw: data };
+        } catch (e: unknown) {
+          const err = e as Error;
+          if (err?.name === 'AbortError') {
+            if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama request timed out for ${mdl}`);
+            return { model: mdl, error: 'Ollama request timed out', provider: 'ollama', code: 504 };
+          }
+          const message = err?.message || 'Unknown error';
+          if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama error for ${mdl}:`, message);
+          return { model: mdl, error: message, provider: 'ollama' };
+        } finally {
+          clearTimeout(timeoutId);
+        }
+      })
+    );
+
+    // Format results: if only one model, return as before; else, return array
+    const formatted = modelList.length === 1
+      ? results[0].status === 'fulfilled' ? results[0].value : { error: 'Failed', ...results[0].reason }
+      : results.map(r => r.status === 'fulfilled' ? r.value : { error: 'Failed', ...r.reason });
+
+    return Response.json(formatted);
+  } catch (e: unknown) {
