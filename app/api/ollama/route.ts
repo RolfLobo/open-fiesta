@@ -156,3 +156,29 @@ export async function POST(req: NextRequest) {
             },
             body: JSON.stringify(requestBody),
             signal: controller.signal,
+          });
+
+          if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama response status for ${mdl}: ${response.status}`);
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama error response for ${mdl}:`, errorText);
+            return {
+              model: mdl,
+              error: `Ollama API error: ${response.status} ${response.statusText}`,
+              details: errorText,
+              provider: 'ollama',
+              code: response.status
+            };
+          }
+
+          const data = await response.json();
+          if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama response data for ${mdl}:`, JSON.stringify(data, null, 2));
+
+          // Extract the response text
+          let text = '';
+          if (data.message && data.message.content) {
+            text = data.message.content;
+          } else if (data.response) {
+            text = data.response;
+          } else {
