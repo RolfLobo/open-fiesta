@@ -316,3 +316,6 @@ export async function POST(req: NextRequest) {
         provider: 'mistral',
       }),
       { status: 500 },
+    );
+  }
+}

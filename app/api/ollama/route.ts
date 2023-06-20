@@ -108,3 +108,25 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ error: message, provider: 'ollama' }), { status: 500 });
   }
 }
+import { NextRequest } from 'next/server';
+
+export const runtime = 'nodejs';
+
+export async function POST(req: NextRequest) {
+  try {
+    const { messages, model, baseUrl, models } = await req.json();
+    // For Ollama, we get the base URL from the request body (user settings) or environment or default to localhost
+    const ollamaUrl = baseUrl || process.env.OLLAMA_URL || 'http://localhost:11434';
+
+    if (process.env.DEBUG_OLLAMA === '1') console.log(`Calling Ollama model: ${model} at ${ollamaUrl}`);
+
+    // Support both single model and array of models
+    const modelList = Array.isArray(models) ? models : model ? [model] : [];
+
+    if (modelList.length === 0) {
+      // Fallback to single model if models array not provided
+      modelList.push(model);
+    }
+
+    // For each model, create a separate request with its own timeout/controller
+    const results = await Promise.allSettled(
