@@ -273,3 +273,30 @@ export async function POST(req: NextRequest) {
         cache: 'no-store',
         signal: controller.signal,
       });
+
+      if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama API response status: ${res.status}`);
+
+      if (!res.ok) {
+        let errorDetails = '';
+        try {
+          const errorText = await res.text();
+          errorDetails = errorText;
+        } catch (_e) {
+          errorDetails = `HTTP ${res.status}`;
+        }
+        return NextResponse.json({
+          ok: false,
+          error: `Ollama connection error`,
+          details: errorDetails,
+          status: res.status
+        }, { status: 502 });
+      }
+
+      const textData = await res.text();
+      if (process.env.DEBUG_OLLAMA === '1') console.log(`Ollama API response text:`, textData.substring(0, 500));
+
+      let data;
+      try {
+        data = JSON.parse(textData);
+      } catch (_parseError) {
+        return NextResponse.json({
