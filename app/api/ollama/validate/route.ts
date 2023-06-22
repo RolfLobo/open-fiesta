@@ -326,3 +326,29 @@ export async function POST(req: NextRequest) {
 
       // Prepare response with available models for better UX
       const response: { ok: true; exists: boolean; availableModels?: string[] } = { ok: true, exists: !!found };
+
+      // If model not found, provide list of available models
+      if (!found && modelList.length > 0) {
+        response.availableModels = modelList
+          .map((m: { name: string }) => m.name)
+          .filter((name: string): name is string => typeof name === 'string')
+          .slice(0, 10);
+      }
+      return NextResponse.json(response);
+    } catch (fetchError: unknown) {
+      const err = fetchError as Error;
+      if (err?.name === 'AbortError') {
+        return NextResponse.json({
+          ok: false,
+          error: 'Connection timeout - Ollama instance not responding',
+          details: 'Request timed out after 15 seconds. Check network connectivity and Ollama configuration.',
+          status: 504
+        }, { status: 504 });
+      }
+      const errorMessage = err?.message || 'Unknown error';
+      return NextResponse.json({
+        ok: false,
+        error: `Failed to connect to Ollama instance`,
+        details: errorMessage,
+        status: 502
+      }, { status: 502 });
