@@ -352,3 +352,13 @@ export async function POST(req: NextRequest) {
         details: errorMessage,
         status: 502
       }, { status: 502 });
+    } finally {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+  } catch (_e: unknown) {
+    const message = typeof _e === 'object' && _e && 'message' in _e ? String((_e as { message?: unknown }).message) : 'Unknown error';
+    return NextResponse.json({ ok: false, error: message, status: 500 }, { status: 500 });
+  }
+}

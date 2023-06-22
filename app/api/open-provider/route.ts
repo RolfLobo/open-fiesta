@@ -495,3 +495,20 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+import { NextRequest } from 'next/server';
+import { Buffer } from 'node:buffer';
+
+// Simple token estimator (approximate): ~4 characters per token
+function estimateTokens(text: string): number {
+  const t = (text || '').replace(/\s+/g, ' ').trim();
+  return t.length > 0 ? Math.ceil(t.length / 4) : 0;
+}
+
+// Function to get natural TTS prefix based on content type
+function getTTSPrefix(text: string): string {
+  const lowerText = text.toLowerCase().trim();
+
+  // For questions
+  if (
+    lowerText.includes('?') ||
