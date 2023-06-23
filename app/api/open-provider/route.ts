@@ -538,3 +538,29 @@ function getTTSPrefix(text: string): string {
 
   // For commands or requests
   if (
+    lowerText.startsWith('please') ||
+    lowerText.startsWith('can you') ||
+    lowerText.startsWith('could you') ||
+    lowerText.startsWith('tell me') ||
+    lowerText.startsWith('explain') ||
+    lowerText.startsWith('describe')
+  ) {
+    return 'Your request was:';
+  }
+
+  // For statements or stories
+  if (lowerText.length > 50) {
+    return "Here's your text:";
+  }
+
+  // Default for short phrases
+  return 'Repeating:';
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { messages, model, apiKey: apiKeyFromBody, imageDataUrl, voice } = await req.json();
+    // Use the provided token or fallback to environment variables or default token
+    const apiKey =
+      apiKeyFromBody ||
+      process.env.OPEN_PROVIDER_API_KEY ||
