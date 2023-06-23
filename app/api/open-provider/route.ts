@@ -590,3 +590,29 @@ export async function POST(req: NextRequest) {
           return { role, content };
         })
         .filter((m) => isRole(m.role));
+
+    const sanitizedMessages = sanitize((messages as unknown[]) || []);
+
+    // Keep last 8 messages to avoid overly long histories
+    const trimmedMessages =
+      sanitizedMessages.length > 8 ? sanitizedMessages.slice(-8) : sanitizedMessages;
+
+    // Extract the last user message as the prompt for image generation
+    const lastUserMessage = trimmedMessages.filter((msg) => msg.role === 'user').pop();
+    let prompt = lastUserMessage ? lastUserMessage.content : 'A beautiful image';
+
+    // Handle different model categories
+    const isImageModel = ['flux', 'kontext', 'turbo'].includes(model);
+    const isAudioModel = model === 'openai-audio';
+    const isReasoningModel = ['deepseek-reasoning'].includes(model);
+
+    const isGpt5Nano = model === 'gpt-5-nano';
+
+    // For audio models, add natural TTS prefix to make it feel more conversational
+    if (isAudioModel && prompt) {
+      const ttsPrefix = getTTSPrefix(prompt);
+      prompt = `${ttsPrefix} ${prompt}`;
+      console.log(`Audio TTS input length: ${prompt.length} characters`);
+    }
+
+    if (isImageModel) {
