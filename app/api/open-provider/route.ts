@@ -642,3 +642,29 @@ export async function POST(req: NextRequest) {
     let useChunking = false;
 
     if (isAudioModel) {
+      // Check if text is too long for URL (conservative limit: 800 chars for reliable audio)
+      if (prompt.length > 800) {
+        // For very long text, truncate with a note
+        const truncatedPrompt =
+          prompt.substring(0, 750) + '... [Audio truncated due to length limit]';
+        const encodedPrompt = encodeURIComponent(truncatedPrompt);
+        const selectedVoice = voice || 'alloy';
+        textUrl = `https://text.pollinations.ai/${encodedPrompt}?model=openai-audio&voice=${selectedVoice}&token=${encodeURIComponent(apiKey)}`;
+        useChunking = true;
+      } else {
+        // For shorter text, use full content
+        const encodedPrompt = encodeURIComponent(prompt);
+        const selectedVoice = voice || 'alloy';
+        textUrl = `https://text.pollinations.ai/${encodedPrompt}?model=openai-audio&voice=${selectedVoice}&token=${encodeURIComponent(apiKey)}`;
+      }
+    } else {
+      // Use OpenAI-compatible endpoint for text models
+      const baseUrl = 'https://text.pollinations.ai/openai';
+      textUrl = `${baseUrl}?token=${encodeURIComponent(apiKey)}`;
+    }
+
+    // Prepare the request body in OpenAI format for Pollinations API
+    // Compute token estimates
+    const messageTokenDetails = trimmedMessages.map((m, idx) => ({
+      index: idx,
+      role: m.role,
