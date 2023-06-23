@@ -512,3 +512,29 @@ function getTTSPrefix(text: string): string {
   // For questions
   if (
     lowerText.includes('?') ||
+    lowerText.startsWith('what') ||
+    lowerText.startsWith('how') ||
+    lowerText.startsWith('why') ||
+    lowerText.startsWith('when') ||
+    lowerText.startsWith('where') ||
+    lowerText.startsWith('who') ||
+    lowerText.startsWith('which') ||
+    lowerText.startsWith('can you')
+  ) {
+    return "Here's what you asked:";
+  }
+
+  // For greetings
+  if (
+    lowerText.includes('hello') ||
+    lowerText.includes('hi ') ||
+    lowerText.includes('hey') ||
+    lowerText.startsWith('good morning') ||
+    lowerText.startsWith('good afternoon') ||
+    lowerText.startsWith('good evening')
+  ) {
+    return 'You said:';
+  }
+
+  // For commands or requests
+  if (
