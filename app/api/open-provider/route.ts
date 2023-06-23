@@ -616,3 +616,29 @@ export async function POST(req: NextRequest) {
     }
 
     if (isImageModel) {
+      // For image models, use the image generation endpoint with token authentication
+      const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&model=${encodeURIComponent(model)}&nologo=true&enhance=true&token=${encodeURIComponent(apiKey)}`;
+
+      // Return the image URL directly without markdown text to avoid showing text before image loads
+      const text = `![Generated Image](${imageUrl})`;
+      const promptTokensEstimate = estimateTokens(prompt);
+      return Response.json({
+        text,
+        imageUrl,
+        provider: 'open-provider',
+        usedKeyType,
+        isImageGeneration: true, // Flag to indicate this is image generation
+        tokens: {
+          by: 'prompt',
+          total: promptTokensEstimate,
+          model,
+        },
+      });
+    }
+
+    // For audio models, use GET format with chunking for long text
+    // For text models, use POST format
+    let textUrl;
+    let useChunking = false;
+
+    if (isAudioModel) {
