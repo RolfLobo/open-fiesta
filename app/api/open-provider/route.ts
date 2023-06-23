@@ -564,3 +564,29 @@ export async function POST(req: NextRequest) {
     const apiKey =
       apiKeyFromBody ||
       process.env.OPEN_PROVIDER_API_KEY ||
+      process.env.OPEN_PROVIDER_API_KEY_BACKUP ||
+      'EKfz9oU-FsP-Kz4w';
+    const usedKeyType = apiKeyFromBody
+      ? 'user'
+      : process.env.OPEN_PROVIDER_API_KEY
+        ? 'shared-primary'
+        : process.env.OPEN_PROVIDER_API_KEY_BACKUP
+          ? 'shared-backup'
+          : 'default';
+
+    if (!model) return new Response(JSON.stringify({ error: 'Missing model id' }), { status: 400 });
+
+    // Sanitize and validate messages
+    type InMsg = { role?: unknown; content?: unknown };
+    type OutMsg = { role: 'user' | 'assistant' | 'system'; content: string };
+
+    const isRole = (r: unknown): r is OutMsg['role'] =>
+      r === 'user' || r === 'assistant' || r === 'system';
+    const sanitize = (msgs: unknown[]): OutMsg[] =>
+      (Array.isArray(msgs) ? (msgs as InMsg[]) : [])
+        .map((m) => {
+          const role = isRole(m?.role) ? m.role : 'user';
+          const content = typeof m?.content === 'string' ? m.content : String(m?.content ?? '');
+          return { role, content };
+        })
+        .filter((m) => isRole(m.role));
