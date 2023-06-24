@@ -668,3 +668,29 @@ export async function POST(req: NextRequest) {
     const messageTokenDetails = trimmedMessages.map((m, idx) => ({
       index: idx,
       role: m.role,
+      chars: m.content.length,
+      tokens: estimateTokens(m.content),
+    }));
+    const totalTokensEstimate = messageTokenDetails.reduce((sum, x) => sum + x.tokens, 0);
+    const requestBody = isAudioModel
+      ? null
+      : {
+          // For text models, use chat format
+          messages: trimmedMessages.map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+          model: model,
+          stream: false,
+          // Add defaults and reasoning parameters
+          // Note: Omit `temperature` entirely to satisfy Azure models that only accept the default (1)
+          ...(isReasoningModel ? { max_tokens: 4000 } : { max_tokens: 2048 }),
+        };
+
+    // Longer timeout for reasoning models as they take more time
+    const timeoutMs = isReasoningModel ? 180000 : 120000; // 180s for reasoning, 120s for others
+    const aborter = new AbortController();
+    const timeoutId = setTimeout(() => aborter.abort(), timeoutMs);
+
+    try {
+      const messageCount =
