@@ -694,3 +694,29 @@ export async function POST(req: NextRequest) {
 
     try {
       const messageCount =
+        !isAudioModel && (requestBody as { messages?: unknown[] })?.messages
+          ? (requestBody as { messages: unknown[] }).messages.length || 0
+          : 0;
+      console.log(`Making request to Pollinations API for model: ${model}`, {
+        url: textUrl,
+        bodyPreview: isAudioModel
+          ? {
+              method: 'GET',
+              model: 'openai-audio',
+              voice: voice || 'alloy',
+              isAudio: true,
+              originalLength: prompt?.length || 0,
+              truncated: prompt.length > 800,
+              finalLength: prompt.length > 800 ? 750 : prompt.length,
+            }
+          : {
+              model: requestBody?.model || model,
+              messageCount:
+                requestBody && 'messages' in requestBody ? requestBody.messages?.length || 0 : 0,
+              isReasoning: isReasoningModel,
+              endpoint: 'openai-compatible',
+              tokensEstimate: totalTokensEstimate,
+            },
+      });
+
+      // For reasoning models, try both token methods
