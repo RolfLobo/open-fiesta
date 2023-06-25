@@ -798,3 +798,29 @@ export async function POST(req: NextRequest) {
 
       // Handle different response types based on model
       let data;
+      let audioUrl = null;
+      const contentType = resp.headers.get('content-type');
+
+      if (isAudioModel) {
+        // For audio models, handle binary audio response
+        console.log('Audio response content-type:', contentType);
+
+        if (contentType?.includes('audio/') || contentType?.includes('application/octet-stream')) {
+          // Binary audio response - convert to base64 for client-side blob creation
+          const audioBuffer = await resp.arrayBuffer();
+          const audioBase64 = Buffer.from(audioBuffer).toString('base64');
+          const mimeType = contentType || 'audio/mpeg';
+          audioUrl = `data:${mimeType};base64,${audioBase64}`;
+          data = { audio_url: audioUrl };
+          console.log('Created data URL for audio, size:', audioBuffer.byteLength, 'bytes');
+        } else {
+          // Try to parse as JSON first, then as text
+          const responseText = await resp.text();
+          console.log('Audio response text:', responseText.substring(0, 200));
+
+          try {
+            data = JSON.parse(responseText);
+            // 1) Direct fields
+            if (data.audio_url || data.url) {
+              audioUrl = data.audio_url || data.url;
+              console.log('Found audio URL in JSON:', audioUrl);
