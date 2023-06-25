@@ -772,3 +772,29 @@ export async function POST(req: NextRequest) {
             return 'Server error occurred. Please try again later.';
           }
           return `Provider returned error [status ${resp.status}]: ${errorText}`;
+        })();
+
+        if (resp.status === 429) {
+          return Response.json({
+            text: friendlyError,
+            error: errorText,
+            code: 429,
+            provider: 'open-provider',
+            usedKeyType,
+          });
+        }
+
+        return Response.json(
+          {
+            text: friendlyError,
+            error: errorText,
+            code: resp.status,
+            provider: 'open-provider',
+            usedKeyType,
+          },
+          { status: resp.status },
+        );
+      }
+
+      // Handle different response types based on model
+      let data;
