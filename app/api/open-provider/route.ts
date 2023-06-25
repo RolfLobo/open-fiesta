@@ -745,3 +745,30 @@ export async function POST(req: NextRequest) {
       });
 
       clearTimeout(timeoutId);
+
+      if (!resp.ok) {
+        const errorText = await resp.text().catch(() => 'Unknown error');
+        console.error(`Pollinations API Error for model ${model}:`, {
+          status: resp.status,
+          statusText: resp.statusText,
+          errorText,
+          headers: Object.fromEntries(resp.headers.entries()),
+        });
+
+        const friendlyError = (() => {
+          if (resp.status === 401) {
+            return 'Authentication failed. The model may require higher tier access.';
+          }
+          if (resp.status === 403) {
+            return 'Access denied. This model may require special permissions.';
+          }
+          if (resp.status === 429) {
+            return 'Rate limit exceeded. Please try again in a moment.';
+          }
+          if (resp.status === 503) {
+            return 'Service temporarily unavailable. Please try again later.';
+          }
+          if (resp.status >= 500) {
+            return 'Server error occurred. Please try again later.';
+          }
+          return `Provider returned error [status ${resp.status}]: ${errorText}`;
