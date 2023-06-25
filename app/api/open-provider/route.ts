@@ -720,3 +720,28 @@ export async function POST(req: NextRequest) {
       });
 
       // For reasoning models, try both token methods
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Open-Fiesta/1.0',
+        Authorization: `Bearer ${apiKey}`,
+      };
+
+      // Add additional headers for reasoning models
+      if (isReasoningModel) {
+        headers['X-API-Key'] = apiKey;
+        headers['X-Model-Type'] = 'reasoning';
+      }
+
+      const resp = await fetch(textUrl, {
+        method: isAudioModel ? 'GET' : 'POST',
+        headers: isAudioModel
+          ? {
+              'User-Agent': 'Open-Fiesta/1.0',
+              Authorization: `Bearer ${apiKey}`,
+            }
+          : headers,
+        ...(isAudioModel ? {} : { body: JSON.stringify(requestBody) }),
+        signal: aborter.signal,
+      });
+
+      clearTimeout(timeoutId);
