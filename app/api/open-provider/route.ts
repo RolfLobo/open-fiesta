@@ -902,3 +902,29 @@ export async function POST(req: NextRequest) {
       // audioUrl is already declared above
 
       if (isAudioModel) {
+        // For audio models, prioritize audio URL
+        if (audioUrl) {
+          text = `[AUDIO:${audioUrl}]`; // Special format for audio
+        } else if (data && data.audio_url) {
+          audioUrl = data.audio_url;
+          text = `[AUDIO:${audioUrl}]`;
+        } else if (typeof data === 'string') {
+          text = data;
+        } else if (data && typeof data.text === 'string') {
+          text = data.text;
+        } else {
+          text = 'Audio generation failed. Please try again.';
+        }
+      } else {
+        // For text models, extract text and aggregate all choices if present
+        if (typeof data === 'string') {
+          text = data;
+        } else if (data && typeof (data as { text: unknown }).text === 'string') {
+          text = (data as { text: unknown }).text;
+        } else if (data && typeof (data as { content: unknown }).content === 'string') {
+          text = (data as { content: unknown }).content;
+        } else if (data && Array.isArray((data as { choices: unknown[] }).choices)) {
+          const choices = (data as { choices: unknown[] }).choices as Array<{
+            message?: { content?: string } | { role?: string; content?: string };
+          }>;
+          const all = choices
