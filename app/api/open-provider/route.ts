@@ -824,3 +824,29 @@ export async function POST(req: NextRequest) {
             if (data.audio_url || data.url) {
               audioUrl = data.audio_url || data.url;
               console.log('Found audio URL in JSON:', audioUrl);
+            }
+            // 2) OpenAI Responses API style: { output: [ { content: [ { type: 'output_audio', audio: { data, format } } ] } ] }
+            if (!audioUrl && Array.isArray((data as { output: unknown[] }).output)) {
+              const items = (data as { output: unknown[] }).output as unknown[];
+              for (const item of items) {
+                const contents = item?.content;
+                if (Array.isArray(contents)) {
+                  for (const c of contents) {
+                    const audioObj = c?.audio || c?.output_audio || c?.data?.audio;
+                    const type = c?.type;
+                    if (
+                      (type === 'output_audio' || type === 'audio' || audioObj) &&
+                      (audioObj?.data || c?.data)
+                    ) {
+                      const b64 = audioObj?.data || c?.data;
+                      const fmt = (audioObj?.format || 'mp3').toLowerCase();
+                      const mime =
+                        fmt === 'wav' ? 'audio/wav' : fmt === 'm4a' ? 'audio/mp4' : 'audio/mpeg';
+                      audioUrl = `data:${mime};base64,${b64}`;
+                      console.log('Constructed data URL from Responses payload');
+                      break;
+                    }
+                  }
+                }
+                if (audioUrl) break;
+              }
