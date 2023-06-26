@@ -876,3 +876,29 @@ export async function POST(req: NextRequest) {
               (responseText.includes('.mp3') ||
                 responseText.includes('.wav') ||
                 responseText.includes('.m4a'))
+            ) {
+              audioUrl = responseText.trim();
+              data = { audio_url: audioUrl };
+              console.log('Using response text as audio URL:', audioUrl);
+            } else {
+              // If not JSON or URL, treat as plain text response
+              data = { text: responseText };
+            }
+          }
+        }
+      } else {
+        // For text models, handle as before
+        const responseText = await resp.text();
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          // If not JSON, treat as plain text response
+          data = { text: responseText };
+        }
+      }
+
+      // Extract text from response
+      let text = '';
+      // audioUrl is already declared above
+
+      if (isAudioModel) {
