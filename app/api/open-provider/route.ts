@@ -928,3 +928,29 @@ export async function POST(req: NextRequest) {
             message?: { content?: string } | { role?: string; content?: string };
           }>;
           const all = choices
+            .map((c) => (typeof c?.message?.content === 'string' ? c.message!.content : ''))
+            .filter(Boolean);
+          text = all.join('\n\n') || '';
+        } else {
+          text = 'No response generated. Please try again with a different prompt.';
+        }
+      }
+
+      // Ensure we have some response
+      if (!text || text.trim() === '') {
+        text = 'No response generated. Please try again with a different prompt.';
+      }
+
+      // Token reporting for response
+      const tokensPayload = isAudioModel
+        ? { by: 'prompt', total: estimateTokens(prompt), model }
+        : { by: 'messages', total: totalTokensEstimate, perMessage: messageTokenDetails, model };
+
+      return Response.json({
+        text: text.trim(),
+        audioUrl,
+        raw: data,
+        provider: 'open-provider',
+        usedKeyType,
+        tokens: tokensPayload,
+      });
