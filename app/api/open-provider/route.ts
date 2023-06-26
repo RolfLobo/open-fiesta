@@ -850,3 +850,29 @@ export async function POST(req: NextRequest) {
                 }
                 if (audioUrl) break;
               }
+            }
+            // 3) Choices-style: choices[0].message.audio or .content with audio
+            if (!audioUrl && Array.isArray((data as { choices: unknown[] }).choices)) {
+              const ch0 = (data as { choices: unknown[] }).choices[0];
+              const msg = ch0?.message || {};
+              const audioNode =
+                msg?.audio ||
+                msg?.content?.find?.((x: { type: string }) => x?.type === 'audio' || x?.type === 'output_audio')
+                  ?.audio;
+              const b64 = audioNode?.data;
+              const fmt = (audioNode?.format || 'mp3').toLowerCase();
+              if (b64) {
+                const mime =
+                  fmt === 'wav' ? 'audio/wav' : fmt === 'm4a' ? 'audio/mp4' : 'audio/mpeg';
+                audioUrl = `data:${mime};base64,${b64}`;
+                console.log('Constructed data URL from choices.message.audio');
+              }
+            }
+          } catch {
+            // If response looks like a URL, use it as audio URL
+            const responseText = await resp.text();
+            if (
+              responseText.startsWith('http') &&
+              (responseText.includes('.mp3') ||
+                responseText.includes('.wav') ||
+                responseText.includes('.m4a'))
