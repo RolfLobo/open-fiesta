@@ -661,3 +661,29 @@ export async function POST(req: NextRequest) {
               usedKeyType,
               isImageGeneration: true,
             });
+          }
+        } else {
+          return Response.json({
+            text: 'No image generated',
+            provider: 'openrouter',
+            usedKeyType,
+            isImageGeneration: true,
+          });
+        }
+      } catch (error) {
+        return Response.json({
+          text: `Image generation error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          code: 500,
+          provider: 'openrouter',
+          usedKeyType,
+        });
+      }
+    }
+
+    const isRole = (r: unknown): r is OutMsg['role'] =>
+      r === 'user' || r === 'assistant' || r === 'system';
+    const sanitize = (msgs: unknown[]): OutMsg[] =>
+      (Array.isArray(msgs) ? (msgs as InMsg[]) : [])
+        .map((m) => {
+          const role = isRole(m?.role) ? m.role : 'user';
