@@ -980,3 +980,16 @@ export async function POST(req: NextRequest) {
           usedKeyType,
         },
         { status: 500 },
+      );
+    }
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({
+        error: message,
+        provider: 'open-provider',
+      }),
+      { status: 500 },
+    );
+  }
+}

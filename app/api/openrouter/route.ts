@@ -544,3 +544,16 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ error: message, code }), { status: code });
   }
 }
+
+import { NextRequest } from 'next/server';
+import type { Readable } from 'node:stream';
+export const runtime = 'nodejs';
+// Lazy require to avoid bundling when not used
+let pdfParse:
+  | ((data: Buffer | Uint8Array | ArrayBuffer | Readable) => Promise<{ text: string }>)
+  | null = null;
+let mammoth: { extractRawText: (arg: { buffer: Buffer }) => Promise<{ value: string }> } | null =
+  null;
+
+export async function POST(req: NextRequest) {
+  try {
