@@ -582,3 +582,30 @@ export async function POST(req: NextRequest) {
     // Check if this is an image generation model
     const isImageGenerationModel =
       typeof model === 'string' && /google\/gemini-2\.5-flash-image-preview/i.test(model);
+
+    // Handle image generation models differently
+    if (isImageGenerationModel) {
+      // Extract the last user message as the prompt for image generation
+      const sanitizedMessages = (Array.isArray(messages) ? messages : [])
+        .map((m: InMsg) => ({
+          role:
+            m?.role === 'user' || m?.role === 'assistant' || m?.role === 'system' ? m.role : 'user',
+          content: typeof m?.content === 'string' ? m.content : String(m?.content ?? ''),
+        }))
+        .filter((m: { role: string; content: string }) => m.role && m.content);
+
+      const lastUserMessage = sanitizedMessages
+        .filter((msg: { role: string; content: string }) => msg.role === 'user')
+        .pop();
+      const prompt = lastUserMessage ? lastUserMessage.content : 'A beautiful image';
+
+      // For image generation, we'll make the API call and return the response as markdown image
+      // The actual image generation will be handled by the OpenRouter API
+      try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': referer || 'https://localhost:3000',
+            'X-Title': title || 'AI Chat',
