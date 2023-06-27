@@ -954,3 +954,29 @@ export async function POST(req: NextRequest) {
         usedKeyType,
         tokens: tokensPayload,
       });
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        return Response.json(
+          {
+            text: 'Request timed out. Please try again with a shorter prompt.',
+            error: 'Timeout',
+            code: 408,
+            provider: 'open-provider',
+            usedKeyType,
+          },
+          { status: 408 },
+        );
+      }
+
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      return Response.json(
+        {
+          text: 'Failed to generate response. Please try again.',
+          error: errorMsg,
+          code: 500,
+          provider: 'open-provider',
+          usedKeyType,
+        },
+        { status: 500 },
