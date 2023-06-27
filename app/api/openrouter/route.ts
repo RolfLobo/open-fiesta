@@ -557,3 +557,28 @@ let mammoth: { extractRawText: (arg: { buffer: Buffer }) => Promise<{ value: str
 
 export async function POST(req: NextRequest) {
   try {
+    const {
+      messages,
+      model,
+      apiKey: apiKeyFromBody,
+      referer,
+      title,
+      imageDataUrl,
+    } = await req.json();
+    const apiKey = apiKeyFromBody || process.env.OPENROUTER_API_KEY;
+    const usedKeyType = apiKeyFromBody
+      ? 'user'
+      : process.env.OPENROUTER_API_KEY
+        ? 'shared'
+        : 'none';
+    if (!apiKey)
+      return new Response(JSON.stringify({ error: 'Missing OpenRouter API key' }), { status: 400 });
+    if (!model) return new Response(JSON.stringify({ error: 'Missing model id' }), { status: 400 });
+
+    // Define types first
+    type InMsg = { role?: unknown; content?: unknown };
+    type OutMsg = { role: 'user' | 'assistant' | 'system'; content: string };
+
+    // Check if this is an image generation model
+    const isImageGenerationModel =
+      typeof model === 'string' && /google\/gemini-2\.5-flash-image-preview/i.test(model);
