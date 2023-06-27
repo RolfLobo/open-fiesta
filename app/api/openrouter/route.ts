@@ -635,3 +635,29 @@ export async function POST(req: NextRequest) {
 
         if (typeof content === 'string') {
           // Check if the response contains an image URL or if we need to generate one
+          const imageUrlMatch = content.match(/https?:\/\/[^\s)]+\.(jpg|jpeg|png|gif|webp)/i);
+
+          if (imageUrlMatch) {
+            // If there's already an image URL in the response, use it
+            const imageUrl = imageUrlMatch[0];
+            const text = `![Generated Image](${imageUrl})`;
+            return Response.json({
+              text,
+              imageUrl,
+              provider: 'openrouter',
+              usedKeyType,
+              isImageGeneration: true,
+            });
+          } else {
+            // For Gemini image preview model, generate an image using the user's prompt
+            const encodedPrompt = encodeURIComponent(prompt);
+            const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&model=flux&nologo=true&enhance=true`;
+            const text = `![Generated Image](${imageUrl})`;
+
+            return Response.json({
+              text,
+              imageUrl,
+              provider: 'openrouter',
+              usedKeyType,
+              isImageGeneration: true,
+            });
