@@ -609,3 +609,29 @@ export async function POST(req: NextRequest) {
             'Content-Type': 'application/json',
             'HTTP-Referer': referer || 'https://localhost:3000',
             'X-Title': title || 'AI Chat',
+          },
+          body: JSON.stringify({
+            model,
+            messages: sanitizedMessages,
+            max_tokens: 4000,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+          return Response.json({
+            text: `Image generation failed: ${errorMessage}`,
+            error: errorMessage,
+            code: response.status,
+            provider: 'openrouter',
+            usedKeyType,
+          });
+        }
+
+        const data = await response.json();
+        const choice = data?.choices?.[0];
+        const content = choice?.message?.content;
+
+        if (typeof content === 'string') {
+          // Check if the response contains an image URL or if we need to generate one
