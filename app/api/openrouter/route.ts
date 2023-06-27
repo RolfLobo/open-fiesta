@@ -687,3 +687,29 @@ export async function POST(req: NextRequest) {
       (Array.isArray(msgs) ? (msgs as InMsg[]) : [])
         .map((m) => {
           const role = isRole(m?.role) ? m.role : 'user';
+          const content = typeof m?.content === 'string' ? m.content : String(m?.content ?? '');
+          return { role, content };
+        })
+        .filter((m) => isRole(m.role));
+    // Keep last 8 messages to avoid overly long histories for picky providers
+    const trimmed = (arr: OutMsg[]) => (arr.length > 8 ? arr.slice(-8) : arr);
+    const toUpstreamMessages = async (msgs: OutMsg[]) => {
+      const arr = trimmed(msgs);
+      if (!imageDataUrl || !arr.length) return arr;
+      // Try to attach to the last user message
+      const lastIdx = [...arr]
+        .map((m, i) => ({ m, i }))
+        .reverse()
+        .find((p) => p.m.role === 'user')?.i;
+      if (lastIdx == null) return arr;
+      const m = arr[lastIdx];
+      const [meta, base64] = String(imageDataUrl).split(',');
+      const mt = /data:(.*?);base64/.exec(meta || '')?.[1] || '';
+      let buf: Buffer | null = null;
+      if (base64) {
+        try {
+          buf = Buffer.from(base64, 'base64');
+        } catch {
+          buf = null;
+        }
+      }
