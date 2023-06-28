@@ -713,3 +713,29 @@ export async function POST(req: NextRequest) {
           buf = null;
         }
       }
+      // If MIME is missing/unknown, detect by magic bytes
+      let detectedMt = mt;
+      if (
+        (!detectedMt || /application\/octet-stream/i.test(detectedMt)) &&
+        buf &&
+        buf.length >= 4
+      ) {
+        const b0 = buf[0],
+          b1 = buf[1];
+        const ascii5 = buf.slice(0, 5).toString('ascii');
+        if (ascii5.startsWith('%PDF-')) {
+          detectedMt = 'application/pdf';
+        } else if (b0 === 0x50 && b1 === 0x4b) {
+          // 'PK' ZIP header, likely DOCX
+          detectedMt = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        }
+      }
+
+      if (/^image\//i.test(detectedMt)) {
+        const content = [
+          { type: 'text', text: m.content },
+          { type: 'image_url', image_url: { url: String(imageDataUrl) } },
+        ];
+        return arr.map((mm, idx) =>
+          idx === lastIdx ? ({ role: mm.role, content } as unknown as OutMsg) : mm,
+        );
