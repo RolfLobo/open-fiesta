@@ -739,3 +739,29 @@ export async function POST(req: NextRequest) {
         return arr.map((mm, idx) =>
           idx === lastIdx ? ({ role: mm.role, content } as unknown as OutMsg) : mm,
         );
+      }
+      // text/plain: decode and append inline (limit)
+      if (/^text\/plain$/i.test(detectedMt) && base64) {
+        try {
+          const decoded = (buf ?? Buffer.from(base64, 'base64')).toString('utf8').slice(0, 20000);
+          const appended = `${m.content}\n\n[Attached text file contents:]\n${decoded}`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        } catch {}
+      }
+      // PDF: extract text using pdf-parse
+      if (/^application\/pdf$/i.test(detectedMt) && base64 && (buf?.length ?? 0) > 0) {
+        try {
+          if (!pdfParse) {
+            type PdfParseFn = (
+              data: Buffer | Uint8Array | ArrayBuffer | Readable,
+            ) => Promise<{ text: string }>;
+            type PdfParseModule = { default?: PdfParseFn } | PdfParseFn;
+            const mod = (await import('pdf-parse')) as PdfParseModule;
+            const fn: PdfParseFn =
+              typeof mod === 'function' ? (mod as PdfParseFn) : (mod.default as PdfParseFn);
+            pdfParse = fn;
+          }
+          const out = await pdfParse!(buf!);
+          const text = (out?.text || '').trim().slice(0, 80000);
