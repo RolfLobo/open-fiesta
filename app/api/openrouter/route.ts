@@ -817,3 +817,29 @@ export async function POST(req: NextRequest) {
     };
 
     const makeBody = async (msgs: unknown) => ({
+      model,
+      messages: await toUpstreamMessages(sanitize((msgs as unknown[]) || [])),
+    });
+    const requestInit = (bodyObj: unknown): RequestInit => ({
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': referer || 'http://localhost',
+        'X-Title': title || 'Open Source Fiesta',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyObj),
+    });
+
+    // Build body first (may include extraction work for PDFs/DOCX)
+    const firstBody = await makeBody(messages);
+    // Now start timeout so extraction time doesn't count toward it
+    const timeoutMs = 120000; // 120s to allow for larger prompts
+    let aborter = new AbortController();
+    const timeoutId = setTimeout(() => aborter.abort(), timeoutMs);
+    let resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      ...requestInit(firstBody),
+      signal: aborter.signal,
+    });
+
+    let data: unknown = await resp.json();
