@@ -765,3 +765,29 @@ export async function POST(req: NextRequest) {
           }
           const out = await pdfParse!(buf!);
           const text = (out?.text || '').trim().slice(0, 80000);
+          const appended = `${m.content}\n\n[Attached PDF extracted text:]\n${
+            text || '(no extractable text)'
+          }\n`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        } catch {
+          const appended = `${m.content}\n\n[Attached PDF could not be auto-extracted. Please copy/paste key text if needed.]`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        }
+      }
+      // DOCX: extract text using mammoth
+      if (
+        /^application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document$/i.test(
+          detectedMt,
+        ) &&
+        base64 &&
+        (buf?.length ?? 0) > 0
+      ) {
+        try {
+          if (!mammoth) {
+            const mod = (await import('mammoth')) as {
+              default?: {
+                extractRawText: (arg: { buffer: Buffer }) => Promise<{ value: string }>;
