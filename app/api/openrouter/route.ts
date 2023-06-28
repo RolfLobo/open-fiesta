@@ -791,3 +791,29 @@ export async function POST(req: NextRequest) {
             const mod = (await import('mammoth')) as {
               default?: {
                 extractRawText: (arg: { buffer: Buffer }) => Promise<{ value: string }>;
+              };
+              extractRawText?: (arg: { buffer: Buffer }) => Promise<{ value: string }>;
+            };
+            mammoth = mod.default ?? { extractRawText: mod.extractRawText! };
+          }
+          const out = await mammoth!.extractRawText({ buffer: buf! });
+          const text = (out?.value || '').trim().slice(0, 80000);
+          const appended = `${m.content}\n\n[Attached DOCX extracted text:]\n${
+            text || '(no extractable text)'
+          }\n`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        } catch {
+          const appended = `${m.content}\n\n[Attached DOCX could not be auto-extracted. Please copy/paste key text if needed.]`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        }
+      }
+      // Other types (pdf/docx): include a short note so assistant is aware
+      const noted = `${m.content}\n\n[Attached file: ${detectedMt || 'unknown'} provided as Data URL. If your model supports reading this type via data URLs, use it.]`;
+      return arr.map((mm, idx) => (idx === lastIdx ? { role: mm.role, content: noted } : mm));
+    };
+
+    const makeBody = async (msgs: unknown) => ({
