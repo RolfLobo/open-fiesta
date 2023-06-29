@@ -843,3 +843,29 @@ export async function POST(req: NextRequest) {
     });
 
     let data: unknown = await resp.json();
+    if (!resp.ok) {
+      const errStr = (() => {
+        const d = data as
+          | { error?: { message?: unknown } }
+          | Record<string, unknown>
+          | string
+          | null
+          | undefined;
+        if (typeof d === 'string') return d;
+        if (d && typeof d === 'object') {
+          const maybeErr = (d as { error?: { message?: unknown } }).error;
+          if (maybeErr && typeof maybeErr === 'object' && 'message' in maybeErr) {
+            const m = (maybeErr as { message?: unknown }).message;
+            return typeof m === 'string' ? m : JSON.stringify(m);
+          }
+          try {
+            return JSON.stringify(d);
+          } catch {
+            return 'Unknown error';
+          }
+        }
+        return 'Unknown error';
+      })();
+      if (resp.status === 429) {
+        const text =
+          usedKeyType === 'user'
