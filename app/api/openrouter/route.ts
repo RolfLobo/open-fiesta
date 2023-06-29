@@ -895,3 +895,29 @@ export async function POST(req: NextRequest) {
           typeof model === 'string' && /z-ai\s*\/\s*glm-4\.5-air(?!:free)/i.test(model);
         const text = isGLMPaid
           ? 'The model GLM 4.5 Air is a paid model on OpenRouter. Please add your own OpenRouter API key with credit, or select the FREE pool variant "GLM 4.5 Air (FREE)".'
+          : 'Provider returned 402 (payment required / insufficient credit). Add your own OpenRouter API key with credit, or pick a free model variant if available.';
+        clearTimeout(timeoutId);
+        return Response.json(
+          { text, code: 402, provider: 'openrouter', usedKeyType },
+          { status: 402 },
+        );
+      }
+      // Special-case retry for Sarvam: try with only the last user message
+      if (typeof model === 'string' && /sarvam/i.test(model)) {
+        const lastUser = Array.isArray(messages)
+          ? [...messages]
+              .reverse()
+              .find((m) => (m as InMsg)?.role === 'user' && (m as InMsg)?.content !== undefined)
+          : null;
+        if (lastUser) {
+          const cont = (lastUser as InMsg).content;
+          const contentVal: string = typeof cont === 'string' ? cont : String(cont);
+          const simpleMsgs: OutMsg[] = [{ role: 'user', content: contentVal }];
+          // fresh controller + timer for retry
+          clearTimeout(timeoutId);
+          aborter = new AbortController();
+          const retryTimeoutId = setTimeout(() => aborter.abort(), timeoutMs);
+          try {
+            resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+              ...requestInit(await makeBody(simpleMsgs)),
+              signal: aborter.signal,
