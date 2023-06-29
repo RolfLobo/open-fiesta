@@ -869,3 +869,29 @@ export async function POST(req: NextRequest) {
       if (resp.status === 429) {
         const text =
           usedKeyType === 'user'
+            ? 'Your OpenRouter API key hit a rate limit. Please retry after a moment or upgrade your plan/limits.'
+            : 'This model hit a shared rate limit. Add your own OpenRouter API key for FREE in Settings for higher limits and reliability.';
+        clearTimeout(timeoutId);
+        return Response.json({
+          text,
+          error: errStr,
+          code: 429,
+          provider: 'openrouter',
+          usedKeyType,
+        });
+      }
+      if (resp.status === 404 && /model not found/i.test(errStr)) {
+        const text =
+          'This model is currently unavailable on OpenRouter (404 model not found). It may be renamed, private, or the free pool is paused. Try again later or pick another model.';
+        clearTimeout(timeoutId);
+        return Response.json(
+          { text, code: 404, provider: 'openrouter', usedKeyType },
+          { status: 404 },
+        );
+      }
+      if (resp.status === 402) {
+        // Payment required / no credit. Provide clearer guidance.
+        const isGLMPaid =
+          typeof model === 'string' && /z-ai\s*\/\s*glm-4\.5-air(?!:free)/i.test(model);
+        const text = isGLMPaid
+          ? 'The model GLM 4.5 Air is a paid model on OpenRouter. Please add your own OpenRouter API key with credit, or select the FREE pool variant "GLM 4.5 Air (FREE)".'
