@@ -973,3 +973,29 @@ export async function POST(req: NextRequest) {
           if (typeof obj.text === 'string') return obj.text;
           if (typeof obj.content === 'string') return obj.content;
           if (typeof obj.value === 'string') return obj.value;
+          return '';
+        })
+        .filter(Boolean)
+        .join('\n');
+    } else if (content && typeof content === 'object') {
+      // Some providers nest text inside content.text
+      if (typeof (content as { text?: unknown }).text === 'string') {
+        text = String((content as { text?: unknown }).text);
+      } else {
+        try {
+          text = JSON.stringify(content);
+        } catch {
+          text = '';
+        }
+      }
+    }
+
+    // DeepSeek-style reasoning tags often include <think> ... </think>
+    const stripReasoning = (s: string) =>
+      s
+        .replace(/<think>[\s\S]*?<\/think>/gi, '')
+        .replace(/<\|?thought_(start|end)\|>/gi, '')
+        .replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, '')
+        .trim();
+
+    // Convert common Markdown to plain text (headers, lists, emphasis, links, code fences)
