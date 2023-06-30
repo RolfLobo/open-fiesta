@@ -921,3 +921,29 @@ export async function POST(req: NextRequest) {
             resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
               ...requestInit(await makeBody(simpleMsgs)),
               signal: aborter.signal,
+            });
+          } finally {
+            clearTimeout(retryTimeoutId);
+          }
+          data = await resp.json();
+          if (resp.ok) {
+            // continue to normalization below using new data
+          } else {
+            const friendly2 = `Provider returned error for ${model} (after retry) [status ${resp.status}]`;
+            clearTimeout(timeoutId);
+            return Response.json(
+              { text: friendly2, code: resp.status, provider: 'openrouter', usedKeyType },
+              { status: resp.status },
+            );
+          }
+        } else {
+          const friendly = `Provider returned error for ${model} [status ${resp.status}]`;
+          clearTimeout(timeoutId);
+          return Response.json(
+            { text: friendly, code: resp.status, provider: 'openrouter', usedKeyType },
+            { status: resp.status },
+          );
+        }
+      } else {
+        // Return structured JSON but also a user-friendly text to render in UI
+        const friendly = `Provider returned error${model ? ` for ${model}` : ''} [status ${resp.status}]`;
