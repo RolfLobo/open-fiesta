@@ -947,3 +947,29 @@ export async function POST(req: NextRequest) {
       } else {
         // Return structured JSON but also a user-friendly text to render in UI
         const friendly = `Provider returned error${model ? ` for ${model}` : ''} [status ${resp.status}]`;
+        clearTimeout(timeoutId);
+        return Response.json(
+          { text: friendly, code: resp.status, provider: 'openrouter', usedKeyType },
+          { status: resp.status },
+        );
+      }
+    }
+
+    // Normalize content to a plain string
+    const choice =
+      (data as { choices?: Array<{ message?: { content?: unknown } }> } | null)?.choices?.[0] || {};
+    const msg = (choice as { message?: { content?: unknown } } | null)?.message || {};
+    const content: unknown = (msg as { content?: unknown } | null)?.content;
+    let text = '';
+    if (typeof content === 'string') {
+      text = content;
+    } else if (Array.isArray(content)) {
+      // Array of content blocks (e.g., {type:'text', text:'...'}, {type:'reasoning', ...})
+      text = content
+        .map((c) => {
+          if (!c) return '';
+          if (typeof c === 'string') return c;
+          const obj = c as { text?: unknown; content?: unknown; value?: unknown };
+          if (typeof obj.text === 'string') return obj.text;
+          if (typeof obj.content === 'string') return obj.content;
+          if (typeof obj.value === 'string') return obj.value;
