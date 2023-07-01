@@ -999,3 +999,28 @@ export async function POST(req: NextRequest) {
         .trim();
 
     // Convert common Markdown to plain text (headers, lists, emphasis, links, code fences)
+    const mdToPlain = (s: string) =>
+      s
+        // code fences and inline code
+        .replace(/```[\s\S]*?```/g, (m) => m.replace(/```/g, ''))
+        .replace(/`([^`]+)`/g, '$1')
+        // headings ###, ##, #
+        .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+        // list markers -, *, +, numbers
+        .replace(/^\s{0,3}[-*+]\s+/gm, '• ')
+        .replace(/^\s{0,3}\d+\.\s+/gm, (m) => m.replace(/\d+\./, (n) => `${n.replace('.', '')}. `))
+        // bold/italic
+        .replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/\*([^*]+)\*/g, '$1')
+        .replace(/__([^_]+)__/g, '$1')
+        .replace(/_([^_]+)_/g, '$1')
+        // links [text](url)
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+        // blockquotes
+        .replace(/^>\s?/gm, '')
+        // horizontal rules
+        .replace(/^\s{0,3}([-*_])\s?\1\s?\1.*$/gm, '')
+        // excess whitespace
+        .replace(/\s+$/gm, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
