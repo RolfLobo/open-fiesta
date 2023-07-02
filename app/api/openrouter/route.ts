@@ -1024,3 +1024,30 @@ export async function POST(req: NextRequest) {
         .replace(/\s+$/gm, '')
         .replace(/\n{3,}/g, '\n\n')
         .trim();
+
+    if (!text) {
+      // Additional fallbacks seen across some providers
+      const alt =
+        (choice as { content?: unknown }).content ||
+        (msg as { response_text?: unknown }).response_text ||
+        (msg as { result?: unknown }).result ||
+        (data as Record<string, unknown> | null | undefined)?.['output_text'];
+      if (typeof alt === 'string') text = alt;
+      else if (Array.isArray(alt)) {
+        text = alt
+          .map((c) => {
+            if (typeof c === 'string') return c;
+            const obj = c as { text?: unknown; content?: unknown };
+            if (typeof obj.text === 'string') return obj.text;
+            if (typeof obj.content === 'string') return obj.content;
+            return '';
+          })
+          .filter(Boolean)
+          .join('\n');
+      }
+    }
+
+    if (text) {
+      const stripped = stripReasoning(text);
+      text = stripped || text; // avoid stripping to empty
+      // For DeepSeek R1, return plain text (no Markdown) to improve readability
