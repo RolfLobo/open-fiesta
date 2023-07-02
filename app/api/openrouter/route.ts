@@ -1051,3 +1051,29 @@ export async function POST(req: NextRequest) {
       const stripped = stripReasoning(text);
       text = stripped || text; // avoid stripping to empty
       // For DeepSeek R1, return plain text (no Markdown) to improve readability
+      if (typeof model === 'string' && /deepseek\s*\/\s*deepseek-r1/i.test(model)) {
+        text = mdToPlain(text);
+      }
+      // For Tencent Hunyuan A13B Instruct, providers often wrap in <answer>...</answer> or simple HTML-like tags.
+      if (typeof model === 'string' && /tencent\s*\/\s*hunyuan-a13b-instruct/i.test(model)) {
+        const between = /<answer[^>]*>([\s\S]*?)<\/answer>/i.exec(text);
+        let t = between ? between[1] : text;
+        t = t
+          .replace(/<(?:b|strong)>/gi, '**')
+          .replace(/<\/(?:b|strong)>/gi, '**')
+          .replace(/<(?:i|em)>/gi, '*')
+          .replace(/<\/(?:i|em)>/gi, '*')
+          .replace(/<br\s*\/?\s*>/gi, '\n')
+          .replace(/<p[^>]*>/gi, '')
+          .replace(/<\/p>/gi, '\n\n')
+          // drop any remaining simple tags
+          .replace(/<[^>]+>/g, '')
+          .replace(/\n{3,}/g, '\n\n')
+          .trim();
+        text = t || text;
+      }
+    }
+
+    if (!text) {
+      text = 'No response from provider.';
+    }
