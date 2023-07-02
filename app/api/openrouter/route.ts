@@ -1077,3 +1077,17 @@ export async function POST(req: NextRequest) {
     if (!text) {
       text = 'No response from provider.';
     }
+
+    clearTimeout(timeoutId);
+    return Response.json({ text, raw: data });
+  } catch (e: unknown) {
+    const isAbort = e instanceof Error && e.name === 'AbortError';
+    const message = isAbort
+      ? 'Request timed out'
+      : e instanceof Error
+        ? e.message
+        : 'Unknown error';
+    const code = isAbort ? 408 : 500;
+    return new Response(JSON.stringify({ error: message, code }), { status: code });
+  }
+}

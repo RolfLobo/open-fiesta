@@ -315,3 +315,15 @@ export async function POST(req: NextRequest) {
     return new Response(message, { status: 500 });
   }
 }
+
+import { NextRequest } from 'next/server';
+
+export const runtime = 'edge';
+
+function sseEncode(obj: unknown) {
+  return `data: ${JSON.stringify(obj)}\n\n`;
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const {
