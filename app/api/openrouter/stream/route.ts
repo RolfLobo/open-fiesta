@@ -327,3 +327,29 @@ function sseEncode(obj: unknown) {
 export async function POST(req: NextRequest) {
   try {
     const {
+      messages,
+      model,
+      apiKey: apiKeyFromBody,
+      referer,
+      title,
+      imageDataUrl,
+    } = await req.json();
+    const apiKey = apiKeyFromBody || process.env.OPENROUTER_API_KEY;
+    const usedKeyType = apiKeyFromBody
+      ? 'user'
+      : process.env.OPENROUTER_API_KEY
+        ? 'shared'
+        : 'none';
+    if (!apiKey) return new Response('Missing OpenRouter API key', { status: 400 });
+    if (!model) return new Response('Missing model id', { status: 400 });
+
+    // Check if this is an image generation model - redirect to non-streaming endpoint
+    const isImageGenerationModel = typeof model === 'string' && 
+      /google\/gemini-2\.5-flash-image-preview/i.test(model);
+
+    if (isImageGenerationModel) {
+      // For image generation models, redirect to the non-streaming endpoint
+      const response = await fetch(new URL('/api/openrouter', req.url).toString(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
