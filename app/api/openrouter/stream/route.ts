@@ -483,3 +483,29 @@ export async function POST(req: NextRequest) {
             /z-ai\s*\/\s*glm-4\.5-air(?!:free)/i.test(model);
           const friendly402 = isGLMPaid
             ? 'The model GLM 4.5 Air is a paid model on OpenRouter. Please add your own OpenRouter API key with credit, or select the FREE pool variant "GLM 4.5 Air (FREE)".'
+            : 'Provider returned 402 (payment required / insufficient credit). Add your own OpenRouter API key with credit, or pick a free model variant if available.';
+          const payload =
+            code === 402
+              ? { error: friendly402, code, provider: 'openrouter', usedKeyType }
+              : { error: errText || 'Upstream error', code, provider: 'openrouter', usedKeyType };
+          controller.enqueue(new TextEncoder().encode(sseEncode(payload)));
+          controller.enqueue(new TextEncoder().encode('data: [DONE]\n\n'));
+          controller.close();
+        },
+      });
+      clearTimeout(timeoutId);
+      return new Response(stream, { status: 200, headers });
+    }
+
+    const reader = upstream.body.getReader();
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    let buffer = '';
+
+    // Simple sanitizer for specific models during streaming
+    const sanitizeDelta = (txt: string): string => {
+      if (typeof model === 'string' && /tencent\s*\/\s*hunyuan-a13b-instruct/i.test(model)) {
+        return txt
+          .replace(/<answer[^>]*>/gi, '')
+          .replace(/<\/answer>/gi, '')
