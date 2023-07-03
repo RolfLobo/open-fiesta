@@ -405,3 +405,29 @@ export async function POST(req: NextRequest) {
           const role = isRole(m?.role) ? m.role : 'user';
           const content = typeof m?.content === 'string' ? m.content : String(m?.content ?? '');
           return { role, content };
+        })
+        .filter((m) => isRole(m.role));
+    const trimmed = (arr: OutMsg[]) => (arr.length > 8 ? arr.slice(-8) : arr);
+    const toUpstreamMessages = (msgs: OutMsg[]) => {
+      const arr = trimmed(msgs);
+      if (!imageDataUrl || !arr.length) return arr;
+      const lastIdx = [...arr]
+        .map((m, i) => ({ m, i }))
+        .reverse()
+        .find((p) => p.m.role === 'user')?.i;
+      if (lastIdx == null) return arr;
+      const m = arr[lastIdx];
+      const [meta, base64] = String(imageDataUrl).split(',');
+      const mt = /data:(.*?);base64/.exec(meta || '')?.[1] || '';
+      if (/^image\//i.test(mt)) {
+        const content = [
+          { type: 'text', text: m.content },
+          { type: 'image_url', image_url: { url: String(imageDataUrl) } },
+        ];
+        return arr.map((mm, idx) =>
+          idx === lastIdx ? ({ role: mm.role, content } as unknown as OutMsg) : mm,
+        );
+      }
+      if (/^text\/plain$/i.test(mt) && base64) {
+        try {
+          const decoded = atob(base64);
