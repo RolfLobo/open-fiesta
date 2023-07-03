@@ -431,3 +431,29 @@ export async function POST(req: NextRequest) {
       if (/^text\/plain$/i.test(mt) && base64) {
         try {
           const decoded = atob(base64);
+          const clipped = decoded.slice(0, 20000);
+          const appended = `${m.content}\n\n[Attached text file contents:]\n${clipped}`;
+          return arr.map((mm, idx) =>
+            idx === lastIdx ? { role: mm.role, content: appended } : mm,
+          );
+        } catch {}
+      }
+      const noted = `${m.content}\n\n[Attached file: ${mt || 'unknown'} provided as Data URL. If your model supports reading this type via data URLs, use it.]`;
+      return arr.map((mm, idx) => (idx === lastIdx ? { role: mm.role, content: noted } : mm));
+    };
+
+    const body = {
+      model,
+      messages: toUpstreamMessages(sanitize(messages as unknown[])),
+      stream: true,
+    };
+
+    // Add fetch timeout to avoid hanging steps
+    const aborter = new AbortController();
+    const timeoutMs = 60000; // 60s
+    const timeoutId = setTimeout(() => aborter.abort(), timeoutMs);
+
+    const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
