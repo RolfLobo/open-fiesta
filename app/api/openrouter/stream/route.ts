@@ -353,3 +353,29 @@ export async function POST(req: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages,
+          model,
+          apiKey: apiKeyFromBody,
+          referer,
+          title,
+          imageDataUrl,
+        }),
+      });
+
+      const data = await response.json();
+      
+      // Return as SSE stream for consistency with streaming interface
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        start(controller) {
+          // Send the complete response as a single chunk
+          if (data.text) {
+            controller.enqueue(encoder.encode(sseEncode({ token: data.text })));
+          }
+          // Send metadata
+          controller.enqueue(encoder.encode(sseEncode({ 
+            meta: { 
+              provider: data.provider, 
+              usedKeyType: data.usedKeyType,
