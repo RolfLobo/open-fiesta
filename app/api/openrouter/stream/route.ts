@@ -379,3 +379,29 @@ export async function POST(req: NextRequest) {
             meta: { 
               provider: data.provider, 
               usedKeyType: data.usedKeyType,
+              isImageGeneration: data.isImageGeneration 
+            } 
+          })));
+          controller.close();
+        },
+      });
+
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    }
+
+    type InMsg = { role?: unknown; content?: unknown };
+    type OutMsg = { role: 'user' | 'assistant' | 'system'; content: string };
+    const isRole = (r: unknown): r is OutMsg['role'] =>
+      r === 'user' || r === 'assistant' || r === 'system';
+    const sanitize = (msgs: unknown[]): OutMsg[] =>
+      (Array.isArray(msgs) ? (msgs as InMsg[]) : [])
+        .map((m) => {
+          const role = isRole(m?.role) ? m.role : 'user';
+          const content = typeof m?.content === 'string' ? m.content : String(m?.content ?? '');
+          return { role, content };
