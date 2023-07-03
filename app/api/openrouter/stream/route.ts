@@ -457,3 +457,29 @@ export async function POST(req: NextRequest) {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': referer || 'http://localhost',
+        'X-Title': title || 'Open Source Fiesta',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+      signal: aborter.signal,
+    });
+
+    const headers = new Headers({
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    });
+
+    if (!upstream.ok || !upstream.body) {
+      const errText = await upstream.text().catch(() => '');
+      const code = upstream.status || 500;
+      const stream = new ReadableStream({
+        start(controller) {
+          const isGLMPaid =
+            code === 402 &&
+            typeof model === 'string' &&
+            /z-ai\s*\/\s*glm-4\.5-air(?!:free)/i.test(model);
+          const friendly402 = isGLMPaid
+            ? 'The model GLM 4.5 Air is a paid model on OpenRouter. Please add your own OpenRouter API key with credit, or select the FREE pool variant "GLM 4.5 Air (FREE)".'
