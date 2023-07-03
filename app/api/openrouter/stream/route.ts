@@ -509,3 +509,29 @@ export async function POST(req: NextRequest) {
         return txt
           .replace(/<answer[^>]*>/gi, '')
           .replace(/<\/answer>/gi, '')
+          .replace(/<(?:b|strong)>/gi, '**')
+          .replace(/<\/(?:b|strong)>/gi, '**')
+          .replace(/<(?:i|em)>/gi, '*')
+          .replace(/<\/(?:i|em)>/gi, '*')
+          .replace(/<br\s*\/?\s*>/gi, '\n')
+          .replace(/<p[^>]*>/gi, '')
+          .replace(/<\/p>/gi, '\n\n');
+      }
+      return txt;
+    };
+
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        // Send a small meta event
+        controller.enqueue(encoder.encode(sseEncode({ provider: 'openrouter', usedKeyType })));
+
+        const push = async (): Promise<void> => {
+          try {
+            const { done, value } = await reader.read();
+            if (done) {
+              clearTimeout(timeoutId);
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+              controller.close();
+              return;
+            }
+            buffer += decoder.decode(value, { stream: true });
