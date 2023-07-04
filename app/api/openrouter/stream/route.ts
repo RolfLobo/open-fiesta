@@ -535,3 +535,29 @@ export async function POST(req: NextRequest) {
               return;
             }
             buffer += decoder.decode(value, { stream: true });
+            const parts = buffer.split('\n\n');
+            buffer = parts.pop() || '';
+            for (const part of parts) {
+              const line = part.trim();
+              if (!line.startsWith('data:')) continue;
+              const payload = line.slice(5).trim();
+              if (payload === '[DONE]') {
+                clearTimeout(timeoutId);
+                controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+                controller.close();
+                return;
+              }
+              try {
+                const json = JSON.parse(payload);
+                const delta = json?.choices?.[0]?.delta;
+                let text = '';
+                if (typeof delta?.content === 'string') {
+                  text = delta.content;
+                } else if (Array.isArray(delta?.content)) {
+                  text = (delta.content as unknown[])
+                    .map((c: unknown) => {
+                      if (!c) return '';
+                      if (typeof c === 'string') return c;
+                      const obj = c as { text?: unknown; content?: unknown; value?: unknown };
+                      if (typeof obj.text === 'string') return obj.text;
+                      if (typeof obj.content === 'string') return obj.content;
