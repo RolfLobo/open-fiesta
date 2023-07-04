@@ -71,3 +71,13 @@ export async function POST(req: Request) {
     const list: Array<{ id: string; pricing?: Record<string, unknown> }> =
       data?.data || data?.models || [];
     const found = list.find((m) => m.id === slug);
+
+    return NextResponse.json({ ok: true, exists: !!found });
+  } catch (e: unknown) {
+    const message =
+      typeof e === 'object' && e && 'message' in e
+        ? String((e as { message?: unknown }).message)
+        : 'Unknown error';
+    return NextResponse.json({ ok: false, error: message }, { status: 200 });
+  }
+}

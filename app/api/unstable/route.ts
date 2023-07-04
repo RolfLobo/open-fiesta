@@ -162,3 +162,18 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+import { NextRequest } from 'next/server';
+
+// Token estimation helper (simplified)
+function estimateTokens(text: string): number {
+  return Math.ceil(text.length / 4);
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { messages, model, apiKey: apiKeyFromBody, imageDataUrl } = await req.json();
+
+    // Use the provided API key or fallback to environment variable
+    const apiKey = apiKeyFromBody || process.env.INFERENCE_API_KEY;
+    const usedKeyType = apiKeyFromBody ? 'user' : process.env.INFERENCE_API_KEY ? 'shared' : 'none';
