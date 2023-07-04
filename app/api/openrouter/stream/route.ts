@@ -613,3 +613,23 @@ export async function POST(req: NextRequest) {
               controller.enqueue(encoder.encode('data: [DONE]\n\n'));
             } finally {
               clearTimeout(timeoutId);
+              controller.close();
+            }
+          }
+        };
+        push();
+      },
+      cancel() {
+        try {
+          reader.cancel();
+        } catch {}
+        clearTimeout(timeoutId);
+      },
+    });
+
+    return new Response(stream, { status: 200, headers });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Unknown error';
+    return new Response(message, { status: 500 });
+  }
+}
