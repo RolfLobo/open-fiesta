@@ -561,3 +561,29 @@ export async function POST(req: NextRequest) {
                       const obj = c as { text?: unknown; content?: unknown; value?: unknown };
                       if (typeof obj.text === 'string') return obj.text;
                       if (typeof obj.content === 'string') return obj.content;
+                      if (typeof obj.value === 'string') return obj.value;
+                      return '';
+                    })
+                    .filter(Boolean)
+                    .join('');
+                }
+                if (text) {
+                  const cleaned = sanitizeDelta(text);
+                  controller.enqueue(encoder.encode(sseEncode({ delta: cleaned })));
+                }
+                if (json?.error) {
+                  const code = json.error?.code;
+                  const isGLMPaid =
+                    code === 402 &&
+                    typeof model === 'string' &&
+                    /z-ai\s*\/\s*glm-4\.5-air(?!:free)/i.test(model);
+                  const friendly402 = isGLMPaid
+                    ? 'The model GLM 4.5 Air is a paid model on OpenRouter. Please add your own OpenRouter API key with credit, or select the FREE pool variant "GLM 4.5 Air (FREE)".'
+                    : 'Provider returned 402 (payment required / insufficient credit). Add your own OpenRouter API key with credit, or pick a free model variant if available.';
+                  const payload =
+                    code === 402
+                      ? { error: friendly402, code, provider: 'openrouter', usedKeyType }
+                      : {
+                          error: json.error?.message || 'error',
+                          code,
+                          provider: 'openrouter',
