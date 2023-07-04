@@ -587,3 +587,29 @@ export async function POST(req: NextRequest) {
                           error: json.error?.message || 'error',
                           code,
                           provider: 'openrouter',
+                          usedKeyType,
+                        };
+                  controller.enqueue(encoder.encode(sseEncode(payload)));
+                }
+              } catch {
+                // ignore parse errors
+              }
+            }
+            return push();
+          } catch (err) {
+            const aborted = (err as Error)?.name === 'AbortError';
+            const errorMsg = aborted ? `Request timed out after ${timeoutMs}ms` : 'Stream error';
+            try {
+              controller.enqueue(
+                encoder.encode(
+                  sseEncode({
+                    error: errorMsg,
+                    code: aborted ? 408 : 500,
+                    provider: 'openrouter',
+                    usedKeyType,
+                  }),
+                ),
+              );
+              controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+            } finally {
+              clearTimeout(timeoutId);
