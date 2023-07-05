@@ -204,3 +204,28 @@ export async function POST(req: NextRequest) {
           const content = typeof m.content === 'string' ? m.content : '';
           return content ? { role, content } : null;
         })
+        .filter((m): m is OutMsg => m !== null);
+    };
+
+    const sanitizedMessages = sanitize((messages as unknown[]) || []);
+
+    // Keep last 10 messages to avoid overly long histories
+    const trimmedMessages =
+      sanitizedMessages.length > 10 ? sanitizedMessages.slice(-10) : sanitizedMessages;
+
+    // Ensure we have at least one message
+    if (trimmedMessages.length === 0) {
+      trimmedMessages.push({ role: 'user', content: 'Hello' });
+    }
+
+    // Handle image attachment if provided
+    const processedMessages = trimmedMessages;
+    if (imageDataUrl && trimmedMessages.length > 0) {
+      const lastMessage = trimmedMessages[trimmedMessages.length - 1];
+      if (lastMessage.role === 'user') {
+        // For models that support vision, we'll include image info in the content
+        // Note: This is a simplified approach - actual implementation may vary by model
+        lastMessage.content +=
+          '\n\n[Image attached - processing capabilities depend on the selected model]';
+      }
+    }
