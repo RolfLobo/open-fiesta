@@ -308,3 +308,22 @@ export async function POST(req: NextRequest) {
     };
 
     return Response.json({
+      text: text.trim(),
+      raw: data,
+      provider: 'unstable',
+      usedKeyType,
+      tokens: tokensPayload,
+    });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Unstable provider error:', error);
+
+    return new Response(
+      JSON.stringify({
+        error: `Unstable provider error: ${message}`,
+        provider: 'unstable',
+      }),
+      { status: 500 },
+    );
+  }
+}
