@@ -256,3 +256,29 @@ export async function POST(req: NextRequest) {
       process.env.INFERENCE_API_ENDPOINT || 'https://inference.quran.lat/v1/chat/completions',
       {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+          'User-Agent': 'Open-Fiesta/1.0',
+        },
+        body: JSON.stringify(requestBody),
+      },
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Unstable API error (${response.status}):`, errorText);
+
+      return new Response(
+        JSON.stringify({
+          error: `Unstable API error: ${response.status} ${response.statusText}`,
+          details: errorText,
+          code: response.status,
+          provider: 'unstable',
+          usedKeyType,
+        }),
+        { status: response.status },
+      );
+    }
+
+    const data = await response.json();
