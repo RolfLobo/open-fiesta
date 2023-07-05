@@ -177,3 +177,30 @@ export async function POST(req: NextRequest) {
     // Use the provided API key or fallback to environment variable
     const apiKey = apiKeyFromBody || process.env.INFERENCE_API_KEY;
     const usedKeyType = apiKeyFromBody ? 'user' : process.env.INFERENCE_API_KEY ? 'shared' : 'none';
+
+    if (!apiKey) {
+      return new Response(
+        JSON.stringify({ error: 'Missing Unstable API key', provider: 'unstable', usedKeyType }),
+        { status: 400 },
+      );
+    }
+
+    if (!model) {
+      return new Response(JSON.stringify({ error: 'Missing model id' }), { status: 400 });
+    }
+
+    // Sanitize and validate messages
+    type InMsg = { role?: unknown; content?: unknown };
+    type OutMsg = { role: 'user' | 'assistant' | 'system'; content: string };
+
+    const sanitize = (msgs: unknown[]): OutMsg[] => {
+      return msgs
+        .filter((m): m is InMsg => typeof m === 'object' && m !== null)
+        .map((m): OutMsg | null => {
+          const role =
+            typeof m.role === 'string' && ['user', 'assistant', 'system'].includes(m.role)
+              ? (m.role as 'user' | 'assistant' | 'system')
+              : 'user';
+          const content = typeof m.content === 'string' ? m.content : '';
+          return content ? { role, content } : null;
+        })
