@@ -229,3 +229,30 @@ export async function POST(req: NextRequest) {
           '\n\n[Image attached - processing capabilities depend on the selected model]';
       }
     }
+
+    // Calculate token estimates
+    const totalTokensEstimate = processedMessages.reduce(
+      (sum, msg) => sum + estimateTokens(msg.content),
+      0,
+    );
+
+    // Prepare the request body for the inference API
+    const requestBody = {
+      model: model,
+      messages: processedMessages,
+      max_tokens: 2048,
+      temperature: 0.7,
+      stream: false,
+    };
+
+    console.log(`Making request to Unstable API for model: ${model}`, {
+      endpoint: process.env.INFERENCE_API_ENDPOINT,
+      messageCount: processedMessages.length,
+      tokensEstimate: totalTokensEstimate,
+    });
+
+    // Make the API call to the inference endpoint
+    const response = await fetch(
+      process.env.INFERENCE_API_ENDPOINT || 'https://inference.quran.lat/v1/chat/completions',
+      {
+        method: 'POST',
