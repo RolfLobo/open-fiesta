@@ -715,3 +715,29 @@ declare global {
 import { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import { mergeModels, useCustomModels } from '@/lib/customModels';
+import { ChatMessage, ApiKeys, ChatThread, AiModel } from '@/lib/types';
+import { useProjects } from '@/lib/useProjects';
+import ModelsModal from '@/components/modals/ModelsModal';
+import { ChatInterface, ChatInterfaceRef } from '@/components/chat-interface';
+import { useAuth } from '@/lib/auth';
+import AuthModal from '@/components/modals/AuthModal';
+import { cn } from '@/lib/utils'
+import ThreadSidebar from '@/components/chat/ThreadSidebar'
+import HomeAiInput from '@/components/home/HomeAiInput'
+import { fetchThreads, createThread as createThreadDb, addMessage as addMessageDb, deleteThread as deleteThreadDb } from '@/lib/db'
+import { createChatActions } from '@/lib/chatActions'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { Layers } from 'lucide-react'
+import Link from 'next/link'
+import GithubStar from '@/components/app/GithubStar'
+import ThemeToggle from '@/components/ThemeToggle'
+import CustomModels from '@/components/modals/CustomModels'
+import Settings from '@/components/app/Settings'
+import HeaderBar from '@/components/app/HeaderBar'
+import FirstVisitNote from '@/components/app/FirstVisitNote'
+import LaunchScreen from '@/components/ui/LaunchScreen'
+import { useTheme } from '@/lib/themeContext'
+import { BACKGROUND_STYLES } from '@/lib/themes'
+import SupportDropdown from '@/components/support-dropdown'
+import ProjectModal from '@/components/modals/ProjectModal'
