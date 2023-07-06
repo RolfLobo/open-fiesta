@@ -741,3 +741,29 @@ import { useTheme } from '@/lib/themeContext'
 import { BACKGROUND_STYLES } from '@/lib/themes'
 import SupportDropdown from '@/components/support-dropdown'
 import ProjectModal from '@/components/modals/ProjectModal'
+import { Project } from '@/lib/projects'
+
+export default function OpenFiestaChat() {
+  const { user } = useAuth()
+  const { theme } = useTheme()
+  const isDark = theme.mode === 'dark'
+  
+  const guestMode = (process.env.NODE_ENV !== 'production') && (process.env.NEXT_PUBLIC_GUEST_MODE === 'true')
+  if (process.env.NEXT_PUBLIC_GUEST_MODE === 'true' && process.env.NODE_ENV === 'production') {
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.warn('[GuestMode] Ignored in production build.')
+    }
+  }
+  const [isHydrated, setIsHydrated] = useState(false)
+  const [showSplash, setShowSplash] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
+  const [mobileActionsOpen, setMobileActionsOpen] = useState(false)
+  const [modelModalOpen, setModelModalOpen] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [projectModalOpen, setProjectModalOpen] = useState(false)
+  const [editingProject, setEditingProject] = useState<Project | null>(null)
+  const [threads, setThreads] = useLocalStorage<ChatThread[]>('ai-fiesta:threads', [])
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null)
+  const [editingMessage, setEditingMessage] = useState<string>('')
