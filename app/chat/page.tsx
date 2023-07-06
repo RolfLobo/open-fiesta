@@ -700,3 +700,18 @@ export default function OpenFiestaChat() {
     </div>
   )
 }
+
+"use client"
+
+// Extend Window interface for ChatInterface handlers
+declare global {
+  interface Window {
+    handleEditMessage?: (messageId: string, content: string) => void;
+    handleShareMessage?: (message: ChatMessage) => void;
+    handleSubmit?: (text: string) => Promise<void>;
+  }
+}
+
+import { useEffect, useMemo, useRef, useState, useCallback } from "react"
+import { useLocalStorage } from '@/lib/useLocalStorage';
+import { mergeModels, useCustomModels } from '@/lib/customModels';
