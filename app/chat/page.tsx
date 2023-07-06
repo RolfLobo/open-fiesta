@@ -767,3 +767,29 @@ export default function OpenFiestaChat() {
   const [threads, setThreads] = useLocalStorage<ChatThread[]>('ai-fiesta:threads', [])
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null)
   const [editingMessage, setEditingMessage] = useState<string>('')
+  const [apiKeys] = useLocalStorage<ApiKeys>('ai-fiesta:api-keys', {})
+  const [customModels] = useCustomModels()
+  const [selectedHomeModelId, setSelectedHomeModelId] = useLocalStorage<string>('ai-fiesta:selected-home-model', 'open-evil')
+  // First-visit modal
+  const [firstVisitSeen, setFirstVisitSeen] = useLocalStorage<boolean>('ai-fiesta:first-visit-seen', false)
+  const [showFirstVisit, setShowFirstVisit] = useState<boolean>(() => !firstVisitSeen)
+  
+  const {
+    projects,
+    activeProjectId,
+    createProject,
+    updateProject,
+    deleteProject,
+    selectProject,
+  } = useProjects()
+  
+  // Project modal handlers
+  const handleCreateProject = () => {
+    setEditingProject(null)
+    setProjectModalOpen(true)
+  }
+  
+  const handleEditProject = (project: Project) => {
+    setEditingProject(project)
+    setProjectModalOpen(true)
+  }
