@@ -793,3 +793,29 @@ export default function OpenFiestaChat() {
     setEditingProject(project)
     setProjectModalOpen(true)
   }
+  
+  const handleSaveProject = (project: Project) => {
+    if (editingProject) {
+      updateProject(project)
+    } else {
+      createProject(project)
+    }
+    setEditingProject(null)
+    setProjectModalOpen(false)
+  }
+  
+  const visibleHomeThreads = useMemo(() => threads.filter(t => t.pageType === 'home' && (!activeProjectId || t.projectId === activeProjectId)), [threads, activeProjectId])
+
+  const activeThread = useMemo(() => threads.find((t) => t.id === activeThreadId), [threads, activeThreadId])
+  const allModels = useMemo(() => mergeModels(customModels), [customModels])
+  const selectedHomeModel: AiModel | undefined = useMemo(
+    () => allModels.find((m) => m.id === selectedHomeModelId) || allModels[0],
+    [allModels, selectedHomeModelId]
+  )
+  
+  // Auto-select first model if none selected
+  useEffect(() => {
+    if (!selectedHomeModelId && allModels.length > 0) {
+      setSelectedHomeModelId(allModels[0].id);
+    }
+  }, [selectedHomeModelId, allModels, setSelectedHomeModelId])
