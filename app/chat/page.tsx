@@ -819,3 +819,29 @@ export default function OpenFiestaChat() {
       setSelectedHomeModelId(allModels[0].id);
     }
   }, [selectedHomeModelId, allModels, setSelectedHomeModelId])
+
+  // Splash timing like compare
+  useEffect(() => {
+    setIsHydrated(true)
+    const t = setTimeout(() => setShowSplash(false), 350)
+    return () => clearTimeout(t)
+  }, [])
+
+  // Keep showFirstVisit in sync with storage
+  useEffect(() => {
+    setShowFirstVisit(!firstVisitSeen)
+  }, [firstVisitSeen])
+
+  const chatRef = useRef<ChatInterfaceRef | null>(null)
+
+  // Create chat actions for handling AI responses - unused but kept for potential future use
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const chatActions = useMemo(() => {
+    if (!activeThread) {
+      return null;
+    }
+    return createChatActions({
+      threads,
+      setThreads,
+      activeThread,
+      setActiveId: setActiveThreadId,
