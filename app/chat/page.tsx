@@ -845,3 +845,29 @@ export default function OpenFiestaChat() {
       setThreads,
       activeThread,
       setActiveId: setActiveThreadId,
+      setLoadingIds: () => {}, // Disabled - using ChatInterface loading instead
+      setLoadingIdsInit: () => {}, // Disabled - using ChatInterface loading instead
+      selectedModels: selectedHomeModel ? [selectedHomeModel] : [],
+      keys: apiKeys,
+      userId: user?.id || undefined,
+    })
+  }, [activeThread, selectedHomeModel, apiKeys, user?.id, threads, setThreads])
+
+  // Load threads from Supabase when user is authenticated
+  useEffect(() => {
+    const load = async () => {
+      // In guest mode, never touch DB
+      if (guestMode) {
+        return
+      }
+      if (!user?.id) {
+        // In guest mode, keep local threads; otherwise clear when logged out
+        setThreads([])
+        setActiveThreadId(null)
+        return
+      }
+      try {
+        const dbThreads = await fetchThreads(user.id)
+        setThreads(dbThreads)
+        // Keep current active if still present, else pick most recent home thread
+        if (dbThreads.length > 0) {
