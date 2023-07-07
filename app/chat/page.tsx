@@ -949,3 +949,29 @@ export default function OpenFiestaChat() {
     // Clear editing state when submitting
     setEditingMessage('')
     
+    // Create thread if none exists
+    let createdThreadTemp: ChatThread | null = null
+    if (!activeThreadId) {
+      const newTitle = content.length > 60 ? content.slice(0, 57) + '…' : content
+      if (guestMode) {
+        const localId = (typeof crypto !== 'undefined' && (crypto as any).randomUUID)
+          ? (crypto as any).randomUUID()
+          : `guest-${Date.now()}`
+        const createdLocal: ChatThread = {
+          id: localId,
+          title: newTitle,
+          messages: [],
+          createdAt: Date.now(),
+          projectId: activeProjectId || undefined,
+          pageType: 'home',
+        }
+        setThreads((prev) => [createdLocal, ...prev])
+        setActiveThreadId(createdLocal.id)
+        createdThreadTemp = createdLocal
+      } else if (user?.id) {
+        try {
+          const created = await createThreadDb({
+            userId: user.id,
+            title: newTitle,
+            projectId: activeProjectId || null,
+            pageType: 'home',
