@@ -1027,3 +1027,29 @@ export default function OpenFiestaChat() {
               chatId: currentThread.id,
               message: userMsg,
             });
+          } catch (e) {
+            console.error('Failed to save user message to DB:', e);
+          }
+        }
+        
+        // Clear loading immediately after send completes
+        chatRef.current?.setLoading(false)
+      } catch (e) {
+        console.error('❌ Failed to send message via chat actions:', e)
+        chatRef.current?.setLoading(false)
+      }
+    } else {
+      console.warn('⚠️ Cannot send message - no thread or model:', { 
+        hasCurrentThread: !!currentThread, 
+        hasSelectedModel: !!selectedHomeModel 
+      });
+      chatRef.current?.setLoading(false)
+    }
+  }, [user, activeProjectId, activeThreadId, threads, selectedHomeModel, apiKeys, setThreads, setActiveThreadId])
+
+  // Expose handlers to window for ChatInterface to access
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.handleEditMessage = handleEditMessage;
+      window.handleShareMessage = handleShareMessage;
+      window.handleSubmit = handleSubmit;
