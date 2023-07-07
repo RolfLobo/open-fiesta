@@ -871,3 +871,29 @@ export default function OpenFiestaChat() {
         setThreads(dbThreads)
         // Keep current active if still present, else pick most recent home thread
         if (dbThreads.length > 0) {
+          const homeThreads = dbThreads.filter(t => t.pageType === 'home')
+          const preferredThread = activeProjectId 
+            ? homeThreads.find(t => t.projectId === activeProjectId)
+            : homeThreads[0]
+          setActiveThreadId((prev) => {
+            if (prev && dbThreads.some(t => t.id === prev && t.pageType === 'home')) {
+              return prev
+            }
+            return preferredThread?.id || null
+          })
+        } else {
+          setActiveThreadId(null)
+        }
+      } catch (e) {
+        console.warn('Failed to load threads from Supabase:', e)
+      }
+    }
+    load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, activeProjectId])
+
+  // Header shows no brand logo; the chat avatar displays model logo instead
+
+  // Handle edit message functionality
+  const handleEditMessage = useCallback((messageId: string, content: string) => {
+    setEditingMessage(content)
