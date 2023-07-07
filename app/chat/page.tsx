@@ -897,3 +897,29 @@ export default function OpenFiestaChat() {
   // Handle edit message functionality
   const handleEditMessage = useCallback((messageId: string, content: string) => {
     setEditingMessage(content)
+  }, [])
+
+  // Handle share message functionality  
+  const handleShareMessage = useCallback((message: ChatMessage) => {
+    if (!activeThread) return;
+    
+    // Create a temporary thread with just this message for sharing
+    const messageThread: ChatThread = {
+      ...activeThread,
+      messages: [message],
+      title: `Shared Message: ${message.content.slice(0, 50)}...`
+    };
+    
+    // Use the ShareButton logic directly
+    import('@/lib/sharing/shareService').then(({ ShareService }) => {
+      const shareService = new ShareService();
+      shareService.generateShareableUrl(messageThread).then(result => {
+        if (result.success && result.url) {
+          shareService.copyToClipboard(result.url).then(copySuccess => {
+            if (copySuccess) {
+              toast.success("Message link copied to clipboard!");
+            } else {
+              toast.info("Clipboard access failed. Link: " + result.url);
+            }
+          });
+        } else {
