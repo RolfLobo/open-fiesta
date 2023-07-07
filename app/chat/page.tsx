@@ -1001,3 +1001,29 @@ export default function OpenFiestaChat() {
     if (currentThread && selectedHomeModel) {
       const currentChatActions = createChatActions({
         threads,
+        setThreads,
+        activeThread: currentThread,
+        setActiveId: setActiveThreadId,
+        setLoadingIds: () => {}, // Disabled - using ChatInterface loading instead
+        setLoadingIdsInit: () => {}, // Disabled - using ChatInterface loading instead
+        selectedModels: [selectedHomeModel],
+        keys: apiKeys,
+        userId: user?.id || undefined,
+      });
+      
+      try {
+        await currentChatActions.send(content)
+        
+        // Save user message to database
+        if (user?.id && currentThread?.id) {
+          const userMsg: ChatMessage = { 
+            role: 'user', 
+            content: content, 
+            ts: Date.now() 
+          };
+          try {
+            await addMessageDb({
+              userId: user.id,
+              chatId: currentThread.id,
+              message: userMsg,
+            });
