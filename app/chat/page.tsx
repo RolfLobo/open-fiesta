@@ -975,3 +975,29 @@ export default function OpenFiestaChat() {
             title: newTitle,
             projectId: activeProjectId || null,
             pageType: 'home',
+            initialMessage: null,
+          })
+          setThreads((prev) => [created, ...prev])
+          setActiveThreadId(created.id)
+          createdThreadTemp = created
+        } catch (e) {
+          console.error('❌ Failed to create thread:', e)
+          return;
+        }
+      }
+    }
+    
+    // Show loading dots immediately with model type detection
+    const modelType = selectedHomeModel?.category || 'text'
+    chatRef.current?.setLoading(true, { 
+      modelLabel: selectedHomeModel?.label,
+      modelType: modelType as 'text' | 'image' | 'audio'
+    })
+
+    // Get current thread immediately - no timeout needed
+    const currentThread = createdThreadTemp
+      || threads.find(t => t.id === activeThreadId)
+      || threads.find(t => t.id === threads[0]?.id);
+    if (currentThread && selectedHomeModel) {
+      const currentChatActions = createChatActions({
+        threads,
