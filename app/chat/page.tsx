@@ -923,3 +923,29 @@ export default function OpenFiestaChat() {
             }
           });
         } else {
+          toast.error(result.error || "Failed to create share link");
+        }
+      });
+    });
+  }, [activeThread])
+
+  // When user submits text, also record it into a thread shown in the sidebar
+  const handleSubmit = useCallback(async (text: string) => {
+    const content = text.trim()
+    if (!content) {
+      // Ensure loader is off for empty submissions
+      chatRef.current?.setLoading(false)
+      return;
+    }
+    
+    // Check if user is authenticated, allow guest mode bypass
+    if (!user?.id && !guestMode) {
+      setAuthModalOpen(true)
+      // Ensure loader is off if auth required
+      chatRef.current?.setLoading(false)
+      return
+    }
+    
+    // Clear editing state when submitting
+    setEditingMessage('')
+    
