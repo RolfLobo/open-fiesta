@@ -1156,3 +1156,30 @@ export default function OpenFiestaChat() {
         </div>
       )}
 
+
+      <div className="relative z-10 px-3 lg:px-4 py-4 lg:py-6">
+        <div className="flex gap-3 lg:gap-4">
+          {/* Sidebar */}
+          <ThreadSidebar
+            sidebarOpen={sidebarOpen}
+            onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+            threads={visibleHomeThreads}
+            activeId={activeThreadId}
+            onSelectThread={(id) => setActiveThreadId(id)}
+            onNewChat={async () => {
+              if (guestMode) {
+                const localId = (typeof crypto !== 'undefined' && (crypto as any).randomUUID)
+                  ? (crypto as any).randomUUID()
+                  : `guest-${Date.now()}`
+                const createdLocal: ChatThread = {
+                  id: localId,
+                  title: 'New Chat',
+                  messages: [],
+                  createdAt: Date.now(),
+                  projectId: activeProjectId || undefined,
+                  pageType: 'home',
+                }
+                setThreads(prev => [createdLocal, ...prev])
+                setActiveThreadId(createdLocal.id)
+                return
+              }
