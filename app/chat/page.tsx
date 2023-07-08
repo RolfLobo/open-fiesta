@@ -1079,3 +1079,29 @@ export default function OpenFiestaChat() {
           id: `${activeThread.id}-${msg.ts || Date.now()}-${index}`,
           content: msg.content,
           role: msg.role as "user" | "assistant",
+          timestamp: new Date(msg.ts || Date.now()),
+        }
+        if (msg.role === 'assistant') {
+          const id = (msg.modelId || '').toLowerCase()
+          const prov = (msg.provider || '').toLowerCase()
+          const txt = `${id} ${prov}`
+          let avatarUrl = '/brand.svg'
+          let avatarAlt = 'AI Assistant'
+          if (/openai|\bgpt\b|^gpt-|\bo3\b|\bo4\b/.test(txt)) {
+            avatarUrl = 'https://cdn.simpleicons.org/openai/ffffff'
+            avatarAlt = 'OpenAI / ChatGPT'
+          } else if (/anthropic|claude/.test(txt)) {
+            avatarUrl = 'https://cdn.simpleicons.org/anthropic/ffffff'
+            avatarAlt = 'Anthropic / Claude'
+          } else if (/grok|xai/.test(txt)) {
+            // Placeholder using X icon for Grok/xAI
+            avatarUrl = 'https://cdn.simpleicons.org/x/ffffff'
+            avatarAlt = 'Grok / xAI'
+          }
+          return { ...base, avatarUrl, avatarAlt }
+        }
+        return base
+      });
+      chatRef.current.loadMessages(convertedMessages);
+    }
+  }, [activeThread]);
