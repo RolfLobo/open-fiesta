@@ -1209,3 +1209,29 @@ export default function OpenFiestaChat() {
                 try {
                   await deleteThreadDb(user.id, id);
                 } catch (e) {
+                  console.warn('Failed to delete home thread in DB, removing locally:', e);
+                }
+              } else if (!guestMode && !user?.id) {
+                // Not authenticated and not in guest mode -> do nothing
+                return;
+              }
+              setThreads((prev) => {
+                const next = prev.filter((t) => t.id !== id);
+                if (activeThreadId === id) {
+                  const inScope = next.filter((t) => t.pageType === 'home');
+                  const nextInScope =
+                    (activeProjectId ? inScope.find((t) => t.projectId === activeProjectId) : inScope[0])
+                      ?.id ?? null;
+                  setActiveThreadId(nextInScope);
+                }
+                return next;
+              });
+            }}
+            selectedModels={selectedHomeModel ? [selectedHomeModel] : []}
+            projects={projects}
+            activeProjectId={activeProjectId}
+            onSelectProject={selectProject}
+            onCreateProject={handleCreateProject}
+            onUpdateProject={handleEditProject}
+            onDeleteProject={deleteProject}
+          />
