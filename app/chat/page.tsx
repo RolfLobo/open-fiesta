@@ -1183,3 +1183,29 @@ export default function OpenFiestaChat() {
                 setActiveThreadId(createdLocal.id)
                 return
               }
+              if (!user?.id) {
+                setAuthModalOpen(true)
+                return
+              }
+              try {
+                const created = await createThreadDb({
+                  userId: user.id,
+                  title: 'New Chat',
+                  projectId: activeProjectId || null,
+                  pageType: 'home',
+                  initialMessage: null,
+                })
+                setThreads(prev => [created, ...prev])
+                setActiveThreadId(created.id)
+              } catch (e) {
+                console.error('Failed to create new chat:', e)
+              }
+            }}
+            mobileSidebarOpen={mobileSidebarOpen}
+            onCloseMobile={() => setMobileSidebarOpen(false)}
+            onOpenMobile={() => setMobileSidebarOpen(true)}
+            onDeleteThread={async (id) => {
+              if (!guestMode && user?.id) {
+                try {
+                  await deleteThreadDb(user.id, id);
+                } catch (e) {
