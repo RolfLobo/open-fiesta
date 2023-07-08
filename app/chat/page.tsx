@@ -1053,3 +1053,29 @@ export default function OpenFiestaChat() {
       window.handleEditMessage = handleEditMessage;
       window.handleShareMessage = handleShareMessage;
       window.handleSubmit = handleSubmit;
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete window.handleEditMessage;
+        delete window.handleShareMessage;
+        delete window.handleSubmit;
+      }
+    }
+  }, [handleSubmit, handleShareMessage, handleEditMessage]);
+
+  // Load messages into ChatInterface when active thread changes
+  useEffect(() => {
+    if (chatRef.current && activeThread) {
+      // Always load messages, even if empty array
+      const convertedMessages = (activeThread.messages || []).map((msg, index) => {
+        const base: {
+          id: string;
+          content: string;
+          role: "user" | "assistant";
+          timestamp: Date;
+          avatarUrl?: string;
+          avatarAlt?: string;
+        } = {
+          id: `${activeThread.id}-${msg.ts || Date.now()}-${index}`,
+          content: msg.content,
+          role: msg.role as "user" | "assistant",
