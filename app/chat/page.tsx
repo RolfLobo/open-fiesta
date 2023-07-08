@@ -1235,3 +1235,29 @@ export default function OpenFiestaChat() {
             onUpdateProject={handleEditProject}
             onDeleteProject={deleteProject}
           />
+
+        {/* Main Content */}
+        <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] overflow-hidden relative">
+          {/* Mobile Header with Hamburger */}
+          <div className={cn(
+            "lg:hidden flex items-center justify-between p-4 border-b",
+            isDark ? "border-white/10" : "border-zinc-200"
+          )}>
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className={cn(
+                "inline-flex items-center justify-center h-9 w-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95",
+                isDark
+                  ? "bg-gradient-to-r from-white/12 to-white/8 border border-white/15 text-white hover:from-white/18 hover:to-white/12 hover:border-white/25 backdrop-blur-sm shadow-lg"
+                  : "bg-white border border-zinc-300 text-zinc-700 hover:bg-zinc-50 shadow-sm"
+              )}
+              aria-label="Open menu"
+              title="Menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            {/* Right: Compare (small) + Actions trigger (mobile) */}
+            <div className="relative flex items-center gap-2">
+              <Link
