@@ -1105,3 +1105,29 @@ export default function OpenFiestaChat() {
       chatRef.current.loadMessages(convertedMessages);
     }
   }, [activeThread]);
+
+  return (
+    <div className={cn("min-h-screen w-full relative", isDark ? "dark" : "")}> 
+      {/* SEO: Primary page heading for branded queries */}
+      <h1 className="sr-only">
+        Open Fiesta — chat and compare 300+ AI models (OpenAI, Claude, Gemini, DeepSeek, Grok) in one place
+      </h1>
+
+      {/* Background */}
+      {isDark ? (
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), radial-gradient(68% 58% at 50% 50%, #c81e3a 0%, #a51d35 16%, #7d1a2f 32%, #591828 46%, #3c1722 60%, #2a151d 72%, #1f1317 84%, #141013 94%, #0a0a0a 100%), radial-gradient(90% 75% at 50% 50%, rgba(228,42,66,0.06) 0%, rgba(228,42,66,0) 55%), radial-gradient(150% 120% at 8% 8%, rgba(0,0,0,0) 42%, #0b0a0a 82%, #070707 100%), radial-gradient(150% 120% at 92% 92%, rgba(0,0,0,0) 42%, #0b0a0a 82%, #070707 100%), radial-gradient(60% 50% at 50% 60%, rgba(240,60,80,0.06), rgba(0,0,0,0) 60%), #050505",
+          }}
+        />
+      ) : (
+        /* Aurora Dream Corner Whispers */
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 85% 65% at 8% 8%, rgba(175, 109, 255, 0.42), transparent 60%),
+              radial-gradient(ellipse 75% 60% at 75% 35%, rgba(255, 235, 170, 0.55), transparent 62%),
+              radial-gradient(ellipse 70% 60% at 15% 80%, rgba(255, 100, 180, 0.40), transparent 62%),
