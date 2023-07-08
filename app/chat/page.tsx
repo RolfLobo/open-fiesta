@@ -1261,3 +1261,29 @@ export default function OpenFiestaChat() {
             {/* Right: Compare (small) + Actions trigger (mobile) */}
             <div className="relative flex items-center gap-2">
               <Link
+                href="/compare"
+                  className={cn(
+                    "inline-block font-medium overflow-hidden relative px-2 py-1 rounded-md outline-none duration-300 group text-[10px]",
+                    isDark
+                      ? "bg-red-950 text-red-400 border border-red-400 border-b-2 hover:brightness-150 hover:border-t-2 hover:border-b active:opacity-75"
+                      : "bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 active:opacity-80"
+                  )}
+                >
+                  <span className="bg-red-400 shadow-red-400 absolute -top-[150%] left-0 inline-flex w-40 h-[3px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
+                  Compare Models
+                </Link>
+                <button
+                  onClick={() => setMobileActionsOpen((v) => !v)}
+                  className={cn(
+                    "inline-flex items-center justify-center h-9 w-9 rounded-md shadow",
+                    isDark ? "border border-white/15 bg-white/5 hover:bg-white/10 text-white" : "border border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-700"
+                  )}
+                  aria-label="Open quick actions"
+                  title="Actions"
+                >
+                  {/* simple 2x2 dots icon */}
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                    <circle cx="7" cy="7" r="2" />
+                    <circle cx="17" cy="7" r="2" />
+                    <circle cx="7" cy="17" r="2" />
+                    <circle cx="17" cy="17" r="2" />
