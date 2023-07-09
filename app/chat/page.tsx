@@ -1365,3 +1365,29 @@ export default function OpenFiestaChat() {
             />
           </div>
         </div>
+      </div>
+
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+      />
+
+      <ProjectModal
+        open={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
+        onSave={handleSaveProject}
+        project={editingProject}
+      />
+
+      {/* First-visit note modal */}
+      <FirstVisitNote
+        open={showFirstVisit}
+        onClose={() => {
+          setFirstVisitSeen(true)
+          setShowFirstVisit(false)
+        }}
+      />
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
