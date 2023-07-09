@@ -1313,3 +1313,29 @@ export default function OpenFiestaChat() {
                     >
                       <Layers size={14} />
                     </button>
+                    <CustomModels compact />
+                    <ThemeToggle compact />
+                    <Settings compact />
+                    <GithubStar owner="NiladriHazra" repo="Open-Fiesta" />
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Top bar - Desktop only */}
+            <div className="hidden lg:block">
+              <HeaderBar
+                onOpenMenu={() => setMobileSidebarOpen(true)}
+                title="Open Fiesta"
+                githubOwner="NiladriHazra"
+                githubRepo="Open-Fiesta"
+                onOpenModelsModal={() => setModelModalOpen(true)}
+                showCompareButton
+                className="-mr-3 sm:mr-0"
+                hideHomeButton={true}
+              />
+            </div>
+            {/* Use ChatInterface but hide its input; we provide HomeAiInput with model selector */}
+            <ChatInterface ref={chatRef} hideInput />
+            <div className={cn(
+              "absolute bottom-0 left-0 right-0 p-4 lg:p-6 bg-gradient-to-t to-transparent pointer-events-none",
+              isDark ? "from-black/20" : "from-white/5"
