@@ -1339,3 +1339,29 @@ export default function OpenFiestaChat() {
             <div className={cn(
               "absolute bottom-0 left-0 right-0 p-4 lg:p-6 bg-gradient-to-t to-transparent pointer-events-none",
               isDark ? "from-black/20" : "from-white/5"
+            )}>
+              <div className="pointer-events-auto">
+                <HomeAiInput
+                  isDark={isDark}
+                  modelSelectorLabel={selectedHomeModel ? selectedHomeModel.label : "Choose model"}
+                  onOpenModelSelector={() => setModelModalOpen(true)}
+                  onSubmit={handleSubmit}
+                  initialValue={editingMessage}
+                  onClear={() => setEditingMessage('')}
+                />
+              </div>
+            </div>
+            <ModelsModal
+              open={modelModalOpen}
+              onClose={() => setModelModalOpen(false)}
+              selectedIds={selectedHomeModel ? [selectedHomeModel.id] : []}
+              selectedModels={selectedHomeModel ? [selectedHomeModel] : []}
+              customModels={customModels}
+              onToggle={(id) => {
+                setSelectedHomeModelId((prev) => (prev === id ? "" : id))
+                // Close after picking to mimic single-select UX
+                setModelModalOpen(false)
+              }}
+            />
+          </div>
+        </div>
