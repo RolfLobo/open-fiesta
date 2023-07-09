@@ -1287,3 +1287,29 @@ export default function OpenFiestaChat() {
                     <circle cx="17" cy="7" r="2" />
                     <circle cx="7" cy="17" r="2" />
                     <circle cx="17" cy="17" r="2" />
+                  </svg>
+                </button>
+
+                {/* Inline Support button on mobile header */}
+                <div>
+                  <SupportDropdown theme={theme.mode === 'dark' ? 'dark' : 'light'} inline />
+                </div>
+
+                {mobileActionsOpen && (
+                  <div
+                    className={cn(
+                      "absolute right-0 top-11 z-50 rounded-xl shadow-xl p-2 flex items-center gap-2",
+                      isDark ? "border border-white/15 bg-black/60 backdrop-blur-md" : "border border-zinc-200 bg-white"
+                    )}
+                  >
+                    <button
+                      onClick={() => { setModelModalOpen(true); setMobileActionsOpen(false); }}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 text-xs h-9 w-9 justify-center rounded-md shadow",
+                        isDark ? "border border-white/15 bg-white/5 hover:bg-white/10 text-white" : "border border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-700"
+                      )}
+                      title="Change models"
+                      aria-label="Change models"
+                    >
+                      <Layers size={14} />
+                    </button>
