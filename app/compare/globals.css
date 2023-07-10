@@ -1524,3 +1524,29 @@ body.light * {
 .dark.accent-blue {
   --background-pattern:
     linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      #3b82f6 0%,
+      #2563eb 16%,
+      #1d4ed8 32%,
+      #1e40af 46%,
+      #1e3a8a 60%,
+      #1e3a8a 72%,
+      #0f1629 84%,
+      #0f1419 94%,
+      #0a0a0a 100%
+    );
+}
+
+.dark.accent-purple {
+  --background-pattern:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      #8b5cf6 0%,
+      #7c3aed 16%,
+      #6d28d9 32%,
+      #5b21b6 46%,
+      #4c1d95 60%,
+      #3730a3 72%,
+      #1e1b4b 84%,
