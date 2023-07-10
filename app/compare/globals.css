@@ -1472,3 +1472,29 @@ body.light * {
   /* Update background pattern for dark mode */
   --background-pattern:
     linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      var(--accent-primary) 0%,
+      var(--accent-secondary) 16%,
+      var(--accent-tertiary) 32%,
+      #591828 46%,
+      #3c1722 60%,
+      #2a151d 72%,
+      #1f1317 84%,
+      #141013 94%,
+      #0a0a0a 100%
+    );
+}
+
+/* Theme-specific dark mode overrides for each accent */
+.dark.accent-crimson {
+  --background-pattern:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      #c81e3a 0%,
+      #a51d35 16%,
+      #7d1a2f 32%,
+      #591828 46%,
+      #3c1722 60%,
+      #2a151d 72%,
