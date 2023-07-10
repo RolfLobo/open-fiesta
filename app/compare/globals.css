@@ -1498,3 +1498,29 @@ body.light * {
       #591828 46%,
       #3c1722 60%,
       #2a151d 72%,
+      #1f1317 84%,
+      #141013 94%,
+      #0a0a0a 100%
+    );
+}
+
+.dark.accent-emerald {
+  --background-pattern:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      #10b981 0%,
+      #059669 16%,
+      #047857 32%,
+      #065f46 46%,
+      #064e3b 60%,
+      #052e16 72%,
+      #0a0e0a 84%,
+      #0f0f0f 94%,
+      #0a0a0a 100%
+    );
+}
+
+.dark.accent-blue {
+  --background-pattern:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
