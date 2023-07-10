@@ -1420,3 +1420,29 @@ body.light * {
     #f87171 25%,
     #ef4444 50%,
     #dc2626 75%,
+    #b91c1c 100%
+  );
+  --font-primary: var(--font-geist-sans);
+  --font-secondary: var(--font-geist-mono);
+
+  /* Badge System Variables */
+  --badge-pro-background: rgba(228, 42, 66, 0.15);
+  --badge-pro-text: rgb(252, 211, 77);
+  --badge-pro-border: rgba(228, 42, 66, 0.3);
+  --badge-pro-glow: rgba(228, 42, 66, 0.3);
+  --badge-free-background: rgba(16, 185, 129, 0.15);
+  --badge-free-text: rgb(167, 243, 208);
+  --badge-free-border: rgba(16, 185, 129, 0.3);
+  --badge-free-glow: rgba(16, 185, 129, 0.3);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
