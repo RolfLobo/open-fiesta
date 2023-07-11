@@ -1602,3 +1602,29 @@ body.light * {
 .accent-emerald {
   --accent-primary: #0b7f5a;
   --accent-secondary: #086247;
+  --accent-tertiary: #044432;
+  --accent-bg-primary: rgba(11, 127, 90, 0.115);
+  --accent-bg-secondary: rgba(11, 127, 90, 0.045);
+  --accent-interactive-primary: #0b7f5a;
+  --accent-interactive-hover: #086247;
+  --accent-interactive-active: #044432;
+  --accent-interactive-focus: rgba(11, 127, 90, 0.35);
+  --accent-highlight-primary: #2fa97f;
+  --accent-highlight-secondary: #5ec79e;
+  --accent-highlight-subtle: rgba(47, 169, 127, 0.14);
+  --accent-success: #0b7f5a;
+  --accent-warning: #b9820d;
+  --accent-error: #c33040;
+  --accent-info: #2a62ba;
+  --accent-glow-soft: rgba(11, 127, 90, 0.26);
+  --accent-glow-medium: rgba(11, 127, 90, 0.42);
+  --accent-glow-strong: rgba(11, 127, 90, 0.6);
+}
+
+/* Muted blue palette */
+.accent-blue {
+  --accent-primary: #2a62ba;
+  --accent-secondary: #1e4c91;
+  --accent-tertiary: #16386c;
+  --accent-bg-primary: rgba(42, 98, 186, 0.12);
+  --accent-bg-secondary: rgba(42, 98, 186, 0.045);
