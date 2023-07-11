@@ -1576,3 +1576,29 @@ body.light * {
   --accent-primary: #9d1c2b;
   --accent-secondary: #821624;
   --accent-tertiary: #66111b;
+  --accent-bg-primary: rgba(157, 28, 43, 0.12);
+  --accent-bg-secondary: rgba(157, 28, 43, 0.045);
+  /* Interactive */
+  --accent-interactive-primary: #9d1c2b;
+  --accent-interactive-hover: #821624;
+  --accent-interactive-active: #66111b;
+  --accent-interactive-focus: rgba(157, 28, 43, 0.35);
+  /* Highlights (toned down gold) */
+  --accent-highlight-primary: #d3a524;
+  --accent-highlight-secondary: #b9820d;
+  --accent-highlight-subtle: rgba(211, 165, 36, 0.14);
+  /* Status (reuse shared, slightly muted where bright) */
+  --accent-success: #0b7f5a;
+  --accent-warning: #b9820d;
+  --accent-error: #c33040;
+  --accent-info: #2a62ba;
+  /* Glow */
+  --accent-glow-soft: rgba(157, 28, 43, 0.28);
+  --accent-glow-medium: rgba(157, 28, 43, 0.45);
+  --accent-glow-strong: rgba(157, 28, 43, 0.65);
+}
+
+/* Muted emerald palette (align with themes.ts) */
+.accent-emerald {
+  --accent-primary: #0b7f5a;
+  --accent-secondary: #086247;
