@@ -1654,3 +1654,29 @@ body.light * {
   --accent-interactive-primary: #663fba;
   --accent-interactive-hover: #522f99;
   --accent-interactive-active: #3f2376;
+  --accent-interactive-focus: rgba(102, 63, 186, 0.35);
+  --accent-highlight-primary: #9b7ae8;
+  --accent-highlight-secondary: #bda9f5;
+  --accent-highlight-subtle: rgba(155, 122, 232, 0.14);
+  --accent-success: #0b7f5a;
+  --accent-warning: #b9820d;
+  --accent-error: #c33040;
+  --accent-info: #2a62ba;
+  --accent-glow-soft: rgba(102, 63, 186, 0.26);
+  --accent-glow-medium: rgba(102, 63, 186, 0.42);
+  --accent-glow-strong: rgba(102, 63, 186, 0.62);
+}
+
+.accent-black {
+  --accent-primary: #000000;
+  --accent-secondary: #141414;
+  --accent-tertiary: #1f1f1f;
+  --accent-bg-primary: rgba(255, 255, 255, 0.08);
+  --accent-bg-secondary: rgba(255, 255, 255, 0.04);
+  --accent-interactive-primary: #141414;
+  --accent-interactive-hover: #1f1f1f;
+  --accent-interactive-active: #000000;
+  --accent-interactive-focus: rgba(255, 255, 255, 0.35);
+  --accent-highlight-primary: #ffffff;
+  --accent-highlight-secondary: #d9d9d9;
+  --accent-highlight-subtle: rgba(255, 255, 255, 0.12);
