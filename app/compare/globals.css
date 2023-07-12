@@ -1706,3 +1706,29 @@ body.light * {
 }
 
 .font-poppins {
+  --font-primary: var(--font-poppins);
+  --font-secondary: var(--font-poppins);
+}
+
+/* Background Theme Classes - Consolidated */
+.bg-gradient-theme {
+  background: var(--background-pattern);
+}
+
+.bg-minimal-theme {
+  background: var(--background);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--accent-bg-secondary) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, var(--accent-bg-secondary) 0%, transparent 50%);
+}
+
+/* Darker minimal surface specifically for black accent */
+.accent-black.bg-minimal-theme,
+.bg-minimal-theme.accent-black {
+  background: #050505 !important;
+  background-image: none !important;
+  --background-pattern: #050505 !important;
+  --background: #050505 !important;
+}
+
+/* Theme Transition Classes */
