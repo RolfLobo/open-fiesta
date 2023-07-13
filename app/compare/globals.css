@@ -1836,3 +1836,29 @@ body.light * {
     0 0 4px 1px var(--accent-interactive-focus),
     0 0 10px -1px var(--accent-glow-soft),
     0 0 18px -2px var(--accent-glow-medium);
+}
+.accent-beacon::before,
+.accent-beacon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+/* Inner soft halo */
+.accent-beacon::before {
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 65%);
+  opacity: 0.55;
+  filter: blur(3px);
+}
+/* Outer animated aura */
+.accent-beacon::after {
+  inset: -5px;
+  background: radial-gradient(circle, var(--accent-interactive-primary) 0%, transparent 70%);
+  opacity: 0.28;
+  filter: blur(7px);
+  animation: accent-beacon-pulse 3.4s ease-in-out infinite;
+}
+@keyframes accent-beacon-pulse {
+  0%,
+  100% {
