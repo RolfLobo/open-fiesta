@@ -1888,3 +1888,29 @@ body.light * {
 .accent-link:hover {
   color: var(--accent-interactive-hover);
 }
+
+.accent-glow-soft {
+  box-shadow: 0 0 20px var(--accent-glow-soft);
+}
+
+.accent-glow-medium {
+  box-shadow: 0 0 30px var(--accent-glow-medium);
+}
+
+.accent-glow-strong {
+  box-shadow: 0 0 40px var(--accent-glow-strong);
+}
+
+/* New: Badge System CSS */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  border: 1px solid;
+  transition: all 0.2s ease-in-out;
+}
+
+.badge-pro {
