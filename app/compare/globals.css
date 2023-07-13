@@ -1862,3 +1862,29 @@ body.light * {
 @keyframes accent-beacon-pulse {
   0%,
   100% {
+    transform: scale(0.9);
+    opacity: 0.28;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.42;
+  }
+}
+/* Make pulse ring use highlight for dim palettes */
+.accent-dot-pulse::after {
+  background: var(--accent-highlight-primary);
+}
+
+.accent-input-focus:focus {
+  border-color: var(--accent-interactive-primary);
+  box-shadow: 0 0 0 3px var(--accent-interactive-focus);
+}
+
+.accent-link {
+  color: var(--accent-interactive-primary);
+  transition: color 0.2s ease-in-out;
+}
+
+.accent-link:hover {
+  color: var(--accent-interactive-hover);
+}
