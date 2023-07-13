@@ -1940,3 +1940,29 @@ body.light * {
   body {
     @apply bg-background text-foreground;
     font-family:
+      var(--font-primary),
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+}
+
+/* Font preview utility classes (independent from active theme) */
+.font-preview {
+  line-height: 1.25;
+}
+.font-preview-geist {
+  font-family:
+    var(--font-geist-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+.font-preview-inter {
+  font-family:
+    var(--font-inter),
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+.font-preview-mono {
