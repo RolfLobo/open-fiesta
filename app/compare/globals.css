@@ -1758,3 +1758,29 @@ body.light * {
 .accent-button-primary:active {
   background: var(--accent-interactive-active);
 }
+
+.accent-button-secondary {
+  border: 1px solid var(--accent-interactive-primary);
+  color: var(--accent-interactive-primary);
+  background: transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.accent-button-secondary:hover {
+  background: var(--accent-interactive-primary);
+  color: white;
+}
+
+/* Reusable accent action styles */
+.accent-action-fill {
+  background: var(--accent-interactive-primary);
+  color: #fff;
+  transition:
+    background 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+.accent-action-fill:hover {
+  background: var(--accent-interactive-hover);
+}
+.accent-action-fill:active {
+  background: var(--accent-interactive-active);
