@@ -2018,3 +2018,29 @@ body.light * {
 *::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--accent-secondary), var(--accent-tertiary));
   box-shadow:
+    0 0 0 1px var(--accent-interactive-focus) inset,
+    0 0 6px 1px var(--accent-glow-soft);
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Additional Accent Utilities for unified theming */
+.accent-chip-active {
+  background: var(--accent-bg-primary);
+  border: 1px solid var(--accent-interactive-primary);
+  color: var(--accent-interactive-primary);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.accent-chip-active:hover {
+  background: var(--accent-bg-secondary);
+}
+.accent-chip-active:active {
+  background: var(--accent-bg-primary);
+}
+
+.accent-selected {
+  background: var(--accent-interactive-primary);
