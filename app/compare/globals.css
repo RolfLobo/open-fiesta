@@ -2070,3 +2070,29 @@ body.light * {
     background 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease;
+}
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.icon-btn:active {
+  background: rgba(255, 255, 255, 0.18);
+}
+.dark .icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+}
+.icon-btn.accent-focus:focus-visible {
+  box-shadow: 0 0 0 4px var(--accent-interactive-focus);
+}
+
+/* Unified focus outline */
+.accent-focus:focus-visible {
+  outline: 2px solid var(--accent-interactive-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--accent-interactive-focus);
+}
+
+/* Neutral chip (inactive state) */
+.accent-chip {
+  background: var(--accent-bg-secondary);
+  border: 1px solid transparent;
+  color: var(--accent-interactive-primary);
