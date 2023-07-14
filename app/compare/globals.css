@@ -1992,3 +1992,29 @@ body.light * {
 body.light * {
   scrollbar-color: var(--accent-secondary) var(--accent-bg-secondary);
 }
+
+/* WebKit (Chrome/Safari/Edge) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--accent-bg-secondary);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 9999px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* creates inner gap */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.light *::-webkit-scrollbar-thumb {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-secondary), var(--accent-tertiary));
+  box-shadow:
