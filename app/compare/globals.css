@@ -2096,3 +2096,29 @@ body.light * {
   background: var(--accent-bg-secondary);
   border: 1px solid transparent;
   color: var(--accent-interactive-primary);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.accent-chip:hover {
+  background: var(--accent-bg-primary);
+}
+.accent-chip:active {
+  background: var(--accent-bg-secondary);
+}
+
+/* High-contrast search toggle (stands out in monochrome/black accent) */
+.search-toggle {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--accent-interactive-primary);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Chat Input Style Variants */
+.chat-input-shell {
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
