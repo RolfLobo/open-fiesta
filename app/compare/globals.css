@@ -2044,3 +2044,29 @@ body.light * {
 
 .accent-selected {
   background: var(--accent-interactive-primary);
+  color: #fff;
+  border: 1px solid var(--accent-interactive-primary);
+  box-shadow:
+    0 0 0 1px var(--accent-interactive-focus),
+    0 0 0 3px var(--accent-interactive-focus);
+}
+
+.accent-bar-faint {
+  background: var(--accent-interactive-primary);
+  opacity: 0.3;
+}
+
+/* Icon button base */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  height: 2.25rem;
+  width: 2.25rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
