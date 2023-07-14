@@ -1966,3 +1966,29 @@ body.light * {
     sans-serif;
 }
 .font-preview-mono {
+  font-family: var(--font-jetbrains), monospace;
+}
+.font-preview-poppins {
+  font-family:
+    var(--font-poppins),
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+/* Themed scrollbars (accent-aware) */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) var(--accent-bg-secondary);
+}
+/* Utility to hide scrollbars when desired */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+body.light * {
+  scrollbar-color: var(--accent-secondary) var(--accent-bg-secondary);
+}
