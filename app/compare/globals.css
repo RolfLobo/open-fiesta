@@ -2226,3 +2226,29 @@ body.light * {
   box-shadow:
     0 0 0 2px var(--accent-interactive-focus),
     0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+}
+
+/* Accent preview swatches (static per-accent so Theme Settings shows all variants simultaneously) */
+.accent-preview-crimson-primary {
+  background: #e42a42;
+}
+.accent-preview-crimson-secondary {
+  background: #cf243a;
+}
+.accent-preview-crimson-tertiary {
+  background: #b91c3c;
+}
+.accent-preview-emerald-primary {
+  background: #10b981;
+}
+.accent-preview-emerald-secondary {
+  background: #059669;
+}
+.accent-preview-emerald-tertiary {
+  background: #047857;
+}
+.accent-preview-blue-primary {
+  background: #3b82f6;
+}
+.accent-preview-blue-secondary {
+  background: #2563eb;
