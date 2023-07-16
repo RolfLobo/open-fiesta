@@ -2382,3 +2382,29 @@ body.light * {
   border-radius: 9999px;
   background: var(--badge-free-text);
   transform: translateX(0.125rem);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+.model-toggle-pill[data-type='pro'] .model-toggle-thumb {
+  background: var(--badge-pro-text);
+}
+.model-toggle-pill[data-active='true'] .model-toggle-thumb {
+  transform: translateX(0.9rem);
+}
+
+/* AI Chat Box toolbar background */
+.ai-toolbar-bg {
+  background-color: rgba(0, 0, 0, 0.52);
+}
+
+.dark .ai-toolbar-bg {
+  background-color: rgba(14, 13, 13, 0.52);
+}
+
+/* Image skeleton premium animations */
+@keyframes img-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
