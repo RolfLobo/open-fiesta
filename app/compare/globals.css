@@ -2512,3 +2512,29 @@ body.light * {
 }
 
 /* Light theme: glassmorphism */
+:root:not(.dark) .compare-page .group.relative.rounded-lg {
+  background: rgba(255, 255, 255, 0.25) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+:root:not(.dark) .compare-page .group.relative.rounded-lg:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+:root:not(.dark) .compare-page .group.relative.rounded-lg:focus-within {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Remove grey pill around the Thinking indicator (compare-only) */
