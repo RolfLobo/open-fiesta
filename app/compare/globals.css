@@ -2538,3 +2538,29 @@ body.light * {
 }
 
 /* Remove grey pill around the Thinking indicator (compare-only) */
+.compare-page [class*="inline-flex"][class*="rounded-full"][class*="ring-1"],
+.compare-page [class*="bg-white/10"][class*="ring-1"][class*="rounded-full"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Text styling for better readability */
+.compare-page .text-white\/90 {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+:root:not(.dark) .compare-page .text-white\/90 {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Remove bubble background/ring from assistant content blocks */
+.compare-page .max-w\[72ch\].rounded-2xl,
+.compare-page .group.relative.rounded-lg [class*="max-w"][class*="rounded-2xl"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Improve text readability inside answer content */
