@@ -2434,3 +2434,29 @@ body.light * {
 
 /* Optional helpers if needed in markup */
 .img-sweep {
+  animation: img-sweep 2.2s ease-in-out infinite;
+}
+.img-breathe {
+  animation: img-breathe 3.2s ease-in-out infinite;
+}
+.img-ripple {
+  animation: img-ripple 2.6s ease-in-out infinite;
+}
+
+/* Compare page: visual overrides (moved from styled-jsx) */
+.compare-page {
+  position: relative;
+}
+/* Remove the background overlay in light mode, keep minimal dark overlay for dark mode */
+.compare-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: transparent;
+}
+:root.dark .compare-page::before {
+  background:
+    radial-gradient(1000px 600px at 50% 10%, rgba(160, 40, 40, 0.15), transparent 60%),
+    radial-gradient(800px 500px at 20% 80%, rgba(160, 40, 40, 0.10), transparent 70%),
