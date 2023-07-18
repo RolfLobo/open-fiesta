@@ -626,3 +626,29 @@ import SupportDropdown from '@/components/support-dropdown';
 import Link from 'next/link';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProjectModal from '@/components/modals/ProjectModal';
+import { Project } from '@/lib/projects';
+import { cn } from '@/lib/utils';
+import './globals.css';
+
+export default function Home() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [mobileActionsOpen, setMobileActionsOpen] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const backgroundClass = BACKGROUND_STYLES[theme.background].className;
+
+  // Redirect to signin if not authenticated (wait for auth to finish loading)
+  useEffect(() => {
+    if (isHydrated && !loading && !user) {
+      router.push('/signin');
+    }
+  }, [user, loading, isHydrated, router]);
+
+  const [selectedIds, setSelectedIds] = useLocalStorage<string[]>('ai-fiesta:selected-models', [
+    'open-gpt-5-nano', // GPT-5 Nano
