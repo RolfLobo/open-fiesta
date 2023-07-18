@@ -2642,3 +2642,21 @@ body.light * {
   }
 }
 .img-breathe-strong {
+  animation: img-breathe-strong 2.8s ease-in-out infinite;
+}
+
+/* Subtle center ripple to imply activity */
+@keyframes img-ripple {
+  0%,
+  100% {
+    transform: scale(0.98);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.22;
+  }
+}
+.img-ripple {
+  animation: img-ripple 2.6s ease-in-out infinite;
+}

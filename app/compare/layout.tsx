@@ -26,3 +26,12 @@ export const metadata: Metadata = {
 export default function CompareLayout({ children }: { children: React.ReactNode }) {
   return children as React.ReactElement
 }
+
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Compare AI Models — Open Fiesta",
+  description:
+    "Side-by-side compare answers from 300+ AI models (OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more) in one place.",
+  alternates: { canonical: "/compare" },
+  openGraph: {
