@@ -2564,3 +2564,29 @@ body.light * {
 }
 
 /* Improve text readability inside answer content */
+.compare-page .max-w\[72ch\] {
+  color: rgba(255, 255, 255, 0.92);
+}
+:root:not(.dark) .compare-page .max-w\[72ch\] {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* Cell border styling */
+:root.dark .compare-page .group.relative.rounded-lg {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+:root:not(.dark) .compare-page .group.relative.rounded-lg {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Glassy Toast theme (neutral, blurred, accent progress) */
+.glass-toast {
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(20, 20, 20, 0.55) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  color: #f8fafc !important;
