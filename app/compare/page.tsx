@@ -594,3 +594,9 @@ export default function Home() {
     </div>
   );
 }
+
+'use client';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import HeaderBar from '@/components/app/HeaderBar';
+import VoiceSelector from '@/components/modals/VoiceSelector';
