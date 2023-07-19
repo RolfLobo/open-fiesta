@@ -808,3 +808,29 @@ export default function Home() {
               return prev
             }
             return preferredThread?.id || null
+          })
+        } else {
+          setActiveId(null)
+        }
+      } catch (e) {
+        console.warn('Failed to load compare threads from Supabase:', e)
+      }
+    }
+    load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, activeProjectId])
+
+  // group assistant messages by turn for simple compare view
+  const pairs = useMemo(() => {
+    const rows: { user: ChatMessage; answers: ChatMessage[] }[] = [];
+    let currentUser: ChatMessage | null = null;
+    for (const m of messages) {
+      if (m.role === 'user') {
+        currentUser = m;
+        rows.push({ user: m, answers: [] });
+      } else if (m.role === 'assistant' && currentUser) {
+        rows[rows.length - 1]?.answers.push(m);
+      }
+    }
+    return rows;
+  }, [messages]);
