@@ -704,3 +704,29 @@ export default function Home() {
   };
 
   const activeThread = useMemo(
+    () => threads.find((t) => t.id === activeId) || null,
+    [threads, activeId],
+  );
+  // Only show chats for the active project (or all if none selected)
+  const visibleThreads = useMemo(
+    () => {
+      const scope = threads.filter((t) => t.pageType === 'compare');
+      return activeProjectId ? scope.filter((t) => t.projectId === activeProjectId) : scope
+    },
+    [threads, activeProjectId],
+  );
+  const messages = useMemo(() => activeThread?.messages ?? [], [activeThread]);
+
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
+  // Allow collapsing a model column without unselecting it
+  const [collapsedIds, setCollapsedIds] = useState<string[]>([]);
+  const selectedModels = useMemo(
+    () => selectedIds.map((id) => allModels.find((m) => m.id === id)).filter(Boolean) as AiModel[],
+    [selectedIds, allModels],
+  );
+  // Build grid template: collapsed => fixed narrow, expanded => normal
+  const headerTemplate = useMemo(() => {
+    if (selectedModels.length === 0) return '';
+    const isCompact = selectedModels.length < 5;
+    const parts = selectedModels.map((m) => {
+      const collapsed = collapsedIds.includes(m.id);
