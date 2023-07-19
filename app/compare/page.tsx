@@ -782,3 +782,29 @@ export default function Home() {
       setThreads,
       setActiveId,
       activeProject,
+      selectedVoice,
+      user?.id,
+    ],
+  );
+
+  // Load threads from Supabase for this user and keep only compare page threads in view
+  useEffect(() => {
+    const load = async () => {
+      if (!user?.id) {
+        setThreads([])
+        setActiveId(null)
+        return
+      }
+      try {
+        const dbThreads = await fetchThreads(user.id)
+        setThreads(dbThreads)
+        if (dbThreads.length > 0) {
+          const compareThreads = dbThreads.filter(t => t.pageType === 'compare')
+          const preferredThread = activeProjectId 
+            ? compareThreads.find(t => t.projectId === activeProjectId)
+            : compareThreads[0]
+          setActiveId((prev) => {
+            if (prev && dbThreads.some(t => t.id === prev && t.pageType === 'compare')) {
+              return prev
+            }
+            return preferredThread?.id || null
