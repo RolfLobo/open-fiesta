@@ -652,3 +652,29 @@ export default function Home() {
 
   const [selectedIds, setSelectedIds] = useLocalStorage<string[]>('ai-fiesta:selected-models', [
     'open-gpt-5-nano', // GPT-5 Nano
+    'open-midijourney', // Midjourney
+    'open-evil',
+    'open-mistral', // Mistral Small 3.1
+    'open-llamascout', // Llama Scout
+  ]);
+  const [keys] = useLocalStorage<ApiKeys>('ai-fiesta:keys', {});
+  const [threads, setThreads] = useLocalStorage<ChatThread[]>('ai-fiesta:threads', []);
+  const [activeId, setActiveId] = useLocalStorage<string | null>('ai-fiesta:active-thread', null);
+  const [sidebarOpen, setSidebarOpen] = useLocalStorage<boolean>('ai-fiesta:sidebar-open', true);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [modelsModalOpen, setModelsModalOpen] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useLocalStorage<string>(
+    'ai-fiesta:selected-voice',
+    'alloy',
+  );
+
+  const [customModels] = useCustomModels();
+  const allModels = useMemo(() => mergeModels(customModels), [customModels]);
+
+  // Projects hook from main
+  const {
+    projects,
+    activeProjectId,
+    activeProject,
+    createProject,
+    updateProject,
