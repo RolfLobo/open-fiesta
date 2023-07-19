@@ -756,3 +756,29 @@ export default function Home() {
       return [...prev, id];
     });
   };
+
+  // Chat actions (send and onEditUser) moved to lib/chatActions.ts to avoid state races
+  const { send, onEditUser } = useMemo(
+    () =>
+      createChatActions({
+        selectedModels,
+        keys,
+        threads,
+        activeThread,
+        setThreads,
+        setActiveId,
+        setLoadingIds: (updater) => setLoadingIds(updater),
+        setLoadingIdsInit: (ids) => setLoadingIds(ids),
+        activeProject, // include project system prompt/context
+        selectedVoice, // pass voice selection for audio models
+        userId: user?.id,
+        pageType: 'compare',
+      }),
+    [
+      selectedModels,
+      keys,
+      threads,
+      activeThread,
+      setThreads,
+      setActiveId,
+      activeProject,
