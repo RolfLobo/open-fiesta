@@ -730,3 +730,29 @@ export default function Home() {
     const isCompact = selectedModels.length < 5;
     const parts = selectedModels.map((m) => {
       const collapsed = collapsedIds.includes(m.id);
+      if (collapsed) return '90px';
+      // If fewer than 5 models, allow columns to flex and fill available width.
+      // Otherwise keep fixed width for consistent 5-column comparison.
+      return isCompact ? 'minmax(240px, 1fr)' : '320px';
+    });
+    return parts.join(' ');
+  }, [selectedModels, collapsedIds]);
+
+  const anyLoading = loadingIds.length > 0;
+
+  const [firstNoteDismissed, setFirstNoteDismissed] = useLocalStorage<boolean>(
+    'ai-fiesta:first-visit-note-dismissed',
+    false,
+  );
+  const showFirstVisitNote =
+    isHydrated && !firstNoteDismissed && (!keys?.openrouter || !keys?.gemini);
+
+  const toggle = (id: string) => {
+    setSelectedIds((prev) => {
+      if (prev.includes(id)) return prev.filter((x) => x !== id);
+      const valid = new Set(allModels.map((m) => m.id));
+      const currentValidCount = prev.filter((x) => valid.has(x)).length;
+      if (currentValidCount >= 5) return prev;
+      return [...prev, id];
+    });
+  };
