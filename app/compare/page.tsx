@@ -678,3 +678,29 @@ export default function Home() {
     activeProject,
     createProject,
     updateProject,
+    deleteProject,
+    selectProject,
+  } = useProjects();
+  
+  // Project modal handlers
+  const handleCreateProject = () => {
+    setEditingProject(null);
+    setProjectModalOpen(true);
+  };
+  
+  const handleEditProject = (project: Project) => {
+    setEditingProject(project);
+    setProjectModalOpen(true);
+  };
+  
+  const handleSaveProject = (project: Project) => {
+    if (editingProject) {
+      updateProject(project);
+    } else {
+      createProject(project);
+    }
+    setEditingProject(null);
+    setProjectModalOpen(false);
+  };
+
+  const activeThread = useMemo(
