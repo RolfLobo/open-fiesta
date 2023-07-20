@@ -886,3 +886,29 @@ export default function Home() {
         const userStarts: number[] = [];
         for (let i = 0; i < msgs.length; i++) if (msgs[i].role === 'user') userStarts.push(i);
         const start = userStarts[turnIndex];
+        if (start === undefined) return t;
+        const end = userStarts[turnIndex + 1] ?? msgs.length; // exclusive
+        let removed = false;
+        const nextMsgs = msgs.filter((m, idx) => {
+          if (idx <= start || idx >= end) return true;
+          if (!removed && m.role === 'assistant' && m.modelId === modelId) {
+            removed = true;
+            return false;
+          }
+          return true;
+        });
+        return { ...t, messages: nextMsgs };
+      }),
+    );
+  };
+
+  useEffect(() => {
+    setIsHydrated(true);
+    const t = setTimeout(() => setShowSplash(false), 350);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <div className={cn("compare-page min-h-screen w-full relative", isDark ? "dark" : "")}>
+      {/* Background */}
+      {isDark ? (
