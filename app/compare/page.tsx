@@ -834,3 +834,29 @@ export default function Home() {
     }
     return rows;
   }, [messages]);
+
+  // For compare page only: while waiting for model responses, inject a placeholder
+  // "Thinking…" message for each loading model on the latest turn so the UI
+  // shows a loading indicator instead of "No response".
+  const pairsWithPlaceholders = useMemo(() => {
+    const cloned = pairs.map(r => ({ user: r.user, answers: [...r.answers] }));
+    if (cloned.length === 0) return cloned;
+    const last = cloned[cloned.length - 1];
+    const answeredIds = new Set(last.answers.map(a => a.modelId).filter(Boolean) as string[]);
+    // Show placeholders for any selected model that hasn't answered yet
+    selectedModels.forEach(m => {
+      if (!answeredIds.has(m.id)) {
+        last.answers.push({
+          id: `thinking-${m.id}-${safeUUID()}`,
+          role: 'assistant',
+          content: 'Thinking…',
+          modelId: m.id,
+          createdAt: new Date().toISOString(),
+        } as ChatMessage);
+      }
+    });
+    return cloned;
+  }, [pairs, loadingIds, selectedModels]);
+
+  // Delete a full user turn (user + all its answers)
+  const onDeleteUser = (turnIndex: number) => {
