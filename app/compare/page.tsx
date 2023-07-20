@@ -860,3 +860,29 @@ export default function Home() {
 
   // Delete a full user turn (user + all its answers)
   const onDeleteUser = (turnIndex: number) => {
+    if (!activeThread) return;
+    setThreads((prev) =>
+      prev.map((t) => {
+        if (t.id !== activeThread.id) return t;
+        const msgs = t.messages;
+        const userStarts: number[] = [];
+        for (let i = 0; i < msgs.length; i++) if (msgs[i].role === 'user') userStarts.push(i);
+        const start = userStarts[turnIndex];
+        if (start === undefined) return t;
+        const end = userStarts[turnIndex + 1] ?? msgs.length; // exclusive
+        const nextMsgs = msgs.filter((_, idx) => idx < start || idx >= end);
+        return { ...t, messages: nextMsgs };
+      }),
+    );
+  };
+
+  // Delete a specific model's answer within a turn
+  const onDeleteAnswer = (turnIndex: number, modelId: string) => {
+    if (!activeThread) return;
+    setThreads((prev) =>
+      prev.map((t) => {
+        if (t.id !== activeThread.id) return t;
+        const msgs = t.messages;
+        const userStarts: number[] = [];
+        for (let i = 0; i < msgs.length; i++) if (msgs[i].role === 'user') userStarts.push(i);
+        const start = userStarts[turnIndex];
