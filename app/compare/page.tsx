@@ -964,3 +964,29 @@ export default function Home() {
             onNewChat={async () => {
               if (!user?.id) return;
               try {
+                const created = await createThreadDb({
+                  userId: user.id,
+                  title: 'New Chat',
+                  projectId: activeProjectId || null,
+                  pageType: 'compare',
+                  initialMessage: null,
+                });
+                setThreads((prev) => [created, ...prev]);
+                setActiveId(created.id);
+              } catch (e) {
+                console.warn('Failed to create compare thread:', e);
+              }
+            }}
+            mobileSidebarOpen={mobileSidebarOpen}
+            onCloseMobile={() => setMobileSidebarOpen(false)}
+            onOpenMobile={() => setMobileSidebarOpen(true)}
+            onDeleteThread={async (id) => {
+              if (!user?.id) return;
+              try {
+                await deleteThreadDb(user.id, id);
+              } catch (e) {
+                console.warn('Failed to delete compare thread in DB, removing locally:', e);
+              }
+              setThreads((prev) => {
+                const next = prev.filter((t) => t.id !== id);
+                if (activeId === id) {
