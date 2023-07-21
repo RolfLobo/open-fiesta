@@ -938,3 +938,29 @@ export default function Home() {
       {/* Soft vignette for dark mode */}
       {isDark && (
         <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%)",
+            opacity: 0.95,
+          }}
+        />
+      )}
+
+      {showSplash && (
+        <div className="fixed inset-0 z-[9999]">
+          <LaunchScreen backgroundClass={BACKGROUND_STYLES[theme.background].className} dismissed={isHydrated} />
+        </div>
+      )}
+
+      <div className="relative z-10 px-3 lg:px-4 py-4 lg:py-6">
+        <div className="flex gap-3 lg:gap-4">
+          {/* Sidebar */}
+          <ThreadSidebar
+            sidebarOpen={sidebarOpen}
+            onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+            threads={visibleThreads}
+            activeId={activeId}
+            onSelectThread={(id) => setActiveId(id)}
+            onNewChat={async () => {
+              if (!user?.id) return;
+              try {
