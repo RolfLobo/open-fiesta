@@ -990,3 +990,29 @@ export default function Home() {
               setThreads((prev) => {
                 const next = prev.filter((t) => t.id !== id);
                 if (activeId === id) {
+                  const inScope = next.filter((t) => t.pageType === 'compare');
+                  const nextInScope =
+                    (activeProjectId ? inScope.find((t) => t.projectId === activeProjectId) : inScope[0])
+                      ?.id ?? null;
+                  setActiveId(nextInScope);
+                }
+                return next;
+              });
+            }}
+            selectedModels={selectedModels}
+            // Projects (from main)
+            projects={projects}
+            activeProjectId={activeProjectId}
+            onSelectProject={selectProject}
+            onCreateProject={handleCreateProject}
+            onUpdateProject={handleEditProject}
+            onDeleteProject={deleteProject}
+          />
+
+          {/* Main content */}
+          <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] overflow-hidden ">
+            {/* Mobile Header with Hamburger */}
+          <div className={cn(
+            "lg:hidden flex items-center justify-between p-4 border-b",
+            isDark ? "border-white/10" : "border-rose-200/40"
+          )}>
