@@ -1068,3 +1068,29 @@ export default function Home() {
                       className={cn(
                         "inline-flex items-center justify-center h-9 w-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95",
                         isDark
+                          ? "bg-gradient-to-r from-white/12 to-white/8 border border-white/15 text-white hover:from-white/18 hover:to-white/12 hover:border-white/25 backdrop-blur-sm shadow-lg"
+                          : "bg-white border border-zinc-300 text-zinc-700 hover:bg-zinc-50 shadow-sm"
+                      )}
+                      aria-label="Go to home"
+                      title="Home"
+                    >
+                      <HomeIcon size={18} />
+                    </Link>
+                    <button
+                      onClick={() => { setModelsModalOpen(true); setMobileActionsOpen(false); }}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 text-xs h-9 w-9 justify-center rounded-md border shadow",
+                        isDark
+                          ? "border-white/15 bg-white/5 hover:bg-white/10"
+                          : "border-rose-200/60 bg-rose-50/60 hover:bg-rose-100/80"
+                      )}
+                      title="Change models"
+                      aria-label="Change models"
+                    >
+                      <Layers size={14} />
+                    </button>
+                    <CustomModels compact />
+                    <ThemeToggle compact />
+                    <Settings compact />
+                    <GithubStar owner="NiladriHazra" repo="Open-Fiesta" />
+                  </div>
