@@ -222,3 +222,29 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Badge } from "@/components/ui/Badge";
+import { CircleDot, CircleDotDashed, GithubIcon, Undo2 } from "lucide-react";
+
+export const metadata: Metadata = {
+    title: "Aura Farmers of Open-Fiesta",
+    description: "Meet the amazing aura farmers who nurture the energy behind Open-Fiesta",
+};
+
+
+async function getContributors(): Promise<Contributor[]> {
+    try {
+        const response = await fetch(
+            "https://api.github.com/repos/NiladriHazra/Open-Fiesta/contributors",
+            {
+                headers: {
+                    Accept: "application/vnd.github.v3+json",
+                    "User-Agent": "Open-Fiesta-Web-App",
+                },
+                next: { revalidate: 600 },
+            }
+        );
+
+        if (!response.ok) {
