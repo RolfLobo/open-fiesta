@@ -1094,3 +1094,29 @@ export default function Home() {
                     <Settings compact />
                     <GithubStar owner="NiladriHazra" repo="Open-Fiesta" />
                   </div>
+                )}
+              </div>
+            </div>
+            {/* Top bar - Desktop only */}
+            <div className="hidden lg:block">
+              <HeaderBar
+                onOpenMenu={() => setMobileSidebarOpen(true)}
+                title="Open Fiesta"
+                githubOwner="NiladriHazra"
+                githubRepo="Open-Fiesta"
+                onOpenModelsModal={() => setModelsModalOpen(true)}
+                className="-mr-3 sm:mr-0"
+              />
+            </div>
+
+            {/* Voice selector for audio models */}
+            {isHydrated && selectedModels.some((m) => m.category === 'audio') && (
+              <div className="mb-3 px-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-zinc-500 dark:text-zinc-400">Voice:</span>
+                  <VoiceSelector selectedVoice={selectedVoice} onVoiceChange={setSelectedVoice} />
+                </div>
+              </div>
+            )}
+
+            <ModelsModal
