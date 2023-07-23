@@ -1146,3 +1146,29 @@ export default function Home() {
                 onEditUser={onEditUser}
                 onDeleteUser={onDeleteUser}
                 onToggle={toggle}
+              />
+            )}
+
+            {isHydrated && (
+              <div className="px-3 lg:px-4">
+                <HomeAiInput
+                  isDark={isDark}
+                  onSubmit={(text) => {
+                    try { console.log('[Compare] HomeAiInput onSubmit:', text); } catch {}
+                    send(text);
+                  }}
+                />
+                <div className="sr-only" aria-hidden>
+                  {/* Debug counter for messages to ensure state updates */}
+                  activeId: {String(activeId || '')} • messages: {String(messages.length)}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Toasts for share notifications */}
+      <ProjectModal
+        open={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
