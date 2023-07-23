@@ -1120,3 +1120,29 @@ export default function Home() {
             )}
 
             <ModelsModal
+              open={modelsModalOpen}
+              onClose={() => setModelsModalOpen(false)}
+              selectedIds={selectedIds}
+              selectedModels={selectedModels}
+              customModels={customModels}
+              onToggle={toggle}
+            />
+
+            {isHydrated && (
+              <FirstVisitNote
+                open={showFirstVisitNote}
+                onClose={() => setFirstNoteDismissed(true)}
+              />
+            )}
+
+            {isHydrated && (
+              <ChatGrid
+                selectedModels={selectedModels}
+                headerTemplate={headerTemplate}
+                collapsedIds={collapsedIds}
+                setCollapsedIds={setCollapsedIds}
+                loadingIds={loadingIds}
+                pairs={pairsWithPlaceholders}
+                onEditUser={onEditUser}
+                onDeleteUser={onDeleteUser}
+                onToggle={toggle}
