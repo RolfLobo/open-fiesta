@@ -1042,3 +1042,29 @@ export default function Home() {
                   className={cn(
                     "inline-flex items-center justify-center h-9 w-9 rounded-md border shadow",
                     isDark
+                      ? "border-white/15 bg-white/5 hover:bg-white/10"
+                      : "border-rose-200/60 bg-rose-50/60 hover:bg-rose-100/80"
+                  )}
+                  aria-label="Open quick actions"
+                  title="Actions"
+                >
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                    <circle cx="7" cy="7" r="2" />
+                    <circle cx="17" cy="7" r="2" />
+                    <circle cx="7" cy="17" r="2" />
+                    <circle cx="17" cy="17" r="2" />
+                  </svg>
+                </button>
+
+                {mobileActionsOpen && (
+                  <div className={cn(
+                    "absolute right-0 top-11 z-50 rounded-xl border shadow-xl p-2 flex items-center gap-2 backdrop-blur-md",
+                    isDark
+                      ? "border-white/15 bg-black/60"
+                      : "border-rose-200/50 bg-white/95"
+                  )}>
+                    <Link
+                      href="/chat"
+                      className={cn(
+                        "inline-flex items-center justify-center h-9 w-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95",
+                        isDark
