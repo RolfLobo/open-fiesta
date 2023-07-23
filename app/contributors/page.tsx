@@ -215,3 +215,10 @@ export default async function Contributors() {
         </>
     );
 }
+
+import type { Contributor } from "@/lib/types";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
