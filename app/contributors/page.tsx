@@ -248,3 +248,29 @@ async function getContributors(): Promise<Contributor[]> {
         );
 
         if (!response.ok) {
+            console.error("Failed to fetch contributors");
+            return [];
+        }
+
+        const contributors = (await response.json()) as Contributor[];
+
+        const filteredContributors = contributors.filter(
+            (contributor: Contributor) => contributor.type === "User"
+        );
+
+        return filteredContributors;
+    } catch (error) {
+        console.error("Error fetching contributors:", error);
+        return [];
+    }
+}
+
+export default async function Contributors() {
+    const contributors = await getContributors();
+    const topContributors = contributors.slice(0, 2);
+    const otherContributors = contributors.slice(2);
+
+    return (
+        <>
+            <main className="bg-[#0a0a0a] relative z-0 mx-auto flex min-h-screen w-full max-w-full flex-col gap-16 px-6 py-20 text-white">
+                {/* Back Button */}
