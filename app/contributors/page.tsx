@@ -274,3 +274,29 @@ export default async function Contributors() {
         <>
             <main className="bg-[#0a0a0a] relative z-0 mx-auto flex min-h-screen w-full max-w-full flex-col gap-16 px-6 py-20 text-white">
                 {/* Back Button */}
+                <div className="absolute top-6 left-6">
+                    <Link href="/" className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors font-semibold">
+                        <Undo2 size={16} />
+                        Back
+                    </Link>
+                </div>
+                {/* Top 2 Contributors */}
+                {topContributors.length > 0 && (
+                    <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-12 px-6 pt-2">
+                        <div className="flex flex-col items-center justify-center gap-4 text-center">
+                            <div className="flex items-center justify-center gap-6 text-sm text-white/90">
+                                <Link href={"https://github.com/NiladriHazra/Open-Fiesta"} target="_blank" rel="noopener noreferrer">
+                                    <Badge variant="secondary" className="gap-2 mb-6 p-[6px]">
+                                        <GithubIcon className="h-3 w-3" />
+                                        Open Source
+                                    </Badge>
+                                </Link>
+                                <Link href={"https://runable.com/"} target="_blank" rel="noopener noreferrer">
+                                    <Badge variant="secondary" className="gap-2 mb-6 p-[6px]">
+                                        <CircleDotDashed className="h-3 w-3" />
+                                        Backed by Runable
+                                    </Badge>
+                                </Link>
+                            </div>
+                            <h1 className="font-lora text-white text-4xl font-bold">
+                                Lead Aura Farmers
