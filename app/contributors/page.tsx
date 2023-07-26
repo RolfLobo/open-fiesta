@@ -404,3 +404,29 @@ export default async function Contributors() {
                         </h3>
                         <p className="text-white/70 max-w-md text-base">
                             Join our community and help build the future together.
+                        </p>
+                    </div>
+                    <div className="flex gap-4">
+                        <Button asChild variant="default" size="lg">
+                            <Link
+                                href="https://github.com/NiladriHazra/Open-Fiesta"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <GithubIcon className="h-3 w-3" />
+                                Start Farming
+                            </Link>
+                        </Button>
+                        <Button asChild variant="secondary" size="lg">
+                            <Link
+                                href="https://github.com/NiladriHazra/Open-Fiesta/issues"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <CircleDot className="h-3 w-3" />
+                                Browse Aura Tasks
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </main>
