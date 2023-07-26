@@ -378,3 +378,29 @@ export default async function Contributors() {
                                             src={contributor.avatar_url}
                                             alt={`${contributor.login}'s avatar`}
                                         />
+                                        <AvatarFallback className="text-sm font-medium">
+                                            {contributor.login.charAt(0).toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="text-center">
+                                        <p className="text-white group-hover:text-white w-full truncate text-sm font-medium transition-colors">
+                                            {contributor.login}
+                                        </p>
+                                        <p className="text-white/70 text-sm">
+                                            {contributor.contributions} Aura
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* CTA Section */}
+                <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-8 px-6 pt-10 border-t border-neutral-800">
+                    <div className="flex flex-col items-center justify-center gap-4 text-center">
+                        <h3 className="font-lora text-white text-2xl font-bold">
+                            Ready to Farm Your Aura?
+                        </h3>
+                        <p className="text-white/70 max-w-md text-base">
+                            Join our community and help build the future together.
