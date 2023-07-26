@@ -351,3 +351,30 @@ export default async function Contributors() {
                         </div>
                     </div>
                 )}
+
+                {/* Other Contributors */}
+                <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-12 px-6">
+                    <div className="flex flex-col items-center justify-center gap-4 text-center">
+                        <h2 className="font-lora text-white text-3xl font-bold">
+                            Aura Farming Community
+                        </h2>
+                        <p className="text-white/70 max-w-md text-base">
+                            Every aura sown matters. Meet the community behind Open-Fiesta.
+                        </p>
+                    </div>
+
+                    {otherContributors.length > 0 && (
+                        <div className="grid w-full grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                            {otherContributors.map((contributor) => (
+                                <Link
+                                    key={contributor.id}
+                                    href={contributor.html_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:border-ring group flex flex-col items-center gap-3 rounded-xl p-4 transition-colors duration-200"
+                                >
+                                    <Avatar className="h-14 w-14">
+                                        <AvatarImage
+                                            src={contributor.avatar_url}
+                                            alt={`${contributor.login}'s avatar`}
+                                        />
