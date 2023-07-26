@@ -326,3 +326,28 @@ export default async function Contributors() {
                                     key={contributor.id}
                                     href={contributor.html_url}
                                     target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-[#0a0a0a] hover:border-white/20 flex w-full max-w-sm flex-col items-center gap-6 rounded-3xl border border-neutral-800 px-8 py-8 transition-all duration-300"
+                                >
+                                    <Avatar className="h-20 w-20">
+                                        <AvatarImage
+                                            src={contributor.avatar_url}
+                                            alt={`${contributor.login}'s avatar`}
+                                        />
+                                        <AvatarFallback className="text-lg font-medium">
+                                            {contributor.login.charAt(0).toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <p className="text-white text-lg font-semibold">
+                                            {contributor.login}
+                                        </p>
+                                        <p className="text-white/70 text-sm">
+                                            {contributor.contributions} contributions
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )}
