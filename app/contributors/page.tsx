@@ -300,3 +300,29 @@ export default async function Contributors() {
                             </div>
                             <h1 className="font-lora text-white text-4xl font-bold">
                                 Lead Aura Farmers
+                            </h1>
+                            <p className="text-muted-foreground max-w-md text-lg">
+                                The farmers who cultivated the most auras for Open-Fiesta
+                            </p>
+                        </div>
+
+                        <div className="flex items-center justify-center gap-8 text-sm text-white/90">
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 bg-white rounded-full" />
+                                <span className="font-medium">{contributors.length}</span>
+                                <span className="text-white/70">aura farmers</span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 bg-white rounded-full" />
+                                <span className="font-medium">{contributors.reduce((sum, c) => sum + c.contributions, 0)}</span>
+                                <span className="text-white/70">contributions</span>
+                            </div>
+                        </div>
+
+                        <div className="flex w-full flex-row justify-center gap-8">
+                            {topContributors.map((contributor) => (
+                                <Link
+                                    key={contributor.id}
+                                    href={contributor.html_url}
+                                    target="_blank"
