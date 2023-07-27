@@ -430,3 +430,6 @@ export default async function Contributors() {
                     </div>
                 </div>
             </main>
+        </>
+    );
+}
