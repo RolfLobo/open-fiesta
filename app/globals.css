@@ -1341,3 +1341,29 @@ body.light * {
     scrollbar-color: rgba(251, 146, 60, 0.3) transparent;
   }
 }
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Custom toast styles */
+.Toastify__toast {
+  background: rgba(24, 24, 27, 0.95) !important;
+  border: 1px solid rgba(113, 113, 122, 0.5) !important;
+  color: rgb(244, 244, 245) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  backdrop-filter: blur(4px) !important;
+  border-radius: 0.5rem !important;
+}
+
+.Toastify__toast--success {
+  border-left: 4px solid rgb(16, 185, 129) !important;
+}
+
+.Toastify__toast--error {
+  border-left: 4px solid rgb(239, 68, 68) !important;
+}
+
+.Toastify__progress-bar {
+  background: rgb(16, 185, 129) !important;
+}
+
+.Toastify__close-button {
