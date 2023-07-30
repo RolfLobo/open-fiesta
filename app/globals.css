@@ -1445,3 +1445,29 @@ body.light * {
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Theme System Variables */
+  --accent-primary: #e42a42;
+  --accent-secondary: #cf243a;
+  --accent-tertiary: #b91c3c;
+  --accent-bg-primary: rgba(228, 42, 66, 0.15);
+  --accent-bg-secondary: rgba(228, 42, 66, 0.06);
+  --background-pattern: linear-gradient(
+    135deg,
+    #fecaca 0%,
+    #f87171 25%,
+    #ef4444 50%,
+    #dc2626 75%,
+    #b91c1c 100%
+  );
+  --font-primary: var(--font-geist-sans);
+  --font-secondary: var(--font-geist-mono);
+
+  /* Badge System Variables */
+  --badge-pro-background: rgba(228, 42, 66, 0.15);
+  --badge-pro-text: rgb(252, 211, 77);
