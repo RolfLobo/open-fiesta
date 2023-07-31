@@ -1601,3 +1601,29 @@ body.light * {
 .dark.accent-black {
   --background-pattern:
     linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    radial-gradient(
+      68% 58% at 50% 50%,
+      #222222 0%,
+      #1a1a1a 20%,
+      #141414 40%,
+      #0f0f0f 58%,
+      #090909 76%,
+      #050505 90%,
+      #000000 100%
+    );
+}
+
+/* Accent Color Theme Classes - Enhanced System */
+/* Muted / warmer crimson palette */
+.accent-crimson {
+  --accent-primary: #9d1c2b;
+  --accent-secondary: #821624;
+  --accent-tertiary: #66111b;
+  --accent-bg-primary: rgba(157, 28, 43, 0.12);
+  --accent-bg-secondary: rgba(157, 28, 43, 0.045);
+  /* Interactive */
+  --accent-interactive-primary: #9d1c2b;
+  --accent-interactive-hover: #821624;
+  --accent-interactive-active: #66111b;
+  --accent-interactive-focus: rgba(157, 28, 43, 0.35);
+  /* Highlights (toned down gold) */
