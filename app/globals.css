@@ -1757,3 +1757,29 @@ body.light * {
 .bg-gradient-theme {
   background: var(--background-pattern);
 }
+
+.bg-minimal-theme {
+  background: var(--background);
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--accent-bg-secondary) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, var(--accent-bg-secondary) 0%, transparent 50%);
+}
+
+/* Darker minimal surface specifically for black accent */
+.accent-black.bg-minimal-theme,
+.bg-minimal-theme.accent-black {
+  background: #050505 !important;
+  background-image: none !important;
+  --background-pattern: #050505 !important;
+  --background: #050505 !important;
+}
+
+/* Theme Transition Classes */
+.theme-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+.theme-transition-colors {
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
