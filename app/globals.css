@@ -1808,3 +1808,30 @@ body.light * {
   background: transparent;
   transition: all 0.2s ease-in-out;
 }
+
+.accent-button-secondary:hover {
+  background: var(--accent-interactive-primary);
+  color: white;
+}
+
+/* Reusable accent action styles */
+.accent-action-fill {
+  background: var(--accent-interactive-primary);
+  color: #fff;
+  transition:
+    background 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+.accent-action-fill:hover {
+  background: var(--accent-interactive-hover);
+}
+.accent-action-fill:active {
+  background: var(--accent-interactive-active);
+}
+.accent-action-ring:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-interactive-focus);
+}
+
+.accent-dot {
+  background: var(--accent-interactive-primary);
+}
