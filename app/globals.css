@@ -1861,3 +1861,29 @@ body.light * {
     transform: scale(0.4);
     opacity: 0;
   }
+}
+
+/* New: subtle accent beacon with soft outer glow */
+/* Brighter active accent beacon */
+.accent-beacon {
+  position: relative;
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.55) 15%,
+    var(--accent-primary) 42%,
+    var(--accent-secondary) 85%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 0 4px 1px var(--accent-interactive-focus),
+    0 0 10px -1px var(--accent-glow-soft),
+    0 0 18px -2px var(--accent-glow-medium);
+}
+.accent-beacon::before,
+.accent-beacon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
