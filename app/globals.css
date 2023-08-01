@@ -1783,3 +1783,28 @@ body.light * {
   transition:
     background-color 0.3s ease-in-out,
     color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+/* New: Accent Color Utility Classes */
+.accent-button-primary {
+  background: var(--accent-interactive-primary);
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.accent-button-primary:hover {
+  background: var(--accent-interactive-hover);
+  box-shadow: 0 0 0 3px var(--accent-interactive-focus);
+}
+
+.accent-button-primary:active {
+  background: var(--accent-interactive-active);
+}
+
+.accent-button-secondary {
+  border: 1px solid var(--accent-interactive-primary);
+  color: var(--accent-interactive-primary);
+  background: transparent;
+  transition: all 0.2s ease-in-out;
+}
