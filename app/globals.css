@@ -1965,3 +1965,29 @@ body.light * {
 .badge-pro:hover {
   box-shadow: 0 0 0 1px var(--badge-pro-glow, rgba(228, 42, 66, 0.3));
 }
+
+.badge-free {
+  background: var(--badge-free-background, linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%));
+  color: var(--badge-free-text, #000000);
+  border-color: var(--badge-free-border, rgba(251, 191, 36, 0.4));
+}
+
+.badge-free:hover {
+  box-shadow: 0 0 0 1px var(--badge-free-glow, rgba(251, 191, 36, 0.3));
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family:
+      var(--font-primary),
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+}
+
+/* Font preview utility classes (independent from active theme) */
