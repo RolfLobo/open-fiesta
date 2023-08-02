@@ -1939,3 +1939,29 @@ body.light * {
 .accent-glow-medium {
   box-shadow: 0 0 30px var(--accent-glow-medium);
 }
+
+.accent-glow-strong {
+  box-shadow: 0 0 40px var(--accent-glow-strong);
+}
+
+/* New: Badge System CSS */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  border: 1px solid;
+  transition: all 0.2s ease-in-out;
+}
+
+.badge-pro {
+  background: var(--badge-pro-background, linear-gradient(135deg, #e42a42 0%, #cf243a 100%));
+  color: var(--badge-pro-text, #ffffff);
+  border-color: var(--badge-pro-border, rgba(228, 42, 66, 0.4));
+}
+
+.badge-pro:hover {
+  box-shadow: 0 0 0 1px var(--badge-pro-glow, rgba(228, 42, 66, 0.3));
+}
