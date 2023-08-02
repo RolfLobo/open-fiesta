@@ -2017,3 +2017,29 @@ body.light * {
     system-ui,
     -apple-system,
     sans-serif;
+}
+
+/* Themed scrollbars (accent-aware) */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333333 #000000;
+}
+/* Utility to hide scrollbars when desired */
+/* Strong no-scrollbar utility (affects element and its descendants) */
+.no-scrollbar,
+html.no-scrollbar,
+body.no-scrollbar {
+  scrollbar-width: none !important; /* Firefox */
+}
+html.no-scrollbar::-webkit-scrollbar,
+body.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar,
+html.no-scrollbar *::-webkit-scrollbar,
+body.no-scrollbar *::-webkit-scrollbar,
+.no-scrollbar *::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
