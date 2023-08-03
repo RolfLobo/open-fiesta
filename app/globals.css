@@ -2043,3 +2043,29 @@ body.no-scrollbar *::-webkit-scrollbar,
   display: none !important;
   background: transparent !important;
 }
+html.no-scrollbar *::-webkit-scrollbar-thumb,
+body.no-scrollbar *::-webkit-scrollbar-thumb,
+.no-scrollbar *::-webkit-scrollbar-thumb {
+  background: transparent !important;
+  border: none !important;
+}
+body.light * {
+  scrollbar-color: #333333 #000000;
+}
+
+/* WebKit (Chrome/Safari/Edge) */
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: #000000;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #333333 !important;
+  border-radius: 9999px;
+  border: 2px solid rgba(0, 0, 0, 0.25); /* creates inner gap */
+  box-shadow: none !important;
+}
