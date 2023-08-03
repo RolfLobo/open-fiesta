@@ -2173,3 +2173,29 @@ body.light * {
   color: var(--accent-interactive-primary);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
+}
+
+/* Chat Input Style Variants */
+.chat-input-shell {
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.chatinput-default .chat-input-shell {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 4px 20px -6px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  backdrop-filter: blur(10px) saturate(130%);
+}
+
+.chatinput-default .chat-input-shell:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.chatinput-default .chat-input-shell:focus-within {
+  box-shadow:
+    0 0 0 1px var(--accent-interactive-primary),
