@@ -2251,3 +2251,29 @@ body.light * {
     animation: none;
     opacity: 0.35;
   }
+}
+
+/* Accent swatch utilities */
+.accent-swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) inset;
+  position: relative;
+  cursor: pointer;
+  transition:
+    outline 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.accent-swatch[data-tone='primary'] {
+  background: var(--accent-primary);
+}
+.accent-swatch[data-tone='secondary'] {
+  background: var(--accent-secondary);
+}
+.accent-swatch[data-tone='tertiary'] {
+  background: var(--accent-tertiary);
+}
+.accent-swatch:focus-visible {
