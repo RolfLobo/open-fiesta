@@ -2225,3 +2225,29 @@ body.light * {
   color: #fafafa;
 }
 .search-toggle[data-active='true'] {
+  background: linear-gradient(
+    135deg,
+    var(--accent-interactive-primary),
+    var(--accent-interactive-hover)
+  );
+  color: #fff;
+  border-color: var(--accent-interactive-primary);
+  box-shadow:
+    0 0 0 1px var(--accent-interactive-focus),
+    0 0 12px -2px var(--accent-glow-soft);
+}
+.search-toggle[data-active='true'] .search-toggle-label {
+  color: #fff;
+}
+.search-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.search-toggle:focus-visible {
+  box-shadow: 0 0 0 3px var(--accent-interactive-focus);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accent-dot-pulse::after {
+    animation: none;
+    opacity: 0.35;
+  }
