@@ -2303,3 +2303,29 @@ body.light * {
   background: #059669;
 }
 .accent-preview-emerald-tertiary {
+  background: #047857;
+}
+.accent-preview-blue-primary {
+  background: #3b82f6;
+}
+.accent-preview-blue-secondary {
+  background: #2563eb;
+}
+.accent-preview-blue-tertiary {
+  background: #1d4ed8;
+}
+.accent-preview-purple-primary {
+  background: #8b5cf6;
+}
+.accent-preview-purple-secondary {
+  background: #7c3aed;
+}
+.accent-preview-purple-tertiary {
+  background: #6d28d9;
+}
+/* Black accent preview */
+.accent-preview-black-primary {
+  background: #000000;
+}
+.accent-preview-black-secondary {
+  background: #141414;
