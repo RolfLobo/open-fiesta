@@ -2407,3 +2407,29 @@ body.light * {
 
 .model-chip {
   @apply h-8 px-2.5 text-[11px] rounded-full inline-flex items-center gap-1.5 transition-colors shrink-0 border bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10;
+}
+.model-chip-pro {
+  border-color: var(--badge-pro-border);
+}
+.model-chip-free {
+  border-color: var(--badge-free-border);
+}
+.model-chip-selected {
+  background: var(--badge-pro-background);
+}
+.model-chip-selected[data-type='free'] {
+  background: var(--badge-free-background);
+}
+
+/* Toggle pill inside model chip uses pair colors */
+.model-toggle-pill {
+  position: relative;
+  inline-size: 1.75rem;
+  block-size: 1rem;
+  border-radius: 9999px;
+  background: var(--badge-free-background);
+  display: inline-flex;
+  align-items: center;
+}
+.model-toggle-pill[data-type='pro'] {
+  background: var(--badge-pro-background);
