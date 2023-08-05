@@ -2355,3 +2355,29 @@ body.light * {
   inset: 0;
   background: linear-gradient(
     90deg,
+    var(--accent-primary) 0%,
+    var(--accent-secondary) 50%,
+    transparent 110%
+  );
+  opacity: 0.08;
+  pointer-events: none;
+}
+.chat-prompt-accent .chat-prompt-side {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    var(--accent-primary),
+    var(--accent-secondary),
+    var(--accent-tertiary)
+  );
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Scrollbar gutter utility */
+.scroll-stable-gutter {
