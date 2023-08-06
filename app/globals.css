@@ -2589,3 +2589,29 @@ body.light * {
 }
 
 /* Subtle center ripple to imply activity */
+@keyframes img-ripple {
+  0%,
+  100% {
+    transform: scale(0.98);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.22;
+  }
+}
+.img-ripple {
+  animation: img-ripple 2.6s ease-in-out infinite;
+}
+
+/* Additional CSS variables and styles for OpenFiestaChat page.tsx */
+:root {
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
