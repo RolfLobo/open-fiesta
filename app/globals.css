@@ -2459,3 +2459,29 @@ body.light * {
 @keyframes marquee-y {
   0% { transform: translateY(0); }
   100% { transform: translateY(-50%); }
+}
+.animate-marquee {
+  animation: marquee-x var(--duration, 40s) linear infinite;
+  will-change: transform;
+}
+.animate-marquee-vertical {
+  animation: marquee-y var(--duration, 40s) linear infinite;
+  will-change: transform;
+}
+
+/* AI Chat Box toolbar background */
+.ai-toolbar-bg {
+  background-color: rgba(0, 0, 0, 0.52);
+}
+
+.dark .ai-toolbar-bg {
+  background-color: rgba(14, 13, 13, 0.52);
+}
+
+/* Image skeleton premium animations */
+@keyframes img-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
