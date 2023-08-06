@@ -2511,3 +2511,29 @@ body.light * {
 /* Optional helpers if needed in markup */
 .img-sweep {
   animation: img-sweep 2.2s ease-in-out infinite;
+}
+.img-breathe {
+  animation: img-breathe 3s ease-in-out infinite;
+}
+
+/* Import MessageDisplay styles */
+@import '../components/chat/MessageDisplay.module.css';
+.img-ripple {
+  animation: img-ripple 2.6s ease-in-out infinite;
+}
+
+/* Glassy Toast theme (neutral, blurred, accent progress) */
+.glass-toast {
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(20, 20, 20, 0.55) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  color: #f8fafc !important;
+}
+.light .glass-toast {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
