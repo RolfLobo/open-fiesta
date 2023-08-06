@@ -2485,3 +2485,29 @@ body.light * {
     opacity: 0;
   }
   10% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes img-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Optional helpers if needed in markup */
+.img-sweep {
+  animation: img-sweep 2.2s ease-in-out infinite;
