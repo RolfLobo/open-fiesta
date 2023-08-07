@@ -495,3 +495,28 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
+    url: "https://openfiesta.app/",
+    siteName: "Open Fiesta",
+    title: "Open Fiesta – Use Open Source LLMs",
+    description:
+      "Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow.",
+    images: [
+      {
+        url: "https://openfiesta.app/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Open Fiesta",
+      },
+    ],
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@byteHumi",
+    creator: "@byteHumi",
+    title: "Open Fiesta – AI Chat Assistant",
+    description:
+      "Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow.",
+    images: ["https://openfiesta.app/og.png"],
+  },
+}
