@@ -469,3 +469,29 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-video-preview": -1,
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  classification: "AI Tools, Developer Tools, Productivity, Chatbots",
+  category: [
+    "AI Chat",
+    "Developer Productivity",
+    "Prompt Engineering",
+    "Research Tools",
+    "Writing Tools",
+    "Open Source",
+  ].join(", "),
+  other: {
+    "application-name": "Open Fiesta",
+    "apple-mobile-web-app-capable": "yes",
+    "mobile-web-app-capable": "yes",
+    "theme-color": "#000000",
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
