@@ -339,3 +339,29 @@ import { AuthProvider } from '@/lib/auth'
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://openfiesta.app"),
+  title: {
+    default: "Open Fiesta – AI Chat Assistant",
+    template: "%s | Open Fiesta",
+  },
+  description:
+    "Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow.",
+  applicationName: "Open Fiesta",
+  generator: "Open Fiesta",
+  keywords: [
+    // Brand focus: Open Fiesta variations
+    "Open Fiesta",
+    "OpenFiesta",
+    "openfiesta",
+    "open-fiesta",
+    "Open-Fiesta",
+    "open fiesta",
+    "openfiesta.app",
+    "www.openfiesta.app",
+    "open-fiesta.app",
+    "open fiesta website",
+    "openfiesta website",
+    "Open Fiesta app",
+    "OpenFiesta app",
