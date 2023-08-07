@@ -2666,3 +2666,21 @@ body.light * {
   .dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(239, 68, 68, 0.5);
   }
+
+  /* Light mode scrollbar */
+  :root:not(.dark) ::-webkit-scrollbar-thumb {
+    background: rgba(251, 146, 60, 0.3);
+  }
+
+  :root:not(.dark) ::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 146, 60, 0.5);
+  }
+
+  .dark * {
+    scrollbar-color: rgba(239, 68, 68, 0.3) transparent;
+  }
+
+  :root:not(.dark) * {
+    scrollbar-color: rgba(251, 146, 60, 0.3) transparent;
+  }
+}
