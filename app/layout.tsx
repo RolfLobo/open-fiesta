@@ -599,3 +599,29 @@ export default function RootLayout({
           <ThemeProvider>{children}</ThemeProvider>
         </AuthProvider>
         {/* Structured Data */}
+        <Script id="ld-org" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Open Fiesta",
+            url: "https://openfiesta.app",
+            logo: "https://openfiesta.app/brand.png",
+            sameAs: [
+              "https://x.com/byteHumi",
+              "https://github.com/NiladriHazra/Open-Fiesta"
+            ]
+          })}
+        </Script>
+        <Script id="ld-website" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Open Fiesta",
+            url: "https://openfiesta.app",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://openfiesta.app/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </Script>
