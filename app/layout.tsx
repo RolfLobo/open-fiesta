@@ -625,3 +625,29 @@ export default function RootLayout({
             }
           })}
         </Script>
+        <Script id="ld-webapp" type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Open Fiesta",
+            description:
+              "Chat with and compare 300+ AI models (OpenAI, Claude, Gemini, Perplexity, DeepSeek, Grok) side-by-side in one place.",
+            url: "https://openfiesta.app",
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Web",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Open Fiesta",
+              url: "https://openfiesta.app"
+            },
+            author: {
+              "@type": "Person",
+              name: "Niladri Hazra",
+              url: "https://github.com/NiladriHazra"
+            },
