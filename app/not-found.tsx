@@ -44,3 +44,14 @@ export default function NotFound() {
     </main>
   );
 }
+"use client";
+
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { Search } from 'lucide-react';
+
+export default function NotFound() {
+  // Force dark theme for this page only
+  useEffect(() => {
+    const root = document.documentElement;
+    const hadDark = root.classList.contains('dark');

@@ -651,3 +651,13 @@ export default function RootLayout({
               name: "Niladri Hazra",
               url: "https://github.com/NiladriHazra"
             },
+            inLanguage: "en-US",
+            isAccessibleForFree: true,
+            keywords:
+              "AI chat, compare AI models, GPT alternative, OpenAI, Claude, Gemini, Perplexity, DeepSeek, Grok, OpenRouter",
+          })}
+        </Script>
+      </body>
+    </html>
+  )
+}
