@@ -547,3 +547,29 @@ export default function RootLayout({
         <meta property="og:url" content="https://openfiesta.app" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Open Fiesta" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="https://openfiesta.app/og.png" />
+        <meta property="og:image:secure_url" content="https://openfiesta.app/og.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Open Fiesta" />
+        {/* Generic image hints for Google/LinkedIn/others */}
+        <meta itemProp="image" content="https://openfiesta.app/og.png" />
+        <link rel="image_src" href="https://openfiesta.app/og.png" />
+        <meta name="thumbnail" content="https://openfiesta.app/og.png" />
+        <meta name="twitter:image" content="https://openfiesta.app/og.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Open Fiesta – Use Open Source LLMs" />
+        <meta name="twitter:description" content="Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow." />
+        <meta property="twitter:domain" content="openfiesta.app" />
+        <meta property="twitter:url" content="https://openfiesta.app" />
+        <meta name="twitter:site" content="@byteHumi" />
+        <meta name="twitter:creator" content="@byteHumi" />
+        {/* Optional: helps Discord/Slack fetch quickly */}
+        <meta httpEquiv="x-dns-prefetch-control" content="on" />
+        
+        {/* PWA Meta Tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="background-color" content="#000000" />
