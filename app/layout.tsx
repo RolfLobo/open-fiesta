@@ -520,3 +520,30 @@ export const metadata: Metadata = {
     images: ["https://openfiesta.app/og.png"],
   },
 }
+
+/**
+ * Root layout component for the application.
+ *
+ * Renders the top-level HTML structure, global <head> metadata (SEO, social, and PWA tags),
+ * and site-wide JSON-LD structured data. Wraps page content with authentication and theme
+ * providers so all pages share the same context and styles.
+ *
+ * @param children - React node(s) to be rendered inside the app providers.
+ * @returns The root HTML element tree for the application.
+ */
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en" className="dark">
+      <head>
+        {/* Explicit OG/Twitter image for maximum compatibility */}
+        <title>Open Fiesta – Use Open Source LLMs</title>
+        <meta name="description" content="Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow." />
+        <meta property="og:title" content="Open Fiesta – Use Open Source LLMs" />
+        <meta property="og:description" content="Open Fiesta lets you chat with 300+ AI models—OpenAI, Gemini, Claude, Perplexity, DeepSeek, Grok, and more—in one place. Compare responses and stay in flow." />
+        <meta property="og:url" content="https://openfiesta.app" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Open Fiesta" />
