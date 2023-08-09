@@ -404,3 +404,29 @@ export default function StartupSprintLanding() {
           {isMobileMenuOpen ? (
             <X className="w-5 h-5 text-white" />
           ) : (
+            <Menu className="w-5 h-5 text-white" />
+          )}
+        </button>
+      </nav>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-20">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/20 bg-white/10 hover:bg-white/15 flex items-center justify-center text-white"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="flex flex-col items-center justify-center min-h-screen space-y-8">
+            <Link href="/press" className="text-white text-2xl hover:text-gray-300 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Press</Link>
+            <Link href="/about" className="text-white text-2xl hover:text-gray-300 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+            <Link href="/chat" className="text-white text-2xl hover:text-gray-300 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Chat</Link>
+            <Link href="/compare" className="text-white text-2xl hover:text-gray-300 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Compare</Link>
+            <div className="flex flex-col items-center gap-3 mt-8 w-64">
+              <Link
+                href="/chat"
+                className="inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-semibold tracking-wide bg-red-600 text-white hover:bg-red-500 transition-colors shadow"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Start Chat
