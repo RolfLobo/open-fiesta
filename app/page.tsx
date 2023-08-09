@@ -300,3 +300,29 @@ import { CustomCrowd } from '@/components/Footer'
 export default function StartupSprintLanding() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [avatars, setAvatars] = useState<string[]>([
+    'https://pbs.twimg.com/profile_images/1907258802032017408/P_dJGcQ1_400x400.jpg',
+    'https://pbs.twimg.com/profile_images/1926037627091755008/dzPn54GG_400x400.jpg',
+    'https://pbs.twimg.com/profile_images/1925153197645307904/0paEJX5m_400x400.jpg',
+    'https://pbs.twimg.com/profile_images/1920662418704760832/hqkfQwIk_400x400.jpg',
+  ])
+  const [usersCount, setUsersCount] = useState<number | null>(2670)
+
+  // no email/waitlist form on the landing page
+
+  // Load total users from Supabase (profiles table) and latest avatars
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        // Initial total users count
+        const { count } = await supabase
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+        if (!cancelled && typeof count === 'number') {
+          setUsersCount(count)
+        }
+
+        // Fetch latest avatars
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('avatar_url')
