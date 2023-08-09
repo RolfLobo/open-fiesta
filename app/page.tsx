@@ -352,3 +352,29 @@ export default function StartupSprintLanding() {
         .channel('realtime:profiles-count')
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'profiles' }, () => {
           setUsersCount((c) => (typeof c === 'number' ? c + 1 : c))
+        })
+        .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'profiles' }, () => {
+          setUsersCount((c) => (typeof c === 'number' && c > 0 ? c - 1 : c))
+        })
+        // Updates typically don't change count, but if you soft-delete/restore, re-fetch
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, async () => {
+          const { count } = await supabase.from('profiles').select('*', { count: 'exact', head: true })
+          if (typeof count === 'number') setUsersCount(count)
+        })
+        .subscribe()
+      return () => {
+        try { supabase.removeChannel(channel) } catch {}
+      }
+    } catch {
+      // noop
+    }
+  }, [])
+
+  return (
+    <>
+    <div
+      className="min-h-screen text-white relative overflow-hidden bg-cover bg-center bg-no-repeat overflow-x-hidden no-scrollbar"
+      style={{ backgroundImage: "url('https://i.postimg.cc/vHqJkv1Q/Chat-GPT-Image-Aug-24-2025-01-01-36-PM.png')" }}
+    >
+
+      {/* Navbar */}
