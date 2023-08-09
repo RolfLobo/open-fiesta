@@ -378,3 +378,29 @@ export default function StartupSprintLanding() {
     >
 
       {/* Navbar */}
+      <nav className="flex items-center justify-between px-6 pt-7 relative max-w-7xl mx-auto z-10">
+        <div className="flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/Web_logo.svg" alt="Open Fiesta" className="h-10 md:h-12 lg:h-14 w-auto" />
+        </div>
+
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/press" className="text-gray-300/60 hover:text-white font-light transition-colors text-lg">Press</Link>
+          <Link href="/about" className="text-gray-300/60 hover:text-white font-light transition-colors text-lg">About</Link>
+          <Link href="/chat" className="text-gray-300/60 hover:text-white font-light transition-colors text-lg">Chat</Link>
+          <Link href="/contributors" className="text-gray-300/60 hover:text-white font-light transition-colors text-lg">Contributors</Link>
+        </div>
+
+        <div className="hidden md:flex items-center gap-3">
+          <GithubStar owner="NiladriHazra" repo="Open-Fiesta" theme="dark" />
+          <SupportDropdown inline theme={'dark'} />
+        </div>
+
+        <button
+          className="md:hidden w-10 h-10 bg-black/80 backdrop-blur-sm border border-gray-700 rounded-full flex items-center justify-center hover:bg-gray-900/80 transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-5 h-5 text-white" />
+          ) : (
