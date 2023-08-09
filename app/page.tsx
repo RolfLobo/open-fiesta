@@ -283,3 +283,20 @@ export default function StartupSprintLanding() {
     </>
   )
 }
+"use client"
+
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import GithubStar from '@/components/app/GithubStar'
+import SupportDropdown from '@/components/support-dropdown'
+import { Menu, X } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
+import { Testimonials } from '@/components/testimonials/Testimonials'
+import { CustomCrowd } from '@/components/Footer'
+// import { Instagram, Twitter, Linkedin, Menu, X } from "lucide-react"
+
+//uncomment the icons
+
+export default function StartupSprintLanding() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [avatars, setAvatars] = useState<string[]>([
