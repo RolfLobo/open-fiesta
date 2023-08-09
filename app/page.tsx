@@ -326,3 +326,29 @@ export default function StartupSprintLanding() {
         const { data, error } = await supabase
           .from('profiles')
           .select('avatar_url')
+          .not('avatar_url', 'is', null)
+          .order('updated_at', { ascending: false })
+          .limit(12)
+        if (!error && data && !cancelled) {
+          const urls = (data
+            .map((d: { avatar_url?: string | null }) => d.avatar_url || '')
+            .filter(Boolean) as string[])
+          // Merge with defaults, dedupe, cap to 8
+          const merged = Array.from(new Set([...urls, ...avatars]))
+          setAvatars(merged.slice(0, 8))
+        }
+      } catch {
+        // Silently ignore; keep defaults
+      }
+    })()
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Realtime: keep users count in sync with inserts/deletes
+  useEffect(() => {
+    try {
+      const channel = supabase
+        .channel('realtime:profiles-count')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'profiles' }, () => {
+          setUsersCount((c) => (typeof c === 'number' ? c + 1 : c))
