@@ -430,3 +430,29 @@ export default function StartupSprintLanding() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Start Chat
+              </Link>
+              <Link
+                href="/compare"
+                className="inline-flex w-full items-center justify-center px-6 py-3 rounded-full font-semibold tracking-wide border border-red-300 text-white hover:bg-white/10 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Compare Models
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Hero Section */}
+      <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 relative z-10">
+        {/* Waitlist Badge */}
+        <div className="inline-flex items-center bg-white/10 rounded-2xl px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 mb-4 mt-8 w-full max-w-[22rem] sm:w-auto border border-white/15 backdrop-blur-sm shadow-md">
+          <div className="flex -space-x-2 sm:-space-x-2 md:-space-x-3 mr-3 sm:mr-4 md:mr-4">
+            {avatars.slice(0, 6).map((src, i) => (
+              <div key={src + i} className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl overflow-hidden ring-1 ring-black/30">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="User" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+          <span className="text-gray-100/90 font-light md:font-medium leading-relaxed text-sm sm:text-base md:text-lg whitespace-nowrap">
