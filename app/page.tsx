@@ -534,3 +534,29 @@ export default function StartupSprintLanding() {
                 className="w-6 h-6 rounded-full object-cover"
               />
               <span className="text-white font-semibold text-sm">Runable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Testimonials Section with inverted hero background */}
+    <div className="min-h-screen w-full bg-black relative overflow-hidden overflow-x-hidden no-scrollbar">
+      {/* Inverted hero background */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center [transform:scaleY(-1)]"
+        style={{ backgroundImage: "url('https://i.postimg.cc/vHqJkv1Q/Chat-GPT-Image-Aug-24-2025-01-01-36-PM.png')" }}
+      />
+      {/* Subtle dark overlay for readability */}
+      <div className="absolute inset-0 z-0 bg-black/50" />
+      <div className="relative z-10 pb-0">
+        <Testimonials />
+      </div>
+    </div>
+    
+    {/* Large OPEN FIESTA text before footer */}
+    <div className="bg-black py-8 md:py-16 flex items-center justify-center overflow-hidden">
+      <h1
+        className="text-[clamp(2.25rem,18vw,20rem)] text-white uppercase tracking-[0.06em] leading-none select-none animate-pulse text-center whitespace-nowrap max-w-full"
+        style={{ fontFamily: 'Impact, "Arial Black", "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Bold", sans-serif', fontWeight: 900, fontStretch: 'condensed' }}
+      >
