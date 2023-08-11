@@ -456,3 +456,29 @@ export default function StartupSprintLanding() {
             ))}
           </div>
           <span className="text-gray-100/90 font-light md:font-medium leading-relaxed text-sm sm:text-base md:text-lg whitespace-nowrap">
+            {usersCount ? Intl.NumberFormat('en', { notation: 'compact' }).format(usersCount) : '—'}  active users
+          </span>
+        </div>
+
+        {/* Main Heading */}
+        <div className="text-center mb-8 ">
+          <h1 className="text-3xl md:text-8xl font-semibold tracking-tight text-white mb-2">Free, open-source</h1>
+          <h2 className="text-3xl md:text-8xl font-semibold tracking-tight text-white/80">Access to all models.</h2>
+        </div>
+
+        {/* Subtext */}
+        <p className="text-white/50 text-lg md:text-2xl text-center tracking-tight max-w-2xl mb-12">
+          Yeah you guess it right
+          <br />
+          We are better than that AI Pasta
+        </p>
+
+        {/* Primary CTAs */}
+        <div className="w-full max-w-md">
+          <div className="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 w-full">
+            <Link
+              href="/chat"
+              className="inline-flex items-center justify-center w-full sm:w-auto sm:min-w-[170px] px-6 py-3 rounded-full font-semibold tracking-wide bg-red-600 text-white hover:bg-red-500 transition-colors shadow"
+            >
+              Start Chat
+            </Link>
