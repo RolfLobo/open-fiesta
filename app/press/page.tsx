@@ -115,3 +115,29 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Press — Open Fiesta",
     description: "Press kit, logos, and boilerplate for Open Fiesta.",
+    url: "https://openfiesta.app/press",
+    siteName: "Open Fiesta",
+    images: [{ url: "https://openfiesta.app/og.png", width: 1200, height: 630, alt: "Open Fiesta" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Press — Open Fiesta",
+    description: "Press kit, logos, and boilerplate for Open Fiesta.",
+    images: ["https://openfiesta.app/og.png"],
+  },
+}
+
+export default function PressPage() {
+  return (
+    <main className={`relative min-h-screen overflow-hidden bg-[#0a0a0a] pb-24 ${ibmMono.className}`}>
+      {/* Breadcrumbs JSON-LD for richer SERP */}
+      <Script id="press-breadcrumbs" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://openfiesta.app/" },
+            { "@type": "ListItem", position: 2, name: "Press", item: "https://openfiesta.app/press" },
+          ],
+        })}
