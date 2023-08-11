@@ -141,3 +141,29 @@ export default function PressPage() {
             { "@type": "ListItem", position: 2, name: "Press", item: "https://openfiesta.app/press" },
           ],
         })}
+      </Script>
+
+      {/* Background vignette / gradient */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_120%,rgba(244,63,94,0.18)_0%,rgba(244,63,94,0.06)_35%,transparent_70%)]" />
+
+      <section className="mx-auto w-full max-w-5xl px-6 py-14 sm:px-8 sm:py-16 md:py-20">
+        {/* Page label + Home breadcrumb */}
+        <p className="text-[10px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
+          <Link href="/" className="hover:text-zinc-200 transition underline underline-offset-4 decoration-zinc-700/60 hover:decoration-zinc-400">Home</Link>
+          <span className="mx-2 text-zinc-600">/</span>
+          <span>Press</span>
+        </p>
+
+        {/* Title */}
+        <h1 className="text-zinc-100 text-3xl sm:text-4xl md:text-5xl leading-tight mb-4">Open Fiesta Press Kit</h1>
+        <p className="text-zinc-300/90 text-sm sm:text-base leading-relaxed max-w-3xl">
+          Open Fiesta lets you chat with and compare <span className="font-semibold text-zinc-100">300+ AI models</span> — OpenAI, Claude,
+          Gemini, Perplexity, DeepSeek, Grok, and more — side‑by‑side in one place.
+        </p>
+
+        {/* Divider */}
+        <div className="my-10 h-px w-full bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
+
+        {/* Boilerplate */}
+        <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Boilerplate</h2>
+        <p className="text-zinc-300/90 text-sm sm:text-base leading-relaxed max-w-3xl">
