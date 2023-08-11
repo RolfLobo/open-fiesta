@@ -508,3 +508,29 @@ export default function StartupSprintLanding() {
 
           {/* Social icons */}
           <a
+            href="https://x.com/byteHumi"
+             target="_blank"
+            className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-gray-900/80 transition-colors"
+          >
+            <img src="https://i.postimg.cc/HLTCxTsr/twitter.png" className="w-5 h-5" />
+          </a>
+          <a
+            href="https://github.com/NiladriHazra"
+             target="_blank"
+            className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center hover:bg-gray-900/80 transition-colors"
+          >
+            <img src="https://i.postimg.cc/1XRcSWrf/icons8-github-1500.png" className="w-5 h-5 " />
+          </a>
+        </div>
+
+        {/* Backed by Runable badge */}
+        <div className="mt-6 flex items-center justify-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-3 border border-white/20">
+            <span className="text-white/80 text-sm font-medium">Backed by</span>
+            <div className="flex items-center gap-2">
+              <img 
+                src="https://pbs.twimg.com/profile_images/1937785255613829120/t4igWN98_400x400.jpg" 
+                alt="Runable" 
+                className="w-6 h-6 rounded-full object-cover"
+              />
+              <span className="text-white font-semibold text-sm">Runable</span>
