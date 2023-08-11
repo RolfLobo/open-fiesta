@@ -482,3 +482,29 @@ export default function StartupSprintLanding() {
             >
               Start Chat
             </Link>
+            <Link
+              href="/compare"
+              className="inline-flex items-center justify-center w-full sm:w-auto sm:min-w-[170px] px-6 py-3 rounded-full font-semibold tracking-wide border border-red-300 text-white hover:bg-white/10 transition-colors"
+            >
+              Compare Models
+            </Link>
+          </div>
+        </div>
+
+
+        {/* Social + Creator avatar */}
+        <div className="flex items-center gap-3 mt-8">
+          {/* Creator avatar only */}
+          <a
+            href="https://x.com/byteHumi"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Niladri on X"
+            className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-white/20 hover:ring-white/30 transition-all"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/image.png" alt="Niladri" className="w-full h-full object-cover" />
+          </a>
+
+          {/* Social icons */}
+          <a
