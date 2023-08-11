@@ -96,3 +96,22 @@ export default function PressPage() {
     </main>
   )
 }
+
+import type { Metadata } from "next"
+import { IBM_Plex_Mono } from "next/font/google"
+import Script from "next/script"
+import Link from "next/link"
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+})
+
+export const metadata: Metadata = {
+  title: "Press — Open Fiesta",
+  description: "Press kit, logos, and boilerplate for Open Fiesta.",
+  alternates: { canonical: "/press" },
+  openGraph: {
+    title: "Press — Open Fiesta",
+    description: "Press kit, logos, and boilerplate for Open Fiesta.",

@@ -560,3 +560,11 @@ export default function StartupSprintLanding() {
         className="text-[clamp(2.25rem,18vw,20rem)] text-white uppercase tracking-[0.06em] leading-none select-none animate-pulse text-center whitespace-nowrap max-w-full"
         style={{ fontFamily: 'Impact, "Arial Black", "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Bold", sans-serif', fontWeight: 900, fontStretch: 'condensed' }}
       >
+        OPEN FIESTA
+      </h1>
+    </div>
+    
+    <CustomCrowd />
+    </>
+  )
+}
