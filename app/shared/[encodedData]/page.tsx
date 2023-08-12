@@ -151,3 +151,29 @@ export default function SharedChatRoute() {
       // Decode the shared chat data
       const decoded = decodeShareData(encodedData);
       
+      if (!decoded) {
+        setError('Invalid or corrupted share link');
+        setLoading(false);
+        
+        // Log decode failure mm
+        if (process.env.NODE_ENV === 'production') {
+          fetch('/api/metrics', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              event: 'share_decode_error',
+              data: {
+                shareId,
+                error: 'Invalid or corrupted share link',
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+              }
+            })
+          }).catch(() => {}); // Silently fail
+        }
+        
+        return;
+      }
+      
+      const loadTime = Date.now() - startTime;
+      
