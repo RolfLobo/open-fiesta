@@ -125,3 +125,29 @@ import type { SharedChatData } from '@/lib/sharing/types';
 import SharedChatPage from '@/components/shared/SharedChatPage';
 import SharedChatError from '@/components/shared/SharedChatError';
 import SharedChatLoading from '@/components/shared/SharedChatLoading';
+
+export default function SharedChatRoute() {
+  const params = useParams();
+  const encodedData = params.encodedData as string;
+  
+  const [chatData, setChatData] = useState<SharedChatData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!encodedData) {
+      setError('No chat data provided');
+      setLoading(false);
+      return;
+    }
+
+    const startTime = Date.now();
+    const shareId = encodedData.substring(0, 8); // Use first 8 chars as share ID for logging
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Decode the shared chat data
+      const decoded = decodeShareData(encodedData);
+      
