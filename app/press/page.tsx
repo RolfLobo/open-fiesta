@@ -167,3 +167,29 @@ export default function PressPage() {
         {/* Boilerplate */}
         <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Boilerplate</h2>
         <p className="text-zinc-300/90 text-sm sm:text-base leading-relaxed max-w-3xl">
+          Open Fiesta is an elegant, fast AI chat assistant that makes it easy to compare responses
+          across 300+ models in one interface, so you can think, write, and build faster.
+          Learn more at <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="https://openfiesta.app" target="_blank" rel="noreferrer">openfiesta.app</a>.
+        </p>
+
+        {/* Assets */}
+        <div className="mt-10">
+          <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Brand assets</h2>
+          <ul className="space-y-2 text-zinc-300/90 text-sm sm:text-base">
+            <li><a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/brand.svg" download>Logo (SVG)</a></li>
+            <li><a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/brand.png" download>Social image (PNG, 1200×630)</a></li>
+            <li><a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/Web_logo.svg" download>App mark (SVG, dark)</a></li>
+            <li><a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="/Web_logo_light.svg" download>App mark (SVG, light)</a></li>
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div className="mt-10">
+          <h2 className="text-[11px] tracking-[0.22em] uppercase text-zinc-400 mb-3">Contact</h2>
+          <ul className="space-y-2 text-zinc-300/90 text-sm sm:text-base">
+            <li>Email: <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="mailto:press@openfiesta.app">press@openfiesta.app</a></li>
+            <li>X: <a className="underline decoration-zinc-600 hover:decoration-zinc-400" href="https://x.com/byteHumi" target="_blank" rel="noreferrer">@byteHumi</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
