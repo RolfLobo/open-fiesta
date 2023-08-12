@@ -116,3 +116,12 @@ export default function SharedChatRoute() {
 
   return <SharedChatPage chatData={chatData} />;
 }
+"use client";
+
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { decodeShareData } from '@/lib/sharing/encoding';
+import type { SharedChatData } from '@/lib/sharing/types';
+import SharedChatPage from '@/components/shared/SharedChatPage';
+import SharedChatError from '@/components/shared/SharedChatError';
+import SharedChatLoading from '@/components/shared/SharedChatLoading';

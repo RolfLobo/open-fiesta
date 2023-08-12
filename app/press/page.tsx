@@ -193,3 +193,5 @@ export default function PressPage() {
         </div>
       </section>
     </main>
+  )
+}
