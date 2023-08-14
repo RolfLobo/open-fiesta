@@ -141,3 +141,29 @@ export default function SignIn() {
               src="/brand.svg"
               alt="AI Fiesta"
               width={64}
+              height={64}
+              className="mx-auto rounded-lg"
+            />
+            <h2 className="mt-6 text-3xl font-bold text-white">
+              Sign in to Open Fiesta
+            </h2>
+            <p className="mt-2 text-sm text-zinc-400">
+              Choose your preferred sign-in method
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <button
+              onClick={() => handleSignIn('google')}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-zinc-700 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white transition-colors"
+            >
+              <Chrome size={20} />
+              Continue with Google
+            </button>
+
+            <button
+              onClick={() => handleSignIn('github')}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-zinc-700 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white transition-colors"
+            >
+              <Github size={20} />
+              Continue with GitHub
