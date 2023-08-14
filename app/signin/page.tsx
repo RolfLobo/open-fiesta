@@ -115,3 +115,29 @@ export default function SignIn() {
   const handleSignIn = async (provider: 'google' | 'github') => {
     try {
       await signInWithProvider(provider)
+    } catch (error) {
+      console.error('Error signing in:', error)
+    }
+  }
+
+  const handleBackToHome = () => {
+    router.push('/')
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 p-4">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <Image
+              src="/brand.svg"
+              alt="AI Fiesta"
+              width={64}
