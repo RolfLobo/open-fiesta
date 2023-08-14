@@ -94,3 +94,24 @@ export default function SignIn() {
     </div>
   )
 }
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth'
+import { Github, Chrome, Undo2 } from 'lucide-react'
+import Image from 'next/image'
+
+export default function SignIn() {
+  const { user, signInWithProvider, loading } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user) {
+      router.push('/')
+    }
+  }, [user, router])
+
+  const handleSignIn = async (provider: 'google' | 'github') => {
+    try {
+      await signInWithProvider(provider)

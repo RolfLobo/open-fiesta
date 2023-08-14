@@ -229,3 +229,8 @@ export default function SharedChatRoute() {
   }
 
   if (error || !chatData) {
+    return <SharedChatError error={error || 'Unknown error occurred'} />;
+  }
+
+  return <SharedChatPage chatData={chatData} />;
+}
