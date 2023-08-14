@@ -203,3 +203,29 @@ export default function SharedChatRoute() {
     } catch (err) {
       console.error('Error decoding shared chat:', err);
       setError('Failed to load shared chat');
+      setLoading(false);
+      
+      // Log decode error
+      if (process.env.NODE_ENV === 'production') {
+        fetch('/api/metrics', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'share_decode_error',
+            data: {
+              shareId,
+              error: err instanceof Error ? err.message : 'Unknown error',
+              userAgent: navigator.userAgent,
+              timestamp: new Date().toISOString()
+            }
+          })
+        }).catch(() => {}); // Silently fail
+      }
+    }
+  }, [encodedData]);
+
+  if (loading) {
+    return <SharedChatLoading />;
+  }
+
+  if (error || !chatData) {
