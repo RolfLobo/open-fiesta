@@ -167,3 +167,26 @@ export default function SignIn() {
             >
               <Github size={20} />
               Continue with GitHub
+            </button>
+          </div>
+
+          <div className="text-center">
+            <p className="text-xs text-zinc-500">
+              By signing in, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-center pb-8">
+        <button
+          onClick={handleBackToHome}
+          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors"
+        >
+          <Undo2 size={16} />
+          Back to Home
+        </button>
+      </div>
+    </div>
+  )
+}
