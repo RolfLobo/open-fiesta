@@ -681,3 +681,20 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
     </div>
   );
 }
+
+'use client';
+
+import React, { useState, useCallback, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { X, Palette, Sun, Moon, Type, Grid3X3, Star, MessageSquare } from 'lucide-react';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+import {
+  ACCENT_COLORS,
+  FONT_FAMILIES,
+  BACKGROUND_STYLES,
+  type AccentColor,
+  type FontFamily,
+  type BackgroundStyle,
+  type BadgePair,
+  type ChatInputStyle,
