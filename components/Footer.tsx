@@ -14,3 +14,10 @@ export const   CustomCrowd = () => {
     </div>
   );
 };
+
+import { CrowdCanvas, Skiper39 } from "@/components/ui/skiper-ui/skiper39";
+
+// Using the complete component
+const DemoSkiper39 = () => {
+  return <Skiper39 />;
+};
