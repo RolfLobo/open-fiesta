@@ -802,3 +802,29 @@ const FontOption = React.memo<{
             ? 'border-white/10 bg-white/5 hover:bg-white/8'
             : 'border-black/10 bg-black/5 hover:bg-black/8'
       )}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <div className={cn(
+            "text-sm font-medium mb-1",
+            isDark ? "text-white" : "text-gray-800"
+          )}>{font.name}</div>
+          <div className={cn(
+            "text-xs",
+            isDark ? "text-white/60" : "text-gray-600"
+          )}>
+            {font.description}
+          </div>
+        </div>
+        {isSelected && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+      </div>
+      <div className={cn(
+        "text-sm font-preview",
+        `font-preview-${font.id}`,
+        isDark ? "text-white/80" : "text-gray-700"
+      )}>
+        The quick brown fox jumps over the lazy dog 123456
+      </div>
+    </button>
+  );
+});
