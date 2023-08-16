@@ -854,3 +854,29 @@ const BackgroundOption = React.memo<{
         "p-3 rounded-lg border transition-colors text-left",
         isSelected
           ? isDark
+            ? 'border-white/30 bg-white/10'
+            : 'border-black/30 bg-black/10'
+          : isDark
+            ? 'border-white/10 bg-white/5 hover:bg-white/8'
+            : 'border-black/10 bg-black/5 hover:bg-black/8'
+      )}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className={cn(
+            "text-sm font-medium",
+            isDark ? "text-white" : "text-gray-800"
+          )}>{background.name}</div>
+          <div className={cn(
+            "text-xs",
+            isDark ? "text-white/60" : "text-gray-600"
+          )}>{background.description}</div>
+        </div>
+        {isSelected && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+      </div>
+      <div className={`w-full h-16 rounded border border-white/20 ${background.className}`} />
+    </button>
+  );
+});
+
+BackgroundOption.displayName = 'BackgroundOption';
