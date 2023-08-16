@@ -750,3 +750,29 @@ const AccentOption = React.memo<{
             "text-xs",
             isDark ? "text-white/60" : "text-gray-600"
           )}>{accent.description}</div>
+        </div>
+      </div>
+      <div className="flex gap-1">
+        <div
+          className={`w-3 h-3 accent-preview accent-preview-${accent.id}-primary`}
+          aria-hidden="true"
+        />
+        <div
+          className={`w-3 h-3 accent-preview accent-preview-${accent.id}-secondary`}
+          aria-hidden="true"
+        />
+        <div
+          className={`w-3 h-3 accent-preview accent-preview-${accent.id}-tertiary`}
+          aria-hidden="true"
+        />
+      </div>
+    </button>
+  );
+});
+
+AccentOption.displayName = 'AccentOption';
+
+// Memoized font option component
+const FontOption = React.memo<{
+  font: {
+    id: FontFamily;
