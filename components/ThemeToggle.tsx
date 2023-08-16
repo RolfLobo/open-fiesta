@@ -724,3 +724,29 @@ const AccentOption = React.memo<{
       onClick={handleClick}
       className={cn(
         "p-3 rounded-lg border transition-colors text-left",
+        isSelected
+          ? isDark
+            ? 'border-white/30 bg-white/10'
+            : 'border-black/30 bg-black/10'
+          : isDark
+            ? 'border-white/10 bg-white/5 hover:bg-white/8'
+            : 'border-black/10 bg-black/5 hover:bg-black/8'
+      )}
+    >
+      <div className="flex items-center gap-3 mb-2">
+        <div
+          className={`w-6 h-6 rounded-full border border-white/20 accent-preview accent-preview-${
+            accent.id
+          }-primary ${
+            isSelected
+              ? 'ring-2 ring-[var(--accent-interactive-focus)] ring-offset-1 ring-offset-black/20'
+              : ''
+          }`}
+          aria-hidden="true"
+        />
+        <div>
+          <div className="text-sm font-medium">{accent.name}</div>
+          <div className={cn(
+            "text-xs",
+            isDark ? "text-white/60" : "text-gray-600"
+          )}>{accent.description}</div>
