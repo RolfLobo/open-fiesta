@@ -880,3 +880,29 @@ const BackgroundOption = React.memo<{
 });
 
 BackgroundOption.displayName = 'BackgroundOption';
+
+// Memoized badge option component
+const BadgeOption = React.memo<{
+  badge: {
+    id: BadgePair;
+    name: string;
+    description: string;
+    pro: { background: string; text: string; border: string };
+    free: { background: string; text: string; border: string };
+  };
+  isSelected: boolean;
+  onSelect: (id: BadgePair) => void;
+  isDark: boolean;
+}>(({ badge, isSelected, onSelect, isDark }) => {
+  const handleClick = useCallback(() => {
+    onSelect(badge.id);
+  }, [badge.id, onSelect]);
+
+  return (
+    <button
+      onClick={handleClick}
+      className={cn(
+        "p-3 rounded-lg border transition-colors text-left",
+        isSelected
+          ? isDark
+            ? 'border-white/30 bg-white/10'
