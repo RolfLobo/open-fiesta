@@ -698,3 +698,29 @@ import {
   type BackgroundStyle,
   type BadgePair,
   type ChatInputStyle,
+} from '@/lib/themes';
+import { BADGE_PAIRS } from '@/lib/badgeSystem';
+
+// Memoized accent option component
+const AccentOption = React.memo<{
+  accent: {
+    id: AccentColor;
+    name: string;
+    description: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
+  isSelected: boolean;
+  onSelect: (id: AccentColor) => void;
+  isDark: boolean;
+}>(({ accent, isSelected, onSelect, isDark }) => {
+  const handleClick = useCallback(() => {
+    onSelect(accent.id);
+  }, [accent.id, onSelect]);
+
+  return (
+    <button
+      onClick={handleClick}
+      className={cn(
+        "p-3 rounded-lg border transition-colors text-left",
