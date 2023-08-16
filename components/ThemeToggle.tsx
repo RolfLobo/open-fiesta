@@ -776,3 +776,29 @@ AccentOption.displayName = 'AccentOption';
 const FontOption = React.memo<{
   font: {
     id: FontFamily;
+    name: string;
+    description: string;
+    primary: string;
+    fallback: string;
+  };
+  isSelected: boolean;
+  onSelect: (id: FontFamily) => void;
+  isDark: boolean;
+}>(({ font, isSelected, onSelect, isDark }) => {
+  const handleClick = useCallback(() => {
+    onSelect(font.id);
+  }, [font.id, onSelect]);
+
+  return (
+    <button
+      onClick={handleClick}
+      className={cn(
+        "p-4 rounded-lg border transition-colors text-left w-full",
+        isSelected
+          ? isDark
+            ? 'border-white/30 bg-white/10'
+            : 'border-black/30 bg-black/10'
+          : isDark
+            ? 'border-white/10 bg-white/5 hover:bg-white/8'
+            : 'border-black/10 bg-black/5 hover:bg-black/8'
+      )}
