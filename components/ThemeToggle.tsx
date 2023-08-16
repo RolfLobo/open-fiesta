@@ -828,3 +828,29 @@ const FontOption = React.memo<{
     </button>
   );
 });
+
+FontOption.displayName = 'FontOption';
+
+// Memoized background option component
+const BackgroundOption = React.memo<{
+  background: {
+    id: BackgroundStyle;
+    name: string;
+    description: string;
+    className: string;
+  };
+  isSelected: boolean;
+  onSelect: (id: BackgroundStyle) => void;
+  isDark: boolean;
+}>(({ background, isSelected, onSelect, isDark }) => {
+  const handleClick = useCallback(() => {
+    onSelect(background.id);
+  }, [background.id, onSelect]);
+
+  return (
+    <button
+      onClick={handleClick}
+      className={cn(
+        "p-3 rounded-lg border transition-colors text-left",
+        isSelected
+          ? isDark
