@@ -906,3 +906,29 @@ const BadgeOption = React.memo<{
         isSelected
           ? isDark
             ? 'border-white/30 bg-white/10'
+            : 'border-black/30 bg-black/10'
+          : isDark
+            ? 'border-white/10 bg-white/5 hover:bg-white/8'
+            : 'border-black/10 bg-black/5 hover:bg-black/8'
+      )}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className={cn(
+            "text-sm font-medium",
+            isDark ? "text-white" : "text-gray-800"
+          )}>{badge.name}</div>
+          <div className={cn(
+            "text-xs",
+            isDark ? "text-white/60" : "text-gray-600"
+          )}>{badge.description}</div>
+        </div>
+        {isSelected && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+      </div>
+
+      {/* Badge Preview (single-layer containers matching real badges) */}
+      <div className="flex items-center gap-3">
+        <div
+          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full ring-1"
+          style={{
+            background: badge.pro.background,
