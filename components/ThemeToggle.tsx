@@ -957,3 +957,30 @@ const BadgeOption = React.memo<{
 });
 
 BadgeOption.displayName = 'BadgeOption';
+
+type ThemeToggleProps = { compact?: boolean };
+
+export default function ThemeToggle({ compact }: ThemeToggleProps) {
+  const { theme, setAccent, setFont, setBackground, setBadgePair, toggleMode, updateTheme } =
+    useTheme();
+  const isDark = theme.mode === 'dark';
+  const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'accent' | 'font' | 'background' | 'badges' | 'input'>(
+    'accent',
+  );
+
+  // Memoize the arrays to prevent recreating on every render
+  const accentValues = useMemo(() => Object.values(ACCENT_COLORS), []);
+  const fontValues = useMemo(() => Object.values(FONT_FAMILIES), []);
+  const backgroundValues = useMemo(() => Object.values(BACKGROUND_STYLES), []);
+  const badgeValues = useMemo(() => Object.values(BADGE_PAIRS), []);
+
+  // Memoized handlers
+  const handleOpen = useCallback(() => setOpen(true), []);
+  const handleClose = useCallback(() => setOpen(false), []);
+  const handleToggleMode = useCallback(() => toggleMode(), [toggleMode]);
+
+  const handleAccentChange = useCallback(
+    (accent: AccentColor) => {
+      setAccent(accent);
+    },
