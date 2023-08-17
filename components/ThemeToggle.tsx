@@ -932,3 +932,28 @@ const BadgeOption = React.memo<{
           className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full ring-1"
           style={{
             background: badge.pro.background,
+            color: badge.pro.text,
+            // Use border color for ring stroke via box-shadow fallback; ring-1 inherits currentColor so use outline
+            boxShadow: `0 0 0 1px ${badge.pro.border}`,
+          }}
+        >
+          <Star size={10} className="shrink-0" />
+          <span className="text-xs">Pro</span>
+        </div>
+        <div
+          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full ring-1"
+          style={{
+            background: badge.free.background,
+            color: badge.free.text,
+            boxShadow: `0 0 0 1px ${badge.free.border}`,
+          }}
+        >
+          <span className="h-2 w-2 rounded-full bg-current opacity-80" />
+          <span className="text-xs">Free</span>
+        </div>
+      </div>
+    </button>
+  );
+});
+
+BadgeOption.displayName = 'BadgeOption';
