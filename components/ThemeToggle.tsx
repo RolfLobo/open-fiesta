@@ -984,3 +984,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
     (accent: AccentColor) => {
       setAccent(accent);
     },
+    [setAccent],
+  );
+
+  const handleFontChange = useCallback(
+    (font: FontFamily) => {
+      console.log('Font change requested:', font);
+      try {
+        setFont(font);
+      } catch (error) {
+        console.error('Font change error:', error);
+      }
+    },
+    [setFont],
+  );
+
+  const handleBackgroundChange = useCallback(
+    (background: BackgroundStyle) => {
+      setBackground(background);
+    },
+    [setBackground],
+  );
+
+  const handleBadgeChange = useCallback(
+    (badge: BadgePair) => {
+      setBadgePair(badge);
+    },
