@@ -1010,3 +1010,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
     (badge: BadgePair) => {
       setBadgePair(badge);
     },
+    [setBadgePair],
+  );
+
+  const handleTabChange = useCallback(
+    (tab: 'accent' | 'font' | 'background' | 'badges' | 'input') => {
+      setActiveTab(tab);
+    },
+    [],
+  );
+
+  // Memoized current theme info
+  const currentAccent = useMemo(() => ACCENT_COLORS[theme.accent], [theme.accent]);
+  const currentFont = useMemo(() => FONT_FAMILIES[theme.font], [theme.font]);
+  const currentBackground = useMemo(() => BACKGROUND_STYLES[theme.background], [theme.background]);
+  const currentChatInputStyle = theme.chatInputStyle || 'default';
+
+  return (
+    <div className="relative">
+      <button
+        aria-label="Open Theme Settings"
+        title="Theme Settings"
+        onClick={handleOpen}
+        className={cn(
+          "inline-flex items-center gap-1.5 text-xs h-9 rounded-xl border shadow transition-all duration-200",
+          compact ? "w-9 justify-center px-0" : "px-3 py-2",
+          isDark
