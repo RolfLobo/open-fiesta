@@ -1114,3 +1114,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                     id: 'background' as const,
                     label: 'Backgrounds',
                     icon: Grid3X3,
+                  },
+                  {
+                    id: 'input' as const,
+                    label: 'Chat Input',
+                    icon: MessageSquare,
+                  },
+                ].map(({ id, label, icon: Icon }) => (
+                  <button
+                    key={id}
+                    onClick={() => handleTabChange(id)}
+                    className={cn(
+                      "shrink-0 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors",
+                      activeTab === id
+                        ? isDark
+                          ? 'bg-white/15 text-white border border-white/20'
+                          : 'bg-black/15 text-gray-800 border border-black/20'
+                        : isDark
+                          ? 'text-white/70 hover:text-white hover:bg-white/5'
+                          : 'text-gray-600 hover:text-gray-800 hover:bg-black/5'
+                    )}
+                  >
+                    <Icon size={14} />
+                    {label}
+                  </button>
+                ))}
+              </div>
