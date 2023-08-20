@@ -1140,3 +1140,28 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                   </button>
                 ))}
               </div>
+
+              {/* Tab Content (scrollable) */}
+              <div className="min-h-[200px] flex-1 overflow-y-auto pr-1 space-y-0">
+                {/* Accent Colors Tab */}
+                {activeTab === 'accent' && (
+                  <div className="space-y-3">
+                    <h3 className={cn(
+                      "text-sm font-medium mb-3",
+                      isDark ? "text-white/80" : "text-gray-600"
+                    )}>
+                      Choose your accent color
+                    </h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {accentValues.map((accent) => (
+                        <AccentOption
+                          key={accent.id}
+                          accent={accent}
+                          isSelected={theme.accent === accent.id}
+                          onSelect={handleAccentChange}
+                          isDark={isDark}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
