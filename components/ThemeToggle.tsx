@@ -1088,3 +1088,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                   <span className="text-sm font-medium">Dark/Light Mode</span>
                   <button
                     onClick={handleToggleMode}
+                    className={cn(
+                      "inline-flex items-center gap-2 px-3 py-2 rounded-md transition-colors",
+                      isDark
+                        ? "bg-white/10 hover:bg-white/15"
+                        : "bg-black/10 hover:bg-black/15"
+                    )}
+                  >
+                    {theme.mode === 'dark' ? <Moon size={14} /> : <Sun size={14} />}
+                    <span className="text-sm capitalize">{theme.mode}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Tab Navigation */}
+              <div className={cn(
+                "flex flex-nowrap gap-1 mb-4 p-1 rounded-lg shrink-0 overflow-x-auto -mx-1 px-1",
+                isDark ? "bg-white/5" : "bg-black/5"
+              )}>
+                {[
+                  { id: 'accent' as const, label: 'Colors', icon: Palette },
+                  { id: 'badges' as const, label: 'Badges', icon: Star },
+                  { id: 'font' as const, label: 'Fonts', icon: Type },
+                  {
+                    id: 'background' as const,
+                    label: 'Backgrounds',
+                    icon: Grid3X3,
