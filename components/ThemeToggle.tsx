@@ -1062,3 +1062,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg md:text-xl font-semibold">Theme Settings</h2>
+                <button
+                  aria-label="Close"
+                  onClick={handleClose}
+                  className={cn(
+                    "h-8 w-8 inline-flex items-center justify-center rounded-md transition-colors",
+                    isDark
+                      ? "bg-white/10 hover:bg-white/20"
+                      : "bg-black/10 hover:bg-black/20"
+                  )}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Quick Mode Toggle */}
+              <div className={cn(
+                "mb-6 p-3 rounded-lg border shrink-0",
+                isDark
+                  ? "bg-white/5 border-white/10"
+                  : "bg-black/5 border-black/10"
+              )}>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Dark/Light Mode</span>
+                  <button
+                    onClick={handleToggleMode}
