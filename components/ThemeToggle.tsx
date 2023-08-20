@@ -1165,3 +1165,30 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                     </div>
                   </div>
                 )}
+
+                {/* Badge Colors Tab */}
+                {activeTab === 'badges' && (
+                  <div className="space-y-3">
+                    <h3 className={cn(
+                      "text-sm font-medium mb-3",
+                      isDark ? "text-white/80" : "text-gray-600"
+                    )}>
+                      Choose your badge colors
+                    </h3>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {badgeValues.map((badge) => (
+                        <BadgeOption
+                          key={badge.id}
+                          badge={badge}
+                          isSelected={theme.badgePair === badge.id}
+                          onSelect={handleBadgeChange}
+                          isDark={isDark}
+                        />
+                      ))}
+                    </div>
+                    <div className={cn(
+                      "mt-4 p-3 rounded-lg border",
+                      isDark ? "bg-white/5 border-white/10" : "bg-black/5 border-black/10"
+                    )}>
+                      <p className={cn(
+                        "text-xs",
