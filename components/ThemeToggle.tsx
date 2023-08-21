@@ -1348,3 +1348,20 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                   "text-xs",
                   isDark ? "text-white/60" : "text-gray-500"
                 )}>
+                  Current: {theme.mode} mode, {currentAccent.name}, {currentFont.name},{' '}
+                  {currentBackground.name}
+                </div>
+                <button
+                  onClick={handleClose}
+                  className="px-4 py-2 rounded-md text-sm font-medium accent-action-fill accent-action-ring"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </div>
+  );
+}

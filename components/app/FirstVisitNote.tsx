@@ -46,3 +46,12 @@ export default function FirstVisitNote({ open, onClose }: Props) {
     </div>
   );
 }
+
+'use client';
+
+type Props = {
+  open: boolean;
+  onClose: () => void;
+};
+
+export default function FirstVisitNote({ open, onClose }: Props) {
