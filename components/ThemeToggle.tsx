@@ -1270,3 +1270,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {[
                         {
+                          id: 'default',
+                          name: 'Subtle',
+                          desc: 'Soft translucent panel',
+                        },
+                        {
+                          id: 'frosty',
+                          name: 'Frosty Dark',
+                          desc: 'Higher blur & depth',
+                        },
+                      ].map((opt) => {
+                        const selected = currentChatInputStyle === opt.id;
+                        return (
+                          <button
+                            key={opt.id}
+                            onClick={() =>
+                              updateTheme({
+                                chatInputStyle: opt.id as ChatInputStyle,
+                              })
+                            }
+                            className={cn(
+                              "p-3 rounded-lg border text-left transition-colors",
+                              selected
+                                ? isDark
+                                  ? 'border-white/30 bg-white/10'
+                                  : 'border-black/30 bg-black/10'
+                                : isDark
