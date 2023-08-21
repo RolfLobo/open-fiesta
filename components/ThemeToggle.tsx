@@ -1218,3 +1218,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                           isSelected={theme.font === font.id}
                           onSelect={handleFontChange}
                           isDark={isDark}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Background Styles Tab */}
+                {activeTab === 'background' && (
+                  <div className="space-y-3">
+                    <h3 className={cn(
+                      "text-sm font-medium mb-3",
+                      isDark ? "text-white/80" : "text-gray-600"
+                    )}>
+                      Choose your background style
+                    </h3>
+                    <div className="space-y-3">
+                      {backgroundValues.map((bg) => (
+                        <BackgroundOption
+                          key={bg.id}
+                          background={bg}
+                          isSelected={theme.background === bg.id}
+                          onSelect={handleBackgroundChange}
+                          isDark={isDark}
+                        />
+                      ))}
+                    </div>
