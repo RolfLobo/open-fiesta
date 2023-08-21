@@ -1296,3 +1296,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                                   ? 'border-white/30 bg-white/10'
                                   : 'border-black/30 bg-black/10'
                                 : isDark
+                                  ? 'border-white/10 bg-white/5 hover:bg-white/8'
+                                  : 'border-black/10 bg-black/5 hover:bg-black/8'
+                            )}
+                          >
+                            <div className="flex items-center justify-between mb-3">
+                              <div>
+                                <div className={cn(
+                                  "text-sm font-medium",
+                                  isDark ? "text-white" : "text-gray-800"
+                                )}>{opt.name}</div>
+                                <div className={cn(
+                                  "text-xs",
+                                  isDark ? "text-white/60" : "text-gray-600"
+                                )}>{opt.desc}</div>
+                              </div>
+                              {selected && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+                            </div>
+                            <div
+                              className={`w-full h-16 rounded border border-white/15 flex items-center justify-center text-[10px] tracking-wide uppercase opacity-70 chat-input-shell ${
+                                opt.id === 'default'
+                                  ? 'bg-white/10 backdrop-blur-md'
+                                  : 'bg-black/30'
+                              }`}
+                            >
+                              Aa
+                            </div>
