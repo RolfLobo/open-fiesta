@@ -127,3 +127,15 @@ export default function GithubStar({ owner, repo, className, theme }: Props) {
     </a>
   );
 }
+
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import { Github, Star } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+type Props = {
+  owner: string;
+  repo: string;
+  className?: string;
+  theme?: 'light' | 'dark';
+};

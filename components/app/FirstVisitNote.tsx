@@ -81,3 +81,17 @@ export default function FirstVisitNote({ open, onClose }: Props) {
               onClose();
             }}
             className="text-sm px-3 py-2 rounded text-white border border-white/10 accent-action-fill"
+          >
+            Manage keys
+          </button>
+          <button
+            onClick={onClose}
+            className="text-sm px-3 py-2 rounded bg-white/10 border border-white/10 hover:bg-white/15"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
