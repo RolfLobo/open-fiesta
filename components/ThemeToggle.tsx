@@ -1244,3 +1244,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                         />
                       ))}
                     </div>
+                    <div className={cn(
+                      "mt-4 p-3 rounded-lg border",
+                      isDark ? "bg-white/5 border-white/10" : "bg-black/5 border-black/10"
+                    )}>
+                      <p className={cn(
+                        "text-xs",
+                        isDark ? "text-white/60" : "text-gray-500"
+                      )}>
+                        <strong>Gradient:</strong> Rich, complex radial gradients that match your
+                        accent color
+                        <br />
+                        <strong>Minimal:</strong> Clean solid background with subtle accent patterns
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'input' && (
+                  <div className="space-y-4">
+                    <h3 className={cn(
+                      "text-sm font-medium mb-3",
+                      isDark ? "text-white/80" : "text-gray-600"
+                    )}>Chat input style</h3>
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {[
+                        {
