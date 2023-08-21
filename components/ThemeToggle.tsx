@@ -1192,3 +1192,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                     )}>
                       <p className={cn(
                         "text-xs",
+                        isDark ? "text-white/60" : "text-gray-500"
+                      )}>
+                        Badge colors change the Pro/Free badge appearance while maintaining the same
+                        shape, size, and icons.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Font Families Tab */}
+                {activeTab === 'font' && (
+                  <div className="space-y-3">
+                    <h3 className={cn(
+                      "text-sm font-medium mb-3",
+                      isDark ? "text-white/80" : "text-gray-600"
+                    )}>
+                      Choose your font family
+                    </h3>
+                    <div className="space-y-2">
+                      {fontValues.map((font) => (
+                        <FontOption
+                          key={font.id}
+                          font={font}
+                          isSelected={theme.font === font.id}
+                          onSelect={handleFontChange}
+                          isDark={isDark}
