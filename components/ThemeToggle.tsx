@@ -1322,3 +1322,29 @@ export default function ThemeToggle({ compact }: ThemeToggleProps) {
                             >
                               Aa
                             </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className={cn(
+                      "mt-2 p-3 rounded-lg border text-xs",
+                      isDark 
+                        ? "bg-white/5 border-white/10 text-white/60"
+                        : "bg-black/5 border-black/10 text-gray-500"
+                    )}>
+                      Frosty adds stronger glass effect, brightness separation and a focus ring when
+                      active.
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className={cn(
+                "flex justify-between items-center mt-6 pt-4 border-t shrink-0",
+                isDark ? "border-white/10" : "border-black/10"
+              )}>
+                <div className={cn(
+                  "text-xs",
+                  isDark ? "text-white/60" : "text-gray-500"
+                )}>
