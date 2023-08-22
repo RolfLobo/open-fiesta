@@ -191,3 +191,29 @@ export default function GithubStar({ owner, repo, className, theme }: Props) {
       const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
       const value = Math.floor(eased * targetCount);
+      setDisplayCount(value);
+      if (t < 1) {
+        animRef.current = requestAnimationFrame(tick);
+      } else {
+        setDisplayCount(targetCount);
+      }
+    };
+
+    animRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [targetCount]);
+
+  const countText = targetCount == null ? '0' : displayCount.toLocaleString();
+
+  // Set theme classes based on theme prop
+  const isLight = theme === 'light';
+  const isDark = theme === 'dark';
+
+  return (
+    <a
+      href={`https://github.com/${owner}/${repo}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
