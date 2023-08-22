@@ -165,3 +165,29 @@ export default function GithubStar({ owner, repo, className, theme }: Props) {
         if (!cancelled) setTargetCount(null);
       }
     };
+    load();
+    const id = setInterval(load, 300000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [owner, repo]);
+
+  // Animate star count
+  useEffect(() => {
+    if (targetCount == null) return;
+
+    if (didAnimateRef.current) {
+      setDisplayCount(targetCount);
+      return;
+    }
+
+    didAnimateRef.current = true;
+    setDisplayCount(0);
+    const duration = 2000; // ms
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+      const value = Math.floor(eased * targetCount);
