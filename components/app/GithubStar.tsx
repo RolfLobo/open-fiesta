@@ -139,3 +139,29 @@ type Props = {
   className?: string;
   theme?: 'light' | 'dark';
 };
+
+export default function GithubStar({ owner, repo, className, theme }: Props) {
+  const [targetCount, setTargetCount] = useState<number | null>(null);
+  const [displayCount, setDisplayCount] = useState<number>(0);
+  const animRef = useRef<number | null>(null);
+  const didAnimateRef = useRef(false);
+
+  // Fetch stars from API every 5 min
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/github/stars?owner=${owner}&repo=${repo}`, {
+          cache: 'no-store',
+        });
+        const data = await res.json();
+        if (cancelled) return;
+        if (data?.ok && typeof data.stars === 'number') {
+          setTargetCount(data.stars);
+        } else {
+          setTargetCount(null);
+        }
+      } catch {
+        if (!cancelled) setTargetCount(null);
+      }
+    };
