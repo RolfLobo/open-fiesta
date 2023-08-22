@@ -126,3 +126,15 @@ export default function HeaderBar({
     </div>
   );
 }
+
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import GithubStar from '@/components/app/GithubStar';
+import ThemeToggle from '@/components/ThemeToggle';
+import CustomModels from '@/components/modals/CustomModels';
+import Settings from '@/components/app/Settings';
+import { Layers, Home, Menu as MenuIcon } from 'lucide-react';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+import SupportDropdown from '../support-dropdown';

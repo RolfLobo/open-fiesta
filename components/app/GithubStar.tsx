@@ -243,3 +243,17 @@ export default function GithubStar({ owner, repo, className, theme }: Props) {
 
       {/* Star icon + animated count */}
       <div className="flex items-center gap-1 text-sm">
+        <Star
+          className={cn(
+            "relative top-px size-4 fill-current transition-colors duration-300 group-hover:fill-yellow-400 group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]",
+            isLight && "text-black",
+            isDark && "text-white",
+            !theme && "text-black dark:text-white"
+          )}
+          aria-hidden="true"
+        />
+        <span className="font-medium tabular-nums min-w-[2rem] text-right">{countText}</span>
+      </div>
+    </a>
+  );
+}
