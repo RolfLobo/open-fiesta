@@ -217,3 +217,29 @@ export default function GithubStar({ owner, repo, className, theme }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
+        'group inline-flex p-2 items-center gap-2 rounded-lg  border transition-colors text-sm px-2',
+        isLight && 'bg-white text-black hover:bg-gray-100 border-gray-200',
+        isDark && 'bg-black text-white hover:bg-black/90 border-neutral-900',
+        !theme && 'bg-white text-black hover:bg-gray-100 border-gray-200 dark:bg-black dark:text-white hover:dark:bg-black/90 dark:border-neutral-900',
+        className
+      )}
+      title="Star on GitHub"
+      aria-label="Star this project on GitHub"
+    >
+      {/* GitHub icon + text */}
+      <div className="flex items-center">
+        <Github
+          className={cn(
+            "mr-1 size-4 fill-current",
+            isLight && "text-black",
+            isDark && "text-white",
+            !theme && "text-black dark:text-white"
+          )}
+          aria-hidden="true"
+        />
+        <span className="ml-1 lg:hidden">Star</span>
+        <span className="ml-1 hidden lg:inline">GitHub</span>
+      </div>
+
+      {/* Star icon + animated count */}
+      <div className="flex items-center gap-1 text-sm">
