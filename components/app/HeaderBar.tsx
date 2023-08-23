@@ -190,3 +190,29 @@ export default function HeaderBar({
                 ? "bg-red-950 text-red-400 border border-red-400 border-b-2 hover:brightness-150 hover:border-t-2 hover:border-b active:opacity-75"
                 : "bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 active:opacity-80"
             )}
+          >
+            {isDark && (
+              <span className="bg-red-400 shadow-red-400 absolute -top-[150%] left-0 inline-flex w-48 h-[3px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
+            )}
+            Compare Models
+          </Link>
+        )}
+      </div>
+
+      {/* Center: logo only (hidden on mobile). Scales with heading size */}
+      <div className="flex-1 text-center hidden sm:block">
+        <h1 className="text-xl md:text-2xl font-extrabold tracking-tight select-none pointer-events-none inline-flex items-center justify-center">
+          <Image
+            src={isDark ? "/Web_logo.svg" : "/Web_logo_light.svg"}
+            alt="Open Fiesta logo"
+            width={100}
+            height={100}
+            className="h-6 md:h-8 lg:h-10 w-auto"
+            priority
+          />
+        </h1>
+      </div>
+
+      {/* Right cluster */}
+      <div className="flex items-center gap-2 z-10 ml-auto">
+        {!hideHomeButton && (
