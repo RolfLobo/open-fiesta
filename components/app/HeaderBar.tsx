@@ -138,3 +138,29 @@ import { Layers, Home, Menu as MenuIcon } from 'lucide-react';
 import { useTheme } from '@/lib/themeContext';
 import { cn } from '@/lib/utils';
 import SupportDropdown from '../support-dropdown';
+
+type Props = {
+  onOpenMenu: () => void;
+  title?: string;
+  githubOwner: string;
+  githubRepo: string;
+  className?: string;
+  onOpenModelsModal?: () => void;
+  showCompareButton?: boolean;
+  hideHomeButton?: boolean;
+};
+
+export default function HeaderBar({
+  onOpenMenu,
+  title = 'Open Fiesta',
+  githubOwner,
+  githubRepo,
+  className,
+  onOpenModelsModal,
+  showCompareButton = false,
+  hideHomeButton = false,
+}: Props) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+
+  return (
