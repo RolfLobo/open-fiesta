@@ -164,3 +164,29 @@ export default function HeaderBar({
   const isDark = theme.mode === 'dark';
 
   return (
+    <div className={['flex items-center mb-1 gap-2 w-full', className || ''].join(' ')}>
+      {/* Left: menu + optional Compare button */}
+      <div className="flex items-center gap-2 min-w-0">
+        <button
+          onClick={onOpenMenu}
+          className={cn(
+            "lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-xl backdrop-blur-sm shadow-lg transition-all duration-200 hover:scale-105 active:scale-95",
+            isDark
+              ? "bg-gradient-to-r from-white/12 to-white/8 border border-white/15 text-white hover:from-white/18 hover:to-white/12 hover:border-white/25"
+              : "bg-white/70 border border-white/40 text-gray-700 hover:bg-white/80 hover:border-white/50"
+          )}
+          aria-label="Open menu"
+          title="Menu"
+        >
+          <MenuIcon size={18} />
+        </button>
+
+        {showCompareButton && (
+          <Link
+            href="/compare"
+            className={cn(
+              "inline-block ml-1 font-medium overflow-hidden relative px-2.5 py-1.5 rounded-md outline-none duration-300 group text-xs",
+              isDark
+                ? "bg-red-950 text-red-400 border border-red-400 border-b-2 hover:brightness-150 hover:border-t-2 hover:border-b active:opacity-75"
+                : "bg-red-100 text-red-700 border border-red-300 hover:bg-red-200 active:opacity-80"
+            )}
