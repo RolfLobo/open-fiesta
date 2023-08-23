@@ -216,3 +216,29 @@ export default function HeaderBar({
       {/* Right cluster */}
       <div className="flex items-center gap-2 z-10 ml-auto">
         {!hideHomeButton && (
+          <Link
+            href="/"
+            className={cn(
+              "inline-flex items-center gap-1.5 text-xs h-9 w-9 justify-center rounded-xl shadow transition-all duration-200",
+              isDark
+                ? "border border-white/15 bg-white/5 hover:bg-white/10 text-white"
+                : "border border-white/40 bg-white/70 hover:bg-white/80 text-gray-700"
+            )}
+            aria-label="Go to home"
+            title="Home"
+          >
+            <Home size={18} />
+          </Link>
+        )}
+        <button
+          onClick={() => onOpenModelsModal && onOpenModelsModal()}
+          className={cn(
+            "inline-flex items-center gap-1.5 text-xs h-9 w-9 justify-center rounded-xl shadow transition-all duration-200",
+            isDark
+              ? "border border-white/15 bg-white/5 hover:bg-white/10 text-white"
+              : "border border-white/40 bg-white/70 hover:bg-white/80 text-gray-700"
+          )}
+          title="Change models"
+          aria-label="Change models"
+        >
+          <Layers size={14} />
