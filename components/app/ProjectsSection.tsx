@@ -272,3 +272,29 @@ export default function ProjectsSection({
   const handleEdit = (project: Project) => {
     onUpdateProject(project);
   };
+
+  const handleDelete = (id: string) => {
+    setConfirmDeleteId(id);
+  };
+
+  const confirmDelete = () => {
+    if (confirmDeleteId) {
+      onDeleteProject(confirmDeleteId);
+      // If we're deleting the active project, deselect it
+      if (confirmDeleteId === activeProjectId) {
+        onSelectProject(null);
+      }
+    }
+    setConfirmDeleteId(null);
+  };
+
+  if (collapsed) {
+    return (
+      <>
+        {/* Collapsed view */}
+        <div className="flex flex-col items-center gap-2 pt-2">
+          {/* New project button hidden in collapsed view to avoid duplicate plus with New Chat */}
+
+          {/* Project indicators */}
+          {projects.map((project) => {
+            const isActive = project.id === activeProjectId;
