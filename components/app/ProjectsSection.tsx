@@ -324,3 +324,28 @@ export default function ProjectsSection({
           message="This will permanently delete the project and cannot be undone."
           confirmText="Delete"
           cancelText="Cancel"
+          onCancel={() => setConfirmDeleteId(null)}
+          onConfirm={confirmDelete}
+        />
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* Expanded view */}
+      <div className="space-y-2">
+        {/* Header with add button */}
+        <div className="flex items-center justify-between">
+          <div className={cn(
+            "text-xs uppercase tracking-wide opacity-60",
+            isDark ? "text-white" : "text-gray-700"
+          )}>Projects</div>
+          <button
+            title="New Project"
+            onClick={handleCreateNew}
+            className="h-7 w-7 rounded-full flex items-center justify-center accent-action-fill accent-focus shadow-sm"
+          >
+            <Plus size={12} />
+          </button>
+        </div>
