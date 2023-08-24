@@ -376,3 +376,29 @@ export default function ProjectsSection({
               isDark ? "text-white" : "text-gray-800"
             )}>No Project</div>
             <div className={cn(
+              "text-xs opacity-60 truncate",
+              isDark ? "text-white" : "text-gray-600"
+            )}>Default system behavior</div>
+          </div>
+        </div>
+
+        {/* Project list */}
+        {projects.map((project) => {
+          const isActive = project.id === activeProjectId;
+          return (
+            <div
+              key={project.id}
+              className={cn(
+                "w-full px-2 py-2 rounded-md text-sm border flex items-center justify-between gap-2 group",
+                isActive
+                  ? isDark
+                    ? 'bg-white/15 border-white/20'
+                    : 'bg-blue-50/80 border-blue-200/60 ring-1 ring-blue-200/30'
+                  : isDark
+                    ? 'bg-white/5 border-white/10 hover:bg-white/10'
+                    : 'bg-white/60 border-gray-200/60 hover:bg-blue-50/60 hover:border-blue-200/50'
+              )}
+            >
+              <button
+                onClick={() => onSelectProject(project.id)}
+                className="min-w-0 text-left flex-1"
