@@ -428,3 +428,29 @@ export default function ProjectsSection({
                   className={cn(
                     "h-7 w-7 inline-flex items-center justify-center rounded-md border opacity-0 group-hover:opacity-100 transition-opacity",
                     isDark
+                      ? "border-white/10 bg-white/5 hover:bg-blue-500/20 hover:border-blue-300/30 text-zinc-300 hover:text-blue-100"
+                      : "border-gray-300/60 bg-white/80 hover:bg-blue-100/80 hover:border-blue-300/60 text-gray-600 hover:text-blue-700 shadow-sm"
+                  )}
+                >
+                  <Settings size={12} />
+                </button>
+                <button
+                  aria-label="Delete project"
+                  title="Delete project"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(project.id);
+                  }}
+                  className={cn(
+                    "h-7 w-7 inline-flex items-center justify-center rounded-md border opacity-0 group-hover:opacity-100 transition-opacity",
+                    isDark
+                      ? "border-white/10 bg-white/5 hover:bg-rose-500/20 hover:border-rose-300/30 text-zinc-300 hover:text-rose-100"
+                      : "border-gray-300/60 bg-white/80 hover:bg-red-100/80 hover:border-red-300/60 text-gray-600 hover:text-red-700 shadow-sm"
+                  )}
+                >
+                  <Trash2 size={12} />
+                </button>
+              </div>
+            </div>
+          );
+        })}
