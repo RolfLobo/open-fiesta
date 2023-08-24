@@ -402,3 +402,29 @@ export default function ProjectsSection({
               <button
                 onClick={() => onSelectProject(project.id)}
                 className="min-w-0 text-left flex-1"
+                title={`${project.name}${project.systemPrompt ? `\n\nSystem prompt: ${project.systemPrompt}` : ''}`}
+              >
+                <div className={cn(
+                  "truncate font-medium",
+                  isDark ? "text-white" : "text-gray-800"
+                )}>{project.name}</div>
+                {project.systemPrompt && (
+                  <div className={cn(
+                    "text-xs opacity-60 truncate",
+                    isDark ? "text-white" : "text-gray-600"
+                  )}>{project.systemPrompt}</div>
+                )}
+              </button>
+
+              {/* Action buttons */}
+              <div className="flex gap-1 shrink-0">
+                <button
+                  aria-label="Edit project"
+                  title="Edit project"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit(project);
+                  }}
+                  className={cn(
+                    "h-7 w-7 inline-flex items-center justify-center rounded-md border opacity-0 group-hover:opacity-100 transition-opacity",
+                    isDark
