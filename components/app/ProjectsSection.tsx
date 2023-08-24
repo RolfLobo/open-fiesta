@@ -246,3 +246,29 @@ interface ProjectsSectionProps {
   projects: Project[];
   activeProjectId: string | null;
   onSelectProject: (id: string | null) => void;
+  onCreateProject: () => void;
+  onUpdateProject: (project: Project) => void;
+  onDeleteProject: (id: string) => void;
+  collapsed: boolean;
+}
+
+export default function ProjectsSection({
+  projects,
+  activeProjectId,
+  onSelectProject,
+  onCreateProject,
+  onUpdateProject,
+  onDeleteProject,
+  collapsed,
+}: ProjectsSectionProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
+  const handleCreateNew = () => {
+    onCreateProject();
+  };
+
+  const handleEdit = (project: Project) => {
+    onUpdateProject(project);
+  };
