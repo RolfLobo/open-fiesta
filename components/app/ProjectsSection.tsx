@@ -349,3 +349,30 @@ export default function ProjectsSection({
             <Plus size={12} />
           </button>
         </div>
+
+        {/* No projects message */}
+        {projects.length === 0 && <div className={cn(
+          "text-xs opacity-60 py-2",
+          isDark ? "text-white" : "text-gray-600"
+        )}>No projects yet</div>}
+
+        {/* None/Default option */}
+        <div
+          className={cn(
+            "w-full px-2 py-2 rounded-md text-sm border flex items-center justify-between gap-2 group cursor-pointer",
+            activeProjectId === null
+              ? isDark
+                ? 'bg-white/15 border-white/20'
+                : 'bg-blue-50/80 border-blue-200/60 ring-1 ring-blue-200/30'
+              : isDark
+                ? 'bg-white/5 border-white/10 hover:bg-white/10'
+                : 'bg-white/60 border-gray-200/60 hover:bg-blue-50/60 hover:border-blue-200/50'
+          )}
+          onClick={() => onSelectProject(null)}
+        >
+          <div className="min-w-0 text-left flex-1">
+            <div className={cn(
+              "truncate font-medium",
+              isDark ? "text-white" : "text-gray-800"
+            )}>No Project</div>
+            <div className={cn(
