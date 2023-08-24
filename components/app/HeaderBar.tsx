@@ -242,3 +242,16 @@ export default function HeaderBar({
           aria-label="Change models"
         >
           <Layers size={14} />
+        </button>
+
+        <CustomModels compact />
+        <ThemeToggle compact />
+        <Settings compact />
+        <GithubStar owner={githubOwner} repo={githubRepo} />
+        <div >
+          <SupportDropdown inline theme={theme.mode === 'dark' ? 'dark' : 'light'} />
+        </div>
+      </div>
+    </div>
+  );
+}

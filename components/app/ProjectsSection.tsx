@@ -233,3 +233,16 @@ export default function ProjectsSection({
     </>
   );
 }
+
+'use client';
+import { useState } from 'react';
+import { Plus, Settings, Trash2 } from 'lucide-react';
+import { Project } from '@/lib/projects';
+import ConfirmDialog from '@/components/modals/ConfirmDialog';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+interface ProjectsSectionProps {
+  projects: Project[];
+  activeProjectId: string | null;
+  onSelectProject: (id: string | null) => void;
