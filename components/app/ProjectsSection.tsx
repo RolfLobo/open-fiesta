@@ -298,3 +298,29 @@ export default function ProjectsSection({
           {/* Project indicators */}
           {projects.map((project) => {
             const isActive = project.id === activeProjectId;
+            const initial = project.name.trim()[0]?.toUpperCase() || 'P';
+            return (
+              <button
+                key={project.id}
+                title={project.name}
+                onClick={() => onSelectProject(project.id)}
+                className={`h-6 w-6 rounded-full flex items-center justify-center transition-colors focus-visible:outline-none 
+                  ${
+                    isActive
+                      ? 'bg-[var(--accent-interactive-primary)] ring-1 ring-[var(--accent-interactive-hover)] ring-offset-1 ring-offset-black text-white'
+                      : 'bg-white/90 border border-gray-200/60 hover:bg-blue-50/80 text-gray-700 hover:text-gray-900 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white/70 dark:hover:text-white dark:border-white/10'
+                  }`}
+              >
+                <span className="text-[10px] font-semibold leading-none">{initial}</span>
+              </button>
+            );
+          })}
+        </div>
+
+
+        <ConfirmDialog
+          open={!!confirmDeleteId}
+          title="Delete project?"
+          message="This will permanently delete the project and cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
