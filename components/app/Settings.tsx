@@ -495,3 +495,29 @@ export default function Settings({ compact }: SettingsProps) {
                       onClick={() => setShowOpenrouter(!showOpenrouter)}
                       className={cn(
                         "absolute right-2 top-1/2 -translate-y-1/2",
+                        isDark
+                          ? "text-zinc-400 hover:text-white"
+                          : "text-gray-500 hover:text-gray-700"
+                      )}
+                    >
+                      {showOpenrouter ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-sm md:text-base font-medium">
+                      Mistral API Key
+                    </label>
+                    <a
+                      href="https://console.mistral.ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md border",
+                        isDark
+                          ? "bg-white/10 hover:bg-white/15 border-white/15"
+                          : "bg-black/10 hover:bg-black/15 border-black/15"
+                      )}
+                    >
+                      <ExternalLink size={12} /> Get API key
