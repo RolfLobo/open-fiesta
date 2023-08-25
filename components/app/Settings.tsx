@@ -365,3 +365,29 @@ export default function Settings({ compact }: SettingsProps) {
         className={cn(
           "inline-flex items-center gap-1.5 text-xs h-9 rounded-xl border shadow transition-all duration-200",
           compact ? "w-9 justify-center px-0" : "px-3 py-2",
+          isDark
+            ? "border-white/15 bg-white/5 text-white hover:bg-white/10"
+            : "border-white/40 bg-white/70 hover:bg-white/80 text-gray-700"
+        )}
+        title="Settings"
+        aria-label="Settings"
+      >
+        <Cog size={14} />
+        {!compact && <span>Settings</span>}
+      </button>
+      {open &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+            <div
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto"
+              onClick={() => setOpen(false)}
+            />
+            <div className={cn(
+              "relative w-full mx-3 sm:mx-6 max-w-2xl lg:max-w-3xl rounded-2xl border p-5 md:p-6 lg:p-7 shadow-2xl pointer-events-auto",
+              isDark
+                ? "border-white/10 bg-zinc-900/95 text-white"
+                : "border-black/10 bg-white/95 text-gray-800"
+            )}>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-lg md:text-xl font-semibold">API Keys</h2>
