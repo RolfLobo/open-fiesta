@@ -391,3 +391,29 @@ export default function Settings({ compact }: SettingsProps) {
             )}>
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-lg md:text-xl font-semibold">API Keys</h2>
+                <button
+                  aria-label="Close"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "h-8 w-8 inline-flex items-center justify-center rounded-md",
+                    isDark
+                      ? "bg-white/10 hover:bg-white/20"
+                      : "bg-black/10 hover:bg-black/20"
+                  )}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              <p className={cn(
+                "text-xs md:text-sm mb-5",
+                isDark ? "text-zinc-300" : "text-gray-600"
+              )}>
+                Keys are stored locally in your browser via localStorage and sent only with your
+                requests. Do not hardcode keys in code.
+              </p>
+              <div className="space-y-4">
+                {/* Gemini API Key */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-sm md:text-base font-medium">Gemini API Key</label>
+                    <a
