@@ -339,3 +339,29 @@ export default function Settings({ compact }: SettingsProps) {
     setOpen(false);
     // Force a reload so clients pick up the new keys immediately
     if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+  };
+
+  // Sync state when keys change
+  useEffect(() => {
+    setGemini(keys.gemini || "");
+    setOpenrouter(keys.openrouter || "");
+    setMistral(keys['mistral'] || "");
+    setOllama(keys['ollama'] || "");
+  }, [keys]);
+
+  // Allow programmatic open from anywhere (e.g., rate-limit CTA)
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener('open-settings', handler as EventListener);
+    return () => window.removeEventListener('open-settings', handler as EventListener);
+  }, []);
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(true)}
+        className={cn(
+          "inline-flex items-center gap-1.5 text-xs h-9 rounded-xl border shadow transition-all duration-200",
+          compact ? "w-9 justify-center px-0" : "px-3 py-2",
