@@ -443,3 +443,29 @@ export default function Settings({ compact }: SettingsProps) {
                           : "bg-white/40 border-black/15 placeholder:text-gray-500 focus:ring-black/20"
                       )}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowGemini(!showGemini)}
+                      className={cn(
+                        "absolute right-2 top-1/2 -translate-y-1/2",
+                        isDark
+                          ? "text-zinc-400 hover:text-white"
+                          : "text-gray-500 hover:text-gray-700"
+                      )}
+                    >
+                      {showGemini ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
+                </div>
+                {/* OpenRouter API Key */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-sm md:text-base font-medium">
+                      OpenRouter API Key
+                    </label>
+                    <a
+                      href="https://openrouter.ai/sign-in?redirect_url=https%3A%2F%2Fopenrouter.ai%2Fsettings%2Fkeys"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md border",
