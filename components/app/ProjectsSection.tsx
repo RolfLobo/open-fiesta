@@ -454,3 +454,18 @@ export default function ProjectsSection({
             </div>
           );
         })}
+      </div>
+
+
+      <ConfirmDialog
+        open={!!confirmDeleteId}
+        title="Delete project?"
+        message="This will permanently delete the project and cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onCancel={() => setConfirmDeleteId(null)}
+        onConfirm={confirmDelete}
+      />
+    </>
+  );
+}

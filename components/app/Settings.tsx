@@ -302,3 +302,14 @@ export default function Settings({ compact }: SettingsProps) {
     </div>
   );
 }
+
+'use client';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { X, ExternalLink, Cog, Eye, EyeOff } from 'lucide-react';
+import { useLocalStorage } from '@/lib/useLocalStorage';
+import { ApiKeys } from '@/lib/types';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+type SettingsProps = { compact?: boolean };
