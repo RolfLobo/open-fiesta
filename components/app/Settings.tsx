@@ -313,3 +313,29 @@ import { useTheme } from '@/lib/themeContext';
 import { cn } from '@/lib/utils';
 
 type SettingsProps = { compact?: boolean };
+
+export default function Settings({ compact }: SettingsProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [open, setOpen] = useState(false);
+  const [keys, setKeys] = useLocalStorage<ApiKeys>("ai-fiesta:keys", {});
+  const [gemini, setGemini] = useState(keys.gemini || "");
+  const [openrouter, setOpenrouter] = useState(keys.openrouter || "");
+  const [mistral, setMistral] = useState(keys['mistral'] || "");
+  const [ollama, setOllama] = useState(keys['ollama'] || "");
+
+  // hide/show toggle states
+  const [showGemini, setShowGemini] = useState(false);
+  const [showOpenrouter, setShowOpenrouter] = useState(false);
+
+  const save = () => {
+    const next = {
+      gemini: gemini.trim() || undefined,
+      openrouter: openrouter.trim() || undefined,
+      'mistral': mistral.trim() || undefined,
+      'ollama': ollama.trim() || undefined,
+    };
+    setKeys(next);
+    setOpen(false);
+    // Force a reload so clients pick up the new keys immediately
+    if (typeof window !== 'undefined') {
