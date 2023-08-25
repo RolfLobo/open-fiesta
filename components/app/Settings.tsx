@@ -469,3 +469,29 @@ export default function Settings({ compact }: SettingsProps) {
                       rel="noopener noreferrer"
                       className={cn(
                         "inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md border",
+                        isDark
+                          ? "bg-white/10 hover:bg-white/15 border-white/15"
+                          : "bg-black/10 hover:bg-black/15 border-black/15"
+                      )}
+                    >
+                      <ExternalLink size={12} /> Get API key
+                    </a>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showOpenrouter ? 'text' : 'password'}
+                      value={openrouter}
+                      onChange={(e) => setOpenrouter(e.target.value)}
+                      placeholder="sk-or-..."
+                      className={cn(
+                        "w-full border rounded-md px-3 py-2.5 text-sm font-mono tracking-wide focus:outline-none focus:ring-2 pr-10",
+                        isDark
+                          ? "bg-black/40 border-white/15 placeholder:text-zinc-500 focus:ring-white/20"
+                          : "bg-white/40 border-black/15 placeholder:text-gray-500 focus:ring-black/20"
+                      )}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowOpenrouter(!showOpenrouter)}
+                      className={cn(
+                        "absolute right-2 top-1/2 -translate-y-1/2",
