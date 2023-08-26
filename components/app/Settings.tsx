@@ -573,3 +573,29 @@ export default function Settings({ compact }: SettingsProps) {
                         : "bg-white/40 border-black/15 placeholder:text-gray-500 focus:ring-black/20"
                     )}
                   />
+                  <p className={cn(
+                    "text-xs mt-1",
+                    isDark ? "text-zinc-400" : "text-gray-500"
+                  )}>
+                    Base URL for your local Ollama instance. Default is http://localhost:11434
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2 justify-end mt-6">
+                <button
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "px-4 py-2 rounded-md border text-sm",
+                    isDark
+                      ? "border-white/15 bg-white/5 hover:bg-white/10"
+                      : "border-black/15 bg-black/5 hover:bg-black/10"
+                  )}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={save}
+                  className="px-4 py-2 rounded-md text-sm font-medium accent-action-fill accent-focus"
+                >
+                  Save
+                </button>
