@@ -521,3 +521,29 @@ export default function Settings({ compact }: SettingsProps) {
                       )}
                     >
                       <ExternalLink size={12} /> Get API key
+                    </a>
+                  </div>
+                  <input
+                    value={mistral}
+                    onChange={(e) => setMistral(e.target.value)}
+                    placeholder="..."
+                    className={cn(
+                      "w-full border rounded-md px-3 py-2.5 text-sm font-mono tracking-wide focus:outline-none focus:ring-2",
+                      isDark
+                        ? "bg-black/40 border-white/15 placeholder:text-zinc-500 focus:ring-white/20"
+                        : "bg-white/40 border-black/15 placeholder:text-gray-500 focus:ring-black/20"
+                    )}
+                  />
+                  <p className={cn(
+                    "text-xs mt-1",
+                    isDark ? "text-zinc-400" : "text-gray-500"
+                  )}>
+                    Access to Mistral Large, Medium, Small, Codestral, Pixtral, and specialized
+                    models
+                  </p>
+                </div>
+                {/* Ollama Configuration */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-sm md:text-base font-medium">
+                      Ollama Base URL
