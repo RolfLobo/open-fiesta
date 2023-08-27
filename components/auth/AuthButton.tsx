@@ -74,3 +74,21 @@ export default function AuthButton() {
     </button>
   )
 }
+
+'use client'
+
+import { useAuth } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
+import { LogIn } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { useTheme } from '@/lib/themeContext'
+import { BACKGROUND_STYLES } from '@/lib/themes'
+import LogoutButton from '@/components/auth/LogoutButton'
+import UserProfileButton from '@/components/auth/UserProfileButton'
+
+export default function AuthButton() {
+  const { user, signOut, loading } = useAuth()
+  const router = useRouter()
+  const { theme } = useTheme()
+  const isDark = BACKGROUND_STYLES[theme.background]?.className?.includes('dark') || false

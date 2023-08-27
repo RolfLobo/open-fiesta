@@ -599,3 +599,11 @@ export default function Settings({ compact }: SettingsProps) {
                 >
                   Save
                 </button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </div>
+  );
+}
