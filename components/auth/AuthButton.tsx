@@ -118,3 +118,29 @@ export default function AuthButton() {
   }
 
   if (loading) {
+    return (
+      <div className="w-full h-12 rounded-xl bg-gradient-to-r from-white/8 to-white/4 border border-white/15 backdrop-blur-sm flex items-center justify-center gap-3">
+        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/50 border-t-transparent" />
+        <span className="text-sm font-medium text-white/70">Loading...</span>
+      </div>
+    )
+  }
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-2 w-full">
+        <UserProfileButton
+          avatarUrl={avatarUrl}
+          initials={initials}
+          displayName={displayName}
+          firstName={firstName}
+          className="flex-1 min-w-0"
+        />
+        <LogoutButton onClick={handleSignOut} />
+      </div>
+    )
+  }
+
+  return (
+    <button
+      onClick={handleSignIn}
