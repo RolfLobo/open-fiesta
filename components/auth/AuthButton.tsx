@@ -92,3 +92,29 @@ export default function AuthButton() {
   const router = useRouter()
   const { theme } = useTheme()
   const isDark = BACKGROUND_STYLES[theme.background]?.className?.includes('dark') || false
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) ||
+    (user?.user_metadata?.name as string | undefined) ||
+    (user?.user_metadata?.user_name as string | undefined) ||
+    user?.email ||
+    'User'
+  const avatarUrl =
+    (user?.user_metadata?.avatar_url as string | undefined) ||
+    (user?.user_metadata?.picture as string | undefined) ||
+    undefined
+  const initials = displayName?.trim()?.charAt(0)?.toUpperCase() || 'U'
+  const firstName = (displayName || '').split(' ').filter(Boolean)[0] || displayName
+
+  const handleSignIn = () => {
+    router.push('/signin')
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+  }
+
+  if (loading) {
