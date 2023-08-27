@@ -42,3 +42,22 @@ export default function LogoutButton({ onClick, className }: LogoutButtonProps) 
     </button>
   )
 }
+
+"use client"
+
+import React from 'react'
+import { cn } from '@/lib/utils'
+import { useTheme } from '@/lib/themeContext'
+import { ACCENT_COLORS } from '@/lib/themes'
+
+interface LogoutButtonProps {
+  onClick: () => void
+  className?: string
+}
+
+export default function LogoutButton({ onClick, className }: LogoutButtonProps) {
+  const { theme } = useTheme()
+  const accent = ACCENT_COLORS[theme.accent]
+
+  return (
+    <button

@@ -144,3 +144,10 @@ export default function AuthButton() {
   return (
     <button
       onClick={handleSignIn}
+      className="w-full h-12 rounded-xl bg-gradient-to-r from-white/8 to-white/4 border border-white/15 backdrop-blur-sm hover:from-white/12 hover:to-white/6 hover:border-white/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg"
+    >
+      <LogIn className="h-4 w-4 text-white/80" />
+      <span className="text-sm font-medium text-white/90">Sign In</span>
+    </button>
+  )
+}
