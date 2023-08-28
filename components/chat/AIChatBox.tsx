@@ -575,3 +575,11 @@ export default function AIChatBox({
     </motion.div>
   );
 }
+
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Globe, Paperclip, Send, Loader2, X, FileText, Mic, MicOff, Sparkles } from 'lucide-react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';

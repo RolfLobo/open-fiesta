@@ -118,3 +118,20 @@ export default function UserProfileButton({ avatarUrl, initials, displayName, fi
         )}
       </div>
       {/* Text wrapper: shows first name by default, full name on hover */}
+      <div className="relative flex-1 min-w-0">
+        <span className={cn(
+          "block truncate transition-opacity duration-200 group-hover:opacity-0 text-sm font-medium",
+          isDark ? "text-white/90" : "text-gray-700"
+        )} title={firstName}>
+          {firstName}
+        </span>
+        <span className={cn(
+          "pointer-events-none absolute inset-0 truncate opacity-0 transition-opacity duration-200 group-hover:opacity-100 text-sm font-medium",
+          isDark ? "text-white/90" : "text-gray-700"
+        )} title={displayName}>
+          {displayName}
+        </span>
+      </div>
+    </button>
+  )
+}
