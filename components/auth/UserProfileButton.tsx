@@ -66,3 +66,29 @@ export default function UserProfileButton({ avatarUrl, initials, displayName, fi
     </button>
   )
 }
+
+"use client"
+
+import React from 'react'
+import { cn } from '@/lib/utils'
+import { useTheme } from '@/lib/themeContext'
+import { ACCENT_COLORS } from '@/lib/themes'
+
+interface UserProfileButtonProps {
+  avatarUrl?: string
+  initials: string
+  displayName: string
+  firstName: string
+  className?: string
+}
+
+export default function UserProfileButton({ avatarUrl, initials, displayName, firstName, className }: UserProfileButtonProps) {
+  const { theme } = useTheme()
+  const accent = ACCENT_COLORS[theme.accent]
+  const isDark = theme.mode === 'dark'
+
+  return (
+    <button
+      type="button"
+      aria-label={`User: ${displayName}`}
+      className={cn(
