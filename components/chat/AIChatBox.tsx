@@ -714,3 +714,29 @@ export default function AIChatBox({
       return;
     }
     if (!isMicrophoneAvailable) {
+      alert('Microphone access is required for speech recognition.');
+      return;
+    }
+    resetTranscript();
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: 'en-US'
+    });
+  };
+
+  const stopListening = () => {
+    SpeechRecognition.stopListening();
+  };
+
+  const enhancePrompt = async () => {
+    if (!value.trim() || isEnhancing) return;
+
+    // Stop listening if mic is active
+    if (listening) {
+      setTimeout(() => stopListening(), 100);
+    }
+
+    setIsEnhancing(true);
+    try {
+      const response = await fetch('/api/enhance-prompt', {
+        method: 'POST',
