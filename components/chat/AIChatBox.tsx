@@ -610,3 +610,28 @@ function useAutoResizeTextarea({ minHeight, maxHeight }: UseAutoResizeTextareaPr
       const newHeight = Math.max(
         minHeight,
         Math.min(textarea.scrollHeight, maxHeight ?? Number.POSITIVE_INFINITY),
+      );
+
+      textarea.style.height = `${newHeight}px`;
+    },
+    [minHeight, maxHeight],
+  );
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = `${minHeight}px`;
+    }
+  }, [minHeight]);
+
+  useEffect(() => {
+    const handleResize = () => adjustHeight();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [adjustHeight]);
+
+  return { textareaRef, adjustHeight };
+}
+
+const MIN_HEIGHT = 58;
+const MAX_HEIGHT = 197;
