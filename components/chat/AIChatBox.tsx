@@ -635,3 +635,30 @@ function useAutoResizeTextarea({ minHeight, maxHeight }: UseAutoResizeTextareaPr
 
 const MIN_HEIGHT = 58;
 const MAX_HEIGHT = 197;
+
+const AnimatedPlaceholder = ({ showSearch, isDark }: { showSearch: boolean; isDark: boolean }) => (
+  <AnimatePresence mode="wait">
+    <motion.p
+      key={showSearch ? 'search' : 'ask'}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -5 }}
+      transition={{ duration: 0.1 }}
+      className={cn(
+        "pointer-events-none w-[150px] text-sm absolute drop-shadow-sm",
+        isDark ? "text-white/70" : "text-gray-600/70"
+      )}
+    >
+      {showSearch ? 'Ask Anything...' : 'Ask Anything...'}
+    </motion.p>
+  </AnimatePresence>
+);
+
+interface AIChatBoxProps {
+  value: string;
+  setValue: (value: string) => void;
+  onSubmit: (text: string, imageDataUrl?: string, webSearch?: boolean) => void;
+  loading?: boolean;
+  errorMsg?: string | null;
+  showSearch?: boolean;
+  onToggleSearch: () => void;
