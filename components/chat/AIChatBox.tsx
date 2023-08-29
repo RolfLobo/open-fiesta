@@ -688,3 +688,29 @@ export default function AIChatBox({
 
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: MIN_HEIGHT,
+    maxHeight: MAX_HEIGHT,
+  });
+
+  // Speech recognition setup
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    isMicrophoneAvailable
+  } = useSpeechRecognition();
+
+  // Update value when transcript changes
+  useEffect(() => {
+    if (transcript) {
+      setValue(transcript);
+      adjustHeight();
+    }
+  }, [transcript, setValue, adjustHeight]);
+
+  const startListening = () => {
+    if (!browserSupportsSpeechRecognition) {
+      alert('Your browser does not support speech recognition.');
+      return;
+    }
+    if (!isMicrophoneAvailable) {
