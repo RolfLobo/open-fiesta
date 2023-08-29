@@ -583,3 +583,30 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Globe, Paperclip, Send, Loader2, X, FileText, Mic, MicOff, Sparkles } from 'lucide-react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
+import { cn } from '@/lib/utils';
+import { Textarea } from '@/components/ui/textarea';
+import { useTheme } from '@/lib/themeContext';
+
+interface UseAutoResizeTextareaProps {
+  minHeight: number;
+  maxHeight?: number;
+}
+
+function useAutoResizeTextarea({ minHeight, maxHeight }: UseAutoResizeTextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = useCallback(
+    (reset?: boolean) => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+
+      if (reset) {
+        textarea.style.height = `${minHeight}px`;
+        return;
+      }
+
+      textarea.style.height = `${minHeight}px`;
+      const newHeight = Math.max(
+        minHeight,
+        Math.min(textarea.scrollHeight, maxHeight ?? Number.POSITIVE_INFINITY),
