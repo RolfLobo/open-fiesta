@@ -662,3 +662,29 @@ interface AIChatBoxProps {
   errorMsg?: string | null;
   showSearch?: boolean;
   onToggleSearch: () => void;
+  onEnhancePrompt: () => void;
+}
+
+export default function AIChatBox({
+  value,
+  setValue,
+  onSubmit,
+  loading = false,
+  errorMsg,
+  showSearch = false,
+  onToggleSearch,
+  onEnhancePrompt,
+}: AIChatBoxProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [barVisible, setBarVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const [localErrorMsg, setLocalErrorMsg] = useState<string | null>(null);
+
+  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
+    minHeight: MIN_HEIGHT,
