@@ -740,3 +740,29 @@ export default function AIChatBox({
     try {
       const response = await fetch('/api/enhance-prompt', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: value.trim() })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP ${response.status}: Failed to enhance prompt`);
+      }
+
+      const data = await response.json();
+      if (data.enhancedPrompt) {
+        setValue(data.enhancedPrompt);
+        adjustHeight();
+      } else {
+        throw new Error('No enhanced prompt received from server');
+      }
+    } catch (error) {
+      console.error('Error enhancing prompt:', error);
+      alert(`Failed to enhance prompt: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsEnhancing(false);
+    }
+  };
+
+  const handelClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
