@@ -792,3 +792,29 @@ export default function AIChatBox({
       setTimeout(() => setLocalErrorMsg(null), 4000);
       if (fileInputRef.current) fileInputRef.current.value = ''; // reset so same file can be selected later
       return;
+    }
+
+    setAttachedFile(file);
+    if (file.type.startsWith('image/')) {
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImagePreview(null);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // Stop listening if mic is active
+    if (listening) {
+      // Small delay to ensure transcript is captured
+      setTimeout(() => stopListening(), 100);
+    }
+
+    let dataUrl: string | undefined;
+    if (attachedFile) {
+      dataUrl = await new Promise<string>((resolve) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve(String(fr.result));
+        fr.readAsDataURL(attachedFile);
+      });
+    }
+    onSubmit(value.trim(), dataUrl, showSearch);
