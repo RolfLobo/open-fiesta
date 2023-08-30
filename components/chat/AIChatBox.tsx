@@ -766,3 +766,29 @@ export default function AIChatBox({
 
   const handelClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    e.stopPropagation();
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    setImagePreview(null);
+    setAttachedFile(null);
+  };
+
+  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (!file) return;
+
+    // Allowed types: images + text/plain + pdf + msword + docx
+    const allowed = [
+      /^image\//,
+      /^text\/plain$/,
+      /^application\/pdf$/,
+      /^application\/msword$/,
+      /^application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document$/,
+    ];
+    const isAllowed = allowed.some((re) => re.test(file.type));
+    if (!isAllowed) {
+      setLocalErrorMsg('Unsupported file. Allowed: Images, TXT, PDF, DOC, DOCX.');
+      setTimeout(() => setLocalErrorMsg(null), 4000);
+      if (fileInputRef.current) fileInputRef.current.value = ''; // reset so same file can be selected later
+      return;
