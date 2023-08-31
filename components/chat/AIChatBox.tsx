@@ -870,3 +870,29 @@ export default function AIChatBox({
             style={{ '--ai-input-max': `${MAX_HEIGHT}px` } as React.CSSProperties}
           >
             {/* Content area (textarea + attachments + messages) gets bottom padding to make room for fixed toolbar */}
+            <div className="pb-10">
+              {/* 40px toolbar + gap */}
+              {imagePreview ? (
+                <div className="grid grid-cols-[96px_1fr] gap-3 p-3 pr-4">
+                  <div className="relative h-[96px] w-[96px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 shadow-sm">
+                    <Image
+                      className="object-cover h-full w-full"
+                      src={imagePreview}
+                      height={240}
+                      width={240}
+                      alt="attached image"
+                    />
+                    <button
+                      onClick={handelClose}
+                      className="absolute top-1.5 right-1.5 inline-flex items-center justify-center h-6 w-6 rounded-full bg-black/70 dark:bg-white/70 text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 border border-black/20 dark:border-white/20"
+                      aria-label="Remove image"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <div className="relative rounded-xl bg-black/80 dark:bg-white/15 border border-black/10 dark:border-white/10 backdrop-blur-sm">
+                    <Textarea
+                      id="ai-input-04"
+                      value={value}
+                      placeholder=""
+                      className="w-full rounded-xl px-4 py-3 bg-transparent border-none text-white dark:text-white resize-none focus-visible:ring-0 leading-[1.2]"
