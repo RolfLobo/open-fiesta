@@ -818,3 +818,29 @@ export default function AIChatBox({
       });
     }
     onSubmit(value.trim(), dataUrl, showSearch);
+    setValue('');
+    setAttachedFile(null);
+    setImagePreview(null);
+    adjustHeight(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  // Hide bar on scroll down, show on scroll up
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      const delta = y - lastScrollY.current;
+      const threshold = 6;
+      if (y < 8) {
+        setBarVisible(true);
+      } else if (delta > threshold) {
+        setBarVisible(false);
+      } else if (delta < -threshold) {
+        setBarVisible(true);
