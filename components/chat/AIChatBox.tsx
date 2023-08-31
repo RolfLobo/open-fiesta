@@ -974,3 +974,29 @@ export default function AIChatBox({
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
+              )}
+            </div>
+          </div>
+
+          {/* Fixed toolbar anchored to bottom; textarea grows upward above it */}
+          <div className="absolute inset-x-0 bottom-0 h-10 rounded-b-2xl backdrop-blur-sm flex items-center justify-between px-3 ai-toolbar-bg">
+            <div className="flex items-center gap-2">
+              <label
+                title="Attach file"
+                className={cn(
+                  'cursor-pointer relative rounded-full p-1.5 bg-black/30 dark:bg-white/10',
+                  attachedFile
+                    ? 'bg-[var(--accent-interactive-primary)]/15 border border-[var(--accent-interactive-primary)] text-[var(--accent-interactive-primary)]'
+                    : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white',
+                )}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handelChange}
+                  accept="image/*,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  className="hidden"
+                  aria-label="Attach file"
+                />
+                <Paperclip
+                  className={cn(
