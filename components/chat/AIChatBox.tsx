@@ -922,3 +922,29 @@ export default function AIChatBox({
                     value={value}
                     placeholder=""
                     className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/90 dark:bg-white/15 border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                    ref={textareaRef}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSubmit();
+                      }
+                    }}
+                    onChange={(e) => {
+                      setValue(e.target.value);
+                      adjustHeight();
+                    }}
+                  />
+                  {!value && (
+                    <div className="absolute left-4 top-3">
+                      <AnimatedPlaceholder showSearch={showSearch} isDark={isDark} />
+                    </div>
+                  )}
+                </div>
+              )}
+              {(errorMsg || localErrorMsg) && (
+                <div className={cn(
+                  "px-4 py-2 text-[13px] bg-rose-500/10 border-t",
+                  isDark 
+                    ? "text-rose-200 border-white/10" 
+                    : "text-rose-700 border-black/10"
+                )}>
