@@ -896,3 +896,29 @@ export default function AIChatBox({
                       value={value}
                       placeholder=""
                       className="w-full rounded-xl px-4 py-3 bg-transparent border-none text-white dark:text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                      ref={textareaRef}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSubmit();
+                        }
+                      }}
+                      onChange={(e) => {
+                        setValue(e.target.value);
+                        adjustHeight();
+                      }}
+                    />
+                    {!value && (
+                      <div className="absolute left-4 top-3">
+                        <AnimatedPlaceholder showSearch={showSearch} isDark={isDark} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="relative">
+                  <Textarea
+                    id="ai-input-04"
+                    value={value}
+                    placeholder=""
+                    className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/90 dark:bg-white/15 border-none text-white resize-none focus-visible:ring-0 leading-[1.2]"
