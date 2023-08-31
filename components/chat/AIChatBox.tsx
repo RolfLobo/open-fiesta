@@ -844,3 +844,29 @@ export default function AIChatBox({
         setBarVisible(false);
       } else if (delta < -threshold) {
         setBarVisible(true);
+      }
+      lastScrollY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <motion.div
+      className="w-full py-4"
+      initial={{ y: 0, opacity: 1 }}
+      animate={{ y: barVisible ? 0 : 72, opacity: barVisible ? 1 : 0.9 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
+      <div className={cn(
+        "relative max-w-xl border rounded-[22px] p-1 w-full mx-auto chat-input-shell",
+        isDark ? "border-white/5" : "border-black/5"
+      )}>
+        <div className={cn(
+          "relative rounded-2xl border overflow-hidden",
+          isDark ? "border-white/5" : "border-black/5"
+        )}>
+          <div
+            className="ai-grow-area"
+            style={{ '--ai-input-max': `${MAX_HEIGHT}px` } as React.CSSProperties}
+          >
+            {/* Content area (textarea + attachments + messages) gets bottom padding to make room for fixed toolbar */}
