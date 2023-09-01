@@ -643,3 +643,29 @@ export type ChatGridProps = {
  *   to add API keys when detected in content.
  *
  * @returns A React element containing the chat comparison grid and related dialogs/modals.
+ */
+export default function ChatGrid({
+  selectedModels,
+  headerTemplate,
+  collapsedIds,
+  setCollapsedIds,
+  loadingIds,
+  pairs,
+  onEditUser,
+  onDeleteUser,
+  onToggle,
+}: ChatGridProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [pendingDelete, setPendingDelete] = useState<{ turnIndex: number } | null>(null);
+  // Compute grid columns dynamically so expanded model can take full width
+  const headerCols = useMemo(() => {
+    if (headerTemplate) return headerTemplate;
+    
+    const expandedCount = selectedModels.length - collapsedIds.length;
+    
+    // If only one model is expanded, give it all space, others get minimal
+    if (expandedCount === 1) {
+      const cols = selectedModels.map((m) =>
+        collapsedIds.includes(m.id) ? '60px' : 'minmax(0, 1fr)'
+      );
