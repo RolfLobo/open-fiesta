@@ -1078,3 +1078,29 @@ export default function AIChatBox({
               {/* Mic Button */}
               {browserSupportsSpeechRecognition && (
                 <button
+                  type="button"
+                  onClick={listening ? stopListening : startListening}
+                  className={cn(
+                    'rounded-full p-2 transition-all duration-300 flex items-center justify-center relative group',
+                    listening
+                      ? 'bg-red-500 text-white shadow-lg shadow-red-500/25 animate-pulse scale-105'
+                      : 'bg-white dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-600 hover:text-zinc-800 dark:hover:text-zinc-100 hover:scale-105 shadow-sm',
+                  )}
+                  aria-label={listening ? 'Stop recording' : 'Start voice input'}
+                  title={listening ? 'Stop recording' : 'Start voice input'}
+                >
+                  {listening ? (
+                    <MicOff className="w-4 h-4" />
+                  ) : (
+                    <Mic className="w-4 h-4" />
+                  )}
+                  {/* Pulse animation for recording */}
+                  {listening && (
+                    <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-20" />
+                  )}
+                </button>
+              )}
+
+              {/* Prompt Enhancer Button - themed */}
+              {value.trim() && (
+                <button
