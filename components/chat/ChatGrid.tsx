@@ -591,3 +591,29 @@ export default function ChatGrid({
 
 'use client';
 import ConfirmDialog from '@/components/modals/ConfirmDialog';
+import type { AiModel, ChatMessage } from '@/lib/types';
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Pencil,
+  Star,
+  Trash,
+  Expand,
+  Shrink,
+  Minus,
+} from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import MarkdownLite from './MarkdownLite';
+import { CopyToClipboard } from '../ui/CopyToClipboard';
+import { estimateTokens, sanitizeContent, cn } from '@/lib/utils';
+import ModelSelector from '../selectors/ModelSelector';
+import { useTheme } from '@/lib/themeContext';
+import ExpandedChatModal from '../modals/ExpandedChatModal';
+
+export type ChatGridProps = {
+  selectedModels: AiModel[];
+  headerTemplate: string;
+  collapsedIds: string[];
+  setCollapsedIds: (updater: (prev: string[]) => string[]) => void;
+  loadingIds: string[];
