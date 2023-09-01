@@ -1130,3 +1130,26 @@ export default function AIChatBox({
                 title={loading ? 'Sending...' : 'Send message'}
                 onClick={handleSubmit}
                 className={cn(
+                  'rounded-full p-2 h-8 w-8 transition-all duration-300 flex items-center justify-center relative group',
+                  loading
+                    ? 'bg-[var(--accent-interactive-primary)]/20 text-[var(--accent-interactive-primary)] cursor-not-allowed'
+                    : value
+                      ? 'bg-[var(--accent-interactive-primary)] text-white hover:bg-[var(--accent-interactive-hover)] shadow-lg hover:shadow-xl hover:scale-105 shadow-[var(--accent-interactive-primary)]/25'
+                      : 'bg-white dark:bg-zinc-700 text-zinc-400 dark:text-zinc-500 cursor-not-allowed',
+                )}
+                disabled={loading || !value.trim()}
+                aria-busy={loading ? 'true' : 'false'}
+              >
+                {loading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+              </button>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

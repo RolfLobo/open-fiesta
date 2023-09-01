@@ -588,3 +588,6 @@ export default function ChatGrid({
     </>
   );
 }
+
+'use client';
+import ConfirmDialog from '@/components/modals/ConfirmDialog';
