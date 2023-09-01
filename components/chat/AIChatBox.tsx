@@ -1104,3 +1104,29 @@ export default function AIChatBox({
               {/* Prompt Enhancer Button - themed */}
               {value.trim() && (
                 <button
+                  type="button"
+                  onClick={enhancePrompt}
+                  disabled={isEnhancing}
+                  className={cn(
+                    'rounded-full p-2 h-8 w-8 transition-all duration-300 flex items-center justify-center relative group',
+                    isEnhancing
+                      ? 'bg-[var(--accent-interactive-primary)]/20 text-[var(--accent-interactive-primary)] cursor-not-allowed'
+                      : 'accent-action-fill hover:shadow-lg hover:scale-105 shadow-[var(--accent-interactive-primary)]/25',
+                  )}
+                  aria-label={isEnhancing ? 'Enhancing prompt...' : 'Enhance prompt'}
+                  title={isEnhancing ? 'Enhancing prompt...' : 'Enhance prompt with AI'}
+                >
+                  {isEnhancing ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-4 h-4" />
+                  )}
+                </button>
+              )}
+
+              {/* Send Button */}
+              <button
+                type="button"
+                title={loading ? 'Sending...' : 'Send message'}
+                onClick={handleSubmit}
+                className={cn(
