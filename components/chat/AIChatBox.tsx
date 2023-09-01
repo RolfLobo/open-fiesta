@@ -1026,3 +1026,29 @@ export default function AIChatBox({
                     }}
                     whileHover={{
                       rotate: showSearch ? 180 : 15,
+                      scale: 1.1,
+                      transition: {
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 10,
+                      },
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 25,
+                    }}
+                  >
+                    <Globe
+                      className={cn(
+                        'w-3.5 h-3.5',
+                        showSearch
+                          ? 'text-black dark:text-white'
+                          : 'text-black/60 dark:text-white/50',
+                      )}
+                    />
+                  </motion.div>
+                </div>
+                <AnimatePresence>
+                  {showSearch && (
+                    <motion.span
