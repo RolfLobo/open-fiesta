@@ -1000,3 +1000,29 @@ export default function AIChatBox({
                 />
                 <Paperclip
                   className={cn(
+                    'w-3.5 h-3.5 transition-colors',
+                    attachedFile
+                      ? 'text-[var(--accent-interactive-primary)]'
+                      : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white',
+                  )}
+                />
+              </label>
+              <button
+                type="button"
+                onClick={() => onToggleSearch && onToggleSearch()}
+                className={cn(
+                  'rounded-full transition-all flex items-center gap-1.5 px-1.5 py-1 h-7 search-toggle',
+                )}
+                data-active={showSearch}
+                aria-pressed={showSearch ? 'true' : 'false'}
+                aria-label={showSearch ? 'Disable web search' : 'Enable web search'}
+                title={showSearch ? 'Disable web search' : 'Enable web search'}
+              >
+                <div className="w-3.5 h-3.5 flex items-center justify-center flex-shrink-0">
+                  <motion.div
+                    animate={{
+                      rotate: showSearch ? 180 : 0,
+                      scale: showSearch ? 1.1 : 1,
+                    }}
+                    whileHover={{
+                      rotate: showSearch ? 180 : 15,
