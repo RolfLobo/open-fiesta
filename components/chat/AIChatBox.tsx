@@ -1052,3 +1052,29 @@ export default function AIChatBox({
                 <AnimatePresence>
                   {showSearch && (
                     <motion.span
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{
+                        width: 'auto',
+                        opacity: 1,
+                      }}
+                      exit={{ width: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-xs overflow-hidden whitespace-nowrap search-toggle-label flex-shrink-0"
+                    >
+                      Search
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
+
+            {/* Primary Actions - Mic, Enhance, Send (not clubbed together) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25, delay: 0.1 }}
+              className="flex items-center gap-2"
+            >
+              {/* Mic Button */}
+              {browserSupportsSpeechRecognition && (
+                <button
