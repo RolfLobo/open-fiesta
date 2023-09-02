@@ -799,3 +799,29 @@ export default function ChatGrid({
                                 ? 'border-white/10'
                                 : 'border-gray-300/40'
                         )}
+                        data-selected={true}
+                        data-type={m.good ? 'pro' : isFree ? 'free' : 'other'}
+                        title="Click to toggle"
+                      >
+                        <Minus
+                          size={16}
+                          data-type={m.good ? 'pro' : 'free'}
+                          data-active={true}
+                        />
+                      </button>
+
+                      {isCollapsed ? (
+                        <button
+                          onClick={() =>
+                            setCollapsedIds((prev) => prev.filter((id) => id !== m.id))
+                          }
+                          className="icon-btn h-7 w-7 accent-focus"
+                          title={`Expand ${m.label}`}
+                        >
+                          <EyeOff size={14} />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setCollapsedIds((prev) => [...prev, m.id])}
+                          className="icon-btn h-7 w-7 accent-focus"
+                          title={`Collapse ${m.label}`}
