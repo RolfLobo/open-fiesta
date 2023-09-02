@@ -669,3 +669,29 @@ export default function ChatGrid({
       const cols = selectedModels.map((m) =>
         collapsedIds.includes(m.id) ? '60px' : 'minmax(0, 1fr)'
       );
+      return cols.join(' ');
+    }
+    
+    // Otherwise, use responsive layout that fits container
+    return `repeat(${selectedModels.length}, minmax(280px, 1fr))`;
+  }, [headerTemplate, selectedModels, collapsedIds]);
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [draft, setDraft] = useState<string>('');
+  const [expandedModal, setExpandedModal] = useState<{
+    model: AiModel;
+    response: ChatMessage;
+    userMessage: string;
+  } | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth', // change to "auto" if you want instant jump
+      });
+    }
+  }, [pairs]);
+
+  return (
+    <>
