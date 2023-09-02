@@ -773,3 +773,29 @@ export default function ChatGrid({
                         )}
                         <span
                           className={cn(
+                            "truncate max-w-[18ch] px-2 py-0.5 rounded-full text-[12px]",
+                            isDark 
+                              ? "border border-white/10 bg-white/5"
+                              : "border border-gray-300/40 bg-white/20"
+                          )}
+                          title={m.label}
+                        >
+                          {m.label}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2">
+                      <button
+                        key={m.id}
+                        onClick={() => onToggle(m.id)}
+                        className={cn(
+                          "icon-btn cursor-pointer",
+                          isDark ? "text-white" : "text-gray-700",
+                          m.good
+                            ? 'model-chip-pro'
+                            : isFree
+                              ? 'model-chip-free'
+                              : isDark 
+                                ? 'border-white/10'
+                                : 'border-gray-300/40'
+                        )}
