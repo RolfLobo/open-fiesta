@@ -877,3 +877,29 @@ export default function ChatGrid({
                             }}
                             className="px-3 py-1 text-xs rounded bg-rose-600 hover:bg-rose-700 text-white transition-colors"
                           >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingIdx(null);
+                              setDraft('');
+                            }}
+                            className={cn(
+                              "px-3 py-1 text-xs rounded transition-colors",
+                              isDark 
+                                ? "bg-white/10 hover:bg-white/20 text-white"
+                                : "bg-black/10 hover:bg-black/20 text-gray-700"
+                            )}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                    <div className="group flex gap-2 items-center justify-end sticky right-6 sm:right-8 z-10">
+                      <div className="inline-flex items-center text-sm leading-relaxed px-3 py-3 rounded-md bg-[var(--accent-interactive-primary)] text-white shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
+                        <span className="truncate whitespace-pre-wrap break-words max-w-[68ch]">
+                          {row.user.content}
+                        </span>
+                      </div>
+                      <div className="hidden group-hover:flex order-first gap-1.5 ">
