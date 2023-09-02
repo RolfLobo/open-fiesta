@@ -721,3 +721,29 @@ export default function ChatGrid({
                   ? "sm:bg-black/40 sm:border-white/10"
                   : "sm:bg-white/40 sm:border-black/10"
               )}
+              style={{ gridTemplateColumns: headerCols }}
+            >
+              {selectedModels.map((m) => {
+                const isFree = /(\(|\s)free\)/i.test(m.label);
+                const isCollapsed = collapsedIds.includes(m.id);
+                return (
+                  <div
+                    key={m.id}
+                    className={cn(
+                      "px-2.5 py-2 sm:px-2 sm:py-2 min-h-[42px] min-w-0 flex items-center rounded-lg backdrop-blur-sm shadow-[0_1px_8px_rgba(0,0,0,0.25)] ring-1",
+                      isCollapsed ? 'justify-center' : 'justify-between',
+                      m.good
+                        ? isDark
+                          ? 'ring-amber-300/35 bg-gradient-to-b from-amber-400/10 to-black/60'
+                          : 'ring-amber-300/50 bg-gradient-to-b from-amber-100/60 to-white/40'
+                        : isDark
+                          ? 'ring-white/10 bg-black/60'
+                          : 'ring-white/30 bg-white/50'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <div
+                        className={cn(
+                          "text-[12px] leading-normal font-medium pr-2 inline-flex items-center gap-1.5 min-w-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.35)] sm:drop-shadow-none",
+                          isDark 
+                            ? "text-white"
