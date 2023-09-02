@@ -825,3 +825,29 @@ export default function ChatGrid({
                           onClick={() => setCollapsedIds((prev) => [...prev, m.id])}
                           className="icon-btn h-7 w-7 accent-focus"
                           title={`Collapse ${m.label}`}
+                        >
+                          <Eye size={14} />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {pairs.map((row, i) => (
+              <div key={i} className="space-y-3">
+                {/* User prompt as right-aligned red pill */}
+                <div className="px-2 flex justify-end relative">
+                    {editingIdx === i && (
+                      <div className="ml-auto">
+                        <textarea
+                          value={draft}
+                          onChange={(e) => setDraft(e.target.value)}
+                          className={cn(
+                            "w-full min-h-[40px] max-w-[68ch] text-sm leading-relaxed px-3 py-1.5 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-rose-500/50",
+                            isDark 
+                              ? "bg-white/10 border border-white/20 text-white placeholder-white/60"
+                              : "bg-black/10 border border-black/20 text-gray-800 placeholder-gray-500"
+                          )}
+                          placeholder="Edit your message..."
