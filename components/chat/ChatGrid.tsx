@@ -695,3 +695,29 @@ export default function ChatGrid({
 
   return (
     <>
+      <div
+        ref={scrollRef}
+        className={cn(
+          "relative rounded-lg border px-3 lg:px-4 pt-2 overflow-x-auto flex-1 overflow-y-auto pb-28 scroll-stable-gutter",
+          isDark 
+            ? "border-white/5 bg-white/5"
+            : "border-black/10 bg-black/5"
+        )}
+      >
+        {selectedModels.length === 0 ? (
+          <div className={cn(
+            "p-4",
+            isDark ? "text-zinc-400" : "text-zinc-600"
+          )}>
+            Select up to 5 models to compare.
+          </div>
+        ) : (
+          <div className="w-full space-y-3">
+            {/* Header row: model labels */}
+            <div
+              className={cn(
+                "grid w-full gap-3 items-center overflow-visible mt-0 sticky top-0 left-0 right-0 z-30 -mx-3 px-3 lg:-mx-4 lg:px-4 py-1 rounded-t-lg shadow-[0_1px_0_rgba(0,0,0,0.4)] bg-transparent border-0 sm:backdrop-blur-sm sm:border-b",
+                isDark 
+                  ? "sm:bg-black/40 sm:border-white/10"
+                  : "sm:bg-white/40 sm:border-black/10"
+              )}
