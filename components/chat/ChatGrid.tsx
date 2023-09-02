@@ -851,3 +851,29 @@ export default function ChatGrid({
                               : "bg-black/10 border border-black/20 text-gray-800 placeholder-gray-500"
                           )}
                           placeholder="Edit your message..."
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              if (draft.trim()) {
+                                onEditUser(i, draft.trim());
+                                setEditingIdx(null);
+                                setDraft('');
+                              }
+                            } else if (e.key === 'Escape') {
+                              setEditingIdx(null);
+                              setDraft('');
+                            }
+                          }}
+                        />
+                        <div className="mt-2 flex justify-end gap-2">
+                          <button
+                            onClick={() => {
+                              if (draft.trim()) {
+                                onEditUser(i, draft.trim());
+                                setEditingIdx(null);
+                                setDraft('');
+                              }
+                            }}
+                            className="px-3 py-1 text-xs rounded bg-rose-600 hover:bg-rose-700 text-white transition-colors"
+                          >
