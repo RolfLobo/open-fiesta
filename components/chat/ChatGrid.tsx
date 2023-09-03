@@ -955,3 +955,29 @@ export default function ChatGrid({
                                 isCollapsed
                                   ? 'opacity-0 pointer-events-none'
                                   : 'opacity-0 group-hover:opacity-100'
+                              }`}
+                            >
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedModal({
+                                    model: m,
+                                    response: ans,
+                                    userMessage: row.user.content,
+                                  });
+                                }}
+                                className="icon-btn h-7 w-7 accent-focus"
+                                title={`Open ${m.label} response in full screen`}
+                              >
+                                <Expand size={12} />
+                              </button>
+
+                              <CopyToClipboard
+                                getText={() => sanitizeContent(ans.content)}
+                                title={`Copy ${m.label} response`}
+                              />
+                            </div>
+                          )}
+                          <div className="relative overflow-hidden">
+                            <div
+                              className={`text-sm leading-relaxed w-full pr-8 break-words overflow-wrap-anywhere ${
