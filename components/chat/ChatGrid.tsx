@@ -1085,3 +1085,29 @@ export default function ChatGrid({
                                             : "text-gray-700 border-gray-300/40"
                                         )}
                                       >
+                                        Add keys
+                                      </button>
+                                    </div>
+                                  )}
+                                </>
+                              ) : loadingIds.includes(m.id) ||
+                                (ans && ['Thinking…', 'Typing…'].includes(String(ans.content))) ? (
+                                <div className="w-full self-stretch">
+                                  <div className={cn(
+                                    "inline-flex items-center gap-2 text-[12px] font-medium",
+                                    isDark ? "text-rose-100" : "text-rose-700"
+                                  )}>
+                                    <span className={cn(
+                                      "inline-flex items-center gap-2 px-2.5 py-1 rounded-full ring-1",
+                                      isDark 
+                                        ? "bg-white/10 ring-white/15"
+                                        : "bg-white/40 ring-white/30"
+                                    )}>
+                                      <span className={isDark ? "text-white/90" : "text-gray-700"}>Thinking</span>
+                                      <span className="inline-flex items-center gap-0.5" aria-hidden>
+                                        <span className={cn(
+                                          "w-1.5 h-1.5 rounded-full animate-bounce",
+                                          isDark ? "bg-white/70" : "bg-gray-600/70"
+                                        )} style={{ animationDelay: '0ms' }} />
+                                        <span className={cn(
+                                          "w-1.5 h-1.5 rounded-full animate-bounce",
