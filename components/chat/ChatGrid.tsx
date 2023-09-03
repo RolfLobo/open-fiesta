@@ -1059,3 +1059,29 @@ export default function ChatGrid({
                                             : "bg-white/60 hover:bg-white/80 text-gray-700 border-gray-300/40"
                                         )}
                                       >
+                                        Add key
+                                      </button>
+                                    </div>
+                                  )}
+                                  {(() => {
+                                    try {
+                                      const txt = String(ans.content || '');
+                                      const show =
+                                        /add your own\s+(?:openrouter|gemini)\s+api key/i.test(txt);
+                                      return show;
+                                    } catch {
+                                      return false;
+                                    }
+                                  })() && (
+                                    <div className="mt-2">
+                                      <button
+                                        onClick={() =>
+                                          window.dispatchEvent(new Event('open-settings'))
+                                        }
+                                        className={cn(
+                                          "text-xs px-2.5 py-1 rounded border accent-action-fill",
+                                          isDark
+                                            ? "text-white border-white/10"
+                                            : "text-gray-700 border-gray-300/40"
+                                        )}
+                                      >
