@@ -903,3 +903,29 @@ export default function ChatGrid({
                         </span>
                       </div>
                       <div className="hidden group-hover:flex order-first gap-1.5 ">
+                        <button
+                          onClick={() => {
+                            setEditingIdx(i);
+                            setDraft(row.user.content);
+                          }}
+                          className="icon-btn h-7 w-7 accent-focus "
+                          title="Edit message"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          onClick={() => setPendingDelete({ turnIndex: i })}
+                          className="icon-btn h-7 w-7 accent-focus "
+                          title="Delete message"
+                        >
+                          <Trash size={14} />
+                        </button>
+                        <CopyToClipboard getText={() => row.user.content} />
+                      </div>
+                    </div>
+                </div>
+
+                <div
+                  className="grid gap-3 items-stretch"
+                  style={{ gridTemplateColumns: headerCols }}
+                >
