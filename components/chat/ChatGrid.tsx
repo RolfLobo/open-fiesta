@@ -929,3 +929,29 @@ export default function ChatGrid({
                   className="grid gap-3 items-stretch"
                   style={{ gridTemplateColumns: headerCols }}
                 >
+                  {selectedModels.map((m) => {
+                    const ans = row.answers.find((a) => a.modelId === m.id);
+                    const isCollapsed = collapsedIds.includes(m.id);
+                    return (
+                      <div key={m.id} className="h-full">
+                        <div
+                          className={cn(
+                            "group relative rounded-lg h-full min-h-[140px] flex ring-1 transition-shadow backdrop-blur-[2px]",
+                            isCollapsed ? 'p-2.5 cursor-pointer' : 'p-3',
+                            isDark
+                              ? "bg-gradient-to-b from-black/40 to-black/20 ring-white/10 hover:ring-white/20"
+                              : "bg-gradient-to-b from-white/40 to-white/20 ring-white/30 hover:ring-white/40"
+                          )}
+                          onClick={() => {
+                            if (isCollapsed)
+                              setCollapsedIds((prev) => prev.filter((id) => id !== m.id));
+                          }}
+                          title={isCollapsed ? 'Click to expand' : undefined}
+                        >
+                          {/* decorative overlay removed for cleaner look */}
+                          {ans && String(ans.content || '').length > 0 && (
+                            <div
+                              className={`absolute top-2 right-6 sm:right-8 z-10 flex flex-col gap-2 ${
+                                isCollapsed
+                                  ? 'opacity-0 pointer-events-none'
+                                  : 'opacity-0 group-hover:opacity-100'
