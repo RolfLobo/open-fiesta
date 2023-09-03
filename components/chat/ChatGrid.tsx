@@ -981,3 +981,29 @@ export default function ChatGrid({
                           <div className="relative overflow-hidden">
                             <div
                               className={`text-sm leading-relaxed w-full pr-8 break-words overflow-wrap-anywhere ${
+                                isCollapsed ? 'overflow-hidden max-h-20 opacity-70 line-clamp-3' : 'space-y-2'
+                              } ${
+                                !isCollapsed
+                                  ? 'max-h-[40vh] md:max-h-[400px] overflow-y-auto custom-scrollbar'
+                                  : ''
+                              }`}
+                              style={{ WebkitOverflowScrolling: 'touch', wordBreak: 'break-word', overflowWrap: 'break-word' }}
+                            >
+                              {ans &&
+                              String(ans.content || '').length > 0 &&
+                              !['Thinking…', 'Typing…'].includes(String(ans.content)) ? (
+                                <>
+                                  <div className="rounded-2xl ring-white/10 px-3 py-2 overflow-hidden">
+                                    <div className="break-words overflow-wrap-anywhere" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                                      <MarkdownLite text={sanitizeContent(ans.content)} />
+                                    </div>
+                                  </div>
+                                  {/* Token usage footer */}
+                                  {ans.tokens &&
+                                    !isCollapsed &&
+                                    (() => {
+                                      const by = ans.tokens?.by;
+                                      const model = ans.tokens?.model;
+                                      const inTokens = Array.isArray(ans.tokens?.perMessage)
+                                        ? ans.tokens!.perMessage!.reduce(
+                                            (sum, x) => sum + (Number(x?.tokens) || 0),
