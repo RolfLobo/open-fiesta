@@ -1033,3 +1033,29 @@ export default function ChatGrid({
                                             {by && <span className="opacity-70">• {by}</span>}
                                             {model && <span className="opacity-70">• {model}</span>}
                                           </span>
+                                        </div>
+                                      );
+                                    })()}
+                                  {ans.code === 503 && ans.provider === 'openrouter' && (
+                                    <div className={cn(
+                                      "mt-2 inline-flex items-center gap-2 text-xs px-2.5 py-1.5 rounded ring-1",
+                                      isDark
+                                        ? "text-amber-200/90 bg-amber-500/15 ring-amber-300/30"
+                                        : "text-amber-800/90 bg-amber-100/60 ring-amber-400/40"
+                                    )}>
+                                      <span>
+                                        Free pool temporarily unavailable (503). Try again soon,
+                                        switch model, or add your own OpenRouter API key for higher
+                                        limits.
+                                      </span>
+                                      <button
+                                        onClick={() =>
+                                          window.dispatchEvent(new Event('open-settings'))
+                                        }
+                                        className={cn(
+                                          "ml-1 px-2 py-1 rounded border transition-colors",
+                                          isDark
+                                            ? "bg-white/10 hover:bg-white/20 text-white border-white/10"
+                                            : "bg-white/60 hover:bg-white/80 text-gray-700 border-gray-300/40"
+                                        )}
+                                      >
