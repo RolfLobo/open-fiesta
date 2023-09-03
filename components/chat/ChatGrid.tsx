@@ -1007,3 +1007,29 @@ export default function ChatGrid({
                                       const inTokens = Array.isArray(ans.tokens?.perMessage)
                                         ? ans.tokens!.perMessage!.reduce(
                                             (sum, x) => sum + (Number(x?.tokens) || 0),
+                                            0,
+                                          )
+                                        : (ans.tokens?.total ?? undefined);
+                                      const outTokens = estimateTokens(String(ans.content || ''));
+                                      return (
+                                        <div className={cn(
+                                          "mt-2 text-[11px]",
+                                          isDark ? "text-zinc-300/80" : "text-gray-600/90"
+                                        )}>
+                                          <span className={cn(
+                                            "inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px]",
+                                            isDark 
+                                              ? "border border-white/10 bg-white/5"
+                                              : "border border-gray-300/30 bg-white/30"
+                                          )}>
+                                            {typeof inTokens === 'number' && (
+                                              <span className="opacity-80">In:</span>
+                                            )}
+                                            {typeof inTokens === 'number' && (
+                                              <span className="font-medium">{inTokens}</span>
+                                            )}
+                                            <span className="opacity-80">Out:</span>
+                                            <span className="font-medium">{outTokens}</span>
+                                            {by && <span className="opacity-70">• {by}</span>}
+                                            {model && <span className="opacity-70">• {model}</span>}
+                                          </span>
