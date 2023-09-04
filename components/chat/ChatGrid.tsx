@@ -1111,3 +1111,29 @@ export default function ChatGrid({
                                         )} style={{ animationDelay: '0ms' }} />
                                         <span className={cn(
                                           "w-1.5 h-1.5 rounded-full animate-bounce",
+                                          isDark ? "bg-white/60" : "bg-gray-600/60"
+                                        )} style={{ animationDelay: '120ms' }} />
+                                        <span className={cn(
+                                          "w-1.5 h-1.5 rounded-full animate-bounce",
+                                          isDark ? "bg-white/50" : "bg-gray-600/50"
+                                        )} style={{ animationDelay: '240ms' }} />
+                                      </span>
+                                    </span>
+                                  </div>
+                                </div>
+                              ) : (
+                                <span className={cn(
+                                  "text-sm",
+                                  isDark ? "text-zinc-400" : "text-gray-500"
+                                )}>No response</span>
+                              )}
+                            </div>
+                          </div>
+                          {isCollapsed && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className={cn(
+                                "opacity-0 group-hover:opacity-100 transition-opacity text-[11px] px-2 py-1 rounded-full border inline-flex items-center gap-1",
+                                isDark 
+                                  ? "border-white/10 bg-black/50"
+                                  : "border-gray-300/40 bg-white/70"
+                              )}>
