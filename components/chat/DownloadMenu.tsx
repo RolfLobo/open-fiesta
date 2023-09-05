@@ -102,3 +102,13 @@ export default function DownloadMenu({ thread, selectedModels }: Props) {
     </div>
   );
 }
+
+'use client';
+import { useState } from 'react';
+import { Download, FileText, FileDown, X } from 'lucide-react';
+import type { ChatThread, AiModel } from '@/lib/types';
+import { downloadAsMarkdown, downloadAsPdf } from '@/lib/exportUtils';
+
+type Props = {
+  thread: ChatThread | null;
+  selectedModels: AiModel[];

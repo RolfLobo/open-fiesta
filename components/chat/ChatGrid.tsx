@@ -1163,3 +1163,19 @@ export default function ChatGrid({
           if (!pendingDelete) return;
           onDeleteUser(pendingDelete.turnIndex);
           setPendingDelete(null);
+        }}
+      />
+
+      {/* Expanded Chat Modal */}
+      {expandedModal && (
+        <ExpandedChatModal
+          isOpen={true}
+          onClose={() => setExpandedModal(null)}
+          model={expandedModal.model}
+          response={expandedModal.response}
+          userMessage={expandedModal.userMessage}
+        />
+      )}
+    </>
+  );
+}
