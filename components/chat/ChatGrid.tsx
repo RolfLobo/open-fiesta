@@ -1137,3 +1137,29 @@ export default function ChatGrid({
                                   ? "border-white/10 bg-black/50"
                                   : "border-gray-300/40 bg-white/70"
                               )}>
+                                <Eye size={12} /> Expand
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* Delete confirmation dialog */}
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Delete this turn answer"
+        message="This will remove your prompt and all model answers for this turn."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (!pendingDelete) return;
+          onDeleteUser(pendingDelete.turnIndex);
+          setPendingDelete(null);
