@@ -112,3 +112,29 @@ import { downloadAsMarkdown, downloadAsPdf } from '@/lib/exportUtils';
 type Props = {
   thread: ChatThread | null;
   selectedModels: AiModel[];
+};
+
+export default function DownloadMenu({ thread, selectedModels }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  if (!thread || thread.messages.length === 0) {
+    return null;
+  }
+
+  // helper to stop native propagation (prevents document click listeners)
+  const stopNative = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // stop other native listeners (like the document listener) from running
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
+  const handleDownloadMarkdown = (e?: React.MouseEvent) => {
+    if (e) stopNative(e);
+    downloadAsMarkdown(thread, selectedModels);
+    setIsOpen(false);
+  };
+
+  const handleDownloadPdf = (e?: React.MouseEvent) => {
+    if (e) stopNative(e);
+    downloadAsPdf(thread, selectedModels);
+    setIsOpen(false);
