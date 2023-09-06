@@ -28,3 +28,12 @@ export default function FixedInputBar({ onSubmit, loading }: Props) {
     </div>
   );
 }
+
+'use client';
+import { useState } from 'react';
+import AIChatBox from '@/components/chat/AIChatBox';
+
+type Props = {
+  onSubmit: (text: string, imageDataUrl?: string) => void;
+  loading: boolean;
+};

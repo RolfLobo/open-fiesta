@@ -190,3 +190,20 @@ export default function DownloadMenu({ thread, selectedModels }: Props) {
                 </button>
 
                 <button
+                  onClick={handleDownloadPdf}
+                  className="w-full flex items-center gap-3 px-3 py-2 text-sm text-left rounded-md hover:bg-white/10 text-zinc-200 hover:text-white transition-colors"
+                >
+                  <FileDown size={16} />
+                  <div>
+                    <div className="font-medium">PDF (.pdf)</div>
+                    <div className="text-xs text-zinc-400">Formatted document</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
