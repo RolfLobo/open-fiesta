@@ -1484,3 +1484,7 @@ function splitAndWrap(
   if (lastIndex < input.length) result.push(input.slice(lastIndex));
   return result;
 }
+
+'use client';
+
+// Insert table separators and strip leading heading marker before pipe tables
