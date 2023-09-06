@@ -1514,3 +1514,29 @@ function normalizeTableLikeMarkdown(lines: string[]): string[] {
     const nextIsPipe = /\|/.test(nxt);
     if (isPipe && nextIsPipe && !looksLikeSep(nxt)) {
       // Synthesize separator based on header column count
+      const cols = splitRow(cur).length || 1;
+      const sep = '| ' + Array(cols).fill('---').join(' | ') + ' |';
+      out.splice(i + 1, 0, sep);
+      i += 2; // skip over inserted separator
+      continue;
+    }
+    i++;
+  }
+
+  return out;
+}
+
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Download } from 'lucide-react';
+import { ACCENT_UTILITY_CLASSES } from '../../lib/accentColors';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+import { CopyToClipboard } from '@/components/ui/CopyToClipboard';
+type Props = { text: string };
+
+// Minimal, dependency-free Markdown renderer focusing on bold, italics and inline code.
+// Supported:
+// - **bold**
+// - *italic* or _italic_
+// - `inline code`
