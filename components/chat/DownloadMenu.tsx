@@ -138,3 +138,29 @@ export default function DownloadMenu({ thread, selectedModels }: Props) {
     if (e) stopNative(e);
     downloadAsPdf(thread, selectedModels);
     setIsOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={(e) => {
+          stopNative(e);
+          setIsOpen(!isOpen);
+        }}
+        title="Download chat"
+        className="h-7 w-7 shrink-0 inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors"
+      >
+        <Download size={14} />
+      </button>
+
+      {isOpen && (
+        <>
+          {/* Menu */}
+          <div
+            className="absolute -right-4 top-8 z-50 w-48 rounded-lg border border-white/10 bg-zinc-900/95 backdrop-blur-sm shadow-xl"
+            onClick={(e) => {
+              // ensure clicks inside the menu don't bubble up to document
+              stopNative(e);
+            }}
+          >
+            <div className="p-2">
