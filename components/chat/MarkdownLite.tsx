@@ -1488,3 +1488,29 @@ function splitAndWrap(
 'use client';
 
 // Insert table separators and strip leading heading marker before pipe tables
+function normalizeTableLikeMarkdown(lines: string[]): string[] {
+  const out = [...lines];
+
+  // 1) Convert lines like "# | Col1 | Col2 |" to "| Col1 | Col2 |"
+  for (let i = 0; i < out.length; i++) {
+    if (/^\s*#\s*\|/.test(out[i])) {
+      out[i] = out[i].replace(/^(\s*)#\s*/, '$1');
+    }
+  }
+
+  // 2) If a pipe header is followed by rows but missing a separator, insert one
+  const looksLikeSep = (s: string) => {
+    return (
+      /(^\s*\|?\s*(?::?-+\s*\|\s*)*:?-+\s*\|?\s*$)/.test(s) ||
+      /^\s*\|?\s*(-+\s*\|\s*)*-+\s*\|?\s*$/.test(s)
+    );
+  };
+
+  let i = 0;
+  while (i < out.length - 1) {
+    const cur = out[i];
+    const nxt = out[i + 1];
+    const isPipe = /\|/.test(cur);
+    const nextIsPipe = /\|/.test(nxt);
+    if (isPipe && nextIsPipe && !looksLikeSep(nxt)) {
+      // Synthesize separator based on header column count
