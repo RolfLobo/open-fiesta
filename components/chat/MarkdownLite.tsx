@@ -1566,3 +1566,29 @@ const downloadImage = async (imageUrl: string, filename: string) => {
 };
 
 // Small animated ellipsis used for loading labels
+function AnimatedEllipsis() {
+  const [dots, setDots] = useState('');
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setDots((d) => (d.length >= 3 ? '' : d + '.'));
+    }, 400);
+    return () => clearInterval(iv);
+  }, []);
+  return (
+    <span aria-live="polite" aria-label="loading">
+      {dots}
+    </span>
+  );
+}
+
+// Audio Player Component
+function ProgressBar({
+  value,
+  max,
+  onScrub,
+}: {
+  value: number;
+  max: number;
+  onScrub: (next: number) => void;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
