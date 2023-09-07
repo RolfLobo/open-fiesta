@@ -1592,3 +1592,29 @@ function ProgressBar({
   onScrub: (next: number) => void;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
+  const pct = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let dragging = false;
+
+    const getPos = (e: MouseEvent | TouchEvent) => {
+      const rect = el.getBoundingClientRect();
+      const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+      const rel = Math.min(rect.right, Math.max(rect.left, clientX)) - rect.left;
+      const ratio = rect.width > 0 ? rel / rect.width : 0;
+      return ratio * max;
+    };
+
+    const onMove = (e: MouseEvent | TouchEvent) => {
+      if (!dragging) return;
+      e.preventDefault();
+      onScrub(getPos(e));
+    };
+    const onUp = () => {
+      dragging = false;
+    };
+
+    const onDown = (e: MouseEvent | TouchEvent) => {
+      dragging = true;
