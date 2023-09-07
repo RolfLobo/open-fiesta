@@ -1670,3 +1670,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
   const [error, setError] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [duration, setDuration] = useState<number | null>(null);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const prevBlobUrlRef = useRef<string | null>(null);
+  const [canPlay, setCanPlay] = useState<boolean>(false);
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
+
+  // When audioUrl changes, build a playable URL and reset playback state
+  useEffect(() => {
+    let cancelled = false;
+    const buildUrl = async () => {
+      setError(null);
+      setIsPlaying(false);
+      setDuration(null);
+      setCurrentTime(0);
+      setCanPlay(false);
+
+      const el = audioRef.current;
+      if (el) {
+        try {
+          el.pause();
+          el.currentTime = 0;
