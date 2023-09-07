@@ -1618,3 +1618,29 @@ function ProgressBar({
 
     const onDown = (e: MouseEvent | TouchEvent) => {
       dragging = true;
+      onScrub(getPos(e));
+    };
+
+    el.addEventListener('mousedown', onDown as unknown as EventListener);
+    el.addEventListener('touchstart', onDown as unknown as EventListener, { passive: false });
+    window.addEventListener('mousemove', onMove as unknown as EventListener, { passive: false });
+    window.addEventListener('touchmove', onMove as unknown as EventListener, { passive: false });
+    window.addEventListener('mouseup', onUp as unknown as EventListener);
+    window.addEventListener('touchend', onUp as unknown as EventListener);
+    return () => {
+      el.removeEventListener('mousedown', onDown as unknown as EventListener);
+      el.removeEventListener('touchstart', onDown as unknown as EventListener);
+      window.removeEventListener('mousemove', onMove as unknown as EventListener);
+      window.removeEventListener('touchmove', onMove as unknown as EventListener);
+      window.removeEventListener('mouseup', onUp as unknown as EventListener);
+      window.removeEventListener('touchend', onUp as unknown as EventListener);
+    };
+  }, [max, onScrub]);
+
+  return (
+    <div
+      ref={ref}
+      className="group relative h-2 w-full rounded-full cursor-pointer"
+      role="slider"
+      aria-valuenow={Math.floor(value)}
+      aria-valuemin={0}
