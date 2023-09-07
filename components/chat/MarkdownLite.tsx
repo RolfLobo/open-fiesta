@@ -1644,3 +1644,29 @@ function ProgressBar({
       role="slider"
       aria-valuenow={Math.floor(value)}
       aria-valuemin={0}
+      aria-valuemax={Math.floor(max)}
+      style={{ background: 'color-mix(in srgb, var(--accent-highlight-subtle) 35%, transparent)' }}
+    >
+      <div
+        className="absolute left-0 top-0 h-full rounded-full"
+        style={{ width: `${pct}%`, background: 'var(--accent-interactive-primary)' }}
+      />
+      <div
+        className="absolute -top-1 h-4 w-4 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+        style={{
+          left: `calc(${pct}% - 8px)`,
+          background: 'color-mix(in srgb, white 85%, transparent)',
+          border: '1px solid color-mix(in srgb, white 35%, transparent)',
+          boxShadow:
+            '0 0 8px color-mix(in srgb, var(--accent-interactive-primary) 40%, transparent)',
+        }}
+      />
+    </div>
+  );
+}
+
+const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filename: string; isDark: boolean }) => {
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [duration, setDuration] = useState<number | null>(null);
