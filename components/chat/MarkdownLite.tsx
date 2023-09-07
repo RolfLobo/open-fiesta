@@ -1540,3 +1540,29 @@ type Props = { text: string };
 // - **bold**
 // - *italic* or _italic_
 // - `inline code`
+// - preserves line breaks and paragraphs
+// - fenced code blocks ``` ... ```
+// - simple lists (-, *, 1.)
+// - simple GitHub-style tables
+
+// Download function for images
+const downloadImage = async (imageUrl: string, filename: string) => {
+  try {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Failed to download image:', error);
+    // Fallback: open image in new tab
+    window.open(imageUrl, '_blank');
+  }
+};
+
+// Small animated ellipsis used for loading labels
