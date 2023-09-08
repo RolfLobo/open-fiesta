@@ -1696,3 +1696,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
         try {
           el.pause();
           el.currentTime = 0;
+        } catch {}
+      }
+
+      try {
+        let nextUrl: string;
+        if (audioUrl.startsWith('data:')) {
+          const response = await fetch(audioUrl);
+          const blob = await response.blob();
+          nextUrl = URL.createObjectURL(blob);
+        } else {
+          nextUrl = audioUrl;
+        }
+        if (cancelled) return;
+
+        // Revoke previous blob URL if any
+        if (prevBlobUrlRef.current && prevBlobUrlRef.current.startsWith('blob:')) {
+          try {
+            URL.revokeObjectURL(prevBlobUrlRef.current);
+          } catch {}
+        }
+        prevBlobUrlRef.current = nextUrl.startsWith('blob:') ? nextUrl : null;
+        setBlobUrl(nextUrl);
+      } catch (err) {
+        console.error('Failed to create blob URL:', err);
+        if (cancelled) return;
+        setError('Failed to load audio');
