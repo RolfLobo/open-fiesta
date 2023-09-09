@@ -1800,3 +1800,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
       link.href = url;
       link.download = filename;
       document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to download audio:', error);
+      // Fallback: open audio in new tab
+      window.open(audioUrl, '_blank');
+    }
+  };
+
+  return (
+    <div
+      className="rounded-2xl p-4 sm:p-5 my-4 border bg-transparent transition-transform duration-200 hover:-translate-y-0.5"
+      style={{
+        borderColor: 'color-mix(in srgb, var(--accent-interactive-primary) 35%, transparent)',
+        boxShadow:
+          '0 10px 30px rgba(0,0,0,0.35), 0 6px 10px rgba(0,0,0,0.25), inset 0 1px 0 color-mix(in srgb, var(--accent-highlight-subtle) 14%, transparent)',
+        background:
+          'radial-gradient(120% 100% at 10% 0%, color-mix(in srgb, var(--accent-highlight-subtle) 14%, transparent), transparent 40%), radial-gradient(140% 120% at 100% 100%, color-mix(in srgb, var(--accent-highlight-subtle) 50%, transparent), transparent 60%)',
+      }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-3 h-3 rounded-full animate-pulse"
+            style={{ backgroundColor: 'var(--accent-interactive-primary)' }}
