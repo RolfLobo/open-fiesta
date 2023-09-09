@@ -1774,3 +1774,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
     } catch (e: any) {
       // Swallow AbortError which can occur if a new load interrupts play()
       if (e && e.name === 'AbortError') {
+        console.warn('Play aborted due to new load');
+        return;
+      }
+      console.warn('Failed to play audio:', e);
+    }
+  };
+
+  const downloadAudio = async () => {
+    try {
+      let blob: Blob;
+
+      if (audioUrl.startsWith('data:')) {
+        // Convert data URL to blob
+        const response = await fetch(audioUrl);
+        blob = await response.blob();
+      } else {
+        // Fetch from URL
+        const response = await fetch(audioUrl);
+        blob = await response.blob();
+      }
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
