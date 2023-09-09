@@ -1748,3 +1748,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
     try {
       // Wait for readiness if needed
       if (el.readyState < 2) {
+        await new Promise<void>((resolve, reject) => {
+          const onReady = () => {
+            cleanup();
+            resolve();
+          };
+          const onErr = () => {
+            cleanup();
+            reject(new Error('Audio error'));
+          };
+          const cleanup = () => {
+            el.removeEventListener('canplay', onReady);
+            el.removeEventListener('error', onErr);
+          };
+          el.addEventListener('canplay', onReady, { once: true });
+          el.addEventListener('error', onErr, { once: true });
+          try {
+            el.load();
+          } catch {}
+        });
+      }
+      setCanPlay(true);
+      await el.play();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      // Swallow AbortError which can occur if a new load interrupts play()
+      if (e && e.name === 'AbortError') {
