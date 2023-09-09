@@ -1826,3 +1826,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
           <div
             className="w-3 h-3 rounded-full animate-pulse"
             style={{ backgroundColor: 'var(--accent-interactive-primary)' }}
+          ></div>
+          <span className={cn(
+            "text-sm font-medium tracking-wide",
+            isDark ? "text-zinc-200" : "text-gray-800"
+          )}>
+            Generated Audio
+          </span>
+        </div>
+        {blobUrl && !error && (
+          <div className="hidden sm:flex items-center gap-2" aria-hidden>
+            {isPlaying && (
+              <div className="flex items-end gap-0.5 h-4">
+                <span
+                  className="w-0.5 rounded-sm animate-pulse"
+                  style={{
+                    backgroundColor: 'var(--accent-highlight-primary)',
+                    height: '100%',
+                    boxShadow: '0 0 8px var(--accent-highlight-primary)',
+                  }}
+                />
+                <span
+                  className="w-0.5 rounded-sm animate-pulse"
+                  style={{
+                    backgroundColor: 'var(--accent-highlight-secondary)',
+                    height: '70%',
+                    boxShadow: '0 0 8px var(--accent-highlight-secondary)',
