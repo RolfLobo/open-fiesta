@@ -1722,3 +1722,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
         console.error('Failed to create blob URL:', err);
         if (cancelled) return;
         setError('Failed to load audio');
+        setBlobUrl(audioUrl);
+      }
+    };
+
+    buildUrl();
+    return () => {
+      cancelled = true;
+    };
+  }, [audioUrl]);
+
+  // Ensure the element reloads the new source and we wait for readiness
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el || !blobUrl) return;
+    setCanPlay(false);
+    try {
+      el.load();
+    } catch {}
+  }, [blobUrl]);
+
+  const playSafely = async () => {
+    const el = audioRef.current;
+    if (!el) return;
+    try {
+      // Wait for readiness if needed
+      if (el.readyState < 2) {
