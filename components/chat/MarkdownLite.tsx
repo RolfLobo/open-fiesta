@@ -1878,3 +1878,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
           </div>
         )}
       </div>
+
+      {error ? (
+        <div className="text-sm mb-3" style={{ color: 'var(--accent-error)' }}>
+          {error}
+        </div>
+      ) : blobUrl ? (
+        <div className="mb-4">
+          {/* Hidden audio element */}
+          <audio
+            ref={audioRef}
+            src={blobUrl || undefined}
+            onLoadedMetadata={(e) => {
+              const el = e.currentTarget;
+              if (!isNaN(el.duration) && isFinite(el.duration)) {
+                setDuration(el.duration);
+              }
+            }}
+            onTimeUpdate={(e) => {
+              setCurrentTime(e.currentTarget.currentTime || 0);
+            }}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onCanPlay={() => setCanPlay(true)}
+            onEnded={() => setIsPlaying(false)}
+            onError={() => setError('Failed to load audio')}
+            className="hidden"
