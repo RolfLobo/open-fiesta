@@ -1904,3 +1904,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
             onEnded={() => setIsPlaying(false)}
             onError={() => setError('Failed to load audio')}
             className="hidden"
+          />
+
+          {/* Custom controls */}
+          <div
+            className="w-full rounded-xl px-3.5 py-2.5 flex items-center gap-3"
+            style={{
+              background:
+                'linear-gradient(180deg, color-mix(in srgb, var(--accent-highlight-subtle) 16%, transparent), color-mix(in srgb, var(--accent-highlight-subtle) 6%, transparent))',
+              border:
+                '1px solid color-mix(in srgb, var(--accent-highlight-subtle) 22%, transparent)',
+              boxShadow:
+                '0 10px 20px color-mix(in srgb, black 22%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-highlight-subtle) 18%, transparent)',
+            }}
+          >
+            {/* Play/Pause */}
+            <button
+              onClick={() => {
+                const el = audioRef.current;
+                if (!el) return;
+                if (el.paused) {
+                  // Only attempt play after we ensure readiness
+                  playSafely();
+                } else {
+                  try {
+                    el.pause();
+                  } catch {}
