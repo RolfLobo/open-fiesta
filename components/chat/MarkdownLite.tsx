@@ -2034,3 +2034,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
             className={`${ACCENT_UTILITY_CLASSES.button.secondary} flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors`}
             disabled={!blobUrl}
           >
+            <Download size={16} />
+            Download
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function MarkdownLite({ text }: Props) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+
+  if (!text) return null;
+
+  // Check for audio content first (supports multiple formats)
+  let audioUrl: string | undefined;
+  const tagMatch = text.match(/\[AUDIO:([^\]]+)\]/i);
+  if (tagMatch) {
+    audioUrl = tagMatch[1];
+  } else {
+    const prefixMatch = text.match(/^AUDIO:(.+)$/i);
+    if (prefixMatch) {
+      audioUrl = prefixMatch[1].trim();
+    } else if (/^data:audio\//i.test(text)) {
+      audioUrl = text.trim();
