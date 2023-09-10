@@ -1956,3 +1956,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
                 ) : (
                   <path d="M8 5v14l11-7z"></path>
                 )}
+              </svg>
+            </button>
+
+            {/* Progress */}
+            <div className="flex-1 flex items-center gap-2">
+              <span className="text-xs tabular-nums text-zinc-400 w-10 text-right">
+                {formatTime(currentTime)}
+              </span>
+              <ProgressBar
+                value={Math.min(currentTime, duration ?? 0)}
+                max={duration ?? 0}
+                onScrub={(next) => {
+                  setCurrentTime(next);
+                  if (audioRef.current) audioRef.current.currentTime = next;
+                }}
+              />
+              <span className={cn(
+                "text-xs tabular-nums w-10",
+                isDark ? "text-zinc-400" : "text-gray-500"
+              )}>
+                {duration !== null ? formatTime(duration) : '--:--'}
+              </span>
+            </div>
+          </div>
+        </div>
+      ) : (
