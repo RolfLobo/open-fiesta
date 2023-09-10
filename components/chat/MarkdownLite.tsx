@@ -1930,3 +1930,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
                   try {
                     el.pause();
                   } catch {}
+                }
+              }}
+              className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-white transition-transform duration-150 active:scale-95`}
+              style={{
+                background:
+                  'radial-gradient(80% 80% at 30% 20%, color-mix(in srgb, white 35%, transparent), transparent 40%), var(--accent-interactive-primary)',
+                boxShadow:
+                  '0 8px 18px color-mix(in srgb, var(--accent-interactive-primary) 45%, transparent), inset 0 1px 0 color-mix(in srgb, white 35%, transparent)',
+              }}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="text-white"
+              >
+                {isPlaying ? (
+                  <g>
+                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                    <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+                  </g>
+                ) : (
+                  <path d="M8 5v14l11-7z"></path>
+                )}
