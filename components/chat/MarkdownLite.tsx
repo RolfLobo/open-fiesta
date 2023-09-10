@@ -1852,3 +1852,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
                     backgroundColor: 'var(--accent-highlight-secondary)',
                     height: '70%',
                     boxShadow: '0 0 8px var(--accent-highlight-secondary)',
+                  }}
+                />
+                <span
+                  className="w-0.5 rounded-sm animate-pulse"
+                  style={{
+                    backgroundColor: 'var(--accent-interactive-primary)',
+                    height: '90%',
+                    boxShadow: '0 0 10px var(--accent-interactive-primary)',
+                  }}
+                />
+                <span
+                  className="w-0.5 rounded-sm animate-pulse"
+                  style={{
+                    backgroundColor: 'var(--accent-highlight-secondary)',
+                    height: '60%',
+                    boxShadow: '0 0 8px var(--accent-highlight-secondary)',
+                  }}
+                />
+              </div>
+            )}
+            {duration !== null && (
+              <span className="text-xs text-zinc-400 tabular-nums">{formatTime(duration)}</span>
+            )}
+          </div>
+        )}
+      </div>
