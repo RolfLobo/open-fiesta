@@ -2008,3 +2008,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
           <span>Preparing audio...</span>
         </div>
       )}
+
+      {/* Divider */}
+      <div
+        className="h-px my-2"
+        style={{
+          background: 'color-mix(in srgb, var(--accent-highlight-subtle) 22%, transparent)',
+        }}
+      />
+
+      {/* Footer actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 justify-between">
+        {/* Context (filename) */}
+        <div className={cn(
+          "text-xs truncate",
+          isDark ? "text-zinc-600" : "text-gray-500"
+        )} title={filename}>
+          {filename}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            aria-label="Download audio"
+            onClick={downloadAudio}
+            className={`${ACCENT_UTILITY_CLASSES.button.secondary} flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors`}
+            disabled={!blobUrl}
+          >
