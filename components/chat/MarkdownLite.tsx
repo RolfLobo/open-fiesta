@@ -1982,3 +1982,29 @@ const AudioPlayer = ({ audioUrl, filename, isDark }: { audioUrl: string; filenam
           </div>
         </div>
       ) : (
+        <div className={cn(
+          "flex items-center gap-3 text-sm mb-4",
+          isDark ? "text-zinc-600" : "text-gray-500"
+        )}>
+          {/* Distinct loading equalizer (different from image skeleton) */}
+          <div className="flex items-end gap-1 h-6" aria-hidden>
+            <span
+              className="w-1 h-2 rounded-sm animate-pulse"
+              style={{ backgroundColor: 'var(--accent-highlight-primary)' }}
+            />
+            <span
+              className="w-1 h-4 rounded-sm animate-pulse"
+              style={{ backgroundColor: 'var(--accent-highlight-secondary)' }}
+            />
+            <span
+              className="w-1 h-5 rounded-sm animate-pulse"
+              style={{ backgroundColor: 'var(--accent-interactive-primary)' }}
+            />
+            <span
+              className="w-1 h-3 rounded-sm animate-pulse"
+              style={{ backgroundColor: 'var(--accent-highlight-secondary)' }}
+            />
+          </div>
+          <span>Preparing audio...</span>
+        </div>
+      )}
