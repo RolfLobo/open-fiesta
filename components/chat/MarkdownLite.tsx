@@ -2060,3 +2060,29 @@ export default function MarkdownLite({ text }: Props) {
       audioUrl = prefixMatch[1].trim();
     } else if (/^data:audio\//i.test(text)) {
       audioUrl = text.trim();
+    } else {
+      // Try to find inline data:audio anywhere in the text
+      const dataInline = text.match(/(data:audio\/[a-z0-9.+-]+;base64,[A-Za-z0-9+/=]+)/i);
+      if (dataInline) {
+        audioUrl = dataInline[1];
+      } else {
+        const urlMatch = text.match(/(https?:[^\s)]+\.(?:mp3|wav|m4a)(?:\?[^\s)]*)?)/i);
+        if (urlMatch) audioUrl = urlMatch[1];
+      }
+    }
+  }
+
+  if (audioUrl) {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+    const filename = `openfiesta-audio-${timestamp}.mp3`;
+
+    return (
+      <div className={cn(
+        "leading-relaxed",
+        isDark ? "text-zinc-100" : "text-gray-800"
+      )}>
+        {/* Keep the original marker in DOM but hide it from UI */}
+        <span aria-hidden style={{ display: 'none' }}>
+          {text}
+        </span>
+        <AudioPlayer audioUrl={audioUrl} filename={filename} isDark={isDark} />
