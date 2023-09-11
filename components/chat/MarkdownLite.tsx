@@ -2086,3 +2086,29 @@ export default function MarkdownLite({ text }: Props) {
           {text}
         </span>
         <AudioPlayer audioUrl={audioUrl} filename={filename} isDark={isDark} />
+      </div>
+    );
+  }
+
+  // Split out fenced code blocks first so we don't transform inside them
+  const blocks = splitFencedCodeBlocks(text);
+
+  return (
+    <div className={cn(
+      "leading-relaxed whitespace-pre-wrap text-[13.5px] sm:text-sm space-y-2 tracking-[0.004em]",
+      isDark ? "text-zinc-100" : "text-gray-800"
+    )}>
+      {blocks.map((b, i) =>
+        b.type === 'code' ? (
+          <div key={i} className="relative group">
+            <pre
+              className={cn(
+                "my-2 rounded border p-2 overflow-x-auto text-xs pr-10",
+                isDark
+                  ? "bg-black/40 border-white/10"
+                  : "bg-gray-100/60 border-gray-300/40"
+              )}
+            >
+              <code>{maybeDeescapeJsonish(b.content)}</code>
+            </pre>
+            <CopyToClipboard
