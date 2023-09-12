@@ -2138,3 +2138,29 @@ function splitFencedCodeBlocks(input: string): Array<{ type: 'text' | 'code'; co
   while ((m = regex.exec(input)) !== null) {
     if (m.index > lastIndex) {
       parts.push({ type: 'text', content: input.slice(lastIndex, m.index) });
+    }
+    parts.push({ type: 'code', content: m[1] });
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < input.length) {
+    parts.push({ type: 'text', content: input.slice(lastIndex) });
+  }
+  return parts;
+}
+
+// Heuristic de-escape for code blocks that arrive double-escaped (e.g. lots of \\n, \", \\\)
+// We only transform when it looks like serialized code rather than legitimate backslashes.
+function maybeDeescapeJsonish(src: string): string {
+  if (!src) return src;
+  const backslashes = (src.match(/\\/g) || []).length;
+  const ratio = backslashes / Math.max(1, src.length);
+  const hasEscapes = /\\n|\\t|\\r\\n|\\"/.test(src);
+  // Bail out for low backslash density and no common escapes
+  if (!hasEscapes && ratio < 0.02) return src;
+
+  let out = src;
+  // Normalize common escaped sequences first
+  out = out.replace(/\\r\\n/g, '\n');
+  out = out.replace(/\\n/g, '\n');
+  out = out.replace(/\\t/g, '\t');
+  out = out.replace(/\\"/g, '"');
