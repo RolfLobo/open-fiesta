@@ -2215,3 +2215,30 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [lightboxOpen]);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [lightboxOpen]);
+
+  return (
+    <>
+      <div
+        className="my-3 rounded-2xl overflow-hidden border relative"
+        style={{
+          borderColor: 'color-mix(in srgb, var(--accent-interactive-primary) 22%, transparent)',
+          boxShadow:
+            '0 8px 22px color-mix(in srgb, black 28%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-highlight-subtle) 10%, transparent)',
+        }}
+      >
+        {/* Accent stripe */}
+        <div
+          className="absolute left-0 top-0 h-full w-[3px]"
+          style={{
+            background:
+              'linear-gradient(180deg, var(--accent-interactive-primary), color-mix(in srgb, var(--accent-interactive-primary) 50%, transparent))',
