@@ -2190,3 +2190,28 @@ function maybeDeescapeTextish(src: string): string {
   out = out.replace(/\\\\(?![ntr"\\])/g, '\\');
   out = out.replace(/\r/g, '\n');
   return out;
+}
+
+// Image component that shows a skeleton placeholder until the image loads
+function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: string; filename: string; isDark: boolean }) {
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [dimensions, setDimensions] = useState<{ w: number; h: number } | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  // Reset state whenever the image source changes (important when different models
+  // share an initial placeholder URL and later swap to their own URLs)
+  useEffect(() => {
+    setLoaded(false);
+    setFailed(false);
+    setDimensions(null);
+  }, [src]);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightboxOpen]);
