@@ -2242,3 +2242,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
           style={{
             background:
               'linear-gradient(180deg, var(--accent-interactive-primary), color-mix(in srgb, var(--accent-interactive-primary) 50%, transparent))',
+            boxShadow:
+              '0 0 8px color-mix(in srgb, var(--accent-interactive-primary) 35%, transparent)',
+          }}
+        />
+
+        {/* Header */}
+        <div
+          className="flex items-center justify-between px-4 py-2 pl-6 border-b"
+          style={{
+            borderColor: 'color-mix(in srgb, var(--accent-highlight-subtle) 18%, transparent)',
+            background:
+              'linear-gradient(180deg, color-mix(in srgb, var(--accent-highlight-subtle) 12%, transparent), color-mix(in srgb, var(--accent-highlight-subtle) 4%, transparent))',
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{
+                background: 'var(--accent-interactive-primary)',
+                boxShadow: '0 0 8px var(--accent-interactive-primary)',
+              }}
+            />
+            <span className={cn(
+              "text-sm font-medium",
+              isDark ? "text-zinc-100" : "text-gray-800"
+            )}>
