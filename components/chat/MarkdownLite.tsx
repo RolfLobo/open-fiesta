@@ -2164,3 +2164,29 @@ function maybeDeescapeJsonish(src: string): string {
   out = out.replace(/\\n/g, '\n');
   out = out.replace(/\\t/g, '\t');
   out = out.replace(/\\"/g, '"');
+  // Collapse double backslashes that are not forming a usual escape
+  // Keep \\n, \\t, \\" and \\\\ sequences intact where meaningful
+  out = out.replace(/\\\\(?![ntr"\\])/g, '\\');
+  // If we ended up with CRs, normalize
+  out = out.replace(/\r/g, '\n');
+  return out;
+}
+
+// Softer heuristic for regular text lines that appear over-escaped (e.g., stray \n, \t, \" in paragraphs)
+function maybeDeescapeTextish(src: string): string {
+  if (!src) return src;
+  const backslashes = (src.match(/\\/g) || []).length;
+  const ratio = backslashes / Math.max(1, src.length);
+  const hasEscapes = /\\n|\\t|\\"/.test(src);
+  // Slightly higher tolerance for text; avoid touching normal prose
+  if (!hasEscapes && ratio < 0.04) return src;
+
+  let out = src;
+  out = out.replace(/\\r\\n/g, '\n');
+  out = out.replace(/\\n/g, '\n');
+  out = out.replace(/\\t/g, '\t');
+  out = out.replace(/\\"/g, '"');
+  // Conservatively collapse double backslashes only when not a common escape
+  out = out.replace(/\\\\(?![ntr"\\])/g, '\\');
+  out = out.replace(/\r/g, '\n');
+  return out;
