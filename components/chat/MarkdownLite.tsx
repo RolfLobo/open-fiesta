@@ -2112,3 +2112,29 @@ export default function MarkdownLite({ text }: Props) {
               <code>{maybeDeescapeJsonish(b.content)}</code>
             </pre>
             <CopyToClipboard
+              getText={() => maybeDeescapeJsonish(b.content)}
+              className={cn(
+                "absolute top-2 right-2 p-1 rounded-md transition-opacity opacity-0 group-hover:opacity-100 shadow-sm"
+              )}
+              iconSize={14}
+              timeout={1200}
+              title="Copy code"
+            />
+          </div>
+        ) : (
+          // For non-code text, clean simple math delimiters like \( \) \[ \] and $...$
+          <BlockRenderer key={i} text={sanitizeMath(b.content)} isDark={isDark} />
+        ),
+      )}
+    </div>
+  );
+}
+
+function splitFencedCodeBlocks(input: string): Array<{ type: 'text' | 'code'; content: string }> {
+  const parts: Array<{ type: 'text' | 'code'; content: string }> = [];
+  const regex = /```[\w-]*\n([\s\S]*?)\n```/g; // ```lang?\n...\n```
+  let lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = regex.exec(input)) !== null) {
+    if (m.index > lastIndex) {
+      parts.push({ type: 'text', content: input.slice(lastIndex, m.index) });
