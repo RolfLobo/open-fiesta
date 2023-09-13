@@ -2398,3 +2398,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
                 onLoad={(e) => {
                   const el = e.currentTarget as HTMLImageElement;
                   const w = el.naturalWidth;
+                  const h = el.naturalHeight;
+                  setDimensions({ w, h });
+                  // Some providers briefly return a 1x1 (or tiny) placeholder asset.
+                  // Keep the skeleton (with breathing effect) until the image has meaningful size.
+                  const isTiny = w <= 2 && h <= 2;
+                  if (!isTiny) {
+                    setLoaded(true);
+                  }
+                }}
+                onError={() => setFailed(true)}
+                className={`w-full h-auto rounded-lg ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 shadow-[0_8px_22px_rgba(0,0,0,0.28)] cursor-zoom-in`}
+                style={{
+                  display: failed ? ('none' as const) : 'block',
+                  border:
+                    '1px solid color-mix(in srgb, var(--accent-highlight-subtle) 22%, transparent)',
+                }}
+                onClick={() => loaded && !failed && setLightboxOpen(true)}
+              />
+
+              {/* Status pill removed per request */}
+            </div>
+          </div>
+
+          {/* Error state */}
+          {failed && (
+            <div className="mt-2 text-xs" style={{ color: 'var(--accent-error)' }}>
