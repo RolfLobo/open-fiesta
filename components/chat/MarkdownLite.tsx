@@ -2450,3 +2450,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
             </button>
           )}
         </div>
+      </div>
+      {/* Lightbox overlay via Portal to body */}
+      {lightboxOpen &&
+        !failed &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setLightboxOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image preview"
+          >
+            {/* Close button */}
+            <button
+              aria-label="Close image preview"
+              title="Close"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxOpen(false);
+              }}
+              className="absolute top-4 right-4 h-10 w-10 rounded-full flex items-center justify-center text-white/90 bg-white/10 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 border border-white/20 shadow-lg"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
