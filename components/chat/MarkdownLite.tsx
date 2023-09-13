@@ -2346,3 +2346,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
                     className="absolute inset-y-0 -left-1/3 w-1/3 img-sweep"
                     style={{
                       background:
+                        'linear-gradient(90deg, transparent 0%, color-mix(in srgb, white 10%, transparent) 40%, color-mix(in srgb, var(--accent-highlight-subtle) 22%, transparent) 50%, transparent 80%)',
+                      filter: 'blur(6px)',
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 rounded-[0.5rem] pointer-events-none img-breathe-strong"
+                    style={{
+                      boxShadow:
+                        'inset 0 0 0 1px color-mix(in srgb, var(--accent-highlight-subtle) 28%, transparent), inset 0 0 30px color-mix(in srgb, var(--accent-interactive-primary) 10%, transparent)',
+                    }}
+                  />
+                  {/* center ripple */}
+                  <div
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full img-ripple"
+                    style={{
+                      width: '120px',
+                      height: '120px',
+                      background:
+                        'radial-gradient(closest-side, color-mix(in srgb, var(--accent-interactive-primary) 22%, transparent), transparent 70%)',
+                      filter: 'blur(8px)',
+                      opacity: 0.6,
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="opacity-70 animate-pulse">
+                      <svg
