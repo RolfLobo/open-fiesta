@@ -2294,3 +2294,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
           style={{
             background: `
             linear-gradient(180deg, color-mix(in srgb, var(--accent-highlight-subtle) 5%, transparent), transparent),
+            radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, black 14%, transparent), transparent 40%),
+            linear-gradient(135deg,
+              color-mix(in srgb, var(--accent-highlight-subtle) 4%, transparent) 25%,
+              transparent 25%, transparent 50%,
+              color-mix(in srgb, var(--accent-highlight-subtle) 4%, transparent) 50%,
+              color-mix(in srgb, var(--accent-highlight-subtle) 4%, transparent) 75%,
+              transparent 75%, transparent
+            )`,
+            backgroundSize: 'auto, auto, 24px 24px',
+          }}
+        >
+          {/* Inner frame */}
+          <div
+            className="rounded-xl p-1.5"
+            style={{
+              border:
+                '1px solid color-mix(in srgb, var(--accent-highlight-subtle) 20%, transparent)',
+              boxShadow:
+                'inset 0 1px 0 color-mix(in srgb, white 8%, transparent), inset 0 0 0 9999px color-mix(in srgb, black 4%, transparent)',
+            }}
+          >
+            {/* Unified image container */}
+            <div
+              className="relative w-full rounded-lg overflow-hidden"
+              style={{
+                border:
