@@ -2372,3 +2372,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="opacity-70 animate-pulse">
                       <svg
+                        width="36"
+                        height="36"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        className="text-zinc-400"
+                      >
+                        <path
+                          d="M4 7h3l2-2h6l2 2h3v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"
+                          strokeWidth="1.2"
+                        />
+                        <circle cx="12" cy="13" r="3.5" strokeWidth="1.2" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Actual image */}
+              <img
+                key={src}
+                src={src}
+                alt={alt}
+                onLoad={(e) => {
+                  const el = e.currentTarget as HTMLImageElement;
+                  const w = el.naturalWidth;
