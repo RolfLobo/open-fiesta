@@ -2320,3 +2320,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
               className="relative w-full rounded-lg overflow-hidden"
               style={{
                 border:
+                  '1px solid color-mix(in srgb, var(--accent-highlight-subtle) 20%, transparent)',
+                aspectRatio: !loaded && !failed ? '3 / 2' : undefined,
+              }}
+            >
+              {/* Skeleton layers only while loading */}
+              {!loaded && !failed && (
+                <div className="absolute inset-0">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `
+                      radial-gradient(85% 120% at 50% 30%, color-mix(in srgb, var(--accent-highlight-subtle) 12%, transparent), transparent 65%),
+                      linear-gradient(135deg,
+                        color-mix(in srgb, var(--accent-highlight-subtle) 2.5%, transparent) 25%,
+                        transparent 25%, transparent 50%,
+                        color-mix(in srgb, var(--accent-highlight-subtle) 2.5%, transparent) 50%,
+                        color-mix(in srgb, var(--accent-highlight-subtle) 2.5%, transparent) 75%,
+                        transparent 75%, transparent
+                      )
+                    `,
+                    }}
+                  />
+                  <div
+                    className="absolute inset-y-0 -left-1/3 w-1/3 img-sweep"
+                    style={{
+                      background:
