@@ -2424,3 +2424,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
           {/* Error state */}
           {failed && (
             <div className="mt-2 text-xs" style={{ color: 'var(--accent-error)' }}>
+              Failed to load image.
+            </div>
+          )}
+
+          {/* Download button after load */}
+          {loaded && !failed && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                downloadImage(src, filename);
+              }}
+              className="absolute top-4 right-4 px-3 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"
+              style={{
+                color: '#fff',
+                background:
+                  'radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,0.25), rgba(255,255,255,0) 40%), var(--accent-interactive-primary)',
+                boxShadow:
+                  '0 8px 18px color-mix(in srgb, var(--accent-interactive-primary) 40%, transparent)',
+              }}
+              title="Download image"
+            >
+              <Download size={14} />
+              Download
+            </button>
+          )}
+        </div>
