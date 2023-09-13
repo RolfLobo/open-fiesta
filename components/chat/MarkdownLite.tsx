@@ -2268,3 +2268,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
               "text-sm font-medium",
               isDark ? "text-zinc-100" : "text-gray-800"
             )}>
+              {loaded && !failed ? (
+                'Generated Image'
+              ) : (
+                <>
+                  Generating image
+                  <AnimatedEllipsis />
+                </>
+              )}
+            </span>
+          </div>
+          {dimensions && (
+            <span className={cn(
+              "text-[11px] tabular-nums",
+              isDark ? "text-zinc-400" : "text-gray-500"
+            )}>
+              {dimensions.w}×{dimensions.h}px
+            </span>
+          )}
+        </div>
+
+        {/* Stage background */}
+        <div
+          className="relative p-3"
+          style={{
+            background: `
+            linear-gradient(180deg, color-mix(in srgb, var(--accent-highlight-subtle) 5%, transparent), transparent),
