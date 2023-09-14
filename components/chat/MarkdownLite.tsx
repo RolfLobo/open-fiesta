@@ -2502,3 +2502,29 @@ function ImageWithSkeleton({ src, alt, filename, isDark }: { src: string; alt: s
         )}
     </>
   );
+}
+
+// Renders a text block with support for paragraphs, simple lists, and tables.
+function BlockRenderer({ text, isDark }: { text: string; isDark: boolean }) {
+  // Normalize newlines
+  const rawLines = text.replace(/\r\n?/g, '\n').split('\n');
+  const lines = normalizeTableLikeMarkdown(rawLines);
+  const nodes: React.ReactNode[] = [];
+
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Headings: # to ######
+    const heading = /^\s{0,3}(#{1,6})\s+(.*)$/.exec(line);
+    if (heading) {
+      const level = heading[1].length;
+      const content = heading[2].trim();
+      const Tag = `h${Math.min(6, Math.max(1, level))}` as unknown as React.ElementType;
+      nodes.push(
+        <Tag
+          key={`h-${i}`}
+          className={`mt-2 mb-1 font-semibold tracking-tight ${
+            level <= 2 ? 'text-base md:text-lg' : level === 3 ? 'text-sm md:text-base' : 'text-sm'
+            }`}
+        >
