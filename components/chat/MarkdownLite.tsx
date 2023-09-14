@@ -2554,3 +2554,29 @@ function BlockRenderer({ text, isDark }: { text: string; isDark: boolean }) {
       );
       continue;
     }
+
+    // Table detection: header | --- | --- | followed by rows starting with |
+    if (isTableHeader(lines, i)) {
+      const { element, nextIndex } = parseTable(lines, i, isDark);
+      nodes.push(
+        <div
+          key={`tbl-${i}`}
+          className={cn(
+            "my-2 overflow-x-auto rounded-lg ring-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] p-2",
+            isDark
+              ? "ring-white/20 bg-gradient-to-b from-black/40 to-black/20"
+              : "ring-gray-300/30 bg-gradient-to-b from-white/40 to-gray-50/20"
+          )}
+        >
+          {element}
+        </div>,
+      );
+      i = nextIndex;
+      continue;
+    }
+
+    // List detection: -, *, or numbered like 1.
+    if (isListLine(line)) {
+      const { element, nextIndex } = parseList(lines, i, isDark);
+      nodes.push(
+        <div key={`list-${i}`} className="my-1">
