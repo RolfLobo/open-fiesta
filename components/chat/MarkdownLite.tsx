@@ -2528,3 +2528,29 @@ function BlockRenderer({ text, isDark }: { text: string; isDark: boolean }) {
             level <= 2 ? 'text-base md:text-lg' : level === 3 ? 'text-sm md:text-base' : 'text-sm'
             }`}
         >
+          {renderInline(content, isDark)}
+        </Tag>,
+      );
+      i++;
+      continue;
+    }
+
+    // Blockquote: lines starting with ">"; group consecutive
+    if (/^\s*>\s?/.test(line)) {
+      const quoteLines: string[] = [];
+      while (i < lines.length && /^\s*>\s?/.test(lines[i])) {
+        quoteLines.push(lines[i].replace(/^\s*>\s?/, ''));
+        i++;
+      }
+      nodes.push(
+        <div key={`q-${i}`} className={cn(
+          "my-2 px-3 py-2 rounded-md border",
+          isDark
+            ? "border-white/10 bg-white/5"
+            : "border-gray-300/30 bg-gray-100/40"
+        )}>
+          <BlockRenderer text={quoteLines.join('\n')} isDark={isDark} />
+        </div>,
+      );
+      continue;
+    }
