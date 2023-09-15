@@ -2762,3 +2762,29 @@ function parseTable(
               >
                 {renderInline(c, isDark)}
               </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  return { element, nextIndex: i };
+}
+
+function splitRow(line: string): string[] {
+  // Trim outer pipes, then split; keep empty cells; collapse inner spaces
+  const core = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+  const parts = core.split('|').map((s) => s.replace(/\s+/g, ' ').trim());
+  return parts;
+}
+
+function isListLine(line: string): boolean {
+  return /^\s*(?:[-*]\s+|\d+\.\s+)/.test(line);
+}
+
+function parseList(
+  lines: string[],
+  idx: number,
+  isDark: boolean,
+): { element: React.ReactElement; nextIndex: number } {
