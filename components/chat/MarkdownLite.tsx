@@ -2658,3 +2658,29 @@ function parseTable(
       const core = raw.trim().replace(/^\|/, '').replace(/\|$/, '');
       const cells = core.split('|').map((s) => s.trim());
       const sepRe = /^[:\-\s—–]+$/;
+      const sepCount = cells.filter((c) => c === '' || sepRe.test(c)).length;
+      if (cells.length <= 1) return sepCount === 1; // handle lines without pipes
+      return sepCount >= Math.ceil(cells.length / 2); // majority separator-like -> skip
+    })();
+    if (isSepLike) {
+      i++;
+      continue;
+    }
+    if (!/\|/.test(raw)) {
+      // continuation text for previous row
+      if (rows.length > 0) {
+        rows[rows.length - 1] = rows[rows.length - 1] + ' ' + raw.trim();
+        i++;
+        continue;
+      } else {
+        break;
+      }
+    }
+    const pipeCount = (raw.match(/\|/g) || []).length;
+    if (pipeCount < 2 && rows.length > 0) {
+      // Likely a continuation that begins with a single pipe
+      const cont = raw.replace(/^\|?\s*/, '').trim();
+      // If the continuation is only separator characters (dashes/colons/mdashes/en-dashes/spaces), skip it
+      if (/^[:\-\s—–]+$/.test(cont)) {
+        i++;
+        continue;
