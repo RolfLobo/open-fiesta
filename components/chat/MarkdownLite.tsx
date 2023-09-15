@@ -2632,3 +2632,29 @@ function sanitizeMath(input: string): string {
 
 function isTableHeader(lines: string[], idx: number): boolean {
   const header = lines[idx] || '';
+  const sep = lines[idx + 1] || '';
+  // Require some pipes and a separator line like |---|---| (allow spaces/colons)
+  if (!/\|/.test(header) || !/\|/.test(sep)) return false;
+  const looksLikeSep =
+    /^\s*\|?\s*(?::?-+\s*\|\s*)*:?-+\s*\|?\s*$/.test(sep) ||
+    /^\s*\|?\s*(-+\s*\|\s*)*-+\s*\|?\s*$/.test(sep);
+  return looksLikeSep;
+}
+
+function parseTable(
+  lines: string[],
+  idx: number,
+  isDark: boolean,
+): { element: React.ReactElement; nextIndex: number } {
+  const headerLine = lines[idx] || '';
+  // skip separator line
+  let i = idx + 2;
+  const rows: string[] = [];
+  while (i < lines.length) {
+    const raw = lines[i];
+    if (!raw || raw.trim() === '') break;
+    // Skip any separator-like row inside body (rows made only/mostly of dashes, mdashes, en-dashes, colons, or spaces)
+    const isSepLike = (() => {
+      const core = raw.trim().replace(/^\|/, '').replace(/\|$/, '');
+      const cells = core.split('|').map((s) => s.trim());
+      const sepRe = /^[:\-\s—–]+$/;
