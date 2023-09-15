@@ -2709,3 +2709,30 @@ function parseTable(
     headers = headers.map((h) => (h || '').trim());
     headers = headers.length ? headers : [''];
   }
+
+  // Map body rows to kept columns and normalize lengths
+  const bodyRaw = rows.map(splitRow);
+  const projectCols = (cols: string[]) => {
+    if (keepIdx.length > 0) {
+      const projected = keepIdx.map((i) => (i < cols.length ? cols[i] : ''));
+      return projected;
+    }
+    return cols;
+  };
+  const colCount = headers.length;
+  const body = bodyRaw.map((cols) => {
+    const proj = projectCols(cols);
+    if (proj.length === colCount) return proj;
+    if (proj.length < colCount) return proj.concat(Array(colCount - proj.length).fill(''));
+    // If too many, merge extras into last cell
+    return proj.slice(0, colCount - 1).concat([proj.slice(colCount - 1).join(' | ')]);
+  });
+
+  const element = (
+    <table className="text-[13px] sm:text-sm w-full table-auto border-separate border-spacing-0">
+      <thead>
+        <tr>
+          {headers.map((h, hi) => (
+            <th
+              key={hi}
+              className={cn(
