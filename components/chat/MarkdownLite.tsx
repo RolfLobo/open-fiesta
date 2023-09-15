@@ -2684,3 +2684,28 @@ function parseTable(
       if (/^[:\-\s—–]+$/.test(cont)) {
         i++;
         continue;
+      }
+      rows[rows.length - 1] = rows[rows.length - 1] + ' ' + cont;
+    } else {
+      // If cells are only separator characters, skip
+      const cells = splitRow(raw);
+      const allSep = cells.length > 0 && cells.every((c) => /^[:\-\s—–]+$/.test(c));
+      if (!allSep) rows.push(raw);
+    }
+    i++;
+  }
+
+  // Split headers and drop empty/separator-only header columns to avoid blank columns
+  let headers = splitRow(headerLine);
+  const sepOnly = (s: string) => /^[:\-\s—–]*$/.test(s || '');
+  const keepIdx: number[] = [];
+  headers.forEach((h, idx) => {
+    if (h.trim() !== '' && !sepOnly(h)) keepIdx.push(idx);
+  });
+  if (keepIdx.length > 0) {
+    headers = keepIdx.map((i) => headers[i]);
+  } else {
+    // If all were empty, fall back to original to avoid losing data
+    headers = headers.map((h) => (h || '').trim());
+    headers = headers.length ? headers : [''];
+  }
