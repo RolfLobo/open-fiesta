@@ -2580,3 +2580,29 @@ function BlockRenderer({ text, isDark }: { text: string; isDark: boolean }) {
       const { element, nextIndex } = parseList(lines, i, isDark);
       nodes.push(
         <div key={`list-${i}`} className="my-1">
+          {element}
+        </div>,
+      );
+      i = nextIndex;
+      continue;
+    }
+
+    // Blank line -> paragraph break
+    if (!line.trim()) {
+      nodes.push(<br key={`br-${i}`} />);
+      i++;
+      continue;
+    }
+
+    // Regular paragraph line(s) until next blank/table/list/heading/blockquote
+    const start = i;
+    const buf: string[] = [];
+    while (i < lines.length) {
+      const l = lines[i];
+      if (
+        !l.trim() ||
+        isTableHeader(lines, i) ||
+        isListLine(l) ||
+        /^\s{0,3}#{1,6}\s+/.test(l) ||
+        /^\s*>\s?/.test(l)
+      )
