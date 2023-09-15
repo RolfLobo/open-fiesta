@@ -2736,3 +2736,29 @@ function parseTable(
             <th
               key={hi}
               className={cn(
+                "text-left font-semibold border px-3 py-1.5",
+                isDark
+                  ? "text-zinc-100 bg-black/30 border-white/15"
+                  : "text-gray-800 bg-gray-100/60 border-gray-300/40"
+              )}
+            >
+              {renderInline(h, isDark)}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {body.map((r, ri) => (
+          <tr key={ri} className={isDark ? "even:bg-black/20" : "even:bg-gray-50/40"}>
+            {r.map((c, ci) => (
+              <td
+                key={ci}
+                className={cn(
+                  "align-top border px-3 py-1.5 whitespace-pre-wrap",
+                  isDark
+                    ? "border-white/15 text-zinc-200"
+                    : "border-gray-300/40 text-gray-700"
+                )}
+              >
+                {renderInline(c, isDark)}
+              </td>
