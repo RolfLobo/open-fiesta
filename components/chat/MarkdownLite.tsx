@@ -2606,3 +2606,29 @@ function BlockRenderer({ text, isDark }: { text: string; isDark: boolean }) {
         /^\s{0,3}#{1,6}\s+/.test(l) ||
         /^\s*>\s?/.test(l)
       )
+        break;
+      buf.push(l);
+      i++;
+    }
+    nodes.push(
+      <p key={`p-${start}`} className="whitespace-pre-wrap my-1">
+        {renderInline(buf.join('\n'), isDark)}
+      </p>,
+    );
+  }
+
+  return <>{nodes}</>;
+}
+
+// Remove simple math delimiters so math reads cleanly without a renderer
+function sanitizeMath(input: string): string {
+  let out = input;
+  // Remove escaped LaTeX inline/block delimiters \( \) \[ \]
+  out = out.replace(/\\[()\[\]]/g, '');
+  // Replace $...$ or $$...$$ with the inner content
+  out = out.replace(/\${1,2}([\s\S]*?)\${1,2}/g, (_, inner) => inner);
+  return out;
+}
+
+function isTableHeader(lines: string[], idx: number): boolean {
+  const header = lines[idx] || '';
