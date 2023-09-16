@@ -2814,3 +2814,29 @@ function parseList(
     mode === 'ol' ? (
       <ol className="list-decimal list-outside pl-5 space-y-1">
         {items.map((it, idx2) => (
+          <li key={idx2} className="whitespace-pre-wrap">
+            {renderInline(it.text, isDark)}
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <ul className="list-disc list-outside pl-5 space-y-1">
+        {items.map((it, idx2) => (
+          <li key={idx2} className="whitespace-pre-wrap">
+            {renderInline(it.text, isDark)}
+          </li>
+        ))}
+      </ul>
+    );
+
+  return { element, nextIndex: i };
+}
+
+function renderInline(input: string, isDark?: boolean): React.ReactNode[] {
+  // First handle images ![alt](url)
+  const imageSegments = input.split(/(!\[[^\]]*\]\([^)]+\))/g);
+  const out: React.ReactNode[] = [];
+
+  imageSegments.forEach((imgSeg, imgIdx) => {
+    const isHiddenNoise = (txt: string) => {
+      const t = (txt || '').trim();
