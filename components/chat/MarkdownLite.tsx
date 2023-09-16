@@ -2840,3 +2840,29 @@ function renderInline(input: string, isDark?: boolean): React.ReactNode[] {
   imageSegments.forEach((imgSeg, imgIdx) => {
     const isHiddenNoise = (txt: string) => {
       const t = (txt || '').trim();
+      if (!t) return false;
+      if (/^\{\{?\s*Generated\s+Image\s*\}?\}$/i.test(t)) return true;
+      if (/^\[\s*Generated\s+Image\s*\]$/i.test(t)) return true;
+      if (/^Generated\s+Image$/i.test(t)) return true;
+      if (/^!\($/.test(t) || /^\)$/.test(t)) return true;
+      if (/(https?:\/\/(?:image\.)?pollinations\.ai[^\s)\]\}>"']+)/i.test(t)) return true;
+      return false;
+    };
+
+    const imageMatch = imgSeg.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (imageMatch) {
+      const [, alt, src] = imageMatch;
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+      const filename = `openfiesta-image-${timestamp}.png`;
+
+      out.push(
+        <ImageWithSkeleton
+          key={`img-container-${imgIdx}`}
+          src={src}
+          alt={alt}
+          filename={filename}
+          isDark={isDark ?? true}
+        />,
+      );
+      return;
+    }
