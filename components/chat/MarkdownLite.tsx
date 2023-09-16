@@ -2892,3 +2892,29 @@ function renderInline(input: string, isDark?: boolean): React.ReactNode[] {
         const content = seg.slice(1, -1);
         out.push(
           <code
+            key={`${imgIdx}-${idx}`}
+            className="rounded bg-black/40 px-1 py-0.5 border border-white/10 text-[0.85em]"
+          >
+            {content}
+          </code>,
+        );
+      } else {
+        // For regular text, first de-escape if it looks over-escaped
+        const cleaned = maybeDeescapeTextish(seg);
+        // Bold then italics on the remaining text. Keep it simple and safe.
+        // Replace **bold**
+        const withBold = splitAndWrap(cleaned, /\*\*([^*]+)\*\*/g, (m, i) => (
+          <strong key={`b-${imgIdx}-${idx}-${i}`} className="font-semibold text-zinc-100">
+            {m}
+          </strong>
+        ));
+        // For each piece, also apply _italic_ or *italic*
+        const withItalics: React.ReactNode[] = [];
+        withBold.forEach((piece, i) => {
+          if (typeof piece !== 'string') {
+            withItalics.push(piece);
+            return;
+          }
+          const italics = splitAndWrap(piece, /(?:\*([^*]+)\*|_([^_]+)_)/g, (m2, ii) => (
+            <em key={`i-${imgIdx}-${idx}-${i}-${ii}`} className="italic text-zinc-100/90">
+              {m2}
