@@ -2866,3 +2866,29 @@ function renderInline(input: string, isDark?: boolean): React.ReactNode[] {
       );
       return;
     }
+
+    // If this segment is known noise (provider labels, stray md, bare pollinations URL), keep it in DOM but hide
+    if (isHiddenNoise(imgSeg)) {
+      out.push(
+        <span key={`hidden-${imgIdx}`} aria-hidden style={{ display: 'none' }}>
+          {imgSeg}
+        </span>,
+      );
+      return;
+    }
+
+    // Then split by inline code `...`
+    const segments = imgSeg.split(/(`[^`]+`)/g);
+    segments.forEach((seg, idx) => {
+      if (isHiddenNoise(seg)) {
+        out.push(
+          <span key={`hidden-${imgIdx}-${idx}`} aria-hidden style={{ display: 'none' }}>
+            {seg}
+          </span>,
+        );
+        return;
+      }
+      if (/^`[^`]+`$/.test(seg)) {
+        const content = seg.slice(1, -1);
+        out.push(
+          <code
