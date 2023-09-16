@@ -2788,3 +2788,29 @@ function parseList(
   idx: number,
   isDark: boolean,
 ): { element: React.ReactElement; nextIndex: number } {
+  const items: { marker: 'ul' | 'ol'; text: string }[] = [];
+  let i = idx;
+  let mode: 'ul' | 'ol' | null = null;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!isListLine(line)) break;
+    const ol = /^\s*\d+\.\s+(.*)$/.exec(line);
+    const ul = /^\s*(?:[-*])\s+(.*)$/.exec(line);
+    if (ol) {
+      if (mode && mode !== 'ol') break; // stop when list type changes
+      mode = 'ol';
+      items.push({ marker: 'ol', text: ol[1] });
+    } else if (ul) {
+      if (mode && mode !== 'ul') break;
+      mode = 'ul';
+      items.push({ marker: 'ul', text: ul[1] });
+    } else {
+      break;
+    }
+    i++;
+  }
+
+  const element =
+    mode === 'ol' ? (
+      <ol className="list-decimal list-outside pl-5 space-y-1">
+        {items.map((it, idx2) => (
