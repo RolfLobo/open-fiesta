@@ -2944,3 +2944,29 @@ function renderInline(input: string, isDark?: boolean): React.ReactNode[] {
               }
             });
           });
+        });
+        out.push(<React.Fragment key={`t-${imgIdx}-${idx}`}>{withItalics}</React.Fragment>);
+      }
+    });
+  });
+  return out;
+}
+
+function splitAndWrap(
+  input: string,
+  regex: RegExp,
+  wrap: (matchText: string, idx: number) => React.ReactNode,
+): React.ReactNode[] {
+  const result: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let i = 0;
+  let m: RegExpExecArray | null;
+  const re = new RegExp(regex.source, regex.flags.includes('g') ? regex.flags : regex.flags + 'g');
+  while ((m = re.exec(input)) !== null) {
+    if (m.index > lastIndex) result.push(input.slice(lastIndex, m.index));
+    const captured = m[1] || m[2] || '';
+    result.push(wrap(captured, i++));
+    lastIndex = re.lastIndex;
+  }
+  if (lastIndex < input.length) result.push(input.slice(lastIndex));
+  return result;
