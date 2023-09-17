@@ -2970,3 +2970,4 @@ function splitAndWrap(
   }
   if (lastIndex < input.length) result.push(input.slice(lastIndex));
   return result;
+}
