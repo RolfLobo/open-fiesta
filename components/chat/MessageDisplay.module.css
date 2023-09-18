@@ -489,3 +489,28 @@
 }
 
 .assistant-message.dark .message-h1 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.assistant-message.light .message-h1 {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.message-h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 16px 0 10px 0;
+  color: inherit;
+}
+
+.message-h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 14px 0 7px 0;
+  color: inherit;
+}
+
+.message-p {
+  margin: 10px 0;
+  color: inherit;
+}
