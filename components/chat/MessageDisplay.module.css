@@ -567,3 +567,29 @@
 .assistant-message.dark .message-link:hover {
   color: #93c5fd;
 }
+
+.assistant-message.light .message-link {
+  color: #2563eb;
+}
+
+.assistant-message.light .message-link:hover {
+  color: #1d4ed8;
+}
+
+/* Table Styles */
+.message-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+.assistant-message.dark .message-table {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.assistant-message.light .message-table {
+  border-color: rgba(0, 0, 0, 0.1);
+}
