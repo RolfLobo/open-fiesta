@@ -775,3 +775,29 @@
 .code-block.light .hljs-selector-tag,
 .code-block.light .hljs-built_in {
   color: #be185d; /* Dark pink for keywords */
+}
+
+.code-block.light .hljs-string,
+.code-block.light .hljs-attr {
+  color: #059669; /* Dark green for strings */
+}
+
+.code-block.light .hljs-number,
+.code-block.light .hljs-literal {
+  color: #d97706; /* Dark yellow for numbers */
+}
+
+.code-block.light .hljs-comment {
+  color: #6b7280; /* Gray for comments */
+  font-style: italic;
+}
+
+.code-block.light .hljs-function,
+.code-block.light .hljs-title {
+  color: #2563eb; /* Dark blue for functions */
+}
+
+.code-block.light .hljs-variable,
+.code-block.light .hljs-name {
+  color: #7c3aed; /* Dark purple for variables */
+}
