@@ -749,3 +749,29 @@
 .code-block.dark .hljs-number,
 .code-block.dark .hljs-literal {
   color: #fcd34d; /* Bright yellow for numbers */
+}
+
+.code-block.dark .hljs-comment {
+  color: #6b7280; /* Gray for comments */
+  font-style: italic;
+}
+
+.code-block.dark .hljs-function,
+.code-block.dark .hljs-title {
+  color: #7dd3fc; /* Bright cyan for functions */
+}
+
+.code-block.dark .hljs-variable,
+.code-block.dark .hljs-name {
+  color: #c084fc; /* Bright purple for variables */
+}
+
+.code-block.dark .hljs-type,
+.code-block.dark .hljs-class {
+  color: #fb7185; /* Rose for types */
+}
+
+.code-block.light .hljs-keyword,
+.code-block.light .hljs-selector-tag,
+.code-block.light .hljs-built_in {
+  color: #be185d; /* Dark pink for keywords */
