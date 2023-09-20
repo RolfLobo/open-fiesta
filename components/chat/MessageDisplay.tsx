@@ -115,3 +115,17 @@ export default function MessageDisplay({
   return (
     <div className="flex items-start gap-2 justify-end">
       <div className={`user-message ${isDark ? 'dark' : 'light'}`}>
+        <div className="message-content">{message.content}</div>
+      </div>
+      {/* Small edit icon outside the bubble */}
+      <button
+        onClick={() => onEditMessage?.('temp-id', message.content)}
+        className="mt-1 h-6 w-6 shrink-0 inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 hover:bg-orange-500/20 hover:border-orange-300/30 text-zinc-300 hover:text-orange-100 transition-colors"
+        title="Edit message"
+        aria-label="Edit message"
+      >
+        <Edit3 size={12} />
+      </button>
+    </div>
+  )
+}

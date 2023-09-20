@@ -209,3 +209,14 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
     </>
   );
 }
+"use client";
+import { useState, useRef } from "react";
+import { Share2, Loader2, Copy, Check } from "lucide-react";
+import { toast } from "react-toastify";
+import type { ChatThread } from "@/lib/types";
+import { ShareService } from "@/lib/sharing/shareService";
+
+interface ShareButtonProps {
+  thread: ChatThread;
+  projectName?: string;
+  className?: string;
