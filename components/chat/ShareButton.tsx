@@ -220,3 +220,29 @@ interface ShareButtonProps {
   thread: ChatThread;
   projectName?: string;
   className?: string;
+}
+
+export default function ShareButton({ thread, projectName, className = "" }: ShareButtonProps) {
+  const [isSharing, setIsSharing] = useState(false);
+  const [showManualCopy, setShowManualCopy] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string>("");
+  const [manualCopySuccess, setManualCopySuccess] = useState(false);
+  const urlInputRef = useRef<HTMLInputElement>(null);
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering parent click handlers
+
+    if (isSharing) return;
+
+    setIsSharing(true);
+    setShowManualCopy(false);
+    setManualCopySuccess(false);
+
+    try {
+      const shareService = new ShareService();
+      const result = await shareService.generateShareableUrl(thread, projectName);
+
+      if (result.success && result.url) {
+        setShareUrl(result.url);
+
+        // Try to copy to clipboard
