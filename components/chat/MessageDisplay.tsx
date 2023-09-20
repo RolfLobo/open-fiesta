@@ -63,3 +63,29 @@ export default function MessageDisplay({
     </div>
   )
 }
+
+'use client'
+
+import React from 'react'
+import { Edit3 } from 'lucide-react'
+import type { ChatMessage } from '@/lib/types'
+import MarkdownLite from './MarkdownLite'
+
+interface Message {
+  id: string
+  content: string
+  role: "user" | "assistant"
+  timestamp: Date
+  avatarUrl?: string
+  avatarAlt?: string
+}
+
+interface MessageDisplayProps {
+  message: ChatMessage
+  isDark: boolean
+  AssistantAvatar?: React.ComponentType<any>
+  onEditMessage?: (messageId: string, newContent: string) => void
+  onShareMessage?: (message: ChatMessage) => void
+}
+
+// Assistant messages now use MarkdownLite for unified audio/image rendering
