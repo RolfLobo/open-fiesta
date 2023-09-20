@@ -723,3 +723,29 @@
     rgba(10, 8, 10, 0.99) 100%);
   color: #f1f5f9;
   border: 1px solid rgba(200, 30, 58, 0.1);
+}
+
+.code-block.light {
+  background: linear-gradient(135deg, 
+    rgba(255, 250, 245, 0.98) 0%, 
+    rgba(255, 245, 238, 0.99) 50%,
+    rgba(254, 240, 230, 0.99) 100%);
+  color: #2d1b13;
+  border: 1px solid rgba(255, 140, 100, 0.2);
+}
+
+/* Syntax Highlighting */
+.code-block.dark .hljs-keyword,
+.code-block.dark .hljs-selector-tag,
+.code-block.dark .hljs-built_in {
+  color: #ff6b9d; /* Bright pink for keywords */
+}
+
+.code-block.dark .hljs-string,
+.code-block.dark .hljs-attr {
+  color: #4ade80; /* Bright green for strings */
+}
+
+.code-block.dark .hljs-number,
+.code-block.dark .hljs-literal {
+  color: #fcd34d; /* Bright yellow for numbers */
