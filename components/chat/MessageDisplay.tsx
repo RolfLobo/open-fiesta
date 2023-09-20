@@ -89,3 +89,29 @@ interface MessageDisplayProps {
 }
 
 // Assistant messages now use MarkdownLite for unified audio/image rendering
+
+export default function MessageDisplay({ 
+  message, 
+  isDark, 
+  AssistantAvatar,
+  onEditMessage,
+  onShareMessage
+}: MessageDisplayProps) {
+  if (message.role === "assistant") {
+    return (
+      <div className="flex gap-4 justify-start">
+        {AssistantAvatar && <AssistantAvatar url={(message as any).avatarUrl} alt={(message as any).avatarAlt} />}
+        <div className={`assistant-message ${isDark ? 'dark' : 'light'}`}>
+          <div className="message-content">
+            <MarkdownLite text={String(message.content || '')} />
+          </div>
+          {/* No copy/share buttons as requested */}
+        </div>
+      </div>
+    )
+  }
+
+  // User message
+  return (
+    <div className="flex items-start gap-2 justify-end">
+      <div className={`user-message ${isDark ? 'dark' : 'light'}`}>
