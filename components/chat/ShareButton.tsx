@@ -402,3 +402,21 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
                       <span>Copy</span>
                     </>
                   )}
+                </button>
+              </div>
+
+              <div className="flex gap-2 justify-end">
+                <button
+                  onClick={closeManualCopy}
+                  className="px-4 py-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 rounded"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

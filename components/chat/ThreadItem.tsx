@@ -88,3 +88,12 @@ export default function ThreadItem({
     </div>
   );
 }
+
+'use client';
+import { MoreVertical, Trash2 } from 'lucide-react';
+import type { ChatThread, AiModel } from '@/lib/types';
+import type { Project } from '@/lib/projects';
+import ShareButton from './ShareButton';
+import DownloadMenu from './DownloadMenu';
+
+type ThreadItemProps = {
