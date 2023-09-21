@@ -324,3 +324,29 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
       e.preventDefault();
       // Create a synthetic mouse event for keyboard activation
       const syntheticEvent = {
+        stopPropagation: () => { },
+        preventDefault: () => { }
+      } as React.MouseEvent<HTMLButtonElement>;
+      handleShare(syntheticEvent);
+    }
+  };
+
+  const closeManualCopy = () => {
+    setShowManualCopy(false);
+    setManualCopySuccess(false);
+  };
+
+  return (
+    <>
+      <button
+        aria-label={isSharing ? "Sharing conversation..." : "Share this conversation"}
+        aria-describedby="share-button-description"
+        title="Share this conversation"
+        onClick={handleShare}
+        onKeyDown={handleKeyDown}
+        disabled={isSharing}
+        className={`h-7 w-7 shrink-0 inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 hover:bg-blue-500/20 hover:border-blue-300/30 text-zinc-300 hover:text-blue-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent ${className}`}
+      >
+        {isSharing ? (
+          <Loader2 size={14} className="animate-spin" aria-hidden="true" />
+        ) : (
