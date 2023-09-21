@@ -272,3 +272,29 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
 
         toast.error(userFriendlyMessage);
       }
+    } catch (error) {
+      const errorMessage = "An unexpected error occurred while sharing";
+      toast.error(errorMessage);
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
+  const handleManualCopy = async () => {
+    if (!urlInputRef.current) return;
+
+    try {
+      // Select the text
+      urlInputRef.current.select();
+      urlInputRef.current.setSelectionRange(0, 99999); // For mobile devices
+
+      // Try modern clipboard API first
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareUrl);
+        setManualCopySuccess(true);
+        toast.success("Link copied to clipboard!", {
+          icon: <Check size={18} color="currentColor" aria-hidden="true" />,
+        });
+      } else {
+        // Fallback to execCommand (deprecated but still supported)
+        try {
