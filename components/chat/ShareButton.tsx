@@ -350,3 +350,28 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
         {isSharing ? (
           <Loader2 size={14} className="animate-spin" aria-hidden="true" />
         ) : (
+          <Share2 size={14} aria-hidden="true" />
+        )}
+      </button>
+
+      {/* Hidden description for screen readers */}
+      <span id="share-button-description" className="sr-only">
+        Creates a shareable link for this conversation that can be viewed by anyone with the URL
+      </span>
+
+      {/* Manual Copy Fallback Modal */}
+      {showManualCopy && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="manual-copy-title"
+          aria-describedby="manual-copy-description"
+        >
+          <div className="bg-zinc-800 border border-white/10 rounded-lg p-6 max-w-md w-full">
+            <h3 id="manual-copy-title" className="text-lg font-semibold text-white mb-3">
+              Copy Share Link
+            </h3>
+            <p id="manual-copy-description" className="text-white/70 text-sm mb-4">
+              Automatic clipboard access failed. Please copy the link manually:
+            </p>
