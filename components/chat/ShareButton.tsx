@@ -375,3 +375,30 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
             <p id="manual-copy-description" className="text-white/70 text-sm mb-4">
               Automatic clipboard access failed. Please copy the link manually:
             </p>
+
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <input
+                  ref={urlInputRef}
+                  type="text"
+                  value={shareUrl}
+                  readOnly
+                  className="flex-1 px-3 py-2 bg-zinc-700 border border-white/10 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label="Share URL"
+                />
+                <button
+                  onClick={handleManualCopy}
+                  className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm flex items-center gap-1 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label="Copy link to clipboard"
+                >
+                  {manualCopySuccess ? (
+                    <>
+                      <Check size={14} aria-hidden="true" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={14} aria-hidden="true" />
+                      <span>Copy</span>
+                    </>
+                  )}
