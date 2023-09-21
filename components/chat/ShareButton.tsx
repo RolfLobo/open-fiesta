@@ -298,3 +298,29 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
       } else {
         // Fallback to execCommand (deprecated but still supported)
         try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            setManualCopySuccess(true);
+            toast.success("Link copied to clipboard!", {
+              icon: <Check size={18} color="currentColor" aria-hidden="true" />,
+            });
+          } else {
+            toast.info("Please manually copy the selected text");
+          }
+        } catch {
+          toast.info("Please manually copy the selected text");
+        }
+      }
+    } catch {
+      toast.info("Please manually copy the selected text");
+    }
+
+    // Reset success state after 2 seconds
+    setTimeout(() => setManualCopySuccess(false), 2000);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      // Create a synthetic mouse event for keyboard activation
+      const syntheticEvent = {
