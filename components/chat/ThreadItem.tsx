@@ -97,3 +97,29 @@ import ShareButton from './ShareButton';
 import DownloadMenu from './DownloadMenu';
 
 type ThreadItemProps = {
+  thread: ChatThread;
+  isActive: boolean;
+  onSelect: () => void;
+  onMenuToggle: (id: string) => void;
+  isMenuOpen: boolean;
+  onDelete: (id: string) => void;
+  projects: Project[];
+  selectedModels: AiModel[];
+};
+
+export default function ThreadItem({
+  thread,
+  isActive,
+  onSelect,
+  onMenuToggle,
+  isMenuOpen,
+  onDelete,
+  projects,
+  selectedModels,
+}: ThreadItemProps) {
+  return (
+    <div
+      data-menu-root={thread.id}
+      className={`w-full px-3 py-1.5 xl:py-2.5 rounded-lg text-sm border flex items-center justify-between gap-2 group relative transition-all duration-200 ${
+        isActive
+          ? 'bg-white/15 border-white/25 ring-1 ring-white/30 shadow-sm'
