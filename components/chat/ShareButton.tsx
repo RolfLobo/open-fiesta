@@ -246,3 +246,29 @@ export default function ShareButton({ thread, projectName, className = "" }: Sha
         setShareUrl(result.url);
 
         // Try to copy to clipboard
+        const copySuccess = await shareService.copyToClipboard(result.url);
+
+        if (copySuccess) {
+          toast.success("Share link copied to clipboard!", {
+            icon: <Check size={18} color="currentColor" aria-hidden="true" />,
+          });
+        } else {
+          // Show manual copy fallback
+          setShowManualCopy(true);
+          toast.info("Clipboard access failed. Please copy the link manually.", {
+            autoClose: false,
+          });
+        }
+      } else {
+        const errorMessage = result.error || "Failed to create share link";
+
+        // Provide more helpful error messages for common issues
+        let userFriendlyMessage = errorMessage;
+        if (errorMessage === "Invalid message format") {
+          userFriendlyMessage = "This conversation contains invalid message data and cannot be shared.";
+        } else if (errorMessage === "Cannot share empty conversation") {
+          userFriendlyMessage = "Cannot share an empty conversation. Please add some messages first.";
+        }
+
+        toast.error(userFriendlyMessage);
+      }
