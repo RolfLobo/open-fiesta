@@ -921,3 +921,29 @@ export default function ThreadSidebar({
   onSelectThread,
   onNewChat,
   mobileSidebarOpen,
+  onCloseMobile,
+  onDeleteThread,
+  selectedModels,
+  projects,
+  activeProjectId,
+  onSelectProject,
+  onCreateProject,
+  onUpdateProject,
+  onDeleteProject,
+}: Props) {
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
+  // Tracks which thread's action menu is open
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isThreadSwitching, setIsThreadSwitching] = useState(false);
+  const { theme } = useTheme();
+  const accent = ACCENT_COLORS[theme.accent];
+  const { user } = useAuth();
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) ||
+    (user?.user_metadata?.name as string | undefined) ||
+    (user?.user_metadata?.user_name as string | undefined) ||
+    user?.email ||
+    'User';
+  const avatarUrl =
