@@ -947,3 +947,28 @@ export default function ThreadSidebar({
     user?.email ||
     'User';
   const avatarUrl =
+    (user?.user_metadata?.avatar_url as string | undefined) ||
+    (user?.user_metadata?.picture as string | undefined) ||
+    undefined;
+  const initials = (displayName?.trim()?.charAt(0)?.toUpperCase() || 'U');
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  // Group threads by date
+  const groupedThreads = useMemo(() => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+
+    const filteredThreads = threads.filter(thread =>
+      !searchQuery ||
+      (thread.title || 'Untitled').toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const groups = {
+      today: [] as ChatThread[],
+      yesterday: [] as ChatThread[],
+      older: [] as ChatThread[]
+    };
