@@ -1025,3 +1025,29 @@ export default function ThreadSidebar({
       if (!openMenuId) return;
       const target = ev.target as HTMLElement | null;
       if (!target) return setOpenMenuId(null);
+      const root = document.querySelector(`[data-menu-root="${openMenuId}"]`);
+      // If the click happened within the row (by DOM contains OR event path), ignore
+      const path = (ev.composedPath ? ev.composedPath() : []) as EventTarget[];
+      if (root && (root.contains(target) || path.includes(root))) return;
+      setOpenMenuId(null);
+    };
+    document.addEventListener('click', onOutside);
+    return () => document.removeEventListener('click', onOutside);
+  }, [openMenuId]);
+
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <aside
+        className={cn(
+          `relative hidden lg:flex shrink-0 h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] rounded-xl backdrop-blur-xl shadow-2xl flex-col transition-[width] duration-300`,
+          theme.mode === 'dark' 
+            ? 'border border-white/10 bg-gradient-to-b from-black/40 via-black/30 to-black/20'
+            : 'border border-white/30 bg-gradient-to-b from-white/60 via-white/40 to-white/20',
+          sidebarOpen ? 'w-72' : 'w-16'
+        )}
+      >
+        {/* Collapse/Expand toggle */}
+        <button
+          aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
