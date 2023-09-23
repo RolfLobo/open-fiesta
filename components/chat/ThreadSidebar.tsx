@@ -972,3 +972,30 @@ export default function ThreadSidebar({
       yesterday: [] as ChatThread[],
       older: [] as ChatThread[]
     };
+
+    filteredThreads.forEach(thread => {
+      const threadDate = new Date(thread.createdAt);
+      const threadDay = new Date(threadDate.getFullYear(), threadDate.getMonth(), threadDate.getDate());
+
+      if (threadDay.getTime() === today.getTime()) {
+        groups.today.push(thread);
+      } else if (threadDay.getTime() === yesterday.getTime()) {
+        groups.yesterday.push(thread);
+      } else {
+        groups.older.push(thread);
+      }
+    });
+
+    return groups;
+  }, [threads, searchQuery]);
+
+  // Check for unused recent threads
+  const hasUnusedRecentThread = useMemo(() => {
+    const recentThread = threads.find(t =>
+      (!t.messages || t.messages.length === 0) &&
+      (!t.title || t.title === 'New Chat')
+    );
+    return recentThread;
+  }, [threads]);
+
+  const handleThreadSelect = async (id: string) => {
