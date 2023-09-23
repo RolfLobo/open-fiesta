@@ -895,3 +895,29 @@ import { useAuth } from '@/lib/auth';
 type Props = {
   sidebarOpen: boolean;
   onToggleSidebar: () => void;
+  threads: ChatThread[];
+  activeId: string | null;
+  onSelectThread: (id: string) => void;
+  onNewChat: () => void;
+  mobileSidebarOpen: boolean;
+  onCloseMobile: () => void;
+  onOpenMobile: () => void;
+  onDeleteThread: (id: string) => void;
+  selectedModels: AiModel[];
+  // Projects props
+  projects: Project[];
+  activeProjectId: string | null;
+  onSelectProject: (id: string | null) => void;
+  onCreateProject: () => void;
+  onUpdateProject: (project: Project) => void;
+  onDeleteProject: (id: string) => void;
+};
+
+export default function ThreadSidebar({
+  sidebarOpen,
+  onToggleSidebar,
+  threads,
+  activeId,
+  onSelectThread,
+  onNewChat,
+  mobileSidebarOpen,
