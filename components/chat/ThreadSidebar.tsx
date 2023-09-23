@@ -874,3 +874,24 @@ export function SimpleThreadSidebar({ isDark, sidebarOpen, onClose, onNewChat }:
     </div>
   );
 }
+'use client';
+import { useState, useEffect, useMemo } from 'react';
+import { ChevronLeft, ChevronRight, Plus, X, Trash2, MoreVertical, Search, LogIn } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+import type { ChatThread, AiModel } from '@/lib/types';
+import ConfirmDialog from '@/components/modals/ConfirmDialog';
+import ProjectsSection from '@/components/app/ProjectsSection';
+import DownloadMenu from './DownloadMenu';
+import ShareButton from "@/components/chat/ShareButton";
+import ThreadItem from './ThreadItem';
+import { useTheme } from '@/lib/themeContext';
+import { ACCENT_COLORS, BACKGROUND_STYLES } from '@/lib/themes';
+import AuthButton from '@/components/auth/AuthButton';
+import type { Project } from '@/lib/projects';
+import { useAuth } from '@/lib/auth';
+
+type Props = {
+  sidebarOpen: boolean;
+  onToggleSidebar: () => void;

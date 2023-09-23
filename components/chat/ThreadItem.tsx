@@ -175,3 +175,7 @@ export default function ThreadItem({
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
