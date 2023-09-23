@@ -1051,3 +1051,29 @@ export default function ThreadSidebar({
         {/* Collapse/Expand toggle */}
         <button
           aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          onClick={onToggleSidebar}
+          className={cn(
+            "absolute -right-3 top-6 z-10 h-7 w-7 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-200 shadow-lg",
+            theme.mode === 'dark'
+              ? "bg-gradient-to-r from-white/15 to-white/10 border border-white/20 hover:from-white/25 hover:to-white/15 hover:border-white/30"
+              : "bg-gradient-to-r from-white/40 to-white/30 border border-white/40 hover:from-white/50 hover:to-white/40 hover:border-white/50"
+          )}
+        >
+          {sidebarOpen ? (
+            <ChevronLeft size={16} className={theme.mode === 'dark' ? "text-white/90" : "text-gray-700"} />
+          ) : (
+            <ChevronRight size={16} className={theme.mode === 'dark' ? "text-white/90" : "text-gray-700"} />
+          )}
+        </button>
+
+        {sidebarOpen &&<div
+          className={`flex items-center justify-between p-4 ${sidebarOpen ? '' : 'opacity-0 pointer-events-none'
+            }`}
+        >
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 shadow-lg" />
+              <div className="absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 animate-ping opacity-30" />
+            </div>
+            {/* Replace title with Made by Niladri badge */}
+            <a
