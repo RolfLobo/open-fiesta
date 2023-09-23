@@ -149,3 +149,29 @@ export default function ThreadItem({
         >
           <MoreVertical size={14} />
         </button>
+
+        {/* Popover actions */}
+        {isMenuOpen && (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center gap-1 rounded-lg border border-white/10 bg-zinc-900/90 px-1.5 py-1 shadow-xl">
+            <span onClick={(e) => e.stopPropagation()}>
+              <ShareButton
+                thread={thread}
+                projectName={projects.find(p => p.id === thread.projectId)?.name}
+              />
+            </span>
+            <span onClick={(e) => e.stopPropagation()}>
+              <DownloadMenu thread={thread} selectedModels={selectedModels} />
+            </span>
+            <button
+              aria-label="Delete chat"
+              title="Delete chat"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(thread.id);
+              }}
+              className="h-7 w-7 shrink-0 inline-flex items-center justify-center rounded-md border border-white/10 bg-white/5 hover:bg-rose-500/20 hover:border-rose-300/30 text-zinc-300 hover:text-rose-100"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
+        )}
