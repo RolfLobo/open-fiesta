@@ -999,3 +999,29 @@ export default function ThreadSidebar({
   }, [threads]);
 
   const handleThreadSelect = async (id: string) => {
+    if (id === activeId) return;
+
+    setIsThreadSwitching(true);
+
+    // Small delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 150));
+
+    onSelectThread(id);
+    setIsThreadSwitching(false);
+  };
+
+  const handleNewChat = () => {
+    // If there's an unused recent thread, select it instead of creating new
+    if (hasUnusedRecentThread) {
+      handleThreadSelect(hasUnusedRecentThread.id);
+    } else {
+      onNewChat();
+    }
+  };
+
+  // Close open menu on outside click: only if click happens outside the active row
+  useEffect(() => {
+    const onOutside = (ev: MouseEvent) => {
+      if (!openMenuId) return;
+      const target = ev.target as HTMLElement | null;
+      if (!target) return setOpenMenuId(null);
