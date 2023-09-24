@@ -1077,3 +1077,29 @@ export default function ThreadSidebar({
             </div>
             {/* Replace title with Made by Niladri badge */}
             <a
+              href="https://x.com/byteHumi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                "inline-flex items-center gap-3 rounded-lg xl:rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition-all duration-200 backdrop-blur-sm",
+                theme.mode === 'dark'
+                  ? "bg-gradient-to-r from-white/8 to-white/4 border border-white/15 hover:border-white/25 hover:from-white/12 hover:to-white/6"
+                  : "bg-gradient-to-r from-white/30 to-white/20 border border-white/40 hover:border-white/50 hover:from-white/40 hover:to-white/30"
+              )}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/image.png"
+                alt="Niladri"
+                className={cn(
+                  "h-5 w-5 xl:h-7 xl:w-7 rounded-full object-cover shadow-sm",
+                  theme.mode === 'dark' ? "ring-2 ring-white/20" : "ring-2 ring-gray-300/50"
+                )}
+              />
+              <span className={cn(
+                "text-xs xl:text-sm",
+                theme.mode === 'dark' ? "text-white/90" : "text-gray-700"
+              )}>
+                <span className="font-medium">Made by</span>
+                <span className="font-bold ml-1">Niladri</span>
+              </span>
