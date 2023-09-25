@@ -1207,3 +1207,29 @@ export default function ThreadSidebar({
                 <>
                   {/* Today */}
                   {groupedThreads.today.length > 0 && (
+                    <div className="mb-4">
+                      <div className={cn(
+                        "text-xs font-semibold uppercase tracking-wider mb-3 px-2",
+                        theme.mode === 'dark' ? "text-white/60" : "text-gray-700/80"
+                      )}>Today</div>
+                      <div className="space-y-1">
+                        {groupedThreads.today.map((t) => (
+                          <ThreadItem
+                            key={t.id}
+                            thread={t}
+                            isActive={t.id === activeId}
+                            onSelect={() => {
+                              if (t.pageType === 'compare') {
+                                window.location.href = '/compare';
+                              } else {
+                                handleThreadSelect(t.id);
+                              }
+                            }}
+                            onMenuToggle={(id) => setOpenMenuId(prev => prev === id ? null : id)}
+                            isMenuOpen={openMenuId === t.id}
+                            onDelete={(id) => {
+                              setOpenMenuId(null);
+                              setConfirmDeleteId(id);
+                            }}
+                            projects={projects}
+                            selectedModels={selectedModels}
