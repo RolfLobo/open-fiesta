@@ -1233,3 +1233,29 @@ export default function ThreadSidebar({
                             }}
                             projects={projects}
                             selectedModels={selectedModels}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Yesterday */}
+                  {groupedThreads.yesterday.length > 0 && (
+                    <div className="mb-4">
+                      <div className={cn(
+                        "text-xs font-semibold uppercase tracking-wider mb-3 px-2",
+                        theme.mode === 'dark' ? "text-white/60" : "text-gray-700/80"
+                      )}>Yesterday</div>
+                      <div className="space-y-1">
+                        {groupedThreads.yesterday.map((t) => (
+                          <ThreadItem
+                            key={t.id}
+                            thread={t}
+                            isActive={t.id === activeId}
+                            onSelect={() => {
+                              if (t.pageType === 'compare') {
+                                window.location.href = '/compare';
+                              } else {
+                                handleThreadSelect(t.id);
+                              }
+                            }}
