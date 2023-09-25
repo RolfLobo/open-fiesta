@@ -1181,3 +1181,29 @@ export default function ThreadSidebar({
                 >
                   <Plus className="inline-block w-4 h-4 mr-2" />
                   New Chat
+                </button>
+              </div>
+              {/* Loading state for thread switching */}
+              {isThreadSwitching && (
+                <div className="flex items-center justify-center py-4">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accent.primary }}></div>
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accent.primary, animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accent.primary, animationDelay: '0.2s' }}></div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex-1 space-y-3 px-4 min-h-0">
+                {!isHydrated ? (
+                  <div className="text-xs opacity-60">Loading...</div>
+                ) : threads.length === 0 ? (
+                  <div className="text-xs opacity-60">No chats yet</div>
+                ) : searchQuery && Object.values(groupedThreads).every(group => group.length === 0) ? (
+                  <div className="text-xs opacity-60 text-center py-4">No threads found</div>
+                ) : null}
+
+              {isHydrated && (
+                <>
+                  {/* Today */}
+                  {groupedThreads.today.length > 0 && (
