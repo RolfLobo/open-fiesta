@@ -1129,3 +1129,29 @@ export default function ThreadSidebar({
                   onCreateProject={onCreateProject}
                   onUpdateProject={onUpdateProject}
                   onDeleteProject={onDeleteProject}
+                  collapsed={false}
+                />
+              </div>
+
+            {/* Search Bar */}
+            <div className="mb-3 xl:mb-6 px-4">
+              <div className="relative group">
+                <Search className={cn(
+                  "absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 transition-colors",
+                  theme.mode === 'dark' 
+                    ? "text-white/50 group-focus-within:text-white/70" 
+                    : "text-gray-500 group-focus-within:text-gray-700"
+                )} />
+                <input
+                  type="text"
+                  placeholder="Search threads..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={cn(
+                    "w-full pl-12 pr-10 py-2 xl:py-3 rounded-lg xl:rounded-xl text-sm focus:outline-none focus:ring-2 transition-all duration-200 backdrop-blur-sm",
+                    theme.mode === 'dark'
+                      ? "bg-black/20 border border-white/20 text-white placeholder-white/60 focus:ring-red-500/30 focus:border-red-500/50 focus:bg-black/30 shadow-lg"
+                      : "bg-white/30 border border-white/40 text-gray-700 placeholder-gray-500 focus:ring-white/30 focus:border-white/50 focus:bg-white/40"
+                  )}
+                />
+                {searchQuery && (
