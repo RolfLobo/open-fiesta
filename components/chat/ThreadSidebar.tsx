@@ -1103,3 +1103,29 @@ export default function ThreadSidebar({
                 <span className="font-medium">Made by</span>
                 <span className="font-bold ml-1">Niladri</span>
               </span>
+            </a>
+          </div>
+        </div>}
+
+        {/* Collapsed state - show image at the top */}
+        {!sidebarOpen && (
+          <div className="flex flex-col items-center pt-4">
+            <div className="w-8 h-8 xl:w-10 xl:h-10 rounded-xl overflow-hidden flex items-center justify-center mb-6 ring-2 ring-white/15 shadow-lg bg-gradient-to-br from-white/10 to-white/5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/image.png" alt="Logo" className="h-full w-full object-cover" />
+            </div>
+          </div>
+        )}
+
+        {sidebarOpen ? (
+          <>
+            <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+              {/* Projects Section */}
+              <div className="mb-6 px-4">
+                <ProjectsSection
+                  projects={projects}
+                  activeProjectId={activeProjectId}
+                  onSelectProject={onSelectProject}
+                  onCreateProject={onCreateProject}
+                  onUpdateProject={onUpdateProject}
+                  onDeleteProject={onDeleteProject}
