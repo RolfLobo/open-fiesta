@@ -1155,3 +1155,29 @@ export default function ThreadSidebar({
                   )}
                 />
                 {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className={cn(
+                      "absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors p-1 rounded-md",
+                      theme.mode === 'dark'
+                        ? "text-white/50 hover:text-white/80 hover:bg-white/10"
+                        : "text-gray-500 hover:text-gray-700 hover:bg-white/20"
+                    )}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+              {/* New Chat */}
+              <div className="mb-4 px-4">
+                <button
+                  onClick={handleNewChat}
+                  className="w-full text-sm font-semibold px-4 py-2 xl:py-3 rounded-lg xl:rounded-xl shadow-lg text-white bg-gradient-to-r hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-white/20"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${accent.primary}, ${accent.primary}dd)`,
+                  }}
+                >
+                  <Plus className="inline-block w-4 h-4 mr-2" />
+                  New Chat
