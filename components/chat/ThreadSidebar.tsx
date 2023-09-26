@@ -1493,3 +1493,29 @@ export default function ThreadSidebar({
                     <X className="h-4 w-4" />
                   </button>
                 )}
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <button
+                onClick={() => {
+                  handleNewChat();
+                  onCloseMobile();
+                }}
+                className="w-full text-sm font-semibold px-4 py-2 xl:py-3 rounded-md xl:rounded-xl shadow-lg text-white bg-gradient-to-r hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-white/20"
+                style={{ backgroundImage: `linear-gradient(135deg, ${accent.primary}, ${accent.primary}dd)` }}
+              >
+                <Plus className="inline-block w-4 h-4 mr-2" />
+                New Chat
+              </button>
+            </div>
+
+            <div className="h-[65vh] space-y-2 pr-1">
+              {threads.length === 0 ? (
+                <div className="text-xs opacity-60">No chats yet</div>
+              ) : searchQuery && Object.values(groupedThreads).every(group => group.length === 0) ? (
+                <div className="text-xs opacity-60 text-center py-4">No threads found</div>
+              ) : (
+                <>
+                  {/* Today */}
+                  {groupedThreads.today.length > 0 && (
