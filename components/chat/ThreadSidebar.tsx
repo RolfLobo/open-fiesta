@@ -1441,3 +1441,29 @@ export default function ThreadSidebar({
                 <X size={14} className={theme.mode === 'dark' ? "text-white/90" : "text-gray-700"} />
               </button>
             </div>
+
+            <div className="flex-1 flex flex-col max-h-[82vh] overflow-y-auto">
+            <div className="mb-4">
+              <ProjectsSection
+                projects={projects}
+                activeProjectId={activeProjectId}
+                onSelectProject={(id) => {
+                  if (id) {
+                    onSelectProject(id);
+                  }
+                }}
+                onCreateProject={onCreateProject}
+                onUpdateProject={onUpdateProject}
+                onDeleteProject={onDeleteProject}
+                collapsed={false}
+              />
+            </div>
+
+            {/* Search Bar (Mobile) */}
+            <div className="mb-4">
+              <div className="relative group">
+                <Search className={cn(
+                  "absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 transition-colors",
+                  theme.mode === 'dark' 
+                    ? "text-white/50 group-focus-within:text-white/70" 
+                    : "text-gray-500 group-focus-within:text-gray-700"
