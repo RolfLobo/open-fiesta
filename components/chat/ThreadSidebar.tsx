@@ -1389,3 +1389,29 @@ export default function ThreadSidebar({
           <div className={cn(
             "absolute left-0 top-0 h-full w-80 max-w-[85vw] rounded-r-xl border p-4 backdrop-blur-xl shadow-2xl",
             theme.mode === 'dark'
+              ? "border-white/10 bg-gradient-to-b from-black/40 via-black/30 to-black/20"
+              : "border-white/30 bg-gradient-to-b from-white/60 via-white/40 to-white/20"
+          )}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 shadow-lg" />
+                  <div className="absolute inset-0 w-4 h-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 animate-ping opacity-30" />
+                </div>
+                {/* Replace title with Made by Niladri badge */}
+                <a
+                  href="https://x.com/byteHumi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "inline-flex items-center gap-3 rounded-lg px-3 py-2 shadow-sm hover:shadow-md transition-all duration-200 backdrop-blur-sm",
+                    theme.mode === 'dark'
+                      ? "bg-gradient-to-r from-white/8 to-white/4 border border-white/15 hover:border-white/25 hover:from-white/12 hover:to-white/6"
+                      : "bg-gradient-to-r from-white/30 to-white/20 border border-white/40 hover:border-white/50 hover:from-white/40 hover:to-white/30"
+                  )}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/image.png"
+                    alt="Niladri"
+                    className={cn(
