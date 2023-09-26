@@ -1310,3 +1310,30 @@ export default function ThreadSidebar({
               )}
             </div>
 
+
+            </div>
+            {/* Footer: Auth / User info */}
+            <div className="mt-auto pt-4 pb-4 px-4 border-t border-white/15 shrink-0">
+              <AuthButton />
+            </div>
+          </>
+
+        ) : (
+          <div className="flex-1 overflow-y-hidden flex flex-col items-center pt-4">
+            {/* Projects Section (Collapsed) */}
+            <div className="mb-4 w-full">
+              <ProjectsSection
+                projects={projects}
+                activeProjectId={activeProjectId}
+                onSelectProject={onSelectProject}
+                onCreateProject={onCreateProject}
+                onUpdateProject={onUpdateProject}
+                onDeleteProject={onDeleteProject}
+                collapsed={true}
+              />
+            </div>
+
+            {/* Mini New Chat */}
+            <button
+              title="New Chat"
+              onClick={handleNewChat}
