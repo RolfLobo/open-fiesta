@@ -1415,3 +1415,29 @@ export default function ThreadSidebar({
                     src="/image.png"
                     alt="Niladri"
                     className={cn(
+                      "h-7 w-7 rounded-full object-cover shadow-sm",
+                      theme.mode === 'dark' ? "ring-2 ring-white/20" : "ring-2 ring-gray-300/50"
+                    )}
+                  />
+                  <span className={cn(
+                    "text-sm",
+                    theme.mode === 'dark' ? "text-white/90" : "text-gray-700"
+                  )}>
+                    <span className="font-medium">Made by</span>
+                    <span className="font-bold ml-1">Niladri</span>
+                  </span>
+                </a>
+              </div>
+              <button
+                aria-label="Close"
+                onClick={onCloseMobile}
+                className={cn(
+                  "h-7 w-7 rounded-full backdrop-blur-sm flex items-center justify-center transition-all duration-200 shadow-lg",
+                  theme.mode === 'dark'
+                    ? "bg-gradient-to-r from-white/15 to-white/10 border border-white/20 hover:from-white/25 hover:to-white/15 hover:border-white/30"
+                    : "bg-gradient-to-r from-white/40 to-white/30 border border-white/40 hover:from-white/50 hover:to-white/40 hover:border-white/50"
+                )}
+              >
+                <X size={14} className={theme.mode === 'dark' ? "text-white/90" : "text-gray-700"} />
+              </button>
+            </div>
