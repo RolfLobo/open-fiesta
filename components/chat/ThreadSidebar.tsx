@@ -1337,3 +1337,29 @@ export default function ThreadSidebar({
             <button
               title="New Chat"
               onClick={handleNewChat}
+              className="w-8 h-8 xl:h-10 xl:w-10 rounded-lg xl:rounded-xl cursor-pointer flex items-center justify-center mb-6 mx-auto shrink-0 transition-all duration-200 hover:scale-110 shadow-lg border border-white/20"
+              style={{
+                background: `linear-gradient(135deg, ${accent.primary}, ${accent.primary}dd)`,
+              }}
+            >
+              <Plus size={16} className="text-white" />
+            </button>
+
+            {/* Mini threads */}
+            <div className="flex-1 overflow-y-hidden w-full flex flex-col items-center gap-2 pt-1 pb-2 min-h-0">
+              {threads.map((t) => {
+                const isActive = t.id === activeId;
+                const letter = (t.title || 'Untitled').trim()[0]?.toUpperCase() || 'N';
+                return (
+                  <button
+                    key={t.id}
+                    title={t.title || 'Untitled'}
+                    onClick={() => handleThreadSelect(t.id)}
+                    className={`h-6 w-6 aspect-square rounded-full flex items-center justify-center transition-all duration-200 mx-auto shrink-0 hover:scale-110
+                      ${isActive
+                        ? 'bg-white/20 ring-1 ring-white/30 ring-offset-1 ring-offset-black'
+                        : 'bg-white/5 hover:bg-white/10'
+                      }`}
+                  >
+                    <span className="text-[10px] font-semibold leading-none">{letter}</span>
+                  </button>
