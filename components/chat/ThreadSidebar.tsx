@@ -1363,3 +1363,29 @@ export default function ThreadSidebar({
                   >
                     <span className="text-[10px] font-semibold leading-none">{letter}</span>
                   </button>
+                );
+              })}
+            </div>
+
+            {/* Footer: Auth / User info (collapsed) - Show only user avatar */}
+            <div className="w-full mt-auto pt-4 pb-4 border-t border-white/15 flex justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-white/15 to-white/5 flex items-center justify-center ring-2 ring-white/10 shadow-lg">
+                {avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                ) : (
+                  <span className="text-sm font-bold text-white/90">{initials}</span>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
+
+      {/* Mobile Sidebar */}
+      {mobileSidebarOpen && (
+        <div className="lg:hidden fixed inset-0 z-[70]">
+          <div className="absolute inset-0 bg-black/60" onClick={onCloseMobile} />
+          <div className={cn(
+            "absolute left-0 top-0 h-full w-80 max-w-[85vw] rounded-r-xl border p-4 backdrop-blur-xl shadow-2xl",
+            theme.mode === 'dark'
