@@ -1597,3 +1597,29 @@ export default function ThreadSidebar({
                       <div className="space-y-2">
                         {groupedThreads.older.map((t) => (
                           <ThreadItem
+                            key={t.id}
+                            thread={t}
+                            isActive={t.id === activeId}
+                            onSelect={() => {
+                              if (t.pageType === 'compare') {
+                                window.location.href = '/compare';
+                              } else {
+                                handleThreadSelect(t.id);
+                              }
+                              onCloseMobile();
+                            }}
+                            onMenuToggle={(id) => setOpenMenuId(prev => prev === id ? null : id)}
+                            isMenuOpen={openMenuId === t.id}
+                            onDelete={(id) => {
+                              setOpenMenuId(null);
+                              setConfirmDeleteId(id);
+                            }}
+                            projects={projects}
+                            selectedModels={selectedModels}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
