@@ -1571,3 +1571,29 @@ export default function ThreadSidebar({
                               } else {
                                 handleThreadSelect(t.id);
                               }
+                              onCloseMobile();
+                            }}
+                            onMenuToggle={(id) => setOpenMenuId(prev => prev === id ? null : id)}
+                            isMenuOpen={openMenuId === t.id}
+                            onDelete={(id) => {
+                              setOpenMenuId(null);
+                              setConfirmDeleteId(id);
+                            }}
+                            projects={projects}
+                            selectedModels={selectedModels}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Older */}
+                  {groupedThreads.older.length > 0 && (
+                    <div className="mb-3">
+                      <div className={cn(
+                        "text-xs font-semibold uppercase tracking-wider mb-3 px-2",
+                        theme.mode === 'dark' ? "text-white/60" : "text-gray-700/80"
+                      )}>Older</div>
+                      <div className="space-y-2">
+                        {groupedThreads.older.map((t) => (
+                          <ThreadItem
