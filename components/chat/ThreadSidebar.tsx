@@ -1649,3 +1649,29 @@ export default function ThreadSidebar({
             onDeleteThread(confirmDeleteId);
           }
           setConfirmDeleteId(null);
+        }}
+      />
+    </>
+  );
+}
+
+// Simplified sidebar used on the Home page – extracted from app/page.tsx
+// Usage: import { SimpleThreadSidebar } from '@/components/chat/ThreadSidebar'
+type SimpleSidebarProps = {
+  isDark: boolean;
+  sidebarOpen: boolean;
+  onClose: () => void;
+  onNewChat?: () => void;
+};
+
+export function SimpleThreadSidebar({ isDark, sidebarOpen, onClose, onNewChat }: SimpleSidebarProps) {
+  const [search, setSearch] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
+
+  return (
+    <div
+      className={cn(
+        'flex flex-col transition-all duration-300 border-r rounded-r-2xl',
+        'fixed lg:relative z-30 h-full',
+        sidebarOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-0 lg:overflow-hidden',
+        isDark ? 'bg-black/40 border-gray-800 backdrop-blur-sm' : 'bg-white/70 border-orange-300 backdrop-blur-sm',
