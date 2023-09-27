@@ -1675,3 +1675,29 @@ export function SimpleThreadSidebar({ isDark, sidebarOpen, onClose, onNewChat }:
         'fixed lg:relative z-30 h-full',
         sidebarOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-0 lg:overflow-hidden',
         isDark ? 'bg-black/40 border-gray-800 backdrop-blur-sm' : 'bg-white/70 border-orange-300 backdrop-blur-sm',
+      )}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-inherit rounded-tr-2xl">
+        <h1 className={cn('text-xl font-semibold', isDark ? 'text-white' : 'text-gray-800')}>Made by Niladri</h1>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onClose}
+          className={cn('lg:hidden rounded-xl', isDark ? 'text-gray-300 hover:bg-gray-800/50' : 'text-gray-800 hover:bg-orange-100')}
+        >
+          <X className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <div className="p-4">
+        <Button
+          onClick={() => onNewChat?.()}
+          className={cn(
+            'w-full justify-start gap-2 rounded-xl transition-all duration-200 hover:scale-[1.02]',
+            isDark ? 'bg-red-600/20 hover:bg-red-600/30 text-red-300 border-red-600/30' : 'bg-orange-200 hover:bg-orange-300 text-orange-800 border-orange-400',
+          )}
+          variant="outline"
+        >
+          <Plus className="h-4 w-4" />
+          New Chat
