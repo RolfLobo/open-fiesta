@@ -1623,3 +1623,29 @@ export default function ThreadSidebar({
                   )}
                 </>
               )}
+              </div>
+            </div>
+
+            {/* Footer: Auth / User info (mobile) */}
+            <div className={cn(
+              "absolute bg-black left-0 bottom-0 w-80 max-w-[85vw] p-4 border-t",
+              theme.mode === 'dark' ? "border-white/10" : "border-gray-300/40"
+            )}>
+              <AuthButton />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <ConfirmDialog
+        open={!!confirmDeleteId}
+        title="Delete this chat?"
+        message="This cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onCancel={() => setConfirmDeleteId(null)}
+        onConfirm={() => {
+          if (confirmDeleteId) {
+            onDeleteThread(confirmDeleteId);
+          }
+          setConfirmDeleteId(null);
