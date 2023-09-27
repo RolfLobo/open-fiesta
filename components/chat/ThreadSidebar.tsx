@@ -1701,3 +1701,29 @@ export function SimpleThreadSidebar({ isDark, sidebarOpen, onClose, onNewChat }:
         >
           <Plus className="h-4 w-4" />
           New Chat
+        </Button>
+      </div>
+
+      <div className="px-4 pb-3">
+        <div className="flex">
+          <div
+            className={cn(
+              'flex items-center gap-2 rounded-2xl overflow-hidden transition-all duration-300',
+              isDark ? 'bg-gray-900/70 hover:bg-gray-900/80' : 'bg-orange-50/80 hover:bg-orange-50/90',
+              searchFocused || search.length > 0 ? 'w-full ring-2 ring-offset-0 ring-red-500/20 dark:ring-red-500/20' : 'w-32',
+            )}
+          >
+            <Search className={cn('ml-3 h-4 w-4 shrink-0', isDark ? 'text-gray-400' : 'text-gray-600')} />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
+              placeholder="Search your threads..."
+              className={cn('bg-transparent border-0 outline-none text-sm w-full py-2 pr-2 placeholder:transition-all placeholder:duration-300', isDark ? 'text-white placeholder:text-gray-500' : 'text-gray-800 placeholder:text-gray-500')}
+            />
+            {search.length > 0 && (
+              <button
+                onClick={() => setSearch('')}
+                className={cn('mr-2 rounded-md p-1 transition-colors', isDark ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-600 hover:bg-orange-100')}
+                aria-label="Clear search"
