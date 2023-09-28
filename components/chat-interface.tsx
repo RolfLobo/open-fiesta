@@ -446,3 +446,29 @@ export type ChatInterfaceRef = {
 export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean }>(function ChatInterface(
   { hideInput = false },
   ref
+) {
+  const [isDark, setIsDark] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [loadingType, setLoadingType] = useState<'text' | 'image' | 'audio'>('text')
+  const [messages, setMessages] = useState<Message[]>([])
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const lastModelLabelRef = useRef<string | undefined>(undefined)
+  const [customModels] = useCustomModels()
+  const allModels = mergeModels(customModels)
+
+  // Compute brand logo from a model
+  const getBrandFromModel = (model?: AiModel): { src: string; alt: string } => {
+    const fallback = '/brand.svg'
+    if (!model) return { src: fallback, alt: 'Open Fiesta' }
+    const id = model.id.toLowerCase()
+    const m = model.model.toLowerCase()
+    const lbl = model.label.toLowerCase()
+    if (m.startsWith('gpt-') || m.startsWith('o3') || m.startsWith('o4') || m.includes('openai') || /gpt\b/.test(lbl)) {
+      return { src: 'https://cdn.simpleicons.org/openai/ffffff', alt: 'OpenAI / ChatGPT' }
+    }
+    if (m.includes('gemini') || m.includes('gemma') || id.includes('gemini')) {
+      return { src: 'https://cdn.simpleicons.org/googlegemini/ffffff', alt: 'Google Gemini' }
+    }
+    if (m.includes('claude') || id.includes('claude')) {
+      return { src: 'https://cdn.simpleicons.org/anthropic/ffffff', alt: 'Anthropic / Claude' }
+    }
