@@ -498,3 +498,28 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
       console.log('✅ Calling parent handleSubmit');
       (window as any).handleSubmit(text);
     } else {
+      console.error('❌ No handleSubmit function found on window');
+    }
+  }
+
+  // Expose an imperative API so parents (Home page) can send via their own inputs
+  useImperativeHandle(ref, () => ({
+    sendTextExternal: (text: string, opts?: { modelLabel?: string }) => sendText(text, opts?.modelLabel),
+    loadMessages: (newMessages: Message[]) => setMessages(newMessages),
+    setLoading: (on: boolean, opts?: { modelLabel?: string; modelType?: 'text' | 'image' | 'audio' }) => {
+      if (typeof opts?.modelLabel === 'string') {
+        lastModelLabelRef.current = opts.modelLabel
+      }
+      if (opts?.modelType) {
+        setLoadingType(opts.modelType)
+      }
+      setIsLoading(on)
+    },
+  }))
+
+  // Removed action buttons handler (no longer used)
+
+  const handleExampleClick = (prompt: string) => {
+    sendText(prompt)
+    console.log(`[v0] Example clicked: ${prompt}`)
+  }
