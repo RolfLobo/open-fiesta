@@ -420,3 +420,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
 "use client"
 import React, { forwardRef, useImperativeHandle } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import HomeAiInput from "@/components/home/HomeAiInput"
+// removed action icons import (Sparkles, Search, Code, GraduationCap)
+import { mergeModels, useCustomModels } from "@/lib/customModels"
+import type { AiModel } from "@/lib/types"
+import MessageDisplay from '@/components/chat/MessageDisplay'
+
+interface Message {
+  id: string
+  content: string
+  role: "user" | "assistant"
+  timestamp: Date
+  avatarUrl?
+    : string // optional per-message avatar (model logo)
+  avatarAlt?: string
+}
+
+export type ChatInterfaceRef = {
+  sendTextExternal: (text: string, opts?: { modelLabel?: string }) => void
+  loadMessages: (messages: Message[]) => void
+  setLoading: (isLoading: boolean, opts?: { modelLabel?: string; modelType?: 'text' | 'image' | 'audio' }) => void
+}
+
+export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean }>(function ChatInterface(
+  { hideInput = false },
+  ref
