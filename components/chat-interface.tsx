@@ -416,3 +416,7 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
     </div>
   )
 })
+
+"use client"
+import React, { forwardRef, useImperativeHandle } from "react"
+import { motion, AnimatePresence } from "framer-motion"

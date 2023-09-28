@@ -1727,3 +1727,26 @@ export function SimpleThreadSidebar({ isDark, sidebarOpen, onClose, onNewChat }:
                 onClick={() => setSearch('')}
                 className={cn('mr-2 rounded-md p-1 transition-colors', isDark ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-600 hover:bg-orange-100')}
                 aria-label="Clear search"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Today Section */}
+      <div className="px-4 pb-2">
+        <h3 className={cn('text-sm font-medium mb-2', isDark ? 'text-gray-400' : 'text-gray-700')}>Today</h3>
+        <div className={cn('text-sm p-3 rounded-xl cursor-pointer hover:bg-opacity-80 transition-all duration-200', isDark ? 'text-gray-300 hover:bg-gray-800/50' : 'text-gray-800 hover:bg-orange-100')}>Title for conversation</div>
+      </div>
+
+      {/* Spacer */}
+      <div className="flex-1" />
+
+      <div className="p-4 border-t border-inherit">
+        <AuthButton />
+      </div>
+    </div>
+  );
+}
