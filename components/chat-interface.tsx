@@ -472,3 +472,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
     if (m.includes('claude') || id.includes('claude')) {
       return { src: 'https://cdn.simpleicons.org/anthropic/ffffff', alt: 'Anthropic / Claude' }
     }
+    return { src: fallback, alt: 'Open Fiesta' }
+  }
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"))
+    }
+
+    checkTheme()
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
+
+  const sendText = async (text: string, modelLabel?: string) => {
+    console.log('🎯 ChatInterface.sendText called with:', text);
+    // Delegate to parent's handleSubmit instead of managing messages internally
+    if (typeof window !== 'undefined' && (window as any).handleSubmit) {
+      console.log('✅ Calling parent handleSubmit');
+      (window as any).handleSubmit(text);
+    } else {
