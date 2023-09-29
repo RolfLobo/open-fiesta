@@ -523,3 +523,30 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
     sendText(prompt)
     console.log(`[v0] Example clicked: ${prompt}`)
   }
+
+  const AnimatedOrb = () => (
+    <motion.div
+      className="relative w-10 h-10 lg:w-12 lg:h-12 rounded-full flex-shrink-0"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
+    >
+      {/* Outer glow */}
+      <motion.div
+        className={`absolute -inset-2 rounded-full blur-lg ${
+          isDark
+            ? "bg-gradient-radial from-red-500/40 via-orange-600/20 to-transparent"
+            : "bg-gradient-radial from-orange-400/40 via-red-500/20 to-transparent"
+        }`}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.6, 0.9, 0.6],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Main orb body */}
