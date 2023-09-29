@@ -602,3 +602,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
         animate={{
           scale: [0.8, 1.2, 0.8],
           opacity: [0.4, 0.8, 0.4],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+    </motion.div>
+  )
+
+  // Compact avatar component for assistant
+  const AssistantAvatar: React.FC<{ url?: string; alt?: string }> = ({ url, alt }) => {
+    if (url) {
+      return (
+        <div className="relative w-10 h-10 lg:w-12 lg:h-12 flex-shrink-0 rounded-full ring-1 ring-white/10 overflow-hidden bg-white/5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={url}
+            alt={alt || 'Model'}
+            className="w-full h-full object-contain p-1"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/brand.svg'
+            }}
+          />
+        </div>
+      )
