@@ -706,3 +706,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
                           />
                         ))}
                       </div>
+                      <span className="text-xs lg:text-sm text-zinc-500">Thinking...</span>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+            <div className="h-8" />
+            <div ref={messagesEndRef} />
+          </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center min-h-full p-4 lg:p-6">
+          <div className="relative w-full max-w-4xl">
+            {/* Soft radial backdrop to blend with page background */}
+            <div
+              aria-hidden
+              className={`pointer-events-none absolute -inset-x-10 -top-6 h-[520px] rounded-[40px] blur-2xl -z-10 ${
+                isDark
+                  ? 'bg-[radial-gradient(60%_60%_at_50%_30%,rgba(255,90,90,0.08)_0%,rgba(255,120,60,0.06)_25%,rgba(0,0,0,0)_70%)]'
+                  : 'bg-[radial-gradient(60%_60%_at_50%_30%,rgba(255,176,102,0.20)_0%,rgba(255,214,150,0.14)_30%,rgba(255,255,255,0)_75%)]'
+              }`}
+            />
+            {/* Action Buttons removed */}
+
+            {/* Heading */}
+            <motion.div
+              className="mb-6 lg:mb-8 px-1"
