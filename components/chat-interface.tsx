@@ -732,3 +732,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
             {/* Heading */}
             <motion.div
               className="mb-6 lg:mb-8 px-1"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+            >
+              <h2
+                className={`${
+                  isDark
+                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/70'
+                    : 'text-transparent bg-clip-text bg-gradient-to-r from-orange-900 via-orange-800 to-orange-700'
+                } text-lg lg:text-2xl font-semibold tracking-tight`}
+              >
+                What do you want to ask?
+              </h2>
+              <p className={`${isDark ? 'text-white/60' : 'text-orange-900/70'} text-xs lg:text-sm mt-1`}>
+                Try a suggestion below or type your own question.
+              </p>
+            </motion.div>
+
+            {/* Example Prompts */}
+            <motion.div
+              style={{ perspective: 1200 }}
+              className="flex flex-wrap gap-3 lg:gap-4 mb-16 lg:mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
