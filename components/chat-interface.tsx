@@ -550,3 +550,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
       />
 
       {/* Main orb body */}
+      <motion.div
+        className={`absolute inset-0 rounded-full ${
+          isDark
+            ? "bg-gradient-radial from-red-400/90 via-red-500/80 to-red-600/90"
+            : "bg-gradient-radial from-orange-300/90 via-orange-400/80 to-orange-500/90"
+        } shadow-2xl`}
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Inner highlight */}
+      <motion.div
+        className={`absolute inset-1 rounded-full ${
+          isDark
+            ? "bg-gradient-radial from-red-300/80 via-red-400/60 to-transparent"
+            : "bg-gradient-radial from-orange-200/80 via-orange-300/60 to-transparent"
+        }`}
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.1, 1],
