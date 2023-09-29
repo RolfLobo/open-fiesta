@@ -654,3 +654,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
                       // Pass edit functionality to parent
                       if (typeof window !== 'undefined' && (window as any).handleEditMessage) {
                         (window as any).handleEditMessage(messageId, content)
+                      }
+                    }}
+                    onShareMessage={(message) => {
+                      // Pass share functionality to parent
+                      if (typeof window !== 'undefined' && (window as any).handleShareMessage) {
+                        (window as any).handleShareMessage(message)
+                      }
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            {/* Loading animation with type-specific skeletons */}
+            {isLoading && (
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
+                className="flex items-start gap-3 lg:gap-4 p-3 lg:p-4"
+              >
+                <AssistantAvatar />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs lg:text-sm font-medium text-zinc-400">
