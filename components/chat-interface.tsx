@@ -628,3 +628,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
           />
         </div>
       )
+    }
+    return <AnimatedOrb />
+  }
+
+  return (
+    <div className="relative h-full overflow-hidden">
+      <div className="absolute inset-0 overflow-y-auto" style={{ paddingBottom: hideInput ? "80px" : "200px" }}>
+        {messages.length > 0 ? (
+          <div className="p-3 lg:p-4 space-y-4">
+            <AnimatePresence>
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                  transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
+                >
+                  <MessageDisplay 
+                    message={msg} 
+                    isDark={isDark} 
+                    AssistantAvatar={AssistantAvatar}
+                    onEditMessage={(messageId, content) => {
+                      // Pass edit functionality to parent
+                      if (typeof window !== 'undefined' && (window as any).handleEditMessage) {
+                        (window as any).handleEditMessage(messageId, content)
