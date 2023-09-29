@@ -680,3 +680,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xs lg:text-sm font-medium text-zinc-400">
+                      {lastModelLabelRef.current || 'AI Assistant'}
+                    </span>
+                  </div>
+                  
+                  {/* Only show a minimal text loading indicator; media placeholders are handled by MarkdownLite */}
+                  {loadingType === 'text' && (
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            className={`w-2 h-2 rounded-full ${
+                              isDark ? "bg-red-400" : "bg-orange-500"
+                            }`}
+                            animate={{
+                              scale: [1, 1.2, 1],
+                              opacity: [0.5, 1, 0.5],
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              repeat: Number.POSITIVE_INFINITY,
+                              delay: i * 0.2,
+                            }}
+                          />
+                        ))}
+                      </div>
