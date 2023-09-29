@@ -576,3 +576,29 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
         animate={{
           rotate: [0, 360],
           scale: [1, 1.1, 1],
+        }}
+        transition={{
+          rotate: { duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
+          scale: { duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
+        }}
+      />
+
+      {/* Core light */}
+      <motion.div
+        className={`absolute inset-3 rounded-full ${isDark ? "bg-red-200/90" : "bg-orange-100/90"} backdrop-blur-sm`}
+        animate={{
+          opacity: [0.8, 1, 0.8],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Sparkle effect */}
+      <motion.div
+        className={`absolute inset-4 rounded-full ${isDark ? "bg-white/60" : "bg-white/80"} blur-sm`}
+        animate={{
+          scale: [0.8, 1.2, 0.8],
+          opacity: [0.4, 0.8, 0.4],
