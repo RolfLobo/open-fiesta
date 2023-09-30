@@ -783,3 +783,30 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
                         : 'bg-gradient-to-b from-orange-400/60 via-orange-300/40 to-red-400/50'
                     }`}
                   />
+
+                  {/* Subtle glow overlay on hover */}
+                  <span
+                    className={`pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                      isDark
+                        ? 'bg-gradient-to-r from-red-500/5 via-transparent to-transparent'
+                        : 'bg-gradient-to-r from-orange-400/10 via-transparent to-transparent'
+                    }`}
+                  />
+
+                  {/* Center soft glow for blend */}
+                  <span
+                    className={`pointer-events-none absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 ${
+                      isDark ? 'bg-[radial-gradient(40%_60%_at_30%_50%,rgba(255,120,90,0.12)_0%,rgba(0,0,0,0)_70%)]' : 'bg-[radial-gradient(40%_60%_at_30%_50%,rgba(255,170,120,0.25)_0%,rgba(255,255,255,0)_70%)]'
+                    }`}
+                  />
+
+                  {/* Top glossy highlight for glass effect */}
+                  <span
+                    className={`pointer-events-none absolute left-2 right-2 top-0 h-px opacity-50 ${
+                      isDark ? 'bg-white/15' : 'bg-orange-400/30'
+                    }`}
+                  />
+
+                  {/* Bottom soft shadow inside the card to add depth */}
+                  <span
+                    className={`pointer-events-none absolute left-2 right-2 bottom-0 h-6 rounded-b-2xl ${
