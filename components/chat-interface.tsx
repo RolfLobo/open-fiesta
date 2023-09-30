@@ -758,3 +758,28 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
+              {[
+                "Write a haiku about Monday mornings.",
+                "Explain quantum physics like I'm a golden retriever.",
+                "Invent a new ice‑cream flavor and its ad.",
+                "Roast me gently, but make it motivating.",
+              ].map((prompt, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => handleExampleClick(prompt)}
+                  className={`group cursor-pointer relative overflow-hidden inline-flex w-auto max-w-full text-left px-4 lg:px-6 py-3 lg:py-4 rounded-2xl text-sm lg:text-base font-medium transition-all duration-300 backdrop-blur-lg shadow-md hover:shadow-xl will-change-transform ${
+                    isDark
+                      ? "text-white/85 hover:text-white bg-gradient-to-br from-black/35 via-black/25 to-black/15 border border-white/10 hover:border-white/20 ring-1 ring-red-400/10 hover:ring-red-400/20 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+                      : "text-orange-950/80 hover:text-orange-950 bg-gradient-to-br from-orange-50/80 to-orange-100/70 border border-orange-200/70 hover:border-orange-300"
+                  }`}
+                  whileHover={{ x: 4, y: -2, scale: 1.02, rotateX: 2, rotateY: -1 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {/* Left accent stripe */}
+                  <span
+                    className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${
+                      isDark
+                        ? 'bg-gradient-to-b from-red-400/40 via-red-500/25 to-orange-400/40'
+                        : 'bg-gradient-to-b from-orange-400/60 via-orange-300/40 to-red-400/50'
+                    }`}
+                  />
