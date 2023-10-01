@@ -70,3 +70,22 @@ export default function ComponentErrorBoundary({
         </p>
         <button
           onClick={() => window.location.reload()}
+          className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+        >
+          Refresh Page
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <PageErrorBoundary
+      fallbackComponent={customFallback}
+      onError={(error, errorInfo) => {
+        console.error(`Error in ${componentName}:`, error, errorInfo);
+      }}
+    >
+      {children}
+    </PageErrorBoundary>
+  );
+}
