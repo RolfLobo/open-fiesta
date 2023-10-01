@@ -810,3 +810,28 @@ export const ChatInterface = forwardRef<ChatInterfaceRef, { hideInput?: boolean 
                   {/* Bottom soft shadow inside the card to add depth */}
                   <span
                     className={`pointer-events-none absolute left-2 right-2 bottom-0 h-6 rounded-b-2xl ${
+                      isDark
+                        ? 'bg-gradient-to-t from-black/40 via-black/0 to-transparent'
+                        : 'bg-gradient-to-t from-orange-900/10 via-transparent to-transparent'
+                    }`}
+                  />
+
+                  <span className="relative z-[1] whitespace-normal">{prompt}</span>
+                </motion.button>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+        )}
+      </div>
+
+      {!hideInput && (
+        <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 backdrop-blur-md bg-gradient-to-t from-black/20 to-transparent z-20">
+          <div className="w-full max-w-4xl mx-auto">
+            <HomeAiInput isDark={isDark} onSubmit={(t) => sendText(t)} />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+})
