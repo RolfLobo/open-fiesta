@@ -94,3 +94,12 @@ export default function GlobalErrorHandler({ children }: GlobalErrorHandlerProps
 
   return <>{children}</>;
 }
+
+'use client';
+
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+interface GlobalErrorHandlerProps {
+  children: React.ReactNode;
+}

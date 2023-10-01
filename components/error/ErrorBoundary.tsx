@@ -132,3 +132,20 @@ class ErrorBoundary extends Component<Props, State> {
                   <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
                     Error Details (Development)
                   </summary>
+                  <pre className="mt-2 p-4 bg-muted rounded-md text-xs overflow-auto max-h-40">
+                    {this.state.error.toString()}
+                    {this.state.error.stack}
+                  </pre>
+                </details>
+              )}
+            </div>
+          </div>
+        )
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
