@@ -103,3 +103,29 @@ import { toast } from 'react-toastify';
 interface GlobalErrorHandlerProps {
   children: React.ReactNode;
 }
+
+export default function GlobalErrorHandler({ children }: GlobalErrorHandlerProps) {
+  useEffect(() => {
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason);
+
+      if (process.env.NODE_ENV === 'production') {
+        toast.error('Something went wrong. Please try again.');
+      }
+
+      event.preventDefault();
+    };
+
+    const handleGlobalError = (event: ErrorEvent) => {
+      console.error('Global JavaScript error:', event.error || event.message);
+
+      if (process.env.NODE_ENV === 'production') {
+        toast.error('An unexpected error occurred.');
+      }
+    };
+
+    const handleResourceError = (event: Event) => {
+      const target = event.target as EventTarget | null;
+
+      // Ignore errors that bubble from window without a concrete target
+      if (!target || target === window) {
