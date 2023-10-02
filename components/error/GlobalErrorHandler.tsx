@@ -155,3 +155,29 @@ export default function GlobalErrorHandler({ children }: GlobalErrorHandlerProps
             async: target.async,
             defer: target.defer,
           });
+          return;
+        }
+        if (target instanceof HTMLLinkElement) {
+          console.error('Resource loading error: LINK', {
+            href: target.href,
+            rel: target.rel,
+            as: (target as HTMLLinkElement).as,
+          });
+          return;
+        }
+        if (target instanceof Element) {
+          console.error('Resource loading error:', target.tagName);
+          return;
+        }
+
+        // Fallback: unknown target type
+        console.error('Resource loading error (unknown target):', event);
+      } catch (e) {
+        // Ensure error handler never throws
+        console.error('Resource loading error (handler exception):', e);
+      }
+    };
+
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    window.addEventListener('error', handleGlobalError);
+    window.addEventListener('error', handleResourceError, true); // Use capture phase for resource errors
