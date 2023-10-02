@@ -73,3 +73,18 @@ class PageErrorBoundary extends Component<Props, State> {
 }
 
 export default PageErrorBoundary;
+
+'use client';
+
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallbackComponent?: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}

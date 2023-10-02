@@ -181,3 +181,13 @@ export default function GlobalErrorHandler({ children }: GlobalErrorHandlerProps
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
     window.addEventListener('error', handleGlobalError);
     window.addEventListener('error', handleResourceError, true); // Use capture phase for resource errors
+
+    return () => {
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+      window.removeEventListener('error', handleGlobalError);
+      window.removeEventListener('error', handleResourceError, true);
+    };
+  }, []);
+
+  return <>{children}</>;
+}
