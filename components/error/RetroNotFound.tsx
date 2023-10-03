@@ -664,3 +664,29 @@ const RetroNotFound: React.FC = () => {
               </div>
             </div>
             <div className="lines">
+              <div className="line1" />
+              <div className="line2" />
+              <div className="line3" />
+            </div>
+            <div className="buttons_div">
+              <div className="b1"><div /></div>
+              <div className="b2" />
+              <div className="speakers">
+                <div className="g1">
+                  <div className="g11" />
+                  <div className="g12" />
+                  <div className="g13" />
+                </div>
+                <div className="g" />
+                <div className="g" />
+              </div>
+            </div>
+          </div>
+          <div className="bottom">
+            <div className="base1" />
+            <div className="base2" />
+            <div className="base3" />
+          </div>
+        </div>
+        <div className="text_404">
+          <div className="text_4041">4</div>
