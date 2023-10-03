@@ -620,3 +620,21 @@ const StyledWrapper = styled.div`
 `;
 
 export default RetroNotFound;
+
+"use client";
+import React from 'react';
+import styled from 'styled-components';
+
+const RetroNotFound: React.FC = () => {
+  return (
+    <StyledWrapper className="min-h-screen w-full flex items-center justify-center">
+      <div className="main_wrapper">
+        <div className="main">
+          <div className="antenna">
+            <div className="antenna_shadow" />
+            <div className="a1" />
+            <div className="a1d" />
+            <div className="a2" />
+            <div className="a2d" />
+            <div className="a_base" />
+          </div>

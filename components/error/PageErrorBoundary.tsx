@@ -141,3 +141,11 @@ class PageErrorBoundary extends Component<Props, State> {
             </details>
           )}
         </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default PageErrorBoundary;
