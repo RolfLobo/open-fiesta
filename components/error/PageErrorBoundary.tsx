@@ -88,3 +88,30 @@ interface State {
   hasError: boolean;
   error?: Error;
 }
+
+class PageErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Page Error Boundary caught an error:', error, errorInfo);
+
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallbackComponent) {
+        return this.props.fallbackComponent;
+      }
+
+      // Default fallback UI for page sections
+      return (
