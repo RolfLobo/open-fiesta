@@ -690,3 +690,29 @@ const RetroNotFound: React.FC = () => {
         </div>
         <div className="text_404">
           <div className="text_4041">4</div>
+          <div className="text_4042">0</div>
+          <div className="text_4043">4</div>
+        </div>
+      </div>
+    </StyledWrapper>
+  );
+};
+
+const StyledWrapper = styled.div`
+  /* Design Inspired by one of Stefan Devai's Design on Dribble */
+
+  .main_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30em;
+    height: 30em;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5em;
+  }
