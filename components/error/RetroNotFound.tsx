@@ -716,3 +716,29 @@ const StyledWrapper = styled.div`
     justify-content: center;
     margin-top: 5em;
   }
+
+  .antenna {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: #f27405;
+    margin-bottom: -6em;
+    margin-left: 0em;
+    z-index: -1;
+  }
+  .antenna_shadow {
+    position: absolute;
+    background-color: transparent;
+    width: 50px;
+    height: 56px;
+    margin-left: 1.68em;
+    border-radius: 45%;
+    transform: rotate(140deg);
+    border: 4px solid transparent;
+    box-shadow:
+      inset 0px 16px #a85103,
+      inset 0px 16px 1px 1px #a85103;
+    -moz-box-shadow:
+      inset 0px 16px #a85103,
+      inset 0px 16px 1px 1px #a85103;
