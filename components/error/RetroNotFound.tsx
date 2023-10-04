@@ -742,3 +742,29 @@ const StyledWrapper = styled.div`
     -moz-box-shadow:
       inset 0px 16px #a85103,
       inset 0px 16px 1px 1px #a85103;
+  }
+  .antenna::after {
+    content: "";
+    position: absolute;
+    margin-top: -9.4em;
+    margin-left: 0.4em;
+    transform: rotate(-25deg);
+    width: 1em;
+    height: 0.5em;
+    border-radius: 50%;
+    background-color: #f69e50;
+  }
+  .antenna::before {
+    content: "";
+    position: absolute;
+    margin-top: 0.2em;
+    margin-left: 1.25em;
+    transform: rotate(-20deg);
+    width: 1.5em;
+    height: 0.8em;
+    border-radius: 50%;
+    background-color: #f69e50;
+  }
+  .a1 {
+    position: relative;
+    top: -102%;
