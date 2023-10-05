@@ -820,3 +820,29 @@ const StyledWrapper = styled.div`
       49% 32%,
       30% 38%
     );
+    transform: rotate(-8deg);
+  }
+  .a2d {
+    position: relative;
+    top: -294%;
+    left: 94%;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: #979797;
+    z-index: 99;
+  }
+
+  .notfound_text {
+    background-color: black;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    font-size: 0.75em;
+    color: white;
+    letter-spacing: 0;
+    border-radius: 5px;
+    z-index: 10;
+  }
+  .tv {
+    width: 17em;
