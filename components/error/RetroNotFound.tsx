@@ -768,3 +768,29 @@ const StyledWrapper = styled.div`
   .a1 {
     position: relative;
     top: -102%;
+    left: -130%;
+    width: 12em;
+    height: 5.5em;
+    border-radius: 50px;
+    background-image: linear-gradient(
+      #171717,
+      #171717,
+      #353535,
+      #353535,
+      #171717
+    );
+    transform: rotate(-29deg);
+    clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
+  }
+  .a1d {
+    position: relative;
+    top: -211%;
+    left: -35%;
+    transform: rotate(45deg);
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: #979797;
+    z-index: 99;
+  }
