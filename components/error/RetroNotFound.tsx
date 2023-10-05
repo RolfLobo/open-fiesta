@@ -794,3 +794,29 @@ const StyledWrapper = styled.div`
     background-color: #979797;
     z-index: 99;
   }
+  .a2 {
+    position: relative;
+    top: -210%;
+    left: -10%;
+    width: 12em;
+    height: 4em;
+    border-radius: 50px;
+    background-color: #171717;
+    background-image: linear-gradient(
+      #171717,
+      #171717,
+      #353535,
+      #353535,
+      #171717
+    );
+    margin-right: 5em;
+    clip-path: polygon(
+      47% 0,
+      47% 0,
+      34% 34%,
+      54% 25%,
+      32% 100%,
+      29% 96%,
+      49% 32%,
+      30% 38%
+    );
