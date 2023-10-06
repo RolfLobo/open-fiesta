@@ -898,3 +898,29 @@ const StyledWrapper = styled.div`
   }
   .screen {
     width: 13em;
+    height: 7.85em;
+    font-family: Montserrat, ui-sans-serif, system-ui;
+    border: 2px solid #1d0e01;
+    background:
+      repeating-radial-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 50% 0/2500px 2500px,
+      repeating-conic-gradient(#000 0 0.0001%, #ffffff 0 0.0002%) 60% 60%/2500px 2500px;
+    background-blend-mode: difference;
+    animation: b 0.2s infinite alternate;
+    border-radius: 10px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #252525;
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
+
+  .screenM {
+    width: 13em;
+    height: 7.85em;
+    position: relative;
+    font-family: Montserrat, ui-sans-serif, system-ui;
+    background: linear-gradient(
+      to right,
