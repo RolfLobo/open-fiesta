@@ -872,3 +872,29 @@ const StyledWrapper = styled.div`
     margin-top: 0.25em;
     margin-left: -0.25em;
     height: 12px;
+    width: 12px;
+  }
+  .display_div {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    border-radius: 15px;
+    box-shadow: 3.5px 3.5px 0px #e69635;
+  }
+  .screen_out {
+    width: auto;
+    height: auto;
+
+    border-radius: 10px;
+  }
+  .screen_out1 {
+    width: 11em;
+    height: 7.75em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .screen {
+    width: 13em;
