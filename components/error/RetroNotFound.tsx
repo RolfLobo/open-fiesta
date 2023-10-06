@@ -924,3 +924,29 @@ const StyledWrapper = styled.div`
     font-family: Montserrat, ui-sans-serif, system-ui;
     background: linear-gradient(
       to right,
+      #002fc6 0%,
+      #002bb2 14.2857142857%,
+      #3a3a3a 14.2857142857%,
+      #303030 28.5714285714%,
+      #ff0afe 28.5714285714%,
+      #f500f4 42.8571428571%,
+      #6c6c6c 42.8571428571%,
+      #626262 57.1428571429%,
+      #0affd9 57.1428571429%,
+      #00f5ce 71.4285714286%,
+      #3a3a3a 71.4285714286%,
+      #303030 85.7142857143%,
+      white 85.7142857143%,
+      #fafafa 100%
+    );
+    border-radius: 10px;
+    border: 2px solid black;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #252525;
+    letter-spacing: 0.15em;
+    text-align: center;
+    overflow: hidden;
