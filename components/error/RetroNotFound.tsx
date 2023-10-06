@@ -846,3 +846,29 @@ const StyledWrapper = styled.div`
   }
   .tv {
     width: 17em;
+    height: 9em;
+    margin-top: 3em;
+    border-radius: 15px;
+    background-color: #d36604;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #1d0e01;
+    box-shadow: inset 0.2em 0.2em #e69635;
+  }
+  .tv::after {
+    content: "";
+    position: absolute;
+    width: 17em;
+    height: 9em;
+    border-radius: 15px;
+    background:
+      repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
+      repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
+    background-blend-mode: difference;
+    opacity: 0.09;
+  }
+  .curve_svg {
+    position: absolute;
+    margin-top: 0.25em;
+    margin-left: -0.25em;
+    height: 12px;
