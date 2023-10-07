@@ -1002,3 +1002,29 @@ const StyledWrapper = styled.div`
 
   @keyframes b {
     100% {
+      background-position:
+        50% 0,
+        60% 50%;
+    }
+  }
+
+  .lines {
+    display: flex;
+    column-gap: 0.1em;
+    align-self: flex-end;
+  }
+  .line1,
+  .line3 {
+    width: 2px;
+    height: 0.5em;
+    background-color: black;
+    border-radius: 25px 25px 0px 0px;
+    margin-top: 0.5em;
+  }
+  .line2 {
+    flex-grow: 1;
+    width: 2px;
+    height: 1em;
+    background-color: black;
+    border-radius: 25px 25px 0px 0px;
+  }
