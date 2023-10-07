@@ -1054,3 +1054,29 @@ const StyledWrapper = styled.div`
       inset 2px 2px 1px #b49577,
       -2px 0px #513721,
       -2px 0px 0px 1px black;
+  }
+  .b1::before {
+    content: "";
+    position: absolute;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    transform: rotate(47deg);
+    border-radius: 5px;
+    width: 0.1em;
+    height: 0.4em;
+    background-color: #000000;
+  }
+  .b1::after {
+    content: "";
+    position: absolute;
+    margin-top: 0.9em;
+    margin-left: 0.8em;
+    transform: rotate(47deg);
+    border-radius: 5px;
+    width: 0.1em;
+    height: 0.55em;
+    background-color: #000000;
+  }
+  .b1 div {
+    content: "";
+    position: absolute;
