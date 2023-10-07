@@ -950,3 +950,29 @@ const StyledWrapper = styled.div`
     letter-spacing: 0.15em;
     text-align: center;
     overflow: hidden;
+  }
+  .screenM:before,
+  .screenM:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+  }
+  .screenM:before {
+    top: 0;
+    height: 68.4782608696%;
+    background: linear-gradient(
+      to right,
+      white 0%,
+      #fafafa 14.2857142857%,
+      #ffe60a 14.2857142857%,
+      #f5dc00 28.5714285714%,
+      #0affd9 28.5714285714%,
+      #00f5ce 42.8571428571%,
+      #10ea00 42.8571428571%,
+      #0ed600 57.1428571429%,
+      #ff0afe 57.1428571429%,
+      #f500f4 71.4285714286%,
+      #ed0014 71.4285714286%,
+      #d90012 85.7142857143%,
