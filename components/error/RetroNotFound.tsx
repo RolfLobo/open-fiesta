@@ -1028,3 +1028,29 @@ const StyledWrapper = styled.div`
     background-color: black;
     border-radius: 25px 25px 0px 0px;
   }
+
+  .buttons_div {
+    width: 4.25em;
+    align-self: center;
+    height: 8em;
+    background-color: #e69635;
+    border: 2px solid #1d0e01;
+    padding: 0.6em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 0.75em;
+    box-shadow: 3px 3px 0px #e69635;
+  }
+  .b1 {
+    width: 1.65em;
+    height: 1.65em;
+    border-radius: 50%;
+    background-color: #7f5934;
+    border: 2px solid black;
+    box-shadow:
+      inset 2px 2px 1px #b49577,
+      -2px 0px #513721,
+      -2px 0px 0px 1px black;
