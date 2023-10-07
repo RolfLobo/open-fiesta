@@ -1080,3 +1080,29 @@ const StyledWrapper = styled.div`
   .b1 div {
     content: "";
     position: absolute;
+    margin-top: -0.1em;
+    margin-left: 0.65em;
+    transform: rotate(45deg);
+    width: 0.15em;
+    height: 1.5em;
+    background-color: #000000;
+  }
+  .b2 {
+    width: 1.65em;
+    height: 1.65em;
+    border-radius: 50%;
+    background-color: #7f5934;
+    border: 2px solid black;
+    box-shadow:
+      inset 2px 2px 1px #b49577,
+      -2px 0px #513721,
+      -2px 0px 0px 1px black;
+  }
+  .b2::before {
+    content: "";
+    position: absolute;
+    margin-top: 1.05em;
+    margin-left: 0.8em;
+    transform: rotate(-45deg);
+    border-radius: 5px;
+    width: 0.15em;
