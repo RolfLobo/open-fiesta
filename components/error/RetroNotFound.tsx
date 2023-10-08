@@ -1158,3 +1158,29 @@ const StyledWrapper = styled.div`
     border: 2px solid #171717;
     background-color: #4d4d4d;
     margin-top: -0.15em;
+    z-index: -1;
+  }
+  .base2 {
+    height: 1em;
+    width: 2em;
+    border: 2px solid #171717;
+    background-color: #4d4d4d;
+    margin-top: -0.15em;
+    z-index: -1;
+  }
+  .base3 {
+    position: absolute;
+    height: 0.15em;
+    width: 17.5em;
+    background-color: #171717;
+    margin-top: 0.8em;
+  }
+
+  .text_404 {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    column-gap: 6em;
+    z-index: -5;
+    margin-bottom: 2em;
+    align-items: center;
