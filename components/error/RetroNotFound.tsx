@@ -1106,3 +1106,29 @@ const StyledWrapper = styled.div`
     transform: rotate(-45deg);
     border-radius: 5px;
     width: 0.15em;
+    height: 0.4em;
+    background-color: #000000;
+  }
+  .b2::after {
+    content: "";
+    position: absolute;
+    margin-top: -0.1em;
+    margin-left: 0.65em;
+    transform: rotate(-45deg);
+    width: 0.15em;
+    height: 1.5em;
+    background-color: #000000;
+  }
+  .speakers {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+  }
+  .speakers .g1 {
+    display: flex;
+    column-gap: 0.25em;
+  }
+  .speakers .g1 .g11,
+  .g12,
+  .g13 {
+    width: 0.65em;
