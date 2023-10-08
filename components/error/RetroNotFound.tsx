@@ -1184,3 +1184,29 @@ const StyledWrapper = styled.div`
     z-index: -5;
     margin-bottom: 2em;
     align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    font-family: Montserrat, ui-sans-serif, system-ui;
+  }
+  .text_4041 {
+    transform: scaleY(24.5) scaleX(9);
+  }
+  .text_4042 {
+    transform: scaleY(24.5) scaleX(9);
+  }
+  .text_4043 {
+    transform: scaleY(24.5) scaleX(9);
+  }
+
+  @media only screen and (max-width: 495px) {
+    .text_404 {
+      column-gap: 6em;
+    }
+  }
+  @media only screen and (max-width: 395px) {
+    .text_404 {
+      column-gap: 4em;
+    }
+    .text_4041 {
+      transform: scaleY(25) scaleX(8);
+    }
