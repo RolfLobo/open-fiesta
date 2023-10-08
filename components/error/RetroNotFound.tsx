@@ -1132,3 +1132,29 @@ const StyledWrapper = styled.div`
   .g12,
   .g13 {
     width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    background-color: #7f5934;
+    border: 2px solid black;
+    box-shadow: inset 1.25px 1.25px 1px #b49577;
+  }
+  .speakers .g {
+    width: auto;
+    height: 2px;
+    background-color: #171717;
+  }
+
+  .bottom {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8.7em;
+  }
+  .base1 {
+    height: 1em;
+    width: 2em;
+    border: 2px solid #171717;
+    background-color: #4d4d4d;
+    margin-top: -0.15em;
