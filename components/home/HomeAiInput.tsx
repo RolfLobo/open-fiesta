@@ -489,3 +489,30 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
   } = useSpeechRecognition()
+
+  useEffect(() => {
+    if (transcript) {
+      setValue(transcript)
+      adjustHeight()
+    }
+  }, [transcript])
+
+  // Update value when initialValue changes (for edit functionality)
+  useEffect(() => {
+    if (initialValue !== undefined) {
+      setValue(initialValue)
+      adjustHeight()
+    }
+  }, [initialValue])
+
+  const startListening = () => {
+    if (!browserSupportsSpeechRecognition) {
+      alert('Your browser does not support speech recognition.')
+      return
+    }
+    if (!isMicrophoneAvailable) {
+      alert('Microphone access is required for speech recognition.')
+      return
+    }
+    resetTranscript()
+    SpeechRecognition.startListening({ continuous: true, language: 'en-US' })
