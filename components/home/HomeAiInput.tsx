@@ -464,3 +464,28 @@ interface Props {
   modelSelectorLabel?: string
   onOpenModelSelector?: () => void
   // For edit functionality
+  initialValue?: string
+  onClear?: () => void
+}
+
+const MIN_HEIGHT = 64
+const MAX_HEIGHT = 200
+
+export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabel, onOpenModelSelector, initialValue, onClear }: Props) {
+  const [value, setValue] = useState(initialValue || '')
+  const [showSearch, setShowSearch] = useState(true)
+  const [isEnhancing, setIsEnhancing] = useState(false)
+  const [attachedFile, setAttachedFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  // Speech recognition
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    isMicrophoneAvailable,
+  } = useSpeechRecognition()
