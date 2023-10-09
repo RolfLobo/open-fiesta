@@ -1236,3 +1236,10 @@ const StyledWrapper = styled.div`
     .screen {
       display: flex;
     }
+    .screenM {
+      display: none;
+    }
+  }
+`;
+
+export default RetroNotFound;

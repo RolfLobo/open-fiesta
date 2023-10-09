@@ -445,3 +445,22 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
     </motion.div>
   )
 }
+
+'use client'
+
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Globe, Paperclip, Send, Loader2, X, Mic, MicOff, Sparkles, FileText } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Textarea } from '@/components/ui/textarea'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import Image from 'next/image'
+
+interface Props {
+  onSubmit?: (text: string) => void
+  isDark?: boolean
+  // When provided, replaces the Search toggle with a model selector button
+  modelSelectorLabel?: string
+  onOpenModelSelector?: () => void
+  // For edit functionality
