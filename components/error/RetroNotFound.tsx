@@ -1210,3 +1210,29 @@ const StyledWrapper = styled.div`
     .text_4041 {
       transform: scaleY(25) scaleX(8);
     }
+    .text_4042 {
+      transform: scaleY(25) scaleX(8);
+    }
+    .text_4043 {
+      transform: scaleY(25) scaleX(8);
+    }
+  }
+
+  @media (max-width: 275px), (max-height: 520px) {
+    .main {
+      position: relative;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .screenM {
+      display: flex;
+    }
+    .screen {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 1025px) {
+    .screen {
+      display: flex;
+    }
