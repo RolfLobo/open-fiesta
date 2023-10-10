@@ -594,3 +594,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
       onSubmit(text)
     } else {
       try {
+     
+        console.warn('[HomeAiInput] onSubmit prop is not provided')
+      } catch {}
+    }
+    // Clear value but keep the height as-is and refocus to preserve layout/feel
+    setValue('')
+    setAttachedFile(null)
+    setImagePreview(null)
+    onClear?.() // Call clear callback if provided
+    requestAnimationFrame(() => {
+      textareaRef.current?.focus()
+      // Do NOT reset height here so the bar stays expanded visually
+      // adjustHeight(true)
+    })
+  }
+
+  // Prompt Enhancer (calls /api/enhance-prompt)
+  const enhancePrompt = async () => {
+    const text = value.trim()
+    if (!text || isEnhancing) return
+    if (listening) setTimeout(() => stopListening(), 100)
+    setIsEnhancing(true)
+    try {
+      const res = await fetch('/api/enhance-prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
