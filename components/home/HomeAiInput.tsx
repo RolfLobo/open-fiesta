@@ -516,3 +516,28 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
     }
     resetTranscript()
     SpeechRecognition.startListening({ continuous: true, language: 'en-US' })
+  }
+
+  const stopListening = () => {
+    SpeechRecognition.stopListening()
+  }
+
+  const adjustHeight = (reset?: boolean) => {
+    const ta = textareaRef.current
+    if (!ta) return
+    if (reset) {
+      ta.style.height = `${MIN_HEIGHT}px`
+      return
+    }
+    ta.style.height = `${MIN_HEIGHT}px`
+    const newH = Math.max(MIN_HEIGHT, Math.min(ta.scrollHeight, MAX_HEIGHT))
+    ta.style.height = `${newH}px`
+  }
+
+  useEffect(() => {
+    adjustHeight(true)
+  }, [])
+
+  useEffect(() => () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+  }, [imagePreview])
