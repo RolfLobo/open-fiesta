@@ -620,3 +620,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
       const res = await fetch('/api/enhance-prompt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: text }),
+      })
+      if (!res.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const err = await res.json().catch(() => ({} as any))
+        throw new Error(err?.error || `HTTP ${res.status}`)
+      }
+      const data = await res.json()
+      if (data?.enhancedPrompt) {
+        setValue(data.enhancedPrompt)
+        adjustHeight()
+        requestAnimationFrame(() => textareaRef.current?.focus())
+      }
+    } catch (e) {
+      console.error('Enhance failed', e)
+    } finally {
+      setIsEnhancing(false)
+    }
+  }
+
+  return (
+    <motion.div className="w-full py-2" initial={{ y: 0, opacity: 1 }}>
+      <div className={cn(
+        "relative max-w-4xl rounded-[22px] p-0 w-full mx-auto chat-input-shell bg-transparent",
+        isDark ? "border border-black/10 dark:border-white/10" : ""
+      )}>
