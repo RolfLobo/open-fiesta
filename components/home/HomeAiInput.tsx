@@ -646,3 +646,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
         "relative max-w-4xl rounded-[22px] p-0 w-full mx-auto chat-input-shell bg-transparent",
         isDark ? "border border-black/10 dark:border-white/10" : ""
       )}>
+        <div
+          className={cn(
+            'relative rounded-[22px] overflow-hidden outline-none backdrop-blur-md',
+            isDark ? 'bg-black/20 border border-white/10' : 'bg-gradient-to-br from-rose-50/90 to-pink-50/80 shadow-lg border border-rose-200/40'
+          )}
+        >
+          {/* Error banner */}
+          {errorMsg && (
+            <div className="px-4 py-2 text-sm text-red-200 bg-red-900/40 border-b border-red-700/40">
+              {errorMsg}
+            </div>
+          )}
+          {/* Content area: conditional image layout or standard textarea */}
+          {imagePreview ? (
+            <div className="ai-grow-area" style={{ '--ai-input-max': `${MAX_HEIGHT}px` } as React.CSSProperties}>
+              <div className="grid grid-cols-[96px_1fr] gap-3 p-3 pr-4">
+                <div className="relative h-[96px] w-[96px] rounded-xl overflow-hidden border border-black/10 dark:border-white/10 shadow-sm">
+                  <Image className="object-cover h-full w-full" src={imagePreview} height={240} width={240} alt="attached image" />
+                  <button
+                    onClick={handleRemoveAttachment}
+                    className="absolute top-1.5 right-1.5 inline-flex items-center justify-center h-6 w-6 rounded-full bg-black/70 dark:bg-white/70 text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/80 border border-black/20 dark:border-white/20"
+                    aria-label="Remove image"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
