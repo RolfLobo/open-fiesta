@@ -568,3 +568,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
     const isAllowed = allowed.some((re) => re.test(file.type))
     if (!isAllowed) {
       setErrorMsg('Unsupported file. Allowed: Images, TXT, PDF, DOC, DOCX.')
+      setTimeout(() => setErrorMsg(null), 4000)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+      return
+    }
+
+    setAttachedFile(file)
+    if (file.type.startsWith('image/')) {
+      setImagePreview(URL.createObjectURL(file))
+    } else {
+      setImagePreview(null)
+    }
+  }
+
+  const handleSend = () => {
+    const text = value.trim()
+    if (!text) return
+    if (listening) setTimeout(() => stopListening(), 100)
+    // Debug: verify send triggers and onSubmit exists
+    try {
+ 
+      console.log('[HomeAiInput] handleSend invoked with:', text)
+    } catch {}
+    if (onSubmit) {
+      onSubmit(text)
+    } else {
+      try {
