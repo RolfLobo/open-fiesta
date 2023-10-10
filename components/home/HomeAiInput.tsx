@@ -541,3 +541,30 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
   useEffect(() => () => {
     if (imagePreview) URL.revokeObjectURL(imagePreview)
   }, [imagePreview])
+
+  const handleRemoveAttachment = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    if (fileInputRef.current) fileInputRef.current.value = ''
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+    setImagePreview(null)
+    setAttachedFile(null)
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null
+    if (!file) return
+
+    // Allowed: images, txt, pdf, doc, docx
+    const allowed = [
+      /^image\//,
+      /^text\/plain$/,
+      /^application\/pdf$/,
+      /^application\/msword$/,
+      /^application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document$/,
+    ]
+    const isAllowed = allowed.some((re) => re.test(file.type))
+    if (!isAllowed) {
+      setErrorMsg('Unsupported file. Allowed: Images, TXT, PDF, DOC, DOCX.')
