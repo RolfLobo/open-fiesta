@@ -802,3 +802,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                 <button
                   type="button"
                   onClick={() => setShowSearch((s) => !s)}
+                  className={cn(
+                    'rounded-full transition-all flex items-center gap-2 px-3 py-1.5 h-8 search-toggle',
+                    showSearch
+                      ? 'bg-[var(--accent-interactive-primary)] text-white'
+                      : isDark
+                        ? 'bg-white/10 text-white/80'
+                        : 'bg-rose-200/40 text-rose-700 border border-rose-300/50 hover:bg-rose-200/60'
+                  )}
+                  data-active={showSearch}
+                  aria-pressed={showSearch ? 'true' : 'false'}
+                >
+                  <div className="w-3.5 h-3.5 flex items-center justify-center">
+                    <Globe className={cn('w-3.5 h-3.5', showSearch ? 'text-white' : isDark ? 'text-white/70' : 'text-gray-700')} />
+                  </div>
+                  <AnimatePresence>
+                    {showSearch && (
+                      <motion.span
+                        initial={{ width: 0, opacity: 0 }}
+                        animate={{ width: 'auto', opacity: 1 }}
+                        exit={{ width: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-xs overflow-hidden whitespace-nowrap search-toggle-label"
+                      >
+                        Search
+                      </motion.span>
+                    )}
