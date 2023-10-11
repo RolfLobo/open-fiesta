@@ -750,3 +750,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
+          )}
+
+          {/* Toolbar */}
+          <div className={cn(
+            "h-12 flex items-center justify-between px-3 ai-toolbar-bg",
+            isDark ? "bg-inherit" : "bg-gradient-to-r from-rose-100/70 to-pink-100/60 border-t border-rose-200/50"
+          )}>
+            <div className="flex items-center gap-2">
+              {/* Attach */}
+              <label
+                title="Attach file"
+                className={cn(
+                  'cursor-pointer relative rounded-full p-1.5 transition-all duration-200',
+                  isDark ? 'bg-black/30 dark:bg-white/10' : 'bg-rose-200/40 hover:bg-rose-200/60 border border-rose-300/50',
+                  attachedFile
+                    ? 'bg-[var(--accent-interactive-primary)]/15 border border-[var(--accent-interactive-primary)] text-[var(--accent-interactive-primary)]'
+                    : isDark ? 'text-white/60 hover:text-white' : 'text-rose-700 hover:text-rose-800',
+                )}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/*,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  className="hidden"
+                  aria-label="Attach file"
