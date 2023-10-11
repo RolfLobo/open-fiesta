@@ -776,3 +776,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                   accept="image/*,application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                   className="hidden"
                   aria-label="Attach file"
+                />
+                <Paperclip className="w-3.5 h-3.5" />
+              </label>
+
+              {/* Search toggle OR Model selector */}
+              {modelSelectorLabel && onOpenModelSelector ? (
+                <button
+                  type="button"
+                  onClick={onOpenModelSelector}
+                  className={cn(
+                    'rounded-full transition-all flex items-center gap-2 px-3 py-1.5 h-8',
+                    isDark ? 'bg-white/10 text-white hover:bg-white/15' : 'bg-rose-200/40 text-rose-800 hover:bg-rose-200/60 border border-rose-300/50'
+                  )}
+                  aria-label="Choose model"
+                  title="Choose model"
+                >
+                  <span className="text-xs truncate max-w-[160px]">{modelSelectorLabel}</span>
+                  {/* simple chevron using an inline svg to avoid new imports mid-file */}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-80">
+                    <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setShowSearch((s) => !s)}
