@@ -724,3 +724,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                   isDark
                     ? 'bg-transparent text-white placeholder:text-white/70'
                     : 'bg-transparent text-gray-800 placeholder:text-gray-600',
+                  `min-h-[${MIN_HEIGHT}px]`
+                )}
+              />
+            </div>
+          )}
+
+          {/* Non-image file info */}
+          {attachedFile && !imagePreview && (
+            <div className="px-4 py-2 bg-transparent flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <FileText className="w-4 h-4 text-black/80 dark:text-white/80" />
+                <span className="truncate text-sm text-black/90 dark:text-white/90" title={attachedFile.name}>
+                  {attachedFile.name}
+                </span>
+                <span className="text-xs text-black/60 dark:text-white/60 flex-shrink-0">
+                  {Math.max(1, Math.round(attachedFile.size / 1024))} KB
+                </span>
+              </div>
+              <button
+                onClick={handleRemoveAttachment}
+                className="inline-flex items-center justify-center h-7 w-7 rounded-full bg-black/50 dark:bg-white/50 text-black/90 dark:text-white/90 hover:bg-black/60 dark:hover:bg-white/60 border border-black/10 dark:border-white/10"
+                aria-label="Remove file"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
