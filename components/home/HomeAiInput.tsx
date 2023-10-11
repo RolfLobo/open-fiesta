@@ -828,3 +828,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                         Search
                       </motion.span>
                     )}
+                  </AnimatePresence>
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Mic (speech recognition) */}
+              {browserSupportsSpeechRecognition && (
+                <button
+                  type="button"
+                  onClick={listening ? stopListening : startListening}
+                  className={cn(
+                    'rounded-full p-2 h-8 w-8 transition-all flex items-center justify-center relative',
+                    listening
+                      ? 'bg-red-500 text-white shadow-red-500/30'
+                      : isDark ? 'bg-white/10 text-white/80 hover:bg-white/15' : 'bg-white/70 text-gray-700 hover:bg-white/80 border border-white/40'
+                  )}
+                  aria-label={listening ? 'Stop recording' : 'Start voice input'}
+                  title={listening ? 'Stop recording' : 'Start voice input'}
+                >
+                  {listening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                </button>
+              )}
+
+              {/* Prompt Enhancer */}
+              {value.trim() && (
