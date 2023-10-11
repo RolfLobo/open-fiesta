@@ -698,3 +698,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                     <div className={cn('absolute left-4 top-3', isDark ? 'text-white/70' : 'text-gray-500')}>
                       {showSearch ? 'Search the web...' : 'Type your message here...'}
                     </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="relative">
+              <Textarea
+                ref={textareaRef}
+                value={value}
+                onChange={(e) => {
+                  setValue(e.target.value)
+                  adjustHeight()
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSend()
+                  }
+                }}
+                placeholder={showSearch ? 'Search the web...' : 'Type your message here...'}
+                className={cn(
+                  'w-full rounded-2xl px-5 py-4 border-none resize-none ring-0 focus:outline-none focus-visible:outline-none leading-[1.5] text-[15px] md:text-base',
+                  'placeholder:opacity-80 placeholder:text-[15px] md:placeholder:text-base',
+                  isDark
+                    ? 'bg-transparent text-white placeholder:text-white/70'
+                    : 'bg-transparent text-gray-800 placeholder:text-gray-600',
