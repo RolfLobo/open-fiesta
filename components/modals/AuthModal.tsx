@@ -111,3 +111,28 @@ interface AuthModalProps {
   isOpen: boolean
   onClose: () => void
   title?: string
+  message?: string
+}
+
+export default function AuthModal({ isOpen, onClose, title = "Sign in required", message = "Please sign in to send messages" }: AuthModalProps) {
+  const { signInWithProvider } = useAuth()
+  const router = useRouter()
+  const [loading, setLoading] = useState<string | null>(null)
+
+  if (!isOpen) return null
+
+  const handleSignIn = async (provider: 'google' | 'github') => {
+    try {
+      setLoading(provider)
+      await signInWithProvider(provider)
+      onClose()
+    } catch (error) {
+      console.error('Error signing in:', error)
+      setLoading(null)
+    }
+  }
+
+  const handleGoToSignIn = () => {
+    onClose()
+    router.push('/signin')
+  }
