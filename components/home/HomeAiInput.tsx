@@ -880,3 +880,16 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
                   value
                     ? 'bg-[var(--accent-interactive-primary)] text-white hover:bg-[var(--accent-interactive-hover)]'
                     : isDark ? 'bg-white/10 text-white/50 cursor-not-allowed' : 'bg-white/50 text-gray-500 cursor-not-allowed border border-white/40',
+                )}
+                disabled={!value.trim()}
+                aria-label="Send"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}

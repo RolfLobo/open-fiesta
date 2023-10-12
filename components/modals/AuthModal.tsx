@@ -98,3 +98,16 @@ export default function AuthModal({ isOpen, onClose, title = "Sign in required",
     </div>
   )
 }
+
+'use client'
+
+import { useState } from 'react'
+import { useAuth } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
+import { X, Chrome, Github } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+interface AuthModalProps {
+  isOpen: boolean
+  onClose: () => void
+  title?: string
