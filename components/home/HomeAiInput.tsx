@@ -854,3 +854,29 @@ export default function HomeAiInput({ onSubmit, isDark = true, modelSelectorLabe
 
               {/* Prompt Enhancer */}
               {value.trim() && (
+                <button
+                  type="button"
+                  onClick={enhancePrompt}
+                  disabled={isEnhancing}
+                  className={cn(
+                    'rounded-full p-2 h-8 w-8 transition-all flex items-center justify-center',
+                    isEnhancing
+                      ? 'bg-[var(--accent-interactive-primary)]/20 text-[var(--accent-interactive-primary)] cursor-not-allowed'
+                      : 'accent-action-fill'
+                  )}
+                  aria-label={isEnhancing ? 'Enhancing prompt...' : 'Enhance prompt'}
+                  title={isEnhancing ? 'Enhancing prompt...' : 'Enhance prompt with AI'}
+                >
+                  {isEnhancing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                </button>
+              )}
+
+              {/* Send */}
+              <button
+                type="button"
+                onClick={handleSend}
+                className={cn(
+                  'rounded-full p-2 h-8 w-8 transition-all flex items-center justify-center',
+                  value
+                    ? 'bg-[var(--accent-interactive-primary)] text-white hover:bg-[var(--accent-interactive-hover)]'
+                    : isDark ? 'bg-white/10 text-white/50 cursor-not-allowed' : 'bg-white/50 text-gray-500 cursor-not-allowed border border-white/40',
