@@ -136,3 +136,30 @@ export default function AuthModal({ isOpen, onClose, title = "Sign in required",
     onClose()
     router.push('/signin')
   }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="relative w-full max-w-md mx-4 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors"
+        >
+          <X size={20} />
+        </button>
+
+        <div className="p-6">
+          <div className="text-center mb-6">
+            <img
+              src="/brand.svg"
+              alt="AI Fiesta"
+              className="mx-auto h-12 w-12 rounded-lg mb-4"
+            />
+            <h2 className="text-xl font-bold text-white mb-2">{title}</h2>
+            <p className="text-sm text-zinc-400">{message}</p>
+          </div>
+
+          <div className="space-y-3">
+            <Button
+              onClick={() => handleSignIn('google')}
+              disabled={loading !== null}
+              className="w-full flex items-center justify-center gap-3 bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-600"
