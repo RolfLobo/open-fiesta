@@ -98,3 +98,20 @@ export default function ConfirmDialog({
         </div>
         <div className="text-sm text-zinc-300 mb-4">{message}</div>
         <div className="flex items-center justify-end gap-2">
+          <button
+            onClick={onCancel}
+            className="px-3 py-2 text-sm rounded-md border border-white/10 bg-white/5 hover:bg-white/10"
+          >
+            {cancelText}
+          </button>
+          <button
+            onClick={onConfirm}
+            className="px-3 py-2 text-sm rounded-md text-rose-100 border border-rose-300/30 bg-rose-500/20 hover:bg-rose-500/30"
+          >
+            {confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

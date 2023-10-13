@@ -383,3 +383,12 @@ export default function CustomModels({ compact }: CustomModelsProps) {
     </div>
   );
 }
+
+'use client';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Wrench } from 'lucide-react';
+import { useCustomModels, makeCustomModel } from '@/lib/customModels';
+import { useLocalStorage } from '@/lib/useLocalStorage';
+import type { ApiKeys } from '@/lib/types';
+import { X, Check, Copy, Loader2, AlertCircle, Trash2 } from 'lucide-react';
