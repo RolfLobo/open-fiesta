@@ -163,3 +163,29 @@ export default function AuthModal({ isOpen, onClose, title = "Sign in required",
               onClick={() => handleSignIn('google')}
               disabled={loading !== null}
               className="w-full flex items-center justify-center gap-3 bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-600"
+            >
+              {loading === 'google' ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Chrome size={18} />
+              )}
+              Continue with Google
+            </Button>
+
+            <Button
+              onClick={() => handleSignIn('github')}
+              disabled={loading !== null}
+              className="w-full flex items-center justify-center gap-3 bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-600"
+            >
+              {loading === 'github' ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Github size={18} />
+              )}
+              Continue with GitHub
+            </Button>
+
+            <div className="text-center">
+              <button
+                onClick={handleGoToSignIn}
+                className="text-sm text-zinc-400 hover:text-white transition-colors underline"
