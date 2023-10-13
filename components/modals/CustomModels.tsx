@@ -392,3 +392,29 @@ import { useCustomModels, makeCustomModel } from '@/lib/customModels';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import type { ApiKeys } from '@/lib/types';
 import { X, Check, Copy, Loader2, AlertCircle, Trash2 } from 'lucide-react';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+type CustomModelsProps = { compact?: boolean };
+
+export default function CustomModels({ compact }: CustomModelsProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [open, setOpen] = useState(false);
+  const [customModels, setCustomModels] = useCustomModels();
+  const [label, setLabel] = useState('');
+  const [slug, setSlug] = useState('');
+  const [err, setErr] = useState<string | null>(null);
+  const [validMsg, setValidMsg] = useState<string | null>(null);
+  const [validating, setValidating] = useState(false);
+  const [validState, setValidState] = useState<null | 'ok' | 'fail' | 'error'>(null);
+  const [keys] = useLocalStorage<ApiKeys>('ai-fiesta:keys', {});
+  // Always use keys.ollama for Ollama base URL (never keys.ollamaUrl or other variants)
+  // This ensures consistency with Settings and avoids stale values.
+
+  const addCustom = () => {
+    setErr(null);
+    setValidMsg(null);
+    setValidState(null);
+    const l = label.trim();
+    const s = slug.trim();
