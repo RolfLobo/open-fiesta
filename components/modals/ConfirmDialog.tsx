@@ -56,3 +56,19 @@ export default function ConfirmDialog({
     </div>
   );
 }
+
+'use client';
+import { X } from 'lucide-react';
+import React from 'react';
+
+export type ConfirmDialogProps = {
+  open: boolean;
+  title?: string;
+  message?: string | React.ReactNode;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+};
+
+export default function ConfirmDialog({

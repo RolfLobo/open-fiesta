@@ -189,3 +189,13 @@ export default function AuthModal({ isOpen, onClose, title = "Sign in required",
               <button
                 onClick={handleGoToSignIn}
                 className="text-sm text-zinc-400 hover:text-white transition-colors underline"
+              >
+                Or go to sign in page
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
