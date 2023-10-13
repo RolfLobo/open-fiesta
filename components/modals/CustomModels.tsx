@@ -444,3 +444,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
   const removeCustom = (id: string) => {
     setCustomModels(customModels.filter((m) => m.id !== id));
   };
+
+  const validate = async () => {
+    setErr(null);
+    setValidMsg(null);
+    setValidState(null);
+    const s = slug.trim();
+    if (!s) {
+      setErr('Enter a Model ID to validate.');
+      return;
+    }
+
+    // Check if it's an Ollama model (no slash in the name)
+    if (!s.includes('/')) {
+      // If no Ollama URL is set, show a clear error
+      if (!keys?.ollama || !/^https?:\/\/.+:\d+/.test(keys.ollama)) {
+        setValidMsg('Please set a valid Ollama Base URL in Settings (e.g. http://localhost:11434 or http://host.docker.internal:11434)');
+        setValidState('error');
+        return;
+      }
+      try {
+        setValidating(true);
+        // Always use keys.ollama for baseUrl
+        const res = await fetch("/api/ollama/validate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug: s, baseUrl: keys.ollama }),
