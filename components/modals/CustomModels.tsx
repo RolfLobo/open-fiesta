@@ -418,3 +418,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
     setValidState(null);
     const l = label.trim();
     const s = slug.trim();
+    if (!l || !s) {
+      setErr('Please enter both Label and Model ID.');
+      return;
+    }
+    if (customModels.some((m) => m.id === s)) {
+      setErr('A custom model with this Model ID already exists.');
+      return;
+    }
+    // Require successful validation before adding
+    if (validState !== 'ok') {
+      setErr('Please validate the Model ID before adding.');
+      return;
+    }
+    const model = makeCustomModel(l, s);
+    setCustomModels([...customModels, model]);
+    setLabel('');
+    setSlug('');
+    // Ensure UI picks up new models consistently
+    if (typeof window !== 'undefined') {
+      setTimeout(() => window.location.reload(), 10);
+    }
+  };
+
+  const removeCustom = (id: string) => {
+    setCustomModels(customModels.filter((m) => m.id !== id));
+  };
