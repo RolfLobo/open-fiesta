@@ -496,3 +496,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
           }
           setValidMsg(message);
           setValidState("fail");
+        }
+      } catch (e: unknown) {
+        const errorMsg = e instanceof Error ? e.message : 'Unknown error';
+        setValidMsg(`Could not validate Ollama model: ${errorMsg}`);
+        setValidState("error");
+      } finally {
+        setValidating(false);
+      }
+      return;
+    }
+
+    // For OpenRouter models, use the existing validation
+    try {
+      setValidating(true);
+      const res = await fetch('/api/openrouter/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: s, apiKey: keys?.openrouter }),
+      });
+      const data = await res.json();
+      if (!data?.ok) {
+        const errorMsg = `Validation error${data?.status ? ` (status ${data.status})` : ""}`;
+        setValidMsg(errorMsg);
+        setValidState("error");
+        return;
+      }
