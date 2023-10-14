@@ -470,3 +470,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ slug: s, baseUrl: keys.ollama }),
+        });
+        const data = await res.json();
+        if (!data?.ok) {
+          const errorMsg = [
+            "Validation error",
+            data?.status ? ` (status ${data.status})` : "",
+            data?.error ? `: ${data.error}` : "",
+            data?.details ? `: ${data.details}` : ""
+          ].join("");
+          setValidMsg(errorMsg);
+          setValidState("error");
+          return;
+        }
+        if (data.exists) {
+          setValidMsg("Ollama model found.");
+          setValidState("ok");
+        } else {
+          let message = "Ollama model not found. Make sure this model is available in your Ollama instance.";
+          if (data.availableModels && data.availableModels.length > 0) {
+            message += ` Available models: ${data.availableModels.slice(0, 5).join(", ")}`;
+            if (data.availableModels.length > 5) {
+              message += ` and ${data.availableModels.length - 5} more`;
+            }
+          }
+          setValidMsg(message);
+          setValidState("fail");
