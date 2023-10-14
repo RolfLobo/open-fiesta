@@ -522,3 +522,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
         setValidState("error");
         return;
       }
+      if (data.exists) {
+        setValidMsg('Model found.');
+        setValidState('ok');
+      } else {
+        setValidMsg('Model not found. Check the exact slug on OpenRouter.');
+        setValidState('fail');
+      }
+    } catch (e: unknown) {
+      const errorMsg = e instanceof Error ? e.message : 'Unknown error';
+      setValidMsg(`Could not validate: ${errorMsg}`);
+      setValidState("error");
+    } finally {
+      setValidating(false);
+    }
+  };
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(true)}
+        className={`inline-flex items-center gap-1.5 text-xs h-9 ${
+          compact ? "w-9 justify-center px-0" : "px-3 py-2"
+        } rounded-xl shadow transition-all duration-200
+            border border-white/40 bg-white/70 hover:bg-white/80 text-gray-700
+            dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10`}
+        title="Custom models"
