@@ -548,3 +548,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
             border border-white/40 bg-white/70 hover:bg-white/80 text-gray-700
             dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:bg-white/10`}
         title="Custom models"
+        aria-label="Custom models"
+      >
+        <Wrench size={14} />
+        {!compact && <span>Custom models</span>}
+      </button>
+      {open &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+            <div
+              className={cn(
+                "absolute inset-0 backdrop-blur-sm",
+                isDark ? "bg-black/70" : "bg-white/50"
+              )}
+              onClick={() => setOpen(false)}
+            />
+            <div className={cn(
+              "relative w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl mx-auto rounded-2xl border p-6 md:p-7 lg:p-8 shadow-2xl",
+              isDark 
+                ? "border-white/10 bg-zinc-900/95" 
+                : "border-gray-300/50 bg-white/95"
+            )}>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className={cn(
+                    "text-base md:text-lg lg:text-xl font-semibold tracking-wide",
