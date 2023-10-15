@@ -626,3 +626,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                     value={slug}
                     onChange={(e) => {
                       setSlug(e.target.value);
+                      setValidState(null);
+                      setValidMsg(null);
+                    }}
+                    placeholder="provider/model:variant (e.g., deepseek/deepseek-r1:free) or Ollama model name (e.g., llama3)"
+                    className={cn(
+                      "w-full border rounded-md px-3.5 py-2.5 text-sm md:text-base focus:outline-none focus:ring-1",
+                      isDark 
+                        ? "bg-black/40 border-white/10 text-white focus:ring-white/30" 
+                        : "bg-gray-50/80 border-gray-300/50 text-gray-800 focus:ring-gray-400/50"
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
+                <div className={cn(
+                  "text-[12px] md:text-sm",
+                  isDark ? "text-zinc-400" : "text-gray-600"
+                )}>
+                  Tip: Only use &quot;:free&quot; if the model page lists a free variant.
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={validate}
+                    disabled={validating}
+                    className={cn(
+                      "inline-flex items-center gap-2 px-3.5 py-2 rounded-md border disabled:opacity-60 text-sm md:text-base transition-colors",
