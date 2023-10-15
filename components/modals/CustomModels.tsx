@@ -600,3 +600,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                 </button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 mb-3">
+                <div className="space-y-1 sm:col-span-1">
+                  <label className={cn(
+                    "text-[11px] md:text-xs",
+                    isDark ? "text-zinc-400" : "text-gray-600"
+                  )}>Label</label>
+                  <input
+                    value={label}
+                    onChange={(e) => setLabel(e.target.value)}
+                    placeholder="DeepSeek: R1 Distill Qwen 14B (free)"
+                    className={cn(
+                      "w-full border rounded-md px-3.5 py-2.5 text-sm md:text-base focus:outline-none focus:ring-1",
+                      isDark 
+                        ? "bg-black/40 border-white/10 text-white focus:ring-white/30" 
+                        : "bg-gray-50/80 border-gray-300/50 text-gray-800 focus:ring-gray-400/50"
+                    )}
+                  />
+                </div>
+                <div className="space-y-1 sm:col-span-1">
+                  <label className={cn(
+                    "text-[11px] md:text-xs",
+                    isDark ? "text-zinc-400" : "text-gray-600"
+                  )}>Model ID (slug)</label>
+                  <input
+                    value={slug}
+                    onChange={(e) => {
+                      setSlug(e.target.value);
