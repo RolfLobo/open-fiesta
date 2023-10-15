@@ -574,3 +574,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                 <div>
                   <h3 className={cn(
                     "text-base md:text-lg lg:text-xl font-semibold tracking-wide",
+                    isDark ? "text-white" : "text-gray-800"
+                  )}>
+                    Add custom models
+                  </h3>
+                  <p className={cn(
+                    "text-xs md:text-sm mt-1",
+                    isDark ? "text-zinc-400" : "text-gray-600"
+                  )}>
+                    Add any model from OpenRouter or Ollama. Selection is still
+                    capped at 5 in the picker.
+                  </p>
+                </div>
+                <button
+                  aria-label="Close"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "h-9 w-9 md:h-10 md:w-10 inline-flex items-center justify-center rounded-md transition-colors",
+                    isDark 
+                      ? "bg-white/10 hover:bg-white/20 text-white" 
+                      : "bg-gray-200/50 hover:bg-gray-300/50 text-gray-700"
+                  )}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 mb-3">
