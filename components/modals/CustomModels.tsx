@@ -678,3 +678,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                   "mb-2 text-xs inline-flex items-center gap-2",
                   isDark ? "text-rose-300" : "text-red-600"
                 )}>
+                  <AlertCircle size={14} /> {err}
+                </div>
+              )}
+              {validMsg && (
+                <div
+                  className={cn(
+                    "mb-2 text-xs inline-flex items-center gap-2 px-2 py-1 rounded-md border",
+                    validState === 'ok'
+                      ? isDark
+                        ? 'text-emerald-300 border-emerald-300/30 bg-emerald-400/10'
+                        : 'text-emerald-700 border-emerald-400/50 bg-emerald-100/50'
+                      : validState === 'fail'
+                        ? isDark
+                          ? 'text-rose-300 border-rose-300/30 bg-rose-400/10'
+                          : 'text-red-700 border-red-400/50 bg-red-100/50'
+                        : isDark
+                          ? 'text-yellow-300 border-yellow-300/30 bg-yellow-400/10'
+                          : 'text-yellow-700 border-yellow-400/50 bg-yellow-100/50'
+                  )}
+                >
+                  {validState === 'ok' ? (
+                    <Check size={14} />
+                  ) : validState === 'fail' ? (
+                    <X size={14} />
+                  ) : (
+                    <AlertCircle size={14} />
