@@ -204,3 +204,29 @@ import type { ChatMessage, AiModel } from '@/lib/types';
 interface ExpandedChatModalProps {
   isOpen: boolean;
   onClose: () => void;
+  model: AiModel;
+  response: ChatMessage;
+  userMessage: string;
+}
+
+export default function ExpandedChatModal({
+  isOpen,
+  onClose,
+  model,
+  response,
+  userMessage,
+}: ExpandedChatModalProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
