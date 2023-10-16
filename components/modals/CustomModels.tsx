@@ -704,3 +704,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                     <X size={14} />
                   ) : (
                     <AlertCircle size={14} />
+                  )}
+                  {validMsg}
+                </div>
+              )}
+              {customModels.length > 0 && (
+                <div className="max-h-[65vh] overflow-auto rounded-md border border-white/10 mt-3">
+                  <table className="w-full text-sm md:text-base">
+                    <thead className="bg-white/5 sticky top-0 z-10">
+                      <tr className="text-left">
+                        <th className="px-3 py-2 font-medium">Label</th>
+                        <th className="px-3 py-2 font-medium">Model ID</th>
+                        <th className="px-3 py-2 w-32 md:w-40 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {customModels.map((m) => (
+                        <tr key={m.id} className="border-t border-white/10 hover:bg-white/5">
+                          <td className="px-3 py-2 align-top">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate max-w-[260px] lg:max-w-[360px]">
+                                {m.label}
+                              </span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 border border-white/15">
+                                custom
+                              </span>
+                            </div>
