@@ -652,3 +652,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                     disabled={validating}
                     className={cn(
                       "inline-flex items-center gap-2 px-3.5 py-2 rounded-md border disabled:opacity-60 text-sm md:text-base transition-colors",
+                      isDark 
+                        ? "bg-white/10 border-white/10 hover:bg-white/20 text-white" 
+                        : "bg-gray-200/50 border-gray-300/50 hover:bg-gray-300/50 text-gray-700"
+                    )}
+                  >
+                    {validating ? (
+                      <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                      <Check size={16} />
+                    )}
+                    <span>{validating ? 'Validating…' : 'Validate'}</span>
+                  </button>
+                  <button
+                    onClick={addCustom}
+                    disabled={validState !== 'ok'}
+                    className="px-3.5 py-2 rounded-md accent-action-fill accent-focus disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm md:text-base"
+                  >
+                    Add Model
+                  </button>
+                </div>
+              </div>
+              {err && (
+                <div className={cn(
+                  "mb-2 text-xs inline-flex items-center gap-2",
+                  isDark ? "text-rose-300" : "text-red-600"
+                )}>
