@@ -191,3 +191,16 @@ export default function ExpandedChatModal({
     </div>
   );
 }
+
+'use client';
+import { X } from 'lucide-react';
+import { useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { useTheme } from '@/lib/themeContext';
+import MarkdownLite from '../chat/MarkdownLite';
+import { sanitizeContent } from '@/lib/utils';
+import type { ChatMessage, AiModel } from '@/lib/types';
+
+interface ExpandedChatModalProps {
+  isOpen: boolean;
+  onClose: () => void;

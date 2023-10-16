@@ -756,3 +756,16 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                               <Trash2 size={12} /> Remove
                             </button>
                           </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>,
+          document.body,
+        )}
+    </div>
+  );
+}
