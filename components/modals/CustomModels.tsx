@@ -730,3 +730,29 @@ export default function CustomModels({ compact }: CustomModelsProps) {
                                 custom
                               </span>
                             </div>
+                          </td>
+                          <td className="px-3 py-2 align-top">
+                            <div className="flex items-center gap-2 text-xs text-white/85">
+                              <span
+                                className="truncate max-w-[360px] lg:max-w-[520px]"
+                                title={m.model}
+                              >
+                                {m.model}
+                              </span>
+                              <button
+                                className="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-white/10 border border-white/10 hover:bg-white/20"
+                                onClick={() => navigator.clipboard.writeText(m.model)}
+                                title="Copy model ID"
+                              >
+                                <Copy size={12} /> Copy
+                              </button>
+                            </div>
+                          </td>
+                          <td className="px-3 py-2 text-right align-top">
+                            <button
+                              onClick={() => removeCustom(m.id)}
+                              className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-white/10 border border-white/10 hover:bg-white/20"
+                            >
+                              <Trash2 size={12} /> Remove
+                            </button>
+                          </td>
