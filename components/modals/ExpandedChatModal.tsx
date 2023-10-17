@@ -308,3 +308,29 @@ export default function ExpandedChatModal({
                   )}>
                     <span className="hidden sm:inline">Pro</span>
                   </span>
+                )}
+                <span
+                  className={cn(
+                    "truncate px-2 py-0.5 rounded-full text-[12px]",
+                    isDark 
+                      ? "border border-white/10 bg-white/5"
+                      : "border border-gray-300/40 bg-white/20"
+                  )}
+                  title={model.label}
+                >
+                  {model.label}
+                </span>
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className={cn(
+              "icon-btn h-8 w-8",
+              isDark
+                ? "hover:bg-white/10 text-white"
+                : "hover:bg-black/10 text-gray-700"
+            )}
+          >
+            <X size={16} />
+          </button>
