@@ -334,3 +334,29 @@ export default function ExpandedChatModal({
           >
             <X size={16} />
           </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex flex-col h-[calc(100%-80px)]">
+          {/* User Message */}
+          <div className="px-4 py-3 flex justify-end relative">
+            <div className="group flex gap-2 items-center justify-end sticky right-0 z-10">
+              <div className="inline-flex items-center text-sm leading-relaxed px-3 py-3 rounded-md bg-[var(--accent-interactive-primary)] text-white shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
+                <span className="truncate whitespace-pre-wrap break-words max-w-[68ch]">
+                  {userMessage}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* AI Response */}
+          <div className="flex-1 p-4 overflow-y-auto">
+            <div
+              className={cn(
+                "group relative rounded-lg h-full min-h-[140px] flex ring-1 transition-shadow backdrop-blur-[2px] p-3",
+                isDark
+                  ? "bg-gradient-to-b from-black/40 to-black/20 ring-white/10"
+                  : "bg-gradient-to-b from-white/40 to-white/20 ring-white/30"
+              )}
+            >
+              <div className="relative overflow-hidden w-full">
