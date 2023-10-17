@@ -282,3 +282,29 @@ export default function ExpandedChatModal({
             <div
               className={cn(
                 "px-2.5 py-2 min-h-[42px] flex items-center rounded-lg backdrop-blur-sm shadow-[0_1px_8px_rgba(0,0,0,0.25)] ring-1",
+                model.good
+                  ? isDark
+                    ? 'ring-amber-300/35 bg-gradient-to-b from-amber-400/10 to-black/60'
+                    : 'ring-amber-300/50 bg-gradient-to-b from-amber-100/60 to-white/40'
+                  : isDark
+                    ? 'ring-white/10 bg-black/60'
+                    : 'ring-white/30 bg-white/50'
+              )}
+            >
+              <div
+                className={cn(
+                  "text-[12px] leading-normal font-medium inline-flex items-center gap-1.5 min-w-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.35)] sm:drop-shadow-none",
+                  isDark 
+                    ? "text-white"
+                    : "text-gray-800"
+                )}
+              >
+                {model.good && (
+                  <span className={cn(
+                    "inline-flex items-center gap-1 h-6 self-center px-2 py-0.5 rounded-full text-[11px] font-medium",
+                    isDark 
+                      ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                      : "bg-amber-100 text-amber-700 border border-amber-300"
+                  )}>
+                    <span className="hidden sm:inline">Pro</span>
+                  </span>
