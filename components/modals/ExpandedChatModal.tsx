@@ -256,3 +256,29 @@ export default function ExpandedChatModal({
         className={cn(
           "absolute inset-0 backdrop-blur-sm",
           isDark ? "bg-black/80" : "bg-white/80"
+        )}
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div
+        className={cn(
+          "relative w-[95vw] h-[90vh] max-w-6xl rounded-lg shadow-2xl overflow-hidden border",
+          isDark
+            ? "bg-white/5 border-white/5"
+            : "bg-black/5 border-black/10"
+        )}
+      >
+        {/* Header */}
+        <div
+          className={cn(
+            "flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm",
+            isDark 
+              ? "bg-black/40 border-white/10"
+              : "bg-white/40 border-black/10"
+          )}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              className={cn(
+                "px-2.5 py-2 min-h-[42px] flex items-center rounded-lg backdrop-blur-sm shadow-[0_1px_8px_rgba(0,0,0,0.25)] ring-1",
