@@ -648,3 +648,30 @@ export default function ModelsModal({
     </div>
   );
 }
+
+'use client';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
+import { X, Star, StarOff, Search, Eye, Brain, MessageSquare, Mic, Image as ImageIcon, Heart } from 'lucide-react';
+import type { AiModel } from '@/lib/types';
+import { MODEL_CATALOG } from '@/lib/models';
+import { useLocalStorage } from '@/lib/useLocalStorage';
+import { mergeModels } from '@/lib/customModels';
+import type { CustomModel } from '@/lib/customModels';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+export type ModelsModalProps = {
+  open: boolean;
+  onClose: () => void;
+  selectedIds: string[];
+  selectedModels: AiModel[];
+  customModels: CustomModel[];
+  onToggle: (id: string) => void;
+};
+
+export default function ModelsModal({
+  open,
+  onClose,
+  selectedIds,
