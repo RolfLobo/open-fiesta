@@ -360,3 +360,28 @@ export default function ExpandedChatModal({
               )}
             >
               <div className="relative overflow-hidden w-full">
+                <div
+                  className="text-sm leading-relaxed w-full break-words overflow-wrap-anywhere space-y-2 max-h-[80vh] overflow-y-auto custom-scrollbar"
+                  style={{ WebkitOverflowScrolling: 'touch', wordBreak: 'break-word', overflowWrap: 'break-word' }}
+                >
+                  {response && String(response.content || '').length > 0 ? (
+                    <div className="rounded-2xl ring-white/10 px-3 py-2 overflow-hidden">
+                      <div className="break-words overflow-wrap-anywhere" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                        <MarkdownLite text={sanitizeContent(response.content)} />
+                      </div>
+                    </div>
+                  ) : (
+                    <span className={cn(
+                      "text-sm",
+                      isDark ? "text-zinc-400" : "text-gray-500"
+                    )}>No response</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
