@@ -675,3 +675,29 @@ export default function ModelsModal({
   open,
   onClose,
   selectedIds,
+  selectedModels,
+  customModels,
+  onToggle,
+}: ModelsModalProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [searchQuery, setSearchQuery] = useState('');
+  const [favoriteIds, setFavoriteIds] = useLocalStorage<string[]>('ai-fiesta:favorite-models', [
+    'unstable-gpt-5-chat',
+    'unstable-claude-sonnet-4',
+    'gemini-2.5-pro',
+    'unstable-grok-4',
+    'open-evil',
+  ]);
+
+  // Lock background scroll while modal is open
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('modal-open');
+      return () => {
+        document.body.classList.remove('modal-open');
+      };
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [open]);
