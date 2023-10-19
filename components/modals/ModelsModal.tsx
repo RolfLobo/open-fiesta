@@ -753,3 +753,29 @@ export default function ModelsModal({
   const isVisionModel = (m: AiModel) => {
     const label = m.label.toLowerCase();
     return label.includes('vision') || label.includes('flash') || label.includes('imagen');
+  };
+
+  const buckets: Record<string, AiModel[]> = {
+    Favorites: [],
+    'Thinking Models': [],
+    'Vision Models': [],
+    'Text Models': [],
+    'Image Generation': [],
+    'Audio Models': [],
+    Others: [],
+  };
+  const seen = new Set<string>();
+  const isFree = (m: AiModel) => {
+    // Only Open Provider models are truly free
+    return m.provider === 'open-provider' && m.free;
+  };
+  const isUnc = (m: AiModel) =>
+    /uncensored/i.test(m.label) ||
+    /venice/i.test(m.model) ||
+    m.model === 'evil' ||
+    m.model === 'unity';
+  const isFav = (m: AiModel) => favoriteIds.includes(m.id);
+
+  // Brand classifier for text models
+  const getBrand = (
+    m: AiModel,
