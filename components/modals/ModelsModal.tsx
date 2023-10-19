@@ -831,3 +831,29 @@ export default function ModelsModal({
     setFavoriteIds((prev) =>
       prev.includes(modelId) ? prev.filter((id) => id !== modelId) : [...prev, modelId],
     );
+  };
+  // Display name overrides for providers
+  const providerLabel = (p: string) => (p === 'unstable' ? 'Quran.lat' : p.replace('-', ' '));
+  const pick = (m: AiModel) => {
+    if (isFav(m)) return 'Favorites';
+    if (isThinkingModel(m)) return 'Thinking Models';
+    if (isVisionModel(m)) return 'Vision Models';
+    if (m.category === 'image') return 'Image Generation';
+    if (m.category === 'audio') return 'Audio Models';
+    if (m.category === 'text' || m.provider === 'open-provider') return 'Text Models';
+    return 'Others';
+  };
+
+  // Filter models by search query
+  const filteredModels = MODEL_CATALOG.filter((m) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      m.label.toLowerCase().includes(query) ||
+      m.model.toLowerCase().includes(query) ||
+      m.provider.toLowerCase().includes(query) ||
+      providerLabel(m.provider).toLowerCase().includes(query)
+    );
+  });
+
+  filteredModels.forEach((m) => {
