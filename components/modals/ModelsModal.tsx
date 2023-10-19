@@ -883,3 +883,29 @@ export default function ModelsModal({
     iconUrl,
     iconAlt,
   }: {
+    title: string;
+    models: AiModel[];
+    showBadges?: boolean;
+    iconUrl?: string;
+    iconAlt?: string;
+  }) => (
+    <div className="space-y-3">
+      <div className={cn(
+        "text-base font-semibold flex items-center gap-3 pb-2 border-b",
+        isDark ? "text-white border-zinc-700/50" : "text-gray-800 border-gray-300/50"
+      )}>
+        <div className={cn(
+          "p-2 rounded-lg border",
+          isDark ? "bg-gradient-to-br from-zinc-800 to-zinc-900 border-zinc-700/50" : "bg-gradient-to-br from-white/80 to-gray-50/80 border-gray-300/50"
+        )}>
+          {iconUrl ? (
+            <img
+              src={iconUrl}
+              alt={iconAlt || title}
+              className={cn(
+                "h-5 w-5 object-contain",
+                isDark ? "opacity-90" : "opacity-80"
+              )}
+              data-ignore-errors="true"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = 'none';
