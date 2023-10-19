@@ -701,3 +701,29 @@ export default function ModelsModal({
       document.body.classList.remove('modal-open');
     }
   }, [open]);
+
+  if (!open) return null;
+
+  const showImageLimitToast = () => {
+    toast.info('Only one image generation model can be active at a time.', {
+      className: 'glass-toast',
+      progressClassName: 'glass-toast-progress',
+      position: 'top-right',
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  };
+  const showAudioLimitToast = () => {
+    toast.info('Only one audio model can be active at a time.', {
+      className: 'glass-toast',
+      progressClassName: 'glass-toast-progress',
+      position: 'top-right',
+      autoClose: 3000,
+      closeOnClick: true,
+      pauseOnHover: true,
+    });
+  };
+
+  const handleToggle = (m: AiModel) => {
+    const alreadySelected = selectedIds.includes(m.id);
