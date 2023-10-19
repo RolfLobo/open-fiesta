@@ -727,3 +727,29 @@ export default function ModelsModal({
 
   const handleToggle = (m: AiModel) => {
     const alreadySelected = selectedIds.includes(m.id);
+    // Enforce only one selected per generation category: image and audio
+    if (!alreadySelected && (m.category === 'image' || m.category === 'audio')) {
+      const hasOtherSameCategory = selectedModels.some(
+        (x) => x.category === m.category && x.id !== m.id,
+      );
+      if (hasOtherSameCategory) {
+        if (m.category === 'image') showImageLimitToast();
+        else showAudioLimitToast();
+        return;
+      }
+    }
+    onToggle(m.id);
+  };
+
+  // Enhanced categorization with thinking models
+  const isThinkingModel = (m: AiModel) => {
+    const id = m.id.toLowerCase();
+    const model = m.model.toLowerCase();
+    const label = m.label.toLowerCase();
+    return model.includes('thinking') || model.includes('o3') || model.includes('o4') || 
+           label.includes('thinking') || id.includes('thinking');
+  };
+
+  const isVisionModel = (m: AiModel) => {
+    const label = m.label.toLowerCase();
+    return label.includes('vision') || label.includes('flash') || label.includes('imagen');
