@@ -857,3 +857,29 @@ export default function ModelsModal({
   });
 
   filteredModels.forEach((m) => {
+    const key = pick(m as AiModel);
+    if (!seen.has(m.id)) {
+      buckets[key].push(m as AiModel);
+      seen.add(m.id);
+    }
+  });
+
+  const getCategoryIcon = (title: string) => {
+    switch (title) {
+      case 'Thinking Models': return <Brain className="h-4 w-4" />;
+      case 'Vision Models': return <Eye className="h-4 w-4" />;
+      case 'Text Models': return <MessageSquare className="h-4 w-4" />;
+      case 'Image Generation': return <ImageIcon className="h-4 w-4" />;
+      case 'Audio Models': return <Mic className="h-4 w-4" />;
+      case 'Favorites': return <Star className="h-4 w-4" />;
+      default: return null;
+    }
+  };
+
+  const Section = ({
+    title,
+    models,
+    showBadges = true,
+    iconUrl,
+    iconAlt,
+  }: {
