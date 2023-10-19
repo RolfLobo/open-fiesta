@@ -779,3 +779,29 @@ export default function ModelsModal({
   // Brand classifier for text models
   const getBrand = (
     m: AiModel,
+  ): 'OpenAI' | 'Google' | 'Anthropic' | 'Grok' | 'Open Source Models' => {
+    const id = m.id.toLowerCase();
+    const model = m.model.toLowerCase();
+    const label = m.label.toLowerCase();
+    // OpenAI family: gpt-*, o3*, o4*, any explicit openai
+    if (
+      model.startsWith('gpt-') ||
+      model.startsWith('o3') ||
+      model.startsWith('o4') ||
+      model.includes('openai') ||
+      /gpt\b/.test(label)
+    )
+      return 'OpenAI';
+    // Google family: gemini*, gemma*
+    if (model.includes('gemini') || model.includes('gemma') || id.includes('gemini'))
+      return 'Google';
+    // Anthropic family: claude*
+    if (model.includes('claude') || id.includes('claude')) return 'Anthropic';
+    // Grok family
+    if (model.includes('grok') || id.includes('grok')) return 'Grok';
+    // Everything else
+    return 'Open Source Models';
+  };
+
+  // External SVG icons for brand headings (theme-aware)
+  const BRAND_ICONS: Record<string, { darkUrl: string; lightUrl: string; alt: string }> = {
