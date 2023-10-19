@@ -805,3 +805,29 @@ export default function ModelsModal({
 
   // External SVG icons for brand headings (theme-aware)
   const BRAND_ICONS: Record<string, { darkUrl: string; lightUrl: string; alt: string }> = {
+    OpenAI: { 
+      darkUrl: 'https://cdn.simpleicons.org/openai/ffffff', 
+      lightUrl: 'https://cdn.simpleicons.org/openai/000000',
+      alt: 'OpenAI / ChatGPT' 
+    },
+    Google: { 
+      darkUrl: 'https://cdn.simpleicons.org/googlegemini/ffffff', 
+      lightUrl: 'https://cdn.simpleicons.org/googlegemini/000000',
+      alt: 'Google Gemini' 
+    },
+    Anthropic: { 
+      darkUrl: 'https://cdn.simpleicons.org/anthropic/ffffff', 
+      lightUrl: 'https://cdn.simpleicons.org/anthropic/000000',
+      alt: 'Anthropic / Claude' 
+    },
+    Grok: { 
+      darkUrl: 'https://cdn.simpleicons.org/xai/ffffff', 
+      lightUrl: 'https://cdn.simpleicons.org/xai/000000',
+      alt: 'xAI Grok' 
+    },
+  };
+
+  const toggleFavorite = (modelId: string) => {
+    setFavoriteIds((prev) =>
+      prev.includes(modelId) ? prev.filter((id) => id !== modelId) : [...prev, modelId],
+    );
