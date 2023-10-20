@@ -935,3 +935,29 @@ export default function ModelsModal({
           const free = isFree(m);
           const selected = selectedIds.includes(m.id);
           const disabled = !selected && selectedModels.length >= 5;
+          const isThinking = isThinkingModel(m);
+          const isVision = isVisionModel(m);
+          
+          return (
+            <div
+              key={m.id}
+              onClick={() => !disabled && handleToggle(m)}
+              className={cn(
+                "relative group cursor-pointer rounded-2xl border backdrop-blur-sm transition-all duration-300 overflow-hidden",
+                disabled ? 'opacity-40 cursor-not-allowed' : 'hover:scale-[1.02] hover:shadow-2xl',
+                selected
+                  ? isDark 
+                    ? 'border-red-400/50 bg-gradient-to-br from-red-950/40 via-zinc-900/90 to-black/70 shadow-2xl shadow-red-500/20 ring-1 ring-red-500/20'
+                    : 'border-red-400/60 bg-gradient-to-br from-red-50/80 via-white/90 to-red-50/60 shadow-2xl shadow-red-500/10 ring-1 ring-red-400/30'
+                  : isDark
+                    ? 'border-zinc-700/60 bg-gradient-to-br from-zinc-800/50 via-zinc-900/70 to-black/50 hover:border-zinc-600/70 hover:from-zinc-800/70 hover:via-zinc-900/90 hover:to-black/70 hover:ring-1 hover:ring-zinc-500/20'
+                    : 'border-gray-300/60 bg-gradient-to-br from-white/80 via-gray-50/70 to-white/50 hover:border-gray-400/70 hover:from-white/90 hover:via-gray-50/90 hover:to-white/70 hover:ring-1 hover:ring-gray-400/20'
+              )}
+            >
+              {/* Enhanced gradient overlays */}
+              <div className={cn(
+                "absolute inset-0 bg-gradient-to-t pointer-events-none",
+                isDark ? "from-black/30 via-black/5 to-transparent" : "from-gray-100/30 via-gray-50/5 to-transparent"
+              )} />
+              <div className={cn(
+                "absolute inset-0 bg-gradient-to-br pointer-events-none",
