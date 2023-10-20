@@ -961,3 +961,29 @@ export default function ModelsModal({
               )} />
               <div className={cn(
                 "absolute inset-0 bg-gradient-to-br pointer-events-none",
+                isDark ? "from-white/[0.02] via-transparent to-black/10" : "from-white/20 via-transparent to-gray-100/10"
+              )} />
+              
+              {/* Selection glow effect */}
+              {selected && (
+                <>
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-br pointer-events-none",
+                    isDark ? "from-red-500/15 via-red-500/5 to-red-500/10" : "from-red-400/10 via-red-300/3 to-red-400/8"
+                  )} />
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-t pointer-events-none",
+                    isDark ? "from-red-900/20 via-transparent to-transparent" : "from-red-100/15 via-transparent to-transparent"
+                  )} />
+                </>
+              )}
+              
+              {/* Model card content */}
+              <div className="relative p-4 flex flex-col h-full min-h-[120px]">
+                {/* Header with badges */}
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex flex-wrap gap-2">
+                    {m.good && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
