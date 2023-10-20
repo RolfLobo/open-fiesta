@@ -909,3 +909,29 @@ export default function ModelsModal({
               data-ignore-errors="true"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).style.display = 'none';
+              }}
+            />
+          ) : (
+            <div className={cn(
+              isDark ? "text-zinc-300" : "text-gray-600"
+            )}>
+              {getCategoryIcon(title)}
+            </div>
+          )}
+        </div>
+        <span className={cn(
+          "text-lg",
+          isDark ? "text-white" : "text-gray-800"
+        )}>{title}</span>
+        <span className={cn(
+          "text-sm ml-auto px-2 py-0.5 rounded-full",
+          isDark ? "text-zinc-400 bg-zinc-800/50" : "text-gray-600 bg-gray-200/80"
+        )}>
+          {models.length}
+        </span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {models.map((m) => {
+          const free = isFree(m);
+          const selected = selectedIds.includes(m.id);
+          const disabled = !selected && selectedModels.length >= 5;
