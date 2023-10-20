@@ -987,3 +987,29 @@ export default function ModelsModal({
                       <motion.span 
                         className={cn(
                           "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-yellow-500/25 to-amber-500/25 text-yellow-200 border-yellow-500/30 shadow-yellow-500/10"
+                            : "bg-gradient-to-r from-yellow-400/80 to-amber-400/80 text-yellow-900 border-yellow-600/40 shadow-yellow-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Star size={12} className={cn(isDark ? "text-yellow-400" : "text-yellow-700")} fill="currentColor" />
+                        Pro
+                      </motion.span>
+                    )}
+                    {free && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-green-500/25 to-emerald-500/25 text-green-200 border-green-500/30 shadow-green-500/10"
+                            : "bg-gradient-to-r from-green-400/80 to-emerald-400/80 text-green-900 border-green-600/40 shadow-green-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        Free
+                      </motion.span>
+                    )}
+                    {isThinking && (
+                      <motion.span 
+                        className={cn(
