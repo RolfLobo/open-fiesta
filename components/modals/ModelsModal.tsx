@@ -1065,3 +1065,29 @@ export default function ModelsModal({
                         )}
                         whileHover={{ scale: 1.05 }}
                       >
+                        <ImageIcon size={12} className={cn(isDark ? "text-pink-400" : "text-pink-700")} />
+                        Image
+                      </motion.span>
+                    )}
+                    {m.category === 'audio' && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-orange-500/25 to-red-500/25 text-orange-200 border-orange-500/30 shadow-orange-500/10"
+                            : "bg-gradient-to-r from-orange-400/80 to-red-400/80 text-orange-900 border-orange-600/40 shadow-orange-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Mic size={12} className={cn(isDark ? "text-orange-400" : "text-orange-700")} />
+                        Audio
+                      </motion.span>
+                    )}
+                    {/* Special NEW badge styled like Pro/Free, different color */}
+                    {Array.isArray(m.tags) && m.tags.includes('new') && (
+                      <motion.span
+                        className={cn(
+                          "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-sky-500/25 to-cyan-500/25 text-sky-200 border-sky-500/30 shadow-sky-500/10"
+                            : "bg-gradient-to-r from-sky-400/80 to-cyan-400/80 text-sky-900 border-sky-600/40 shadow-sky-400/20"
