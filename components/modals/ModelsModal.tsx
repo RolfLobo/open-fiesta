@@ -1143,3 +1143,28 @@ export default function ModelsModal({
                 {/* Provider */}
                 <p className={cn(
                   "text-[12px] mb-3 capitalize font-medium",
+                  isDark ? "text-zinc-400" : "text-gray-600"
+                )}>
+                  {providerLabel(m.provider)}
+                </p>
+                
+                {/* Enhanced selection indicator */}
+                <div className="mt-auto">
+                  <div className={cn(
+                    "w-full h-1 rounded-full transition-all duration-300",
+                    selected 
+                      ? 'bg-gradient-to-r from-red-600 via-red-400 to-red-600 shadow-lg shadow-red-500/40' 
+                      : isDark
+                        ? 'bg-gradient-to-r from-zinc-700/80 via-zinc-600/60 to-zinc-700/80'
+                        : 'bg-gradient-to-r from-gray-300/80 via-gray-400/60 to-gray-300/80'
+                  )} />
+                  {selected && (
+                    <div className={cn(
+                      "text-xs font-semibold mt-1.5 text-center tracking-wide",
+                      isDark ? "text-red-300" : "text-red-600"
+                    )}>
+                      ✓ SELECTED
+                    </div>
+                  )}
+                </div>
+              </div>
