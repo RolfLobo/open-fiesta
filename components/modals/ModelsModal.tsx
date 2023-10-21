@@ -1039,3 +1039,29 @@ export default function ModelsModal({
                       </motion.span>
                     )}
                     {isUnc(m) && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-red-500/25 to-rose-500/25 text-red-200 border-red-500/30 shadow-red-500/10"
+                            : "bg-gradient-to-r from-red-400/80 to-rose-400/80 text-red-900 border-red-600/40 shadow-red-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <span className={cn(
+                          "w-2.5 h-2.5 rounded-full animate-pulse",
+                          isDark ? "bg-red-400" : "bg-red-700"
+                        )} />
+                        Uncensored
+                      </motion.span>
+                    )}
+                    {m.category === 'image' && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-pink-500/25 to-rose-500/25 text-pink-200 border-pink-500/30 shadow-pink-500/10"
+                            : "bg-gradient-to-r from-pink-400/80 to-rose-400/80 text-pink-900 border-pink-600/40 shadow-pink-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
