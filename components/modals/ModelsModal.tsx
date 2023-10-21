@@ -1013,3 +1013,29 @@ export default function ModelsModal({
                     {isThinking && (
                       <motion.span 
                         className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-purple-500/25 to-violet-500/25 text-purple-200 border-purple-500/30 shadow-purple-500/10"
+                            : "bg-gradient-to-r from-purple-400/80 to-violet-400/80 text-purple-900 border-purple-600/40 shadow-purple-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Brain size={12} className={cn(isDark ? "text-purple-400" : "text-purple-700")} />
+                        Thinking
+                      </motion.span>
+                    )}
+                    {isVision && (
+                      <motion.span 
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border shadow-lg",
+                          isDark
+                            ? "bg-gradient-to-r from-cyan-500/25 to-teal-500/25 text-cyan-200 border-cyan-500/30 shadow-cyan-500/10"
+                            : "bg-gradient-to-r from-cyan-400/80 to-teal-400/80 text-cyan-900 border-cyan-600/40 shadow-cyan-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Eye size={12} className={cn(isDark ? "text-cyan-400" : "text-cyan-700")} />
+                        Vision
+                      </motion.span>
+                    )}
+                    {isUnc(m) && (
