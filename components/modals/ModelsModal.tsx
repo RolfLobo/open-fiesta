@@ -1168,3 +1168,30 @@ export default function ModelsModal({
                   )}
                 </div>
               </div>
+
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const order: Array<keyof typeof buckets> = [
+    'Favorites',
+    'Thinking Models',
+    'Vision Models', 
+    'Text Models',
+    'Image Generation',
+    'Audio Models',
+    'Others',
+  ];
+  // Build sections; for Text Models, group into branded subsections
+  const builtInSections = order
+    .filter((k) => buckets[k].length > 0)
+    .flatMap((k) => {
+      if (k !== 'Text Models') return <Section key={k} title={k} models={buckets[k]} />;
+      const textModels = buckets[k].filter(
+        (m) => m.category === 'text' || m.provider === 'open-provider',
+      );
+      const grouped: Record<string, AiModel[]> = {
+        OpenAI: [],
