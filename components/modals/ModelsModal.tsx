@@ -1091,3 +1091,29 @@ export default function ModelsModal({
                           isDark
                             ? "bg-gradient-to-r from-sky-500/25 to-cyan-500/25 text-sky-200 border-sky-500/30 shadow-sky-500/10"
                             : "bg-gradient-to-r from-sky-400/80 to-cyan-400/80 text-sky-900 border-sky-600/40 shadow-sky-400/20"
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                        title="New"
+                      >
+                        New
+                      </motion.span>
+                    )}
+                    {Array.isArray(m.tags) && m.tags.filter((t) => t !== 'new').length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {m.tags.filter((tag) => tag !== 'new').map((tag) => (
+                          <span
+                            key={`${m.id}-tag-${tag}`}
+                            className={cn(
+                              "inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border",
+                              isDark ? "bg-white/5 border-white/10 text-white/80" : "bg-black/5 border-black/10 text-gray-700/90"
+                            )}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
