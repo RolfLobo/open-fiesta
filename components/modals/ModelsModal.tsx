@@ -1117,3 +1117,29 @@ export default function ModelsModal({
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
+                      toggleFavorite(m.id);
+                    }}
+                    className={cn(
+                      "p-1.5 rounded-lg transition-all duration-200",
+                      isFav(m)
+                        ? 'text-yellow-400 hover:text-yellow-300 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20'
+                        : isDark
+                          ? 'text-zinc-400 hover:text-zinc-300 hover:bg-white/10 border border-transparent hover:border-white/10'
+                          : 'text-gray-500 hover:text-gray-400 hover:bg-gray-200/50 border border-transparent hover:border-gray-300/50'
+                    )}
+                  >
+                    {isFav(m) ? <Star size={14} fill="currentColor" /> : <StarOff size={14} />}
+                  </button>
+                </div>
+                
+                {/* Model name */}
+                <h4 className={cn(
+                  "font-semibold text-[15px] mb-1.5 line-clamp-2 leading-tight",
+                  isDark ? "text-white" : "text-gray-800"
+                )}>
+                  {m.label}
+                </h4>
+                
+                {/* Provider */}
+                <p className={cn(
+                  "text-[12px] mb-3 capitalize font-medium",
