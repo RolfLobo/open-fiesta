@@ -1247,3 +1247,29 @@ export default function ModelsModal({
             isDark ? "text-white" : "text-gray-800"
           )}>
             Select up to 5 models
+          </h3>
+          <button
+            aria-label="Close"
+            onClick={onClose}
+            className={cn(
+              "h-8 w-8 md:h-8 md:w-8 inline-flex items-center justify-center rounded-md transition-colors",
+              isDark ? "bg-white/10 hover:bg-white/20 text-white" : "bg-gray-200/80 hover:bg-gray-300/80 text-gray-700"
+            )}
+          >
+            <X size={16} />
+          </button>
+        </div>
+        <div className="flex items-center justify-between mb-4">
+          <div className={cn(
+            "text-sm",
+            isDark ? "text-zinc-300" : "text-gray-600"
+          )}>
+            Selected: <span className={cn(
+              "font-medium",
+              isDark ? "text-white" : "text-gray-800"
+            )}>{selectedModels.length}/5</span>
+          </div>
+          
+          {/* Search bar */}
+          <div className="relative">
+            <Search className={cn(
