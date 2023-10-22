@@ -1195,3 +1195,28 @@ export default function ModelsModal({
       );
       const grouped: Record<string, AiModel[]> = {
         OpenAI: [],
+        Google: [],
+        Anthropic: [],
+        Grok: [],
+        'Open Source Models': [],
+      };
+      textModels.forEach((m) => {
+        grouped[getBrand(m)].push(m);
+      });
+      const brandOrder = ['OpenAI', 'Google', 'Anthropic', 'Grok', 'Open Source Models'] as const;
+      return brandOrder
+        .filter((name) => grouped[name].length > 0)
+        .map((name) => (
+          <Section
+            key={name}
+            title={name}
+            models={grouped[name]}
+            iconUrl={isDark ? (BRAND_ICONS[name]?.darkUrl ?? '/brand.svg') : (BRAND_ICONS[name]?.lightUrl ?? '/brand.svg')}
+            iconAlt={BRAND_ICONS[name]?.alt ?? 'Open Fiesta'}
+          />
+        ));
+    });
+
+  const customSection = (
+    <Section key="Custom models" title="Custom models" models={customModels} showBadges={false} />
+  );
