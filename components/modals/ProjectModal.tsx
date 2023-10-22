@@ -265,3 +265,29 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
   const isDark = theme.mode === 'dark';
   const [name, setName] = useState('');
   const [systemPrompt, setSystemPrompt] = useState('');
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [promptError, setPromptError] = useState<string | null>(null);
+
+  const isEditing = project !== null;
+  const title = isEditing ? 'Edit project' : 'Create new project';
+  const buttonText = isEditing ? 'Save changes' : 'Create project';
+
+  // Reset form when modal opens/closes or project changes
+  useEffect(() => {
+    if (open) {
+      if (project) {
+        setName(project.name);
+        setSystemPrompt(project.systemPrompt);
+      } else {
+        setName('');
+        setSystemPrompt('');
+      }
+      setNameError(null);
+      setPromptError(null);
+    }
+  }, [open, project]);
+
+  const handleNameChange = (value: string) => {
+    setName(value);
+    setNameError(null);
+  };
