@@ -1273,3 +1273,29 @@ export default function ModelsModal({
           {/* Search bar */}
           <div className="relative">
             <Search className={cn(
+              "absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4",
+              isDark ? "text-zinc-400" : "text-gray-500"
+            )} />
+            <input
+              type="text"
+              placeholder="Search models..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={cn(
+                "pl-9 pr-3 py-1.5 border rounded-lg text-sm focus:outline-none w-56 transition-colors",
+                isDark 
+                  ? "bg-black/30 border-white/20 text-white placeholder-zinc-400 focus:border-red-500/50 focus:bg-black/40 focus:ring-2 focus:ring-red-500/30 shadow-lg"
+                  : "bg-gray-100/80 border-gray-300/50 text-gray-800 placeholder-gray-500 focus:border-gray-400/70 focus:bg-gray-200/80"
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-4 flex-1 overflow-y-auto pr-1 scroll-touch safe-inset">
+          {customSection}
+          {builtInSections}
+        </div>
+      </div>
+    </div>
+  );
+}
