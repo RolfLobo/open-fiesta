@@ -239,3 +239,29 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
     </div>
   );
 }
+
+'use client';
+import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
+import {
+  Project,
+  createProject,
+  updateProject,
+  validateProjectName,
+  validateSystemPrompt,
+} from '@/lib/projects';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+interface ProjectModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSave: (project: Project) => void;
+  project?: Project | null; // null for create, Project for edit
+}
+
+export default function ProjectModal({ open, onClose, onSave, project = null }: ProjectModalProps) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [name, setName] = useState('');
+  const [systemPrompt, setSystemPrompt] = useState('');
