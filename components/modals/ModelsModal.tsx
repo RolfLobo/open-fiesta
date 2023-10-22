@@ -1220,3 +1220,30 @@ export default function ModelsModal({
   const customSection = (
     <Section key="Custom models" title="Custom models" models={customModels} showBadges={false} />
   );
+
+  // Use merged models for tab counts
+  const allModels = mergeModels(customModels);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className={cn(
+        "absolute inset-0 backdrop-blur-sm",
+        isDark ? "bg-black/70" : "bg-white/70"
+      )} onClick={onClose} />
+      <div
+        role="dialog"
+        aria-modal="true"
+        className={cn(
+          "relative w-full sm:w-full max-w-none sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-3 sm:mx-auto rounded-xl sm:rounded-2xl border p-4 sm:p-5 md:p-6 lg:p-6 shadow-2xl h-[90vh] sm:max-h-[90vh] overflow-hidden flex flex-col min-h-0",
+          isDark ? "border-white/10 bg-zinc-900/90" : "border-gray-300/50 bg-white/95"
+        )}
+      >
+        <div className={cn(
+          "px-4 sm:-mx-6 md:-mx-7 lg:-mx-8 sm:px-6 md:px-7 lg:px-8 pt-1 pb-2 mb-2 flex items-center justify-between backdrop-blur border-b",
+          isDark ? "bg-zinc-900/95 border-white/10" : "bg-white/95 border-gray-300/50"
+        )}>
+          <h3 className={cn(
+            "text-base md:text-lg lg:text-xl font-semibold tracking-wide",
+            isDark ? "text-white" : "text-gray-800"
+          )}>
+            Select up to 5 models
