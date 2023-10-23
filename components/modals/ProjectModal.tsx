@@ -368,3 +368,30 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
             <X size={16} />
           </button>
         </div>
+
+        {/* Body */}
+        <div className="p-4 space-y-4">
+          <p className={cn(
+            "text-sm",
+            isDark ? "text-white/70" : "text-gray-600"
+          )}>
+            Fill in the details below to {isEditing ? 'update' : 'create'}{' '}
+            {isEditing ? 'this' : 'a new'} project.
+          </p>
+
+          {/* Project Name */}
+          <div>
+            <label htmlFor="project-name" className={cn(
+              "block text-sm font-medium mb-2",
+              isDark ? "text-white/80" : "text-gray-700"
+            )}>
+              Project name
+            </label>
+            <input
+              id="project-name"
+              type="text"
+              value={name}
+              onChange={(e) => handleNameChange(e.target.value)}
+              placeholder="Enter a name for your project (max 50 characters)"
+              className={cn(
+                "w-full px-3 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 transition-colors",
