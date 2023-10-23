@@ -395,3 +395,29 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
               placeholder="Enter a name for your project (max 50 characters)"
               className={cn(
                 "w-full px-3 py-2 border text-sm rounded-md focus:outline-none focus:ring-2 transition-colors",
+                isDark
+                  ? "bg-white/5 text-white placeholder-white/40"
+                  : "bg-black/5 text-gray-800 placeholder-gray-500",
+                nameError
+                  ? 'border-red-400 focus:ring-red-400/50'
+                  : isDark
+                    ? 'border-white/20 focus:border-white/30 focus:ring-[var(--accent-interactive-primary)]/50'
+                    : 'border-black/20 focus:border-black/30 focus:ring-[var(--accent-interactive-primary)]/50'
+              )}
+              maxLength={50}
+              autoFocus
+            />
+            {nameError && <p className="mt-1 text-xs text-red-400">{nameError}</p>}
+            <p className={cn(
+              "mt-1 text-xs",
+              isDark ? "text-white/50" : "text-gray-500"
+            )}>{name.length}/50 characters</p>
+          </div>
+
+          {/* System Prompt */}
+          <div>
+            <label htmlFor="system-prompt" className={cn(
+              "block text-sm font-medium mb-2",
+              isDark ? "text-white/80" : "text-gray-700"
+            )}>
+              System prompt
