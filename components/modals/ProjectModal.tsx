@@ -316,3 +316,30 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
     } else {
       savedProject = createProject(name, systemPrompt);
     }
+
+    onSave(savedProject);
+    onClose();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose();
+    } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      handleSubmit();
+    }
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto" onClick={onClose} />
+
+      {/* Modal */}
+      <div
+        className={cn(
+          "relative w-full max-w-md border rounded-lg shadow-2xl pointer-events-auto",
+          isDark
+            ? "bg-zinc-900/95 border-white/20"
+            : "bg-white/95 border-black/20"
