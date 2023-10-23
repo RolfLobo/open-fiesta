@@ -343,3 +343,28 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
           isDark
             ? "bg-zinc-900/95 border-white/20"
             : "bg-white/95 border-black/20"
+        )}
+        onKeyDown={handleKeyDown}
+      >
+        {/* Header */}
+        <div className={cn(
+          "flex items-center justify-between px-4 py-4 lg:py-2 border-b",
+          isDark ? "border-white/10" : "border-black/10"
+        )}>
+          <h2 className={cn(
+            "text-lg font-semibold",
+            isDark ? "text-white" : "text-gray-800"
+          )}>{title}</h2>
+          <button
+            onClick={onClose}
+            className={cn(
+              "h-8 w-8 inline-flex items-center justify-center rounded-md transition-colors",
+              isDark
+                ? "hover:bg-white/10 text-white/60 hover:text-white"
+                : "hover:bg-black/10 text-gray-500 hover:text-gray-700"
+            )}
+            aria-label="Close"
+          >
+            <X size={16} />
+          </button>
+        </div>
