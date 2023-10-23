@@ -421,3 +421,29 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
               isDark ? "text-white/80" : "text-gray-700"
             )}>
               System prompt
+            </label>
+            <textarea
+              id="system-prompt"
+              value={systemPrompt}
+              onChange={(e) => handlePromptChange(e.target.value)}
+              placeholder="Enter a system prompt for chats in this project (max 1000 characters)"
+              rows={6}
+              className={cn(
+                "w-full px-3 py-2 text-sm border rounded-md resize-none focus:outline-none focus:ring-2 transition-colors",
+                isDark
+                  ? "bg-white/5 text-white placeholder-white/40"
+                  : "bg-black/5 text-gray-800 placeholder-gray-500",
+                promptError
+                  ? 'border-red-400 focus:ring-red-400/50'
+                  : isDark
+                    ? 'border-white/20 focus:border-white/30 focus:ring-[var(--accent-interactive-primary)]/50'
+                    : 'border-black/20 focus:border-black/30 focus:ring-[var(--accent-interactive-primary)]/50'
+              )}
+              maxLength={1000}
+            />
+            {promptError && <p className="mt-1 text-xs text-red-400">{promptError}</p>}
+            <div className={cn(
+              "mt-1 flex justify-between text-xs",
+              isDark ? "text-white/50" : "text-gray-500"
+            )}>
+              <span>
