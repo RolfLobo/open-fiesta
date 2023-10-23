@@ -291,3 +291,28 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
     setName(value);
     setNameError(null);
   };
+
+  const handlePromptChange = (value: string) => {
+    setSystemPrompt(value);
+    setPromptError(null);
+  };
+
+  const handleSubmit = () => {
+    // Validate inputs
+    const nameValidation = validateProjectName(name);
+    const promptValidation = validateSystemPrompt(systemPrompt);
+
+    setNameError(nameValidation);
+    setPromptError(promptValidation);
+
+    if (nameValidation || promptValidation) {
+      return;
+    }
+
+    // Create or update project
+    let savedProject: Project;
+    if (isEditing && project) {
+      savedProject = updateProject(project, { name, systemPrompt });
+    } else {
+      savedProject = createProject(name, systemPrompt);
+    }
