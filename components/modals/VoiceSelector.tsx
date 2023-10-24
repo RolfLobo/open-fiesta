@@ -99,3 +99,29 @@ export const VOICE_OPTIONS: VoiceOption[] = [
   { id: 'fable', name: 'Fable', description: 'Warm, engaging voice', gender: 'Female' },
   { id: 'onyx', name: 'Onyx', description: 'Deep, authoritative voice', gender: 'Male' },
   { id: 'nova', name: 'Nova', description: 'Bright, energetic voice', gender: 'Female' },
+  { id: 'shimmer', name: 'Shimmer', description: 'Soft, gentle voice', gender: 'Female' },
+];
+
+type Props = {
+  selectedVoice: string;
+  onVoiceChange: (voice: string) => void;
+  className?: string;
+};
+
+export default function VoiceSelector({ selectedVoice, onVoiceChange, className = '' }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const selectedVoiceOption = VOICE_OPTIONS.find((v) => v.id === selectedVoice) || VOICE_OPTIONS[0];
+
+  return (
+    <div className={`relative ${className}`}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 rounded-lg border border-black/20 dark:border-white/20 text-sm transition-colors"
+      >
+        <Volume2 size={16} />
+        <span>{selectedVoiceOption.name}</span>
+        <span className="text-xs opacity-60">({selectedVoiceOption.gender})</span>
+      </button>
+
+      {isOpen && (
