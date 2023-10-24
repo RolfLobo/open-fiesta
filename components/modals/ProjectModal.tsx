@@ -447,3 +447,29 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
               isDark ? "text-white/50" : "text-gray-500"
             )}>
               <span>
+                All chats in this project will use this as the system prompt sent to the AI model.
+              </span>
+              <span>{systemPrompt.length}/1000</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className={cn(
+          "flex justify-end gap-2 p-4 border-t",
+          isDark ? "border-white/10" : "border-black/10"
+        )}>
+          <button
+            onClick={onClose}
+            className={cn(
+              "px-4 py-2 text-sm rounded-md border transition-colors",
+              isDark
+                ? "border-white/20 bg-white/5 hover:bg-white/10 text-white"
+                : "border-black/20 bg-black/5 hover:bg-black/10 text-gray-700"
+            )}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 text-sm rounded-md text-white shadow transition-colors accent-action-fill accent-focus"
