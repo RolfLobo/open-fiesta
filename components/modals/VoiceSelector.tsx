@@ -81,3 +81,21 @@ export default function VoiceSelector({ selectedVoice, onVoiceChange, className 
     </div>
   );
 }
+
+'use client';
+import { useState } from 'react';
+import { Volume2 } from 'lucide-react';
+
+export type VoiceOption = {
+  id: string;
+  name: string;
+  description: string;
+  gender: string;
+};
+
+export const VOICE_OPTIONS: VoiceOption[] = [
+  { id: 'alloy', name: 'Alloy', description: 'Neutral, balanced voice', gender: 'Neutral' },
+  { id: 'echo', name: 'Echo', description: 'Clear, expressive voice', gender: 'Male' },
+  { id: 'fable', name: 'Fable', description: 'Warm, engaging voice', gender: 'Female' },
+  { id: 'onyx', name: 'Onyx', description: 'Deep, authoritative voice', gender: 'Male' },
+  { id: 'nova', name: 'Nova', description: 'Bright, energetic voice', gender: 'Female' },

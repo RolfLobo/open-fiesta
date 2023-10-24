@@ -473,3 +473,11 @@ export default function ProjectModal({ open, onClose, onSave, project = null }: 
           <button
             onClick={handleSubmit}
             className="px-4 py-2 text-sm rounded-md text-white shadow transition-colors accent-action-fill accent-focus"
+          >
+            {buttonText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
