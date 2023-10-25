@@ -210,3 +210,13 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
 };
 
 export default OfflineDemo;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useOffline } from '@/lib/offline/useOffline';
+import { OfflineIndicator } from './OfflineIndicator';
+import type { ChatMessage } from '@/lib/types';
+
+interface OfflineDemoProps {
+  userId?: string;
+}

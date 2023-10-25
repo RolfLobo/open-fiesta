@@ -151,3 +151,17 @@ export default function VoiceSelector({ selectedVoice, onVoiceChange, className 
                     <div>
                       <div className="font-medium text-black dark:text-white">{voice.name}</div>
                       <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                        {voice.description}
+                      </div>
+                    </div>
+                    <div className="text-xs text-zinc-600 dark:text-zinc-500">{voice.gender}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
