@@ -247,3 +247,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
       setConversations(cached);
     } catch (error) {
       console.error('Error loading conversations:', error);
+    }
+  };
+
+  const loadStorageInfo = async () => {
+    try {
+      const info = await getStorageUsage();
+      setStorageInfo(info);
+    } catch (error) {
+      console.error('Error loading storage info:', error);
+    }
+  };
+
+  const handleCreateThread = async () => {
+    try {
+      const { thread } = await createThread(
+        userId,
+        'Demo Thread',
+        undefined,
+        'home'
+      );
+      console.log('Created thread:', thread);
+      await loadConversations();
+    } catch (error) {
+      console.error('Error creating thread:', error);
+    }
+  };
