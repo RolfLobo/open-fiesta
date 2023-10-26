@@ -220,3 +220,30 @@ import type { ChatMessage } from '@/lib/types';
 interface OfflineDemoProps {
   userId?: string;
 }
+
+export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }) => {
+  const {
+    status,
+    isOnline,
+    sendMessage,
+    createThread,
+    getCachedConversations,
+    syncNow,
+    getStorageUsage
+  } = useOffline();
+
+  const [conversations, setConversations] = useState<any[]>([]);
+  const [storageInfo, setStorageInfo] = useState<any>(null);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    loadConversations();
+    loadStorageInfo();
+  }, []);
+
+  const loadConversations = async () => {
+    try {
+      const cached = await getCachedConversations();
+      setConversations(cached);
+    } catch (error) {
+      console.error('Error loading conversations:', error);
