@@ -299,3 +299,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
       await loadStorageInfo();
     } catch (error) {
       console.error('Error syncing:', error);
+    }
+  };
+
+  return (
+    <div className="p-6 max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Offline Functionality Demo</h2>
+      
+      {/* Status Section */}
+      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-6">
+        <h3 className="text-lg font-semibold mb-3">Connection Status</h3>
+        <div className="flex items-center gap-4">
+          <OfflineIndicator showDetails={true} />
+          <div className="text-sm">
+            <div>Online: {isOnline ? 'Yes' : 'No'}</div>
+            <div>Queued Actions: {status.queuedActionsCount}</div>
+            <div>Sync in Progress: {status.syncInProgress ? 'Yes' : 'No'}</div>
+            <div>Has Conflicts: {status.hasConflicts ? 'Yes' : 'No'}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Storage Info */}
+      {storageInfo && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-6">
+          <h3 className="text-lg font-semibold mb-3">Storage Usage</h3>
+          <div className="text-sm">
