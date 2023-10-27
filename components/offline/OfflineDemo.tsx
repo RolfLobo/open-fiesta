@@ -403,3 +403,22 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
           
           <button
             onClick={() => {
+              (navigator as any).onLine = !(navigator as any).onLine;
+              window.dispatchEvent(new Event((navigator as any).onLine ? 'online' : 'offline'));
+            }}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
+            Toggle Online/Offline
+          </button>
+        </div>
+        
+        <div className="text-sm mt-2 text-gray-600 dark:text-gray-400">
+          Try going offline and creating threads or sending messages. 
+          They will be queued and synced when you come back online.
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OfflineDemo;

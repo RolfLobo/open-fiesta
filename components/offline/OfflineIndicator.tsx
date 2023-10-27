@@ -118,3 +118,10 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
 };
 
 export default OfflineIndicator;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { offlineManager } from '@/lib/offline/manager';
+import type { OfflineStatus } from '@/lib/offline/types';
+
+interface OfflineIndicatorProps {
