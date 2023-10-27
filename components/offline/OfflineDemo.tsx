@@ -351,3 +351,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
           </button>
           
           <div className="text-sm">
+            <div>Cached Conversations: {conversations.length}</div>
+            {conversations.slice(0, 3).map((conv, index) => (
+              <div key={conv.id} className="mt-1 p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                {conv.title} ({conv.messages.length} messages)
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Message Sending */}
+        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg border">
+          <h3 className="text-lg font-semibold mb-3">Send Message</h3>
+          <div className="flex gap-2 mb-3">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-1 px-3 py-2 border rounded dark:bg-gray-800 dark:border-gray-600"
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={!message.trim() || conversations.length === 0}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50"
+            >
