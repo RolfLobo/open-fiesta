@@ -273,3 +273,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
       console.error('Error creating thread:', error);
     }
   };
+
+  const handleSendMessage = async () => {
+    if (!message.trim() || conversations.length === 0) return;
+
+    try {
+      const testMessage: ChatMessage = {
+        role: 'user',
+        content: message.trim(),
+        ts: Date.now()
+      };
+
+      await sendMessage(userId, conversations[0].id, testMessage);
+      setMessage('');
+      await loadConversations();
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+
+  const handleSync = async () => {
+    try {
+      await syncNow();
+      await loadConversations();
+      await loadStorageInfo();
+    } catch (error) {
+      console.error('Error syncing:', error);
