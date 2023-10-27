@@ -325,3 +325,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-6">
           <h3 className="text-lg font-semibold mb-3">Storage Usage</h3>
           <div className="text-sm">
+            <div>Used: {(storageInfo.used / 1024 / 1024).toFixed(2)} MB</div>
+            <div>Quota: {(storageInfo.quota / 1024 / 1024).toFixed(2)} MB</div>
+            <div>Percentage: {storageInfo.percentage.toFixed(1)}%</div>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+            <div 
+              className="bg-blue-600 h-2 rounded-full" 
+              style={{ width: `${Math.min(storageInfo.percentage, 100)}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Thread Management */}
+        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg border">
+          <h3 className="text-lg font-semibold mb-3">Thread Management</h3>
+          <button
+            onClick={handleCreateThread}
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-3"
+          >
+            Create Demo Thread
+          </button>
+          
+          <div className="text-sm">
