@@ -377,3 +377,29 @@ export const OfflineDemo: React.FC<OfflineDemoProps> = ({ userId = 'demo-user' }
               disabled={!message.trim() || conversations.length === 0}
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50"
             >
+              Send
+            </button>
+          </div>
+          
+          {conversations.length === 0 && (
+            <div className="text-sm text-gray-500">
+              Create a thread first to send messages
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Sync Controls */}
+      <div className="mt-6 bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold mb-3">Sync Controls</h3>
+        <div className="flex gap-3">
+          <button
+            onClick={handleSync}
+            disabled={!isOnline || status.syncInProgress}
+            className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 disabled:opacity-50"
+          >
+            {status.syncInProgress ? 'Syncing...' : 'Sync Now'}
+          </button>
+          
+          <button
+            onClick={() => {
