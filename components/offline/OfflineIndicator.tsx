@@ -177,3 +177,29 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
   };
 
   const getTooltipText = () => {
+    if (!status.isOnline) {
+      return 'You are offline. Changes will be saved locally and synced when you reconnect.';
+    }
+    if (status.syncInProgress) {
+      return 'Synchronizing your changes with the server...';
+    }
+    if (status.queuedActionsCount > 0) {
+      return `${status.queuedActionsCount} actions waiting to be synced. Click to sync now.`;
+    }
+    if (status.hasConflicts) {
+      return 'Some changes have conflicts that need to be resolved.';
+    }
+    return 'All changes are synchronized.';
+  };
+
+  return (
+    <div className={`relative ${className}`}>
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        onClick={handleManualSync}
+      >
+        {/* Status indicator dot */}
+        <div className={`w-3 h-3 rounded-full ${getStatusColor()} transition-colors duration-200`}>
+          {status.syncInProgress && (
