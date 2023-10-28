@@ -150,3 +150,30 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
 
     updateStatus();
     const unsubscribe = offlineManager.addStatusListener(setStatus);
+
+    return unsubscribe;
+  }, []);
+
+  const handleManualSync = async () => {
+    if (status.isOnline && !status.syncInProgress) {
+      await offlineManager.syncQueuedActions();
+    }
+  };
+
+  const getStatusColor = () => {
+    if (!status.isOnline) return 'bg-red-500';
+    if (status.syncInProgress) return 'bg-yellow-500';
+    if (status.queuedActionsCount > 0) return 'bg-orange-500';
+    if (status.hasConflicts) return 'bg-purple-500';
+    return 'bg-green-500';
+  };
+
+  const getStatusText = () => {
+    if (!status.isOnline) return 'Offline';
+    if (status.syncInProgress) return 'Syncing...';
+    if (status.queuedActionsCount > 0) return `${status.queuedActionsCount} pending`;
+    if (status.hasConflicts) return 'Conflicts';
+    return 'Online';
+  };
+
+  const getTooltipText = () => {
