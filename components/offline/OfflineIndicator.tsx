@@ -125,3 +125,28 @@ import { offlineManager } from '@/lib/offline/manager';
 import type { OfflineStatus } from '@/lib/offline/types';
 
 interface OfflineIndicatorProps {
+  className?: string;
+  showDetails?: boolean;
+}
+
+export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
+  className = '',
+  showDetails = false
+}) => {
+  const [status, setStatus] = useState<OfflineStatus>({
+    isOnline: navigator.onLine,
+    queuedActionsCount: 0,
+    syncInProgress: false,
+    hasConflicts: false
+  });
+
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    const updateStatus = async () => {
+      const currentStatus = await offlineManager.getStatus();
+      setStatus(currentStatus);
+    };
+
+    updateStatus();
+    const unsubscribe = offlineManager.addStatusListener(setStatus);
