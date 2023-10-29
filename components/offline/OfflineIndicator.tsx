@@ -203,3 +203,29 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
         {/* Status indicator dot */}
         <div className={`w-3 h-3 rounded-full ${getStatusColor()} transition-colors duration-200`}>
           {status.syncInProgress && (
+            <div className="w-3 h-3 rounded-full bg-current animate-pulse" />
+          )}
+        </div>
+
+        {/* Status text */}
+        {showDetails && (
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            {getStatusText()}
+          </span>
+        )}
+
+        {/* Sync button for pending actions */}
+        {status.isOnline && status.queuedActionsCount > 0 && !status.syncInProgress && (
+          <button
+            onClick={handleManualSync}
+            className="text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            title="Sync now"
+          >
+            Sync
+          </button>
+        )}
+      </div>
+
+      {/* Tooltip */}
+      {showTooltip && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg z-50 whitespace-nowrap">
