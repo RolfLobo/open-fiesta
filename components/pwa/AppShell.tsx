@@ -131,3 +131,29 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = ({
   children,
   showLaunchScreen = true,
+  launchScreenDuration = 1500,
+  className = '',
+}) => {
+  const [isLoading, setIsLoading] = useState(showLaunchScreen);
+  const [isStandaloneMode, setIsStandaloneMode] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    // Check if running in standalone mode
+    setIsStandaloneMode(isStandalone());
+    setIsHydrated(true);
+
+    // Handle launch screen timing
+    if (showLaunchScreen) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, launchScreenDuration);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoading(false);
+    }
+  }, [showLaunchScreen, launchScreenDuration]);
+
+  // Show loading state during hydration
+  if (!isHydrated) {
