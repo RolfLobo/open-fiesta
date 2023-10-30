@@ -234,3 +234,30 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
     if (isStandalone()) {
       return;
     }
+
+    // Check if banner was permanently dismissed
+    if (showOnce && localStorage.getItem('pwa-banner-dismissed')) {
+      return;
+    }
+
+    // Check if banner was dismissed in this session
+    if (sessionStorage.getItem('pwa-banner-session-dismissed')) {
+      return;
+    }
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      
+      // Show banner after a short delay
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 2000);
+    };
+
+    const handleAppInstalled = () => {
+      setIsVisible(false);
+      setDeferredPrompt(null);
+      onInstall?.();
+      
+      // Track installation
