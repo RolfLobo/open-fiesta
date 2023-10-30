@@ -209,3 +209,28 @@ export default InstallBanner;
 import React, { useState, useEffect } from 'react';
 import { X, Download, Smartphone, Monitor } from 'lucide-react';
 import { isStandalone } from '@/lib/pwa-config';
+
+interface InstallBannerProps {
+  onInstall?: () => void;
+  onDismiss?: () => void;
+  className?: string;
+  variant?: 'top' | 'bottom';
+  showOnce?: boolean;
+}
+
+export const InstallBanner: React.FC<InstallBannerProps> = ({
+  onInstall,
+  onDismiss,
+  className = '',
+  variant = 'top',
+  showOnce = true,
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalling, setIsInstalling] = useState(false);
+
+  useEffect(() => {
+    // Don't show if already installed
+    if (isStandalone()) {
+      return;
+    }
