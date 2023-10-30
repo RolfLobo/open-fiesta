@@ -261,3 +261,29 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
       onInstall?.();
       
       // Track installation
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'pwa_install', {
+          event_category: 'PWA',
+          event_label: 'banner',
+        });
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, [onInstall, showOnce]);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+
+    setIsInstalling(true);
+    
+    try {
+      await deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      
