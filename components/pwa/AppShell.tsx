@@ -157,3 +157,29 @@ export const AppShell: React.FC<AppShellProps> = ({
 
   // Show loading state during hydration
   if (!isHydrated) {
+    return <Loading />;
+  }
+
+  // Show launch screen for PWA
+  if (isLoading && isStandaloneMode) {
+    return <LaunchScreen />;
+  }
+
+  return (
+    <div className={`app-shell min-h-screen ${isStandaloneMode ? 'standalone-mode' : 'browser-mode'} ${className}`}>
+      {/* App Shell Header - Critical above-the-fold content */}
+      <div className="app-shell-header">
+        {/* This will be populated by the actual header component */}
+      </div>
+
+      {/* Main Content Area */}
+      <main className="app-shell-main flex-1">
+        <Suspense fallback={<Loading />}>
+          {children}
+        </Suspense>
+      </main>
+
+      {/* App Shell Footer - Non-critical content */}
+      <div className="app-shell-footer">
+        {/* This will be populated by the actual footer component */}
+      </div>
