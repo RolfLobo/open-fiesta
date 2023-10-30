@@ -114,3 +114,20 @@ export const AppShell: React.FC<AppShellProps> = ({
 };
 
 export default AppShell;
+'use client';
+
+import React, { useState, useEffect, Suspense } from 'react';
+import { isStandalone } from '@/lib/pwa-config';
+import { LaunchScreen } from '@/components/ui/LaunchScreen';
+import { Loading } from '@/components/ui/Loading';
+
+interface AppShellProps {
+  children: React.ReactNode;
+  showLaunchScreen?: boolean;
+  launchScreenDuration?: number;
+  className?: string;
+}
+
+export const AppShell: React.FC<AppShellProps> = ({
+  children,
+  showLaunchScreen = true,
