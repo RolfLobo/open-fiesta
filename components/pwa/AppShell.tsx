@@ -183,3 +183,29 @@ export const AppShell: React.FC<AppShellProps> = ({
       <div className="app-shell-footer">
         {/* This will be populated by the actual footer component */}
       </div>
+
+      {/* PWA-specific styles */}
+      <style jsx>{`
+        .app-shell {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .standalone-mode {
+          /* Adjust for standalone PWA mode */
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: env(safe-area-inset-bottom);
+          padding-left: env(safe-area-inset-left);
+          padding-right: env(safe-area-inset-right);
+        }
+        
+        .app-shell-main {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        /* Optimize for PWA performance */
+        .app-shell * {
+          box-sizing: border-box;
+        }
