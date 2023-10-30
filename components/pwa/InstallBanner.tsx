@@ -204,3 +204,8 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
 };
 
 export default InstallBanner;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { X, Download, Smartphone, Monitor } from 'lucide-react';
+import { isStandalone } from '@/lib/pwa-config';

@@ -209,3 +209,24 @@ export const AppShell: React.FC<AppShellProps> = ({
         .app-shell * {
           box-sizing: border-box;
         }
+        
+        /* Prevent overscroll in standalone mode */
+        .standalone-mode {
+          overscroll-behavior: none;
+        }
+        
+        /* Handle notch and safe areas */
+        @supports (padding: max(0px)) {
+          .standalone-mode {
+            padding-top: max(env(safe-area-inset-top), 0px);
+            padding-bottom: max(env(safe-area-inset-bottom), 0px);
+            padding-left: max(env(safe-area-inset-left), 0px);
+            padding-right: max(env(safe-area-inset-right), 0px);
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default AppShell;
