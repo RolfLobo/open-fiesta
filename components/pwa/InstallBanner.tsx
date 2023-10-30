@@ -287,3 +287,29 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
       await deferredPrompt.prompt();
       const choiceResult = await deferredPrompt.userChoice;
       
+      // Track user choice
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'pwa_install_prompt', {
+          event_category: 'PWA',
+          event_label: choiceResult.outcome,
+          custom_parameter_1: 'banner',
+        });
+      }
+      
+      if (choiceResult.outcome === 'accepted') {
+        console.log('PWA installation accepted from banner');
+        onInstall?.();
+      }
+    } catch (error) {
+      console.error('Error during PWA installation from banner:', error);
+    } finally {
+      setDeferredPrompt(null);
+      setIsVisible(false);
+      setIsInstalling(false);
+    }
+  };
+
+  const handleDismiss = (permanent = false) => {
+    setIsVisible(false);
+    
+    if (permanent) {
