@@ -193,3 +193,10 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
 };
 
 export default InstallPrompt;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { X, Download, Zap, Wifi, Bell } from 'lucide-react';
+import { isStandalone } from '@/lib/pwa-config';
+
+interface BeforeInstallPromptEvent extends Event {

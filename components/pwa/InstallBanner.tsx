@@ -391,3 +391,22 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
                   onClick={() => handleDismiss(false)}
                   className="text-blue-100 hover:text-white text-xs px-2 py-1 rounded transition-colors"
                 >
+                  Later
+                </button>
+                <button
+                  onClick={() => handleDismiss(true)}
+                  className="text-blue-100 hover:text-white p-1 rounded transition-colors"
+                  aria-label="Dismiss permanently"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InstallBanner;
