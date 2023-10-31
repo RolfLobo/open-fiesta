@@ -339,3 +339,29 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
   };
 
   const DeviceIcon = getDeviceIcon();
+
+  if (!isVisible || isStandalone()) {
+    return null;
+  }
+
+  const bannerClasses = variant === 'top' 
+    ? 'top-0 animate-in slide-in-from-top-2' 
+    : 'bottom-0 animate-in slide-in-from-bottom-2';
+
+  return (
+    <div className={`fixed left-0 right-0 z-50 ${bannerClasses} ${className}`}>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0">
+                <DeviceIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium">
+                  Install Open Fiesta for a better experience
+                </p>
+                <p className="text-xs text-blue-100">
+                  Faster loading, offline access, and push notifications
+                </p>
+              </div>
