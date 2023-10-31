@@ -278,3 +278,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
       if (choiceResult.outcome === 'accepted') {
         // Track successful installation
         if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'pwa_install_success', {
+            event_category: 'PWA',
+            event_label: 'install_prompt',
+          });
+        }
+        onInstall?.();
+      } else {
+        // Track dismissal
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'pwa_install_dismissed', {
+            event_category: 'PWA',
+            event_label: 'install_prompt',
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error during PWA installation:', error instanceof Error ? error.message : 'Unknown error');
+      // Reset state on error
+      setIsInstalling(false);
+      setIsVisible(false);
+    } finally {
+      setDeferredPrompt(null);
+      setIsVisible(false);
+      setIsInstalling(false);
+    }
+  };
