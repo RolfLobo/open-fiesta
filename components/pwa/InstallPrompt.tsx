@@ -252,3 +252,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
       if (isMounted) {
         setDeferredPrompt(null);
         setIsVisible(false);
+        onInstall?.();
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, [onInstall]);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+
+    setIsInstalling(true);
+    
+    try {
+      await deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      
+      if (choiceResult.outcome === 'accepted') {
+        // Track successful installation
+        if (typeof window !== 'undefined' && (window as any).gtag) {
