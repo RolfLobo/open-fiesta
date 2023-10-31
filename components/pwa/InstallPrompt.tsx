@@ -200,3 +200,29 @@ import { X, Download, Zap, Wifi, Bell } from 'lucide-react';
 import { isStandalone } from '@/lib/pwa-config';
 
 interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: ReadonlyArray<string>;
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
+interface InstallPromptProps {
+  onInstall?: () => void;
+  onDismiss?: () => void;
+  className?: string;
+}
+
+export const InstallPrompt: React.FC<InstallPromptProps> = ({
+  onInstall,
+  onDismiss,
+  className = '',
+}) => {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isInstalling, setIsInstalling] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
