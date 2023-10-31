@@ -313,3 +313,29 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
     setIsVisible(false);
     
     if (permanent) {
+      localStorage.setItem('pwa-banner-dismissed', 'true');
+    } else {
+      sessionStorage.setItem('pwa-banner-session-dismissed', 'true');
+    }
+    
+    // Track dismissal
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'pwa_banner_dismiss', {
+        event_category: 'PWA',
+        event_label: permanent ? 'permanent' : 'session',
+      });
+    }
+    
+    onDismiss?.();
+  };
+
+  const getDeviceIcon = () => {
+    if (typeof window === 'undefined') return Monitor;
+    
+    const userAgent = window.navigator.userAgent;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    
+    return isMobile ? Smartphone : Monitor;
+  };
+
+  const DeviceIcon = getDeviceIcon();
