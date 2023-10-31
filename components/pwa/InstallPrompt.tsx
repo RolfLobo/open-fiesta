@@ -226,3 +226,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
 
   useEffect(() => {
     let isMounted = true;
+
+    // Check if already dismissed in this session
+    const dismissed = sessionStorage.getItem('pwa-install-dismissed');
+    if (dismissed) {
+      setIsDismissed(true);
+      return;
+    }
+
+    // Don't show if already installed
+    if (isStandalone()) {
+      return;
+    }
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      const promptEvent = e as BeforeInstallPromptEvent;
+      if (isMounted) {
+        setDeferredPrompt(promptEvent);
+        setIsVisible(true);
+      }
+    };
+
+    const handleAppInstalled = () => {
+      if (isMounted) {
+        setDeferredPrompt(null);
+        setIsVisible(false);
