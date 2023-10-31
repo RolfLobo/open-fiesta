@@ -365,3 +365,29 @@ export const InstallBanner: React.FC<InstallBannerProps> = ({
                   Faster loading, offline access, and push notifications
                 </p>
               </div>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={handleInstall}
+                disabled={isInstalling}
+                className="bg-white text-blue-600 hover:bg-blue-50 disabled:bg-gray-100 disabled:text-gray-400 px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
+              >
+                {isInstalling ? (
+                  <>
+                    <div className="w-3 h-3 border border-blue-600 border-t-transparent rounded-full animate-spin" />
+                    <span>Installing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-3 h-3" />
+                    <span>Install</span>
+                  </>
+                )}
+              </button>
+              
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => handleDismiss(false)}
+                  className="text-blue-100 hover:text-white text-xs px-2 py-1 rounded transition-colors"
+                >
