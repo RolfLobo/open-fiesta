@@ -382,3 +382,9 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
             Later
           </button>
         </div>
+      </div>
+    </div>
+  );
+};
+
+export default InstallPrompt;

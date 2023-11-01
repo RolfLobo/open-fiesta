@@ -58,3 +58,22 @@ export class PWAErrorBoundary extends Component<Props, State> {
 }
 
 export default PWAErrorBoundary;
+'use client';
+
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+export class PWAErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
