@@ -330,3 +330,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
               </h3>
               <p className="text-xs text-gray-600 dark:text-gray-400">
                 Get the app experience
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleDismiss}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            aria-label="Dismiss install prompt"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="space-y-2 mb-4">
+          <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-400">
+            <Zap className="w-3 h-3" />
+            <span>Faster loading</span>
+          </div>
+          <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-400">
+            <Wifi className="w-3 h-3" />
+            <span>Works offline</span>
+          </div>
+          <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-400">
+            <Bell className="w-3 h-3" />
+            <span>Push notifications</span>
+          </div>
+        </div>
