@@ -304,3 +304,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
       setIsInstalling(false);
     }
   };
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    setIsDismissed(true);
+    sessionStorage.setItem('pwa-install-dismissed', 'true');
+    onDismiss?.();
+  };
+
+  if (!isVisible || isDismissed || isStandalone()) {
+    return null;
+  }
+
+  return (
+    <div className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50 ${className}`}>
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 animate-in slide-in-from-bottom-2 duration-300">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <Download className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                Install Open Fiesta
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                Get the app experience
