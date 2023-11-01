@@ -356,3 +356,29 @@ export const InstallPrompt: React.FC<InstallPromptProps> = ({
             <span>Push notifications</span>
           </div>
         </div>
+
+        <div className="flex space-x-2">
+          <button
+            onClick={handleInstall}
+            disabled={isInstalling}
+            className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium py-2 px-3 rounded-md transition-colors flex items-center justify-center space-x-1"
+          >
+            {isInstalling ? (
+              <>
+                <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                <span>Installing...</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-3 h-3" />
+                <span>Install</span>
+              </>
+            )}
+          </button>
+          <button
+            onClick={handleDismiss}
+            className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+          >
+            Later
+          </button>
+        </div>
