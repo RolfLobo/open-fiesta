@@ -210,3 +210,29 @@ interface PWALaunchScreenProps {
   subtitle?: string;
   logoSrc?: string;
   duration?: number;
+  onComplete?: () => void;
+  className?: string;
+}
+
+export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
+  title = 'Open Fiesta',
+  subtitle = 'AI Chat Platform',
+  logoSrc = '/brand.svg',
+  duration = 2000,
+  onComplete,
+  className = '',
+}) => {
+  const { theme } = useTheme();
+  const [isVisible, setIsVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [isStandaloneMode, setIsStandaloneMode] = useState(false);
+
+  const isDark = theme.mode === 'dark';
+
+  useEffect(() => {
+    setIsStandaloneMode(isStandalone());
+  }, []);
+
+  useEffect(() => {
+    // Animate progress bar
+    const progressInterval = setInterval(() => {
