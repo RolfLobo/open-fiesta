@@ -104,3 +104,17 @@ export class PWAErrorBoundary extends Component<Props, State> {
             A PWA feature encountered an error. The app will continue to work normally.
           </p>
           <button
+            onClick={() => this.setState({ hasError: false })}
+            className="mt-2 text-red-600 text-sm underline hover:no-underline"
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default PWAErrorBoundary;

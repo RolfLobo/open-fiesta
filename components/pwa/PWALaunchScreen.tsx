@@ -198,3 +198,15 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
 };
 
 export default PWALaunchScreen;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useTheme } from '@/lib/themeContext';
+import { isStandalone } from '@/lib/pwa-config';
+import { cn } from '@/lib/utils';
+
+interface PWALaunchScreenProps {
+  title?: string;
+  subtitle?: string;
+  logoSrc?: string;
+  duration?: number;
