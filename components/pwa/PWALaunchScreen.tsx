@@ -236,3 +236,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
   useEffect(() => {
     // Animate progress bar
     const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, duration / 50);
+
+    // Hide launch screen after duration
+    const hideTimer = setTimeout(() => {
+      setIsVisible(false);
+      const fadeTimer = setTimeout(() => {
+        onComplete?.();
+      }, 300); // Wait for fade out animation
+      
+      return () => clearTimeout(fadeTimer);
+    }, duration);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(hideTimer);
+    };
+  }, [duration, onComplete]);
+
+  // Only show launch screen in standalone mode
