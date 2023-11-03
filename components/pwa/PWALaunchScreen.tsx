@@ -262,3 +262,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
   }, [duration, onComplete]);
 
   // Only show launch screen in standalone mode
+  if (!isStandaloneMode) {
+    return null;
+  }
+
+  return (
+    <div
+      className={cn(
+        "fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-300",
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none",
+        isDark ? "bg-black" : "bg-white",
+        className
+      )}
+      style={{
+        background: isDark 
+          ? 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)'
+          : 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
+      }}
+    >
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div 
+          className="w-full h-full"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, ${isDark ? '#ffffff' : '#000000'} 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
