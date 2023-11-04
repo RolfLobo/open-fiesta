@@ -366,3 +366,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
               }}
             />
           </div>
+          
+          {/* Loading text */}
+          <p className={cn(
+            "text-sm mt-4",
+            isDark ? "text-gray-500" : "text-gray-500"
+          )}>
+            {progress < 30 ? 'Initializing...' : 
+             progress < 60 ? 'Loading components...' : 
+             progress < 90 ? 'Almost ready...' : 
+             'Welcome!'}
+          </p>
+        </div>
+      </div>
+
+      {/* CSS animations */}
+      <style jsx>{`
+        @keyframes pulse-ring {
+          0% {
+            transform: scale(0.8);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1.2);
+            opacity: 0;
+          }
+        }
