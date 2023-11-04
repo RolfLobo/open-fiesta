@@ -340,3 +340,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
         {/* App name and subtitle */}
         <div className="mb-8">
           <h1 className={cn(
+            "text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          )}>
+            {title}
+          </h1>
+          <p className={cn(
+            "text-lg",
+            isDark ? "text-gray-400" : "text-gray-600"
+          )}>
+            {subtitle}
+          </p>
+        </div>
+
+        {/* Progress bar */}
+        <div className="w-64 mx-auto">
+          <div className={cn(
+            "h-1 rounded-full overflow-hidden",
+            isDark ? "bg-gray-800" : "bg-gray-200"
+          )}>
+            <div 
+              className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-100 ease-out"
+              style={{ 
+                width: `${progress}%`,
+                boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+              }}
+            />
+          </div>
