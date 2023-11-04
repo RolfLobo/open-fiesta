@@ -392,3 +392,9 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
             opacity: 0;
           }
         }
+      `}</style>
+    </div>
+  );
+};
+
+export default PWALaunchScreen;

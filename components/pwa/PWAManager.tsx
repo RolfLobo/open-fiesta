@@ -178,3 +178,23 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
 };
 
 export default PWAManager;
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { StandaloneProvider } from './StandaloneDetector';
+import InstallPrompt from './InstallPrompt';
+import InstallBanner from './InstallBanner';
+import PWALaunchScreen from './PWALaunchScreen';
+import { ServiceWorkerUpdate } from './ServiceWorkerUpdate';
+import PWAErrorBoundary from './PWAErrorBoundary';
+import { injectPWAStyles } from '@/lib/pwa-styles';
+import { isPWAEnabled, isStandalone } from '@/lib/pwa-config';
+
+interface PWAManagerProps {
+  children: React.ReactNode;
+  showInstallPrompt?: boolean;
+  showInstallBanner?: boolean;
+  showLaunchScreen?: boolean;
+  launchScreenDuration?: number;
+  installPromptDelay?: number;
+  bannerVariant?: 'top' | 'bottom';
