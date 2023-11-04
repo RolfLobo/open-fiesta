@@ -314,3 +314,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
               />
             )}
           </div>
+          
+          {/* Animated rings */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div 
+              className={cn(
+                "w-32 h-32 rounded-full border-2 animate-pulse",
+                isDark ? "border-blue-500/20" : "border-blue-500/30"
+              )}
+              style={{
+                animation: 'pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+              }}
+            />
+            <div 
+              className={cn(
+                "absolute w-40 h-40 rounded-full border border-purple-500/10 animate-pulse",
+              )}
+              style={{
+                animation: 'pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite 0.5s'
+              }}
+            />
+          </div>
+        </div>
+
+        {/* App name and subtitle */}
+        <div className="mb-8">
+          <h1 className={cn(
