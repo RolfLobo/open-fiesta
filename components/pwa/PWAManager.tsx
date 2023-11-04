@@ -198,3 +198,29 @@ interface PWAManagerProps {
   launchScreenDuration?: number;
   installPromptDelay?: number;
   bannerVariant?: 'top' | 'bottom';
+}
+
+export const PWAManager: React.FC<PWAManagerProps> = ({
+  children,
+  showInstallPrompt = true,
+  showInstallBanner = true,
+  showLaunchScreen = true,
+  launchScreenDuration = 2000,
+  installPromptDelay = 5000,
+  bannerVariant = 'top',
+}) => {
+  const [isLaunchScreenVisible, setIsLaunchScreenVisible] = useState(showLaunchScreen);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+  const [pwaEnabled, setPwaEnabled] = useState(false);
+
+  useEffect(() => {
+    // Check if PWA features should be enabled
+    setPwaEnabled(isPWAEnabled());
+    
+    // Inject PWA styles
+    injectPWAStyles();
+    
+    // Handle launch screen timing
+    if (showLaunchScreen && isStandalone()) {
+      const timer = setTimeout(() => {
