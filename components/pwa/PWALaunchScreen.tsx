@@ -288,3 +288,29 @@ export const PWALaunchScreen: React.FC<PWALaunchScreenProps> = ({
             backgroundImage: `radial-gradient(circle at 25% 25%, ${isDark ? '#ffffff' : '#000000'} 1px, transparent 1px)`,
             backgroundSize: '50px 50px'
           }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-8">
+        {/* Logo container with glow effect */}
+        <div className="relative mb-8">
+          <div 
+            className={cn(
+              "w-24 h-24 mx-auto rounded-2xl flex items-center justify-center shadow-2xl",
+              isDark ? "bg-gray-900 border border-gray-800" : "bg-white border border-gray-200"
+            )}
+            style={{
+              boxShadow: isDark 
+                ? '0 0 60px rgba(59, 130, 246, 0.3), 0 0 120px rgba(147, 51, 234, 0.2)'
+                : '0 0 60px rgba(59, 130, 246, 0.2), 0 0 120px rgba(147, 51, 234, 0.1)'
+            }}
+          >
+            {logoSrc && (
+              <img 
+                src={logoSrc} 
+                alt={title}
+                className="w-16 h-16 rounded-xl"
+              />
+            )}
+          </div>
