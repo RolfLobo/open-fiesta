@@ -224,3 +224,29 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
     // Handle launch screen timing
     if (showLaunchScreen && isStandalone()) {
       const timer = setTimeout(() => {
+        setIsLaunchScreenVisible(false);
+      }, launchScreenDuration);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setIsLaunchScreenVisible(false);
+    }
+  }, [showLaunchScreen, launchScreenDuration]);
+
+  useEffect(() => {
+    if (!pwaEnabled || isStandalone()) return;
+
+    // Show install prompt after delay
+    if (showInstallPrompt) {
+      const promptTimer = setTimeout(() => {
+        setShowPrompt(true);
+      }, installPromptDelay);
+
+      return () => clearTimeout(promptTimer);
+    }
+
+    // Show install banner
+    if (showInstallBanner) {
+      const bannerTimer = setTimeout(() => {
+        setShowBanner(true);
+      }, 1000);
