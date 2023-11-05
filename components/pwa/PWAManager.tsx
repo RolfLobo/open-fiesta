@@ -250,3 +250,29 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
       const bannerTimer = setTimeout(() => {
         setShowBanner(true);
       }, 1000);
+
+      return () => clearTimeout(bannerTimer);
+    }
+  }, [pwaEnabled, showInstallPrompt, showInstallBanner, installPromptDelay]);
+
+  const handleInstall = () => {
+    setShowPrompt(false);
+    setShowBanner(false);
+    
+    // Track installation
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'pwa_install_success', {
+        event_category: 'PWA',
+        event_label: 'user_initiated',
+      });
+    }
+  };
+
+  const handleDismiss = () => {
+    setShowPrompt(false);
+    setShowBanner(false);
+  };
+
+  if (!pwaEnabled) {
+    return <>{children}</>;
+  }
