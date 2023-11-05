@@ -328,3 +328,29 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
 
         {/* PWA-specific styles */}
         <style jsx global>{`
+          .pwa-app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+          }
+          
+          .pwa-standalone .pwa-app-container {
+            min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+          }
+          
+          .pwa-standalone {
+            overscroll-behavior: none;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          
+          .pwa-standalone::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+      </StandaloneProvider>
+    </PWAErrorBoundary>
