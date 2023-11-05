@@ -302,3 +302,29 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
             {showBanner && showInstallBanner && (
               <PWAErrorBoundary>
                 <InstallBanner
+                  variant={bannerVariant}
+                  onInstall={handleInstall}
+                  onDismiss={handleDismiss}
+                />
+              </PWAErrorBoundary>
+            )}
+
+            {/* Install Prompt */}
+            {showPrompt && showInstallPrompt && (
+              <PWAErrorBoundary>
+                <InstallPrompt
+                  onInstall={handleInstall}
+                  onDismiss={handleDismiss}
+                />
+              </PWAErrorBoundary>
+            )}
+          </>
+        )}
+
+        {/* Service Worker Update Notification */}
+        <PWAErrorBoundary>
+          <ServiceWorkerUpdate />
+        </PWAErrorBoundary>
+
+        {/* PWA-specific styles */}
+        <style jsx global>{`
