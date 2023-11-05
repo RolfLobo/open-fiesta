@@ -276,3 +276,29 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
   if (!pwaEnabled) {
     return <>{children}</>;
   }
+
+  return (
+    <PWAErrorBoundary>
+      <StandaloneProvider>
+        {/* PWA Launch Screen */}
+        {isLaunchScreenVisible && (
+          <PWAErrorBoundary>
+            <PWALaunchScreen
+              duration={launchScreenDuration}
+              onComplete={() => setIsLaunchScreenVisible(false)}
+            />
+          </PWAErrorBoundary>
+        )}
+
+        {/* Main App Content */}
+        <div className="pwa-app-container">
+          {children}
+        </div>
+
+        {/* PWA Install Components */}
+        {!isStandalone() && (
+          <>
+            {/* Install Banner */}
+            {showBanner && showInstallBanner && (
+              <PWAErrorBoundary>
+                <InstallBanner
