@@ -124,3 +124,29 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
       if (event.detail.type === 'available') {
         setUpdateAvailable(true);
       } else if (event.detail.type === 'applied') {
+        setUpdateAvailable(false);
+        setIsUpdating(false);
+        // Reload the page to use the new service worker
+        window.location.reload();
+      }
+    };
+
+    // Listen for service worker update events
+    window.addEventListener('sw-update', handleServiceWorkerUpdate as EventListener);
+
+    return () => {
+      window.removeEventListener('sw-update', handleServiceWorkerUpdate as EventListener);
+    };
+  }, []);
+
+  const handleUpdate = async () => {
+    setIsUpdating(true);
+    
+    try {
+      const manager = getServiceWorkerManager();
+      await manager.skipWaiting();
+      onUpdate?.();
+    } catch (error) {
+      console.error('Failed to update service worker:', error);
+      setIsUpdating(false);
+    }
