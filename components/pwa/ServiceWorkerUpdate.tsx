@@ -102,3 +102,25 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
 };
 
 export default ServiceWorkerUpdate;
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { getServiceWorkerManager } from '../../lib/service-worker';
+
+interface ServiceWorkerUpdateProps {
+  onUpdate?: () => void;
+  onDismiss?: () => void;
+}
+
+export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
+  onUpdate,
+  onDismiss,
+}) => {
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    const handleServiceWorkerUpdate = (event: CustomEvent) => {
+      if (event.detail.type === 'available') {
+        setUpdateAvailable(true);
+      } else if (event.detail.type === 'applied') {

@@ -354,3 +354,7 @@ export const PWAManager: React.FC<PWAManagerProps> = ({
         `}</style>
       </StandaloneProvider>
     </PWAErrorBoundary>
+  );
+};
+
+export default PWAManager;
