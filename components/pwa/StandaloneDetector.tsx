@@ -187,3 +187,29 @@ export const StandaloneProvider: React.FC<StandaloneProviderProps> = ({ children
 
     return () => {
       mediaQuery.removeEventListener('change', handleDisplayModeChange);
+    };
+  }, []);
+
+  const value = {
+    isStandalone: isStandaloneMode,
+    installSource,
+    isLoading,
+  };
+
+  return (
+    <StandaloneContext.Provider value={value}>
+      {children}
+    </StandaloneContext.Provider>
+  );
+};
+
+interface StandaloneUIProps {
+  children: React.ReactNode;
+  standaloneClassName?: string;
+  browserClassName?: string;
+}
+
+export const StandaloneUI: React.FC<StandaloneUIProps> = ({
+  children,
+  standaloneClassName = '',
+  browserClassName = '',
