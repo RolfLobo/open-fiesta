@@ -202,3 +202,7 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
         </button>
       </div>
     </div>
+  );
+};
+
+export default ServiceWorkerUpdate;

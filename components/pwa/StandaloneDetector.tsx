@@ -113,3 +113,25 @@ export const StandaloneUI: React.FC<StandaloneUIProps> = ({
 };
 
 export default StandaloneProvider;
+'use client';
+
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { isStandalone, getInstallSource } from '@/lib/pwa-config';
+
+interface StandaloneContextType {
+  isStandalone: boolean;
+  installSource: string;
+  isLoading: boolean;
+}
+
+const StandaloneContext = createContext<StandaloneContextType>({
+  isStandalone: false,
+  installSource: 'unknown',
+  isLoading: true,
+});
+
+export const useStandalone = () => {
+  const context = useContext(StandaloneContext);
+  if (!context) {
+    throw new Error('useStandalone must be used within a StandaloneProvider');
+  }
