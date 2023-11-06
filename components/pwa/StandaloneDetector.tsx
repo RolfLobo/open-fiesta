@@ -161,3 +161,29 @@ export const StandaloneProvider: React.FC<StandaloneProviderProps> = ({ children
         document.body.classList.add('pwa-standalone');
         document.documentElement.classList.add('pwa-standalone');
       } else {
+        document.body.classList.remove('pwa-standalone');
+        document.documentElement.classList.remove('pwa-standalone');
+      }
+
+      // Track PWA usage
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'pwa_mode_detected', {
+          event_category: 'PWA',
+          event_label: standalone ? 'standalone' : 'browser',
+          custom_parameter_1: source,
+        });
+      }
+    };
+
+    checkStandaloneMode();
+
+    // Listen for display mode changes
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    const handleDisplayModeChange = () => {
+      checkStandaloneMode();
+    };
+
+    mediaQuery.addEventListener('change', handleDisplayModeChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleDisplayModeChange);
