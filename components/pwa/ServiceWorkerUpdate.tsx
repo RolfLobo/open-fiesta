@@ -150,3 +150,29 @@ export const ServiceWorkerUpdate: React.FC<ServiceWorkerUpdateProps> = ({
       console.error('Failed to update service worker:', error);
       setIsUpdating(false);
     }
+  };
+
+  const handleDismiss = () => {
+    setUpdateAvailable(false);
+    onDismiss?.();
+  };
+
+  if (!updateAvailable) {
+    return null;
+  }
+
+  return (
+    <div className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg max-w-sm z-50">
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <h3 className="font-semibold text-sm mb-1">
+            App Update Available
+          </h3>
+          <p className="text-xs opacity-90 mb-3">
+            A new version of the app is ready. Update now to get the latest features and improvements.
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={handleUpdate}
+              disabled={isUpdating}
+              className="bg-white text-blue-600 px-3 py-1 rounded text-xs font-medium hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
