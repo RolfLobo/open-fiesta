@@ -45,3 +45,14 @@ export default function AccentSelector({
     </div>
   );
 }
+
+'use client';
+
+import { useTheme } from '@/lib/themeContext';
+import { ACCENT_COLORS, type AccentColor } from '@/lib/themes';
+
+interface AccentSelectorProps {
+  className?: string;
+  showLabels?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+}

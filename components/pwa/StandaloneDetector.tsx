@@ -213,3 +213,18 @@ export const StandaloneUI: React.FC<StandaloneUIProps> = ({
   children,
   standaloneClassName = '',
   browserClassName = '',
+}) => {
+  const { isStandalone: standalone, isLoading } = useStandalone();
+
+  if (isLoading) {
+    return <div className="standalone-loading">{children}</div>;
+  }
+
+  return (
+    <div className={standalone ? standaloneClassName : browserClassName}>
+      {children}
+    </div>
+  );
+};
+
+export default StandaloneProvider;
