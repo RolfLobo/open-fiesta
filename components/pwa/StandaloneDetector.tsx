@@ -135,3 +135,29 @@ export const useStandalone = () => {
   if (!context) {
     throw new Error('useStandalone must be used within a StandaloneProvider');
   }
+  return context;
+};
+
+interface StandaloneProviderProps {
+  children: React.ReactNode;
+}
+
+export const StandaloneProvider: React.FC<StandaloneProviderProps> = ({ children }) => {
+  const [isStandaloneMode, setIsStandaloneMode] = useState(false);
+  const [installSource, setInstallSource] = useState('unknown');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkStandaloneMode = () => {
+      const standalone = isStandalone();
+      const source = getInstallSource();
+      
+      setIsStandaloneMode(standalone);
+      setInstallSource(source);
+      setIsLoading(false);
+
+      // Add CSS class to body for global styling
+      if (standalone) {
+        document.body.classList.add('pwa-standalone');
+        document.documentElement.classList.add('pwa-standalone');
+      } else {
