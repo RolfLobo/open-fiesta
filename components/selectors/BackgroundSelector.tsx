@@ -59,3 +59,19 @@ export default function BackgroundSelector({
     </div>
   );
 }
+
+'use client';
+
+import { useTheme } from '@/lib/themeContext';
+import { BACKGROUND_STYLES, type BackgroundStyle } from '@/lib/themes';
+
+interface BackgroundSelectorProps {
+  className?: string;
+  showLabels?: boolean;
+  previewSize?: 'sm' | 'md' | 'lg';
+}
+
+export default function BackgroundSelector({
+  className = '',
+  showLabels = true,
+  previewSize = 'md',

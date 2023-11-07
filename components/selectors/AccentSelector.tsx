@@ -83,3 +83,13 @@ export default function AccentSelector({
             key={accent.id}
             onClick={() => handleAccentChange(accent.id)}
             className={`${sizeClasses[size]} rounded-full border-2 transition-all hover:scale-110 accent-swatch`}
+            data-tone="primary"
+            data-active={theme.accent === accent.id}
+            title={`${accent.name} - ${accent.description}`}
+            aria-label={`Select ${accent.name} accent color`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
