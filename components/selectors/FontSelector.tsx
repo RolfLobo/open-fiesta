@@ -75,3 +75,30 @@ export default function FontSelector({
 
 import { useTheme } from '@/lib/themeContext';
 import { FONT_FAMILIES, type FontFamily } from '@/lib/themes';
+
+interface FontSelectorProps {
+  className?: string;
+  showLabels?: boolean;
+  compact?: boolean;
+}
+
+export default function FontSelector({
+  className = '',
+  showLabels = true,
+  compact = false,
+}: FontSelectorProps) {
+  const { theme, setFont } = useTheme();
+
+  const handleFontChange = (font: FontFamily) => {
+    setFont(font);
+  };
+
+  if (compact) {
+    return (
+      <div className={`flex items-center gap-2 ${className}`}>
+        {showLabels && <span className="text-sm font-medium text-white/80">Font:</span>}
+        <select
+          aria-label="Font family"
+          value={theme.font}
+          onChange={(e) => handleFontChange(e.target.value as FontFamily)}
+          className="px-3 py-1 rounded-md bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
