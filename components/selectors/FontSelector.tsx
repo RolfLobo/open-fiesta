@@ -70,3 +70,8 @@ export default function FontSelector({
     </div>
   );
 }
+
+'use client';
+
+import { useTheme } from '@/lib/themeContext';
+import { FONT_FAMILIES, type FontFamily } from '@/lib/themes';

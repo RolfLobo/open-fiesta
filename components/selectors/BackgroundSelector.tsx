@@ -101,3 +101,23 @@ export default function BackgroundSelector({
                 ? 'border-white/30 bg-white/10'
                 : 'border-white/10 bg-white/5 hover:bg-white/8'
             }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <div className="text-sm font-medium">{bg.name}</div>
+                <div className="text-xs text-white/60">{bg.description}</div>
+              </div>
+              {theme.background === bg.id && <div className="w-2 h-2 rounded-full bg-green-400" />}
+            </div>
+            {/* Background Preview */}
+            <div
+              className={`w-full ${sizeClasses[previewSize]} rounded border border-white/20 ${bg.className} overflow-hidden`}
+            >
+              <div className="w-full h-full opacity-80" />
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
