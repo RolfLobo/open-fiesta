@@ -102,3 +102,29 @@ export default function FontSelector({
           value={theme.font}
           onChange={(e) => handleFontChange(e.target.value as FontFamily)}
           className="px-3 py-1 rounded-md bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
+        >
+          {Object.values(FONT_FAMILIES).map((font) => (
+            <option key={font.id} value={font.id} className="bg-zinc-800">
+              {font.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`space-y-2 ${className}`}>
+      {showLabels && <span className="text-sm font-medium text-white/80">Font Family:</span>}
+      <div className="space-y-1">
+        {Object.values(FONT_FAMILIES).map((font) => (
+          <button
+            key={font.id}
+            onClick={() => handleFontChange(font.id)}
+            className={`w-full p-3 rounded-lg border transition-colors text-left ${
+              theme.font === font.id
+                ? 'border-white/30 bg-white/10'
+                : 'border-white/10 bg-white/5 hover:bg-white/8'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-1">
