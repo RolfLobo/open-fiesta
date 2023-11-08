@@ -88,3 +88,14 @@ export default function ModelSelector({
     </div>
   );
 }
+
+'use client';
+import { useMemo } from 'react';
+import { AiModel } from '@/lib/types';
+import { mergeModels, useCustomModels } from '@/lib/customModels';
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+
+export default function ModelSelector({
+  selectedIds,
+  onToggle,

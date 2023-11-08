@@ -128,3 +128,18 @@ export default function FontSelector({
             }`}
           >
             <div className="flex items-center justify-between mb-1">
+              <div>
+                <div className="text-sm font-medium">{font.name}</div>
+                <div className="text-xs text-white/60">{font.description}</div>
+              </div>
+              {theme.font === font.id && <div className="w-2 h-2 rounded-full bg-blue-400" />}
+            </div>
+            <div className={`text-sm text-white/80 font-preview font-preview-${font.id}`}>
+              The quick brown fox jumps 123456
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
