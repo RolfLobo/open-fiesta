@@ -99,3 +99,29 @@ import { cn } from '@/lib/utils';
 export default function ModelSelector({
   selectedIds,
   onToggle,
+  max = 5,
+}: {
+  selectedIds: string[];
+  onToggle: (id: string) => void;
+  max?: number;
+}) {
+  const { theme } = useTheme();
+  const isDark = theme.mode === 'dark';
+  const [customModels] = useCustomModels();
+  const allModels: AiModel[] = useMemo(() => mergeModels(customModels), [customModels]);
+  const disabledIds = useMemo(() => {
+    if (selectedIds.length < max) return new Set<string>();
+    return new Set<string>(allModels.filter((m) => !selectedIds.includes(m.id)).map((m) => m.id));
+  }, [selectedIds, max, allModels]);
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {allModels.map((m: AiModel) => {
+        const selected = selectedIds.includes(m.id);
+        const disabled = disabledIds.has(m.id);
+        return (
+          <button
+            key={m.id}
+            onClick={() => onToggle(m.id)}
+            disabled={!selected && disabled}
+            className={cn(
