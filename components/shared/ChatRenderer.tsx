@@ -357,3 +357,29 @@ export default function ChatRenderer({
 
     return turns;
   }, [messages]);
+
+  const formatTimestamp = (ts?: number) => {
+    if (!ts) return '';
+    return new Date(ts).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  if (messages.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-12 text-white/50">
+        <p>No messages in this conversation.</p>
+      </div>
+    );
+  }
