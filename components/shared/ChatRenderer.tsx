@@ -309,3 +309,26 @@ export default function ChatRenderer({
     </div>
   );
 }
+"use client";
+
+import { useMemo } from 'react';
+import Link from 'next/link';
+import type { ChatMessage } from '@/lib/types';
+import MarkdownLite from '@/components/chat/MarkdownLite';
+import { User, Bot, ArrowLeft, ExternalLink, Info } from 'lucide-react';
+
+interface ChatRendererProps {
+  messages: ChatMessage[];
+  title?: string;
+  createdAt?: number;
+  readOnly?: boolean;
+  truncated?: boolean;
+  originalUserMessageCount?: number;
+  projectContext?: {
+    name: string;
+  };
+}
+
+export default function ChatRenderer({
+  messages,
+  title,
