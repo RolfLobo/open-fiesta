@@ -332,3 +332,28 @@ interface ChatRendererProps {
 export default function ChatRenderer({
   messages,
   title,
+  createdAt,
+  readOnly = false,
+  truncated = false,
+  originalUserMessageCount,
+  projectContext
+}: ChatRendererProps) {
+  // Group messages by conversation turns (user message followed by assistant responses)
+  const conversationTurns = useMemo(() => {
+    const turns: { user: ChatMessage; assistants: ChatMessage[] }[] = [];
+    let currentUser: ChatMessage | null = null;
+
+    for (const message of messages) {
+      if (message.role === 'user') {
+        currentUser = message;
+        turns.push({ user: message, assistants: [] });
+      } else if (message.role === 'assistant' && currentUser) {
+        const lastTurn = turns[turns.length - 1];
+        if (lastTurn) {
+          lastTurn.assistants.push(message);
+        }
+      }
+    }
+
+    return turns;
+  }, [messages]);
