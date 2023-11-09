@@ -125,3 +125,29 @@ export default function ModelSelector({
             onClick={() => onToggle(m.id)}
             disabled={!selected && disabled}
             className={cn(
+              "px-3 py-1.5 rounded-md border text-sm tracking-tight transition-colors accent-focus inline-flex items-center gap-1 flex-wrap",
+              selected
+                ? 'accent-selected'
+                : isDark
+                  ? 'bg-white/10 border-white/15 text-white hover:bg-white/20'
+                  : 'bg-black/10 border-black/15 text-gray-700 hover:bg-black/20',
+              disabled ? 'opacity-40 cursor-not-allowed' : ''
+            )}
+            title={disabled ? `Max ${max} models at once` : ''}
+          >
+            {selected ? '✓ ' : ''}
+            {m.label}
+            {'custom' in m ? (
+              <span className={cn(
+                "ml-1 text-[10px] px-1 py-0.5 rounded",
+                isDark 
+                  ? "bg-white/10 border border-white/15"
+                  : "bg-black/10 border border-black/15"
+              )}>
+                custom
+              </span>
+            ) : null}
+            {m.good ? (
+              <span
+                className={cn(
+                  "ml-1 text-[10px] px-1 py-0.5 rounded border",
