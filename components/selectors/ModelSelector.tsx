@@ -151,3 +151,29 @@ export default function ModelSelector({
               <span
                 className={cn(
                   "ml-1 text-[10px] px-1 py-0.5 rounded border",
+                  isDark ? "bg-amber-400/15 border-amber-300/30 text-amber-200" : "bg-amber-300/20 border-amber-400/40 text-amber-700"
+                )}
+                title="Recommended"
+              >
+                ★ rec
+              </span>
+            ) : null}
+            {Array.isArray(m.tags) && m.tags.length > 0 ? (
+              <span className="ml-1 flex gap-1">
+                {m.tags.map((tag) => (
+                  <span
+                    key={`${m.id}-tag-${tag}`}
+                    className={cn(
+                      "text-[10px] px-1 py-0.5 rounded border",
+                      isDark ? "bg-white/5 border-white/10 text-white/80" : "bg-black/5 border-black/10 text-gray-700/90"
+                    )}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </span>
+            ) : null}
+          </button>
+        );
+      })}
+    </div>
