@@ -383,3 +383,29 @@ export default function ChatRenderer({
       </div>
     );
   }
+
+  return (
+    <div className="space-y-6" data-testid="chat-renderer">
+      {/* Skip to main content link for screen readers */}
+      {readOnly && (
+        <a
+          href="#chat-messages"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50"
+        >
+          Skip to conversation
+        </a>
+      )}
+
+      {/* Header Section - only show in read-only mode when title/createdAt provided */}
+      {readOnly && (title || createdAt) && (
+        <header className="mb-6 space-y-4">
+          {/* Navigation */}
+          <nav className="flex items-center justify-between" aria-label="Page navigation">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent rounded"
+              aria-label="Return to Open Fiesta main application"
+            >
+              <ArrowLeft size={16} aria-hidden="true" />
+              <span>Back to Open Fiesta</span>
+            </Link>
