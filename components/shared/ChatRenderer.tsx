@@ -409,3 +409,30 @@ export default function ChatRenderer({
               <ArrowLeft size={16} aria-hidden="true" />
               <span>Back to Open Fiesta</span>
             </Link>
+
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent rounded"
+              aria-label="Open this conversation in the main application"
+            >
+              <span>Open in App</span>
+              <ExternalLink size={14} aria-hidden="true" />
+            </Link>
+          </nav>
+
+          {/* Chat Info */}
+          {(title || createdAt) && (
+            <div className="space-y-2">
+              {title && (
+                <h1 className="text-2xl lg:text-3xl font-bold text-white">
+                  {title}
+                </h1>
+              )}
+
+              {createdAt && (
+                <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
+                  <time dateTime={new Date(createdAt).toISOString()}>
+                    Created {formatDate(createdAt)}
+                  </time>
+
+                  {projectContext && (
