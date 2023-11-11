@@ -436,3 +436,29 @@ export default function ChatRenderer({
                   </time>
 
                   {projectContext && (
+                    <span className="flex items-center gap-1">
+                      <span aria-hidden="true">•</span>
+                      <span>Project: {projectContext.name}</span>
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Truncation Notice */}
+              {truncated && (
+                <div
+                  className="flex items-start gap-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  <Info size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <div className="text-sm text-yellow-200">
+                    <p className="font-medium">Conversation Truncated</p>
+                    <p className="text-yellow-200/80">
+                      This shared link contains the last {conversationTurns.length} messages from a conversation
+                      {originalUserMessageCount && ` that originally had ${originalUserMessageCount} messages`}.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
