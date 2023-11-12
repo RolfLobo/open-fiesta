@@ -488,3 +488,29 @@ export default function ChatRenderer({
                       dateTime={new Date(turn.user.ts).toISOString()}
                       title={new Date(turn.user.ts).toLocaleString()}
                     >
+                      {formatTimestamp(turn.user.ts)}
+                    </time>
+                  )}
+                </div>
+                <div className="prose prose-invert max-w-none" role="region" aria-label={`User message ${turnIndex + 1} content`}>
+                  <MarkdownLite text={turn.user.content} />
+                </div>
+              </div>
+            </div>
+
+            {/* Assistant Messages */}
+            {turn.assistants.length > 0 && (
+              <div className="space-y-4">
+                {turn.assistants.length > 1 ? (
+                  // Grid layout for multiple models (like original chat)
+                  <div
+                    className="grid gap-3 items-stretch"
+                    style={{
+                      gridTemplateColumns: `repeat(${Math.min(turn.assistants.length, 3)}, minmax(280px, 1fr))`
+                    }}
+                  >
+                    {turn.assistants.map((assistant, assistantIndex) => (
+                      <div key={assistantIndex} className="h-full">
+                        <div className="group relative rounded-lg p-3 h-full min-h-[140px] flex overflow-hidden ring-1 transition-shadow bg-gradient-to-b from-black/40 to-black/20 ring-white/10 backdrop-blur-[2px] hover:ring-white/20">
+                          <div className="text-sm leading-relaxed w-full space-y-2 max-h-[40vh] md:max-h-[400px] overflow-y-auto">
+                            {/* Model header */}
