@@ -462,3 +462,29 @@ export default function ChatRenderer({
                 </div>
               )}
             </div>
+          )}
+        </header>
+      )}
+
+      {/* Messages */}
+      <section id="chat-messages" className="space-y-6" role={readOnly ? "main" : undefined} aria-label="Conversation messages">
+        {conversationTurns.map((turn, turnIndex) => (
+          <article key={turnIndex} className="space-y-4" aria-labelledby={`turn-${turnIndex}`}>
+            {/* User Message */}
+            <div className="flex gap-3" role="group" aria-labelledby={`user-message-${turnIndex}`}>
+              <div
+                className="flex-shrink-0 w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center"
+                role="img"
+                aria-label="User avatar"
+              >
+                <User size={16} className="text-blue-400" aria-hidden="true" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <span id={`user-message-${turnIndex}`} className="font-medium text-white">You</span>
+                  {turn.user.ts && (
+                    <time
+                      className="text-xs text-white/50"
+                      dateTime={new Date(turn.user.ts).toISOString()}
+                      title={new Date(turn.user.ts).toLocaleString()}
+                    >
