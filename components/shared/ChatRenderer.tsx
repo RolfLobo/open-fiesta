@@ -514,3 +514,29 @@ export default function ChatRenderer({
                         <div className="group relative rounded-lg p-3 h-full min-h-[140px] flex overflow-hidden ring-1 transition-shadow bg-gradient-to-b from-black/40 to-black/20 ring-white/10 backdrop-blur-[2px] hover:ring-white/20">
                           <div className="text-sm leading-relaxed w-full space-y-2 max-h-[40vh] md:max-h-[400px] overflow-y-auto">
                             {/* Model header */}
+                            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
+                              <div
+                                className="flex-shrink-0 w-6 h-6 bg-green-500/20 rounded-full flex items-center justify-center"
+                                role="img"
+                                aria-label="Assistant avatar"
+                              >
+                                <Bot size={12} className="text-green-400" aria-hidden="true" />
+                              </div>
+                              <span className="font-medium text-white text-sm">
+                                {assistant.modelId || 'Assistant'}
+                              </span>
+                              {assistant.ts && (
+                                <time
+                                  className="text-xs text-white/50 ml-auto"
+                                  dateTime={new Date(assistant.ts).toISOString()}
+                                  title={new Date(assistant.ts).toLocaleString()}
+                                >
+                                  {formatTimestamp(assistant.ts)}
+                                </time>
+                              )}
+                            </div>
+
+                            {/* Content */}
+                            <div className="prose prose-invert max-w-none prose-sm" role="region" aria-label={`${assistant.modelId || 'Assistant'} response`}>
+                              <MarkdownLite text={assistant.content} />
+                            </div>
