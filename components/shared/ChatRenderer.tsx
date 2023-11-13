@@ -592,3 +592,29 @@ export default function ChatRenderer({
                         </div>
                         <div className="prose prose-invert max-w-none" role="region" aria-label={`Assistant message ${turnIndex + 1}-${assistantIndex + 1} content`}>
                           <MarkdownLite text={assistant.content} />
+                        </div>
+
+                        {/* Error indicator if message has error code */}
+                        {assistant.code && assistant.code >= 400 && (
+                          <div className="mt-2 text-xs text-red-400" role="alert" aria-live="polite">
+                            Error {assistant.code}: Failed to get response
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </article>
+        ))}
+      </section>
+
+      {readOnly && (
+        <footer className="mt-8 pt-6 border-t border-white/10 text-center">
+          <p className="text-white/50 text-sm">
+            This is a read-only view of a shared conversation.
+          </p>
+        </footer>
+      )}
+    </div>
