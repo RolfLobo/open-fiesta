@@ -220,3 +220,30 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
   };
 
   const errorInfo = getErrorMessage(error);
+
+  const handleRetry = () => {
+    try {
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to reload page:', error);
+      // Fallback: redirect to home
+      window.location.href = '/';
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
+
+  return (
+    <div className={`min-h-screen w-full ${backgroundClass} relative text-white`}>
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-95" />
+      
+      <div className="relative z-10 px-3 lg:px-4 py-4 lg:py-6">
+        <div className="max-w-2xl mx-auto">
+          {/* Skip to main content link for screen readers */}
+          <a 
+            href="#main-error-content" 
