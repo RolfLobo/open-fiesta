@@ -195,3 +195,28 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
           suggestion: 'Please check that you have the complete URL and try again.',
           severity: 'error' as const
         };
+      case 'Invalid or corrupted share link':
+        return {
+          title: 'Corrupted Share Link',
+          description: 'The shared conversation data could not be decoded.',
+          suggestion: 'The link may have been corrupted during sharing. Please request a new share link.',
+          severity: 'error' as const
+        };
+      case 'Failed to load shared chat':
+        return {
+          title: 'Loading Failed',
+          description: 'An unexpected error occurred while loading the shared conversation.',
+          suggestion: 'Please try refreshing the page or contact support if the problem persists.',
+          severity: 'error' as const
+        };
+      default:
+        return {
+          title: 'Something Went Wrong',
+          description: error,
+          suggestion: 'Please try again or return to the main application.',
+          severity: 'error' as const
+        };
+    }
+  };
+
+  const errorInfo = getErrorMessage(error);
