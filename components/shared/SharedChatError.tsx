@@ -273,3 +273,29 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
                 role="img"
                 aria-label="Error icon"
               >
+                <AlertCircle size={32} className="text-red-400" aria-hidden="true" />
+              </div>
+            </div>
+
+            {/* Error Message */}
+            <div className="space-y-3" role="alert" aria-live="assertive">
+              <h1 className="text-2xl lg:text-3xl font-bold text-white">
+                {errorInfo.title}
+              </h1>
+              <p className="text-white/70 text-lg">
+                {errorInfo.description}
+              </p>
+              <p className="text-white/50">
+                {errorInfo.suggestion}
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-6">
+              <button
+                onClick={handleRetry}
+                onKeyDown={(e) => handleKeyDown(e, handleRetry)}
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent"
+                aria-describedby="retry-description"
+              >
+                Try Again
