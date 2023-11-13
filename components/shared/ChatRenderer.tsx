@@ -566,3 +566,29 @@ export default function ChatRenderer({
                       <div
                         className="flex-shrink-0 w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center"
                         role="img"
+                        aria-label="Assistant avatar"
+                      >
+                        <Bot size={16} className="text-green-400" aria-hidden="true" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span id={`assistant-message-${turnIndex}-${assistantIndex}`} className="font-medium text-white">
+                            {assistant.modelId || 'Assistant'}
+                          </span>
+                          {assistant.ts && (
+                            <time
+                              className="text-xs text-white/50"
+                              dateTime={new Date(assistant.ts).toISOString()}
+                              title={new Date(assistant.ts).toLocaleString()}
+                            >
+                              {formatTimestamp(assistant.ts)}
+                            </time>
+                          )}
+                          {assistant.provider && (
+                            <span className="text-xs text-white/40 capitalize">
+                              via {assistant.provider}
+                            </span>
+                          )}
+                        </div>
+                        <div className="prose prose-invert max-w-none" role="region" aria-label={`Assistant message ${turnIndex + 1}-${assistantIndex + 1} content`}>
+                          <MarkdownLite text={assistant.content} />
