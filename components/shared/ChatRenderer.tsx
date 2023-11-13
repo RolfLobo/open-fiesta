@@ -540,3 +540,29 @@ export default function ChatRenderer({
                             <div className="prose prose-invert max-w-none prose-sm" role="region" aria-label={`${assistant.modelId || 'Assistant'} response`}>
                               <MarkdownLite text={assistant.content} />
                             </div>
+
+                            {/* Error indicator if message has error code */}
+                            {assistant.code && assistant.code >= 400 && (
+                              <div className="mt-2 text-xs text-red-400" role="alert" aria-live="polite">
+                                Error {assistant.code}: Failed to get response
+                              </div>
+                            )}
+
+                            {/* Provider info */}
+                            {assistant.provider && (
+                              <div className="text-xs text-white/40 mt-2 pt-2 border-t border-white/5">
+                                via {assistant.provider}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // Single column layout for single model
+                  turn.assistants.map((assistant, assistantIndex) => (
+                    <div key={assistantIndex} className="flex gap-3" role="group" aria-labelledby={`assistant-message-${turnIndex}-${assistantIndex}`}>
+                      <div
+                        className="flex-shrink-0 w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center"
+                        role="img"
