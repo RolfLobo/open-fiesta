@@ -247,3 +247,29 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
           {/* Skip to main content link for screen readers */}
           <a 
             href="#main-error-content" 
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50"
+          >
+            Skip to main content
+          </a>
+
+          {/* Navigation */}
+          <nav className="mb-8" aria-label="Breadcrumb">
+            <Link 
+              href="/"
+              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent rounded"
+              onKeyDown={(e) => handleKeyDown(e, () => window.location.href = '/')}
+            >
+              <ArrowLeft size={16} aria-hidden="true" />
+              <span>Back to Open Fiesta</span>
+            </Link>
+          </nav>
+
+          {/* Error Content */}
+          <main id="main-error-content" className="text-center space-y-6">
+            {/* Error Icon with proper ARIA */}
+            <div className="flex justify-center">
+              <div 
+                className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center"
+                role="img"
+                aria-label="Error icon"
+              >
