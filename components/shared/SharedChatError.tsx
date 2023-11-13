@@ -171,3 +171,27 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
     </div>
   );
 }
+"use client";
+
+import Link from 'next/link';
+import { useTheme } from '@/lib/themeContext';
+import { BACKGROUND_STYLES } from '@/lib/themes';
+import { AlertCircle, ArrowLeft, Home } from 'lucide-react';
+
+interface SharedChatErrorProps {
+  error: string;
+}
+
+export default function SharedChatError({ error }: SharedChatErrorProps) {
+  const { theme } = useTheme();
+  const backgroundClass = BACKGROUND_STYLES[theme.background].className;
+
+  const getErrorMessage = (error: string) => {
+    switch (error) {
+      case 'No chat data provided':
+        return {
+          title: 'Invalid Share Link',
+          description: 'The share link appears to be incomplete or malformed.',
+          suggestion: 'Please check that you have the complete URL and try again.',
+          severity: 'error' as const
+        };

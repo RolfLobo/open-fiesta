@@ -618,3 +618,5 @@ export default function ChatRenderer({
         </footer>
       )}
     </div>
+  );
+}
