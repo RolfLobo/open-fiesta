@@ -299,3 +299,29 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
                 aria-describedby="retry-description"
               >
                 Try Again
+              </button>
+
+              
+              <Link
+                href="/"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent"
+                onKeyDown={(e) => handleKeyDown(e, () => window.location.href = '/')}
+                aria-describedby="home-description"
+              >
+                <Home size={16} aria-hidden="true" />
+                <span>Go to Open Fiesta</span>
+              </Link>
+            </div>
+
+            {/* Hidden descriptions for screen readers */}
+            <span id="retry-description" className="sr-only">
+              Reload the page to try loading the shared conversation again
+            </span>
+            <span id="home-description" className="sr-only">
+              Navigate to the main Open Fiesta application
+            </span>
+
+            {/* Technical Details */}
+            <details className="mt-8 text-left">
+              <summary 
+                className="cursor-pointer text-white/50 hover:text-white/70 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
