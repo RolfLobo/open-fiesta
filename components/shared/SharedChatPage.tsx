@@ -45,3 +45,9 @@ export default function SharedChatPage({ chatData }: SharedChatPageProps) {
     </div>
   );
 }
+"use client";
+
+import { useTheme } from '@/lib/themeContext';
+import { BACKGROUND_STYLES } from '@/lib/themes';
+import type { SharedChatData } from '@/lib/sharing/types';
+import ChatRenderer from './ChatRenderer';
