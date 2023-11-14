@@ -78,3 +78,17 @@ export default function SharedChatPage({ chatData }: SharedChatPageProps) {
             {chatData.truncated && ` This is a truncated view showing the last 20 messages.`}
           </div>
           
+          <ChatRenderer 
+            messages={chatData.messages}
+            title={chatData.title}
+            createdAt={chatData.createdAt}
+            readOnly={true}
+            truncated={chatData.truncated}
+            originalUserMessageCount={chatData.originalUserMessageCount}
+            projectContext={chatData.projectContext}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -267,3 +267,16 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
 };
 
 export default SupportDropdown;
+
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import QRCode from "react-qr-code";
+import {
+  Heart,
+  Coffee,
+  Smartphone,
+  Copy,
+  Check,
+  ChevronUp,
+} from "lucide-react";
