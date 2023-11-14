@@ -280,3 +280,29 @@ import {
   Check,
   ChevronUp,
 } from "lucide-react";
+
+interface SupportDropdownProps {
+  theme?: "light" | "dark";
+  // When true, renders as an inline button suitable for headers (no fixed bottom positioning)
+  inline?: boolean;
+}
+
+import { SUPPORT_CONFIG } from "@/lib/constants";
+
+const UPI_ID = SUPPORT_CONFIG.UPI_ID;
+const PAYEE_NAME = SUPPORT_CONFIG.PAYEE_NAME;
+const UPI_MSG = SUPPORT_CONFIG.UPI_MSG;
+
+const SupportDropdown: React.FC<SupportDropdownProps> = ({
+  theme = "light",
+  inline = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  // Responsive QR size for very small devices
+  const [qrSize, setQrSize] = useState<number>(120);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
