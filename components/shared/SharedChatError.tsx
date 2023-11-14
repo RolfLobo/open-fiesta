@@ -325,3 +325,22 @@ export default function SharedChatError({ error }: SharedChatErrorProps) {
             <details className="mt-8 text-left">
               <summary 
                 className="cursor-pointer text-white/50 hover:text-white/70 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                aria-expanded="false"
+              >
+                Technical Details
+              </summary>
+              <div className="mt-3 p-4 bg-black/20 rounded-lg border border-white/10">
+                <code 
+                  className="text-sm text-white/70 break-all"
+                  aria-label={`Error details: ${error}`}
+                >
+                  Error: {error}
+                </code>
+              </div>
+            </details>
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}

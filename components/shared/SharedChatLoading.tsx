@@ -24,3 +24,10 @@ export default function SharedChatLoading() {
     </div>
   );
 }
+"use client";
+
+import { useTheme } from '@/lib/themeContext';
+import { BACKGROUND_STYLES } from '@/lib/themes';
+import { Loader2 } from 'lucide-react';
+
+export default function SharedChatLoading() {
