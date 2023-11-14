@@ -332,3 +332,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
   useEffect(() => {
     const compute = () => {
       const w = typeof window !== "undefined" ? window.innerWidth : 1024;
+      // Keep smaller on very small devices
+      if (w < 360) setQrSize(96);
+      else if (w < 420) setQrSize(108);
+      else setQrSize(120);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
+
+  const copyUpiId = async () => {
+    try {
+      await navigator.clipboard.writeText(UPI_ID);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.log(err);
+      const textArea = document.createElement("textarea");
+      textArea.value = UPI_ID;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
