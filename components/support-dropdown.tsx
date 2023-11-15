@@ -358,3 +358,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const handleBuyMeCoffee = () => {
+    window.open(
+      SUPPORT_CONFIG.BUY_ME_COFFEE_URL,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
+  // UPI QR Code URL
+  const upiUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(
+    PAYEE_NAME
+  )}&tn=${encodeURIComponent(UPI_MSG)}&cu=INR`;
+
+  return (
+    <div
+      ref={dropdownRef}
+      className={
+        inline
+          ? "relative z-50"
+          : "fixed right-3 sm:right-6 z-50 bottom-24 sm:bottom-6"
+      }
+      style={inline ? undefined : { paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      {/* Dropdown Menu */}
