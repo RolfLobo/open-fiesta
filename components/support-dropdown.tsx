@@ -410,3 +410,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
               w-full flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-lg transition-all duration-200 cursor-pointer
               ${
                 theme === "dark"
+                  ? "hover:bg-white/10 text-white/90 hover:text-white"
+                  : "hover:bg-gray-300/50 text-gray-800 hover:text-gray-900"
+              }
+            `}
+          >
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+              <Coffee className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+            </div>
+            <span className="font-medium text-sm sm:text-base">
+              Buy Me Coffee
+            </span>
+          </button>
+
+          {/* UPI Payment Section */}
+          <div
+            onClick={copyUpiId}
+            className={`
+              w-full flex flex-col items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-lg transition-all duration-200 cursor-pointer
+              ${
+                theme === "dark"
+                  ? "hover:bg-white/10 text-white/90 hover:text-white"
+                  : "hover:bg-gray-300/50 text-gray-800 hover:text-gray-900"
+              }
+            `}
+          >
+            <div className="flex items-center gap-2 w-full mb-2">
