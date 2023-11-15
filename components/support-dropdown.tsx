@@ -384,3 +384,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
       style={inline ? undefined : { paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       {/* Dropdown Menu */}
+      <div
+        className={`
+          absolute ${inline ? "top-12 right-0" : "bottom-16 right-0 mb-2"} w-[calc(100vw-2rem)] max-w-xs sm:w-72 md:w-64 lg:w-[18rem] rounded-xl backdrop-blur-md border shadow-xl
+          transform transition-all duration-300 ease-out ${inline ? "origin-top-right" : "origin-bottom-right"}
+          ${
+            isOpen
+              ? "opacity-100 scale-100 translate-y-0"
+              : inline
+              ? "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              : "opacity-0 scale-95 translate-y-2 pointer-events-none"
+          }
+          ${
+            theme === "dark"
+              ? "bg-black/40 border-white/10"
+              : "bg-white border-gray-300"
+          }
+        `}
+      >
+        <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+          {/* Buy Me Coffee Button */}
+          <button
+            onClick={handleBuyMeCoffee}
+            className={`
+              w-full flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-lg transition-all duration-200 cursor-pointer
+              ${
+                theme === "dark"
