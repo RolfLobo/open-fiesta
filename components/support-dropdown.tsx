@@ -436,3 +436,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
             `}
           >
             <div className="flex items-center gap-2 w-full mb-2">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                <Smartphone className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+              </div>
+              <div className="flex-1 text-left">
+                <div className="font-medium text-sm sm:text-base">
+                  UPI Payment
+                </div>
+                <div
+                  className={`text-xs ${
+                    theme === "dark" ? "text-white/60" : "text-gray-600"
+                  }`}
+                >
+                  Scan QR or copy UPI ID
+                </div>
+              </div>
+              <button
+                onClick={copyUpiId}
+                className="w-8 h-8 flex items-center justify-center rounded transition"
+                title="Copy UPI ID"
+                tabIndex={-1}
+              >
+                {copied ? (
+                  <Check className="w-5 h-5 text-green-500" />
+                ) : (
+                  <Copy
+                    className={`w-4 h-4 ${
