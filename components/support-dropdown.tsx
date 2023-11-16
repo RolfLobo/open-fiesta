@@ -514,3 +514,26 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
               ? "bg-black/40 border-white/15 hover:bg-white/10"
               : "bg-white border-gray-300 hover:bg-gray-50"
           }
+          ${isOpen ? "rotate-180" : "rotate-0"}
+        `}
+        aria-label="Support options"
+      >
+        {isOpen ? (
+          <ChevronUp
+            className={`w-5 sm:w-6 h-5 sm:h-6 ${
+              theme === "dark" ? "text-white/80" : "text-gray-600"
+            }`}
+          />
+        ) : (
+          <Heart
+            className={`w-5 sm:w-6 h-5 sm:h-6 ${
+              theme === "dark" ? "text-rose-400" : "text-rose-600"
+            }`}
+          />
+        )}
+      </button>
+    </div>
+  );
+};
+
+export default SupportDropdown;
