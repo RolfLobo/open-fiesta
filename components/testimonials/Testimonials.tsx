@@ -186,3 +186,29 @@ export function Testimonials() {
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { Marquee } from "./marquee";
+
+
+import { reviews } from "./testimonials.data";
+
+// Split reviews into three rows
+const firstRow = reviews.slice(0, Math.floor(reviews.length / 3));
+const secondRow = reviews.slice(Math.floor(reviews.length / 3), Math.floor(2 * reviews.length / 3));
+const thirdRow = reviews.slice(Math.floor(2 * reviews.length / 3));
+
+
+
+const TwitterBird = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
+    <path
+      fill="currentColor"
+      d="M19.633 7.997c.013.178.013.357.013.535 0 5.454-4.154 11.747-11.747 11.747-2.337 0-4.503-.68-6.326-1.857.325.038.636.051.974.051a8.313 8.313 0 0 0 5.151-1.775 4.157 4.157 0 0 1-3.878-2.878c.254.038.51.064.777.064.374 0 .748-.051 1.096-.14A4.149 4.149 0 0 1 2.83 9.697v-.051c.546.305 1.18.497 1.854.523a4.145 4.145 0 0 1-1.85-3.45c0-.764.203-1.468.558-2.081a11.79 11.79 0 0 0 8.553 4.338 4.681 4.681 0 0 1-.102-.95 4.146 4.146 0 0 1 7.17-2.84 8.167 8.167 0 0 0 2.633-1.006 4.134 4.134 0 0 1-1.824 2.287 8.29 8.29 0 0 0 2.383-.637 8.897 8.897 0 0 1-2.192 2.28z"
+    />
+  </svg>
+);
+
+const ReviewCard = ({
+  img,
+  name,
+  username,
+  body,
