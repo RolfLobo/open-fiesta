@@ -488,3 +488,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
             {copied && (
               <div
                 className={`
+                px-2 py-1 sm:px-3 sm:py-2 rounded-lg text-xs sm:text-sm text-center
+                ${
+                  theme === "dark"
+                    ? "bg-green-500/20 text-green-300"
+                    : "bg-green-100 text-green-700"
+                }
+              `}
+              >
+                UPI ID copied to clipboard!
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`
+          ${inline ? "w-9 h-9" : "w-12 h-12 sm:w-12 sm:h-12"} rounded-full backdrop-blur-md border shadow-lg
+          flex items-center justify-center transition-all duration-300
+          ${
+            theme === "dark"
+              ? "bg-black/40 border-white/15 hover:bg-white/10"
+              : "bg-white border-gray-300 hover:bg-gray-50"
+          }
