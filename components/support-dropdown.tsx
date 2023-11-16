@@ -462,3 +462,29 @@ const SupportDropdown: React.FC<SupportDropdownProps> = ({
                 ) : (
                   <Copy
                     className={`w-4 h-4 ${
+                      theme === "dark" ? "text-white/60" : "text-gray-500"
+                    }`}
+                  />
+                )}
+              </button>
+            </div>
+            <div className="bg-white p-2 rounded-lg flex flex-col items-center w-full max-w-[200px] sm:max-w-[220px] mx-auto">
+              <QRCode
+                value={upiUrl}
+                size={qrSize}
+                bgColor="#fff"
+                fgColor="#222"
+              />
+              <div className="mt-2 text-xs text-center text-gray-500 w-full break-words">
+                UPI ID: {" "}
+                <span className="font-mono text-xs text-gray-800 break-all">
+                  {UPI_ID}
+                </span>
+              </div>
+              <div className="text-[11px] text-gray-500">
+                Scan to pay with any UPI app
+              </div>
+            </div>
+            {copied && (
+              <div
+                className={`
