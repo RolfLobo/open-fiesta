@@ -238,3 +238,29 @@ const ReviewCard = ({
         "after:opacity-30 after:pointer-events-none after:transition-all after:duration-500",
         "group-hover:after:opacity-50 group-hover:after:scale-105",
         // Dark texture overlay
+        "[background-image:linear-gradient(to_bottom_right,rgba(0,0,0,0.98),rgba(0,0,0,0.90),rgba(0,0,0,0.98)),radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.03),transparent_50%)]",
+        "[background-size:100%_100%,80%_80%] [background-position:0_0,0_0]"
+      )}
+      style={{
+        boxShadow: `
+          0 32px 64px -12px rgba(0,0,0,0.9),
+          inset 0 3px 6px rgba(255,255,255,0.2),
+          inset 0 -2px 4px rgba(255,255,255,0.1),
+          0 0 0 1px rgba(255,255,255,0.08),
+          0 1px 3px rgba(255,255,255,0.1)
+        `
+      }}
+      role="article"
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img className="rounded-full border border-white/10" width="40" height="40" alt="" src={img} />
+          <div className="min-w-0">
+            <figcaption className="text-sm font-semibold text-white truncate max-w-[11rem] flex items-center gap-1">
+              {name}
+              <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 256 256" xmlSpace="preserve">
+                <g style={{
+                  stroke: "none", 
+                  strokeWidth: 0, 
+                  strokeDasharray: "none", 
+                  strokeLinecap: "butt", 
