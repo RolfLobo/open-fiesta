@@ -368,3 +368,4 @@ export function Testimonials() {
       <div className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-32 md:w-48 lg:w-64 backdrop-blur-[6px] sm:backdrop-blur-[12px] [mask-image:linear-gradient(to_left,black_0%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_left,black_0%,black_70%,transparent_100%)]"></div>
     </div>
   );
+}
