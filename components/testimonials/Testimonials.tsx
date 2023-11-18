@@ -290,3 +290,29 @@ const ReviewCard = ({
                     stroke: "none", 
                     strokeWidth: 1, 
                     strokeDasharray: "none", 
+                    strokeLinecap: "butt", 
+                    strokeLinejoin: "miter", 
+                    strokeMiterlimit: 10, 
+                    fill: "rgb(255,255,255)", 
+                    fillRule: "nonzero", 
+                    opacity: 1
+                  }} 
+                  transform="matrix(1 0 0 1 0 0)" />
+                </g>
+              </svg>
+            </figcaption>
+            <p className="text-xs font-medium text-white/60 truncate">{username}</p>
+          </div>
+        </div>
+        <TwitterBird className="w-5 h-5 text-white/70" />
+      </div>
+      <blockquote className="mt-3 text-[0.95rem] sm:text-[1rem] leading-relaxed text-white/90 line-clamp-4">{body}</blockquote>
+    </figure>
+  );
+
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Open tweet">
+      {content}
+    </a>
+  ) : (
+    content
