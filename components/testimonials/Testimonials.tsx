@@ -316,3 +316,29 @@ const ReviewCard = ({
     </a>
   ) : (
     content
+  );
+};
+
+export function Testimonials() {
+  return (
+    <div
+      className={cn(
+        "relative mx-auto flex w-full max-w-[2000px] flex-col items-center justify-center overflow-hidden px-4 sm:px-10 md:px-20 lg:px-40 pt-12 sm:pt-16 md:pt-24 pb-0",
+      )}
+    >
+      <div className="text-center mb-4 sm:mb-6 md:mb-8">
+        <h2
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_2px_8px_rgba(255,255,255,0.25)] tracking-wide"
+          style={{ textTransform: "uppercase", letterSpacing: "0.08em" }}
+        >
+          <span className="inline-block align-middle">Testimonials</span>
+        </h2>
+      </div>
+
+      <Marquee
+        pauseOnHover
+        className="w-full px-2 sm:px-8 md:px-16 lg:px-32 [--duration:18s] sm:[--duration:22s] [--gap:0.75rem] sm:[--gap:1.25rem] lg:[--gap:1.75rem] mb-4"
+        repeat={2}
+      >
+        {firstRow.map((review, idx) => (
+          <ReviewCard key={`${review.username}-1-${idx}`} {...review} />
