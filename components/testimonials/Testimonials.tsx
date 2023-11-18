@@ -342,3 +342,29 @@ export function Testimonials() {
       >
         {firstRow.map((review, idx) => (
           <ReviewCard key={`${review.username}-1-${idx}`} {...review} />
+        ))}
+      </Marquee>
+      <Marquee
+        reverse
+        pauseOnHover
+        className="w-full px-2 sm:px-8 md:px-16 lg:px-32 [--duration:18s] sm:[--duration:22s] [--gap:0.75rem] sm:[--gap:1.25rem] lg:[--gap:1.75rem] mb-4"
+        repeat={2}
+      >
+        {secondRow.map((review, idx) => (
+          <ReviewCard key={`${review.username}-2-${idx}`} {...review} />
+        ))}
+      </Marquee>
+      <Marquee
+        pauseOnHover
+        className="w-full px-2 sm:px-8 md:px-16 lg:px-32 [--duration:18s] sm:[--duration:22s] [--gap:0.75rem] sm:[--gap:1.25rem] lg:[--gap:1.75rem]"
+        repeat={2}
+      >
+        {thirdRow.map((review, idx) => (
+          <ReviewCard key={`${review.username}-3-${idx}`} {...review} />
+        ))}
+      </Marquee>
+
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-32 md:w-48 lg:w-64 backdrop-blur-[6px] sm:backdrop-blur-[12px] [mask-image:linear-gradient(to_right,black_0%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_0%,black_70%,transparent_100%)]"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-32 md:w-48 lg:w-64 backdrop-blur-[6px] sm:backdrop-blur-[12px] [mask-image:linear-gradient(to_left,black_0%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_left,black_0%,black_70%,transparent_100%)]"></div>
+    </div>
+  );
