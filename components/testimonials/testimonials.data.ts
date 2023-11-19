@@ -330,3 +330,29 @@ const reviewsWithoutUsername: TweetReviewWithoutUsername[] = [
   },
   {
     name: "Ghost",
+    body: `Damn bhai 
+Lfggg ; ) 🔥🔥`,
+    img: "https://pbs.twimg.com/profile_images/1959360588779274242/ERpuOpk__400x400.jpg",
+    href: "https://x.com/GhostCoder_/status/1959297337031094403",
+  },
+  {
+    name: "r84",
+    body: "lesss goooo... 🌋",
+    img: "https://pbs.twimg.com/profile_images/1960046651781111808/bM3MKLjo_400x400.jpg",
+    href: "https://x.com/golok727/status/1959309199487234505",
+  },
+  {
+    name: "Ishika",
+    body: "😳 OMG....ur goat ✨🙌🏻",
+    img: "https://pbs.twimg.com/profile_images/1950246889649295362/FBVF1DmX_400x400.jpg",
+    href: "https://x.com/ishikainframe/status/1959293408641519719",
+  },
+  {
+    name: "rejex visions",
+    body: "THIS IS INSANE",
+    img: "https://pbs.twimg.com/profile_images/1944272291933646848/QEasig9E_400x400.jpg",
+    href: "https://x.com/rejex_visions/status/1959526414559944876",
+  },
+  {
+    name: "D4rsh🦅",
+    body: "lesssgo 🔥🔥🔥🔥",
