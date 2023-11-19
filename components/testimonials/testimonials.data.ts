@@ -301,3 +301,6 @@ export const reviews: TweetReview[] = reviewsWithoutUsername.map((review) => {
     username,
   };
 });
+
+// Define the structure so itis easy to add more testimonials
+export type TweetReview = {
