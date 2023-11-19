@@ -304,3 +304,29 @@ export const reviews: TweetReview[] = reviewsWithoutUsername.map((review) => {
 
 // Define the structure so itis easy to add more testimonials
 export type TweetReview = {
+  name: string;
+  username: string; // includes @
+  body: string;
+  img: string; // avatar URL
+  href: string; // tweet URL
+};
+
+// Define the type which doesn't include the username
+type TweetReviewWithoutUsername = Omit<TweetReview, "username">;
+
+// Add as many different users/tweets as you like here
+const reviewsWithoutUsername: TweetReviewWithoutUsername[] = [
+  {
+    name: "Prasenjit",
+    body: "That's actually huge, best of luck in your journey :)",
+    img: "https://pbs.twimg.com/profile_images/1925153197645307904/0paEJX5m_400x400.jpg",
+    href: "https://x.com/Star_Knight12/status/1959299400162770973",
+  },
+  {
+    name: "Jamil",
+    body: "Not only the open source project but the heart as well !",
+    img: "https://pbs.twimg.com/profile_images/1957317231249141760/Idf9-nNq_400x400.jpg",
+    href: "https://x.com/jr_muj/status/1959346052626256351",
+  },
+  {
+    name: "Ghost",
