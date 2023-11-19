@@ -96,3 +96,29 @@ interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
   children: React.ReactNode;
   /**
    * Whether to animate vertically instead of horizontally
+   * @default false
+   */
+  vertical?: boolean;
+  /**
+   * Number of times to repeat the content
+   * @default 4
+   */
+  repeat?: number;
+}
+
+export function Marquee({
+  className,
+  reverse = false,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: MarqueeProps) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden py-3 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
