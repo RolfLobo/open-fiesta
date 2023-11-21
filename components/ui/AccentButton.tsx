@@ -128,3 +128,8 @@ export default function AccentButton({
   `.trim();
 
   return (
+    <button type={type} className={combinedClasses} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
+}
