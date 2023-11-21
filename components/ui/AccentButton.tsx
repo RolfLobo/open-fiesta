@@ -65,3 +65,14 @@ export default function AccentButton({
     </button>
   );
 }
+
+'use client';
+
+import React from 'react';
+
+interface AccentButtonProps {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  glow?: 'none' | 'soft' | 'medium' | 'strong';
+  children: React.ReactNode;
+  className?: string;

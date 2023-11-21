@@ -590,3 +590,18 @@ Lfggg ; ) 🔥🔥`,
   {
     name: "Apurba Mohapatra.",
     body: "bro its wonderfull",
+    img: "https://pbs.twimg.com/profile_images/1708162645386567680/UYsW6U5R_400x400.jpg",
+    href: "https://x.com/ApurbaMohaptra/status/1959279455404163474",
+  },
+];
+
+export const reviews: TweetReview[] = reviewsWithoutUsername.map((review) => {
+  const hrefPart = new URL(review.href).pathname.split("/");
+
+  const username = hrefPart[1] ? `@${hrefPart[1]}` : "anon";
+
+  return {
+    ...review,
+    username,
+  };
+});
