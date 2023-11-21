@@ -102,3 +102,29 @@ export default function AccentButton({
 
   const variantClasses = {
     primary: 'accent-button-primary focus:ring-[var(--accent-interactive-focus)]',
+    secondary: 'accent-button-secondary focus:ring-[var(--accent-interactive-focus)]',
+    ghost:
+      'text-[var(--accent-interactive-primary)] hover:bg-[var(--accent-highlight-subtle)] focus:ring-[var(--accent-interactive-focus)]',
+  };
+
+  const glowClasses = {
+    none: '',
+    soft: 'accent-glow-soft',
+    medium: 'accent-glow-medium',
+    strong: 'accent-glow-strong',
+  };
+
+  const disabledClasses = disabled
+    ? 'opacity-50 cursor-not-allowed pointer-events-none'
+    : 'cursor-pointer';
+
+  const combinedClasses = `
+    ${baseClasses}
+    ${sizeClasses[size]}
+    ${variantClasses[variant]}
+    ${glowClasses[glow]}
+    ${disabledClasses}
+    ${className}
+  `.trim();
+
+  return (
