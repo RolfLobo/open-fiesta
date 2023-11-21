@@ -76,3 +76,29 @@ interface AccentButtonProps {
   glow?: 'none' | 'soft' | 'medium' | 'strong';
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+export default function AccentButton({
+  variant = 'primary',
+  size = 'md',
+  glow = 'none',
+  children,
+  className = '',
+  onClick,
+  disabled = false,
+  type = 'button',
+}: AccentButtonProps) {
+  const baseClasses =
+    'inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+
+  const sizeClasses = {
+    sm: 'px-2.5 py-1.5 text-xs',
+    md: 'px-3 py-1.5 text-sm',
+    lg: 'px-5 py-2.5 text-sm',
+  };
+
+  const variantClasses = {
+    primary: 'accent-button-primary focus:ring-[var(--accent-interactive-focus)]',
