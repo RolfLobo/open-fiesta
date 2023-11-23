@@ -162,3 +162,20 @@ export default function LaunchScreen({
     </div>
   );
 }
+
+'use client';
+
+import { useTheme } from '@/lib/themeContext';
+import { cn } from '@/lib/utils';
+import { isStandalone } from '@/lib/pwa-config';
+
+interface LaunchScreenProps {
+  backgroundClass?: string;
+  title?: string;
+  subtitle?: string;
+  logoSrc?: string;
+  dismissed?: boolean;
+  isPWA?: boolean;
+}
+
+/**
