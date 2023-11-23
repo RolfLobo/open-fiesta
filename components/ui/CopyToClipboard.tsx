@@ -53,3 +53,8 @@ export const CopyToClipboard = ({
     </button>
   );
 };
+
+'use client';
+import { cn, copyToClipboard } from '@/lib/utils';
+import { CheckIcon, CopyIcon, XIcon } from 'lucide-react';
+import { useOptimistic, useTransition } from 'react';
