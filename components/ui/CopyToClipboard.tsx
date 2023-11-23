@@ -84,3 +84,28 @@ export const CopyToClipboard = ({
             console.error('Error copying to clipboard', error);
             setState('failed');
           }
+          await new Promise((resolve) => setTimeout(resolve, timeout));
+        });
+      }}
+      className={cn(
+        `icon-btn h-7 w-7 cursor-pointer ${
+          state === 'copied'
+            ? 'bg-emerald-500/15 border-emerald-300/30'
+            : state === 'failed'
+              ? 'bg-red-500/15 border-red-300/30 text-red-100'
+              : ''
+        } accent-focus`,
+        className,
+      )}
+      {...props}
+    >
+      {state === 'idle' ? (
+        <CopyIcon size={iconSize} />
+      ) : state === 'copied' ? (
+        <CheckIcon size={iconSize} color='currentColor' />
+      ) : (
+        <XIcon size={iconSize} />
+      )}
+    </button>
+  );
+};
