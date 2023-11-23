@@ -231,3 +231,29 @@ export default function LaunchScreen({
                 aria-live="polite"
                 className={cn(
                   "w-full max-w-sm rounded-2xl border backdrop-blur-md shadow-2xl p-7 sm:p-8 text-center relative overflow-hidden transition-opacity duration-300 ease-out",
+                  isDark 
+                    ? "border-white/10 bg-black/20" 
+                    : "border-gray-300/30 bg-white/80",
+                  dismissed ? 'opacity-0' : 'opacity-100'
+                )}
+              >
+                {/* Ambient glow */}
+                <div
+                  className={cn(
+                    "pointer-events-none absolute -inset-12 bg-gradient-radial via-transparent to-transparent blur-3xl transition-opacity duration-300 ease-out",
+                    isDark ? "from-white/10" : "from-gray-400/15",
+                    dismissed ? 'opacity-0' : 'opacity-100'
+                  )}
+                />
+
+                {/* Card content */}
+                <div className="relative">
+                  {/* Logo with soft ring */}
+                  {logoSrc && (
+                    <div
+                      className={cn(
+                        "mx-auto inline-flex items-center justify-center rounded-2xl ring-1 shadow-md p-2",
+                        isDark 
+                          ? "ring-white/15 bg-black/30" 
+                          : "ring-gray-300/30 bg-gray-100/50"
+                      )}
