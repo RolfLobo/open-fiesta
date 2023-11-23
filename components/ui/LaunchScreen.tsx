@@ -205,3 +205,29 @@ export default function LaunchScreen({
   const { theme } = useTheme();
   const isDark = theme.mode === 'dark';
   const isStandaloneMode = isPWA ?? isStandalone();
+  return (
+    <div
+      className={cn(
+        "min-h-screen w-full relative transition-opacity duration-300 ease-out",
+        backgroundClass,
+        isDark ? "text-white" : "text-gray-800",
+        dismissed ? 'opacity-0 pointer-events-none' : 'opacity-100',
+        isStandaloneMode && "pwa-launch-screen"
+      )}
+      style={{
+        paddingTop: isStandaloneMode ? 'env(safe-area-inset-top)' : undefined,
+        paddingBottom: isStandaloneMode ? 'env(safe-area-inset-bottom)' : undefined,
+      }}
+    >
+      <div
+        className={`absolute inset-0 z-0 pointer-events-none opacity-95 transition-opacity duration-300 ease-out ${dismissed ? 'opacity-0' : 'opacity-95'}`}
+      />
+      <div className="relative z-10 px-3 lg:px-4 py-4 lg:py-6">
+        <div className="flex gap-3 lg:gap-4">
+          <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] overflow-hidden">
+            <div className="flex items-center justify-center h-full">
+              <div
+                role="status"
+                aria-live="polite"
+                className={cn(
+                  "w-full max-w-sm rounded-2xl border backdrop-blur-md shadow-2xl p-7 sm:p-8 text-center relative overflow-hidden transition-opacity duration-300 ease-out",
