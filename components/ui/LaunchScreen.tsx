@@ -309,3 +309,21 @@ export default function LaunchScreen({
                         transform: translateX(-120%);
                       }
                       60% {
+                        transform: translateX(60%);
+                      }
+                      100% {
+                        transform: translateX(220%);
+                      }
+                    }
+                  `}</style>
+
+                  <span className="sr-only">Loading</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
