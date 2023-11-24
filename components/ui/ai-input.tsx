@@ -262,3 +262,26 @@ export default function AiInput() {
     </div>
   );
 }
+
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Globe, Paperclip, Plus, Send } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+import { Textarea } from '@/components/ui/textarea';
+
+interface UseAutoResizeTextareaProps {
+  minHeight: number;
+  maxHeight?: number;
+}
+
+function useAutoResizeTextarea({ minHeight, maxHeight }: UseAutoResizeTextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = useCallback(
+    (reset?: boolean) => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
