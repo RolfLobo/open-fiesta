@@ -283,3 +283,29 @@ export default function LaunchScreen({
                   )}>
                     {/* Base accent line */}
                     <div
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))',
+                        opacity: 0.55,
+                        boxShadow: '0 0 10px 0 var(--accent-primary)',
+                      }}
+                    />
+                    {/* Sheen sweep */}
+                    <div
+                      className="absolute top-0 left-0 h-full w-1/3 motion-safe:animate-[sheen_1.4s_ease-in-out_infinite]"
+                      style={{
+                        background:
+                          'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)',
+                        filter: 'blur(2px)',
+                      }}
+                    />
+                  </div>
+
+                  {/* Keyframes via inline style tag to avoid global CSS touch */}
+                  <style jsx>{`
+                    @keyframes sheen {
+                      0% {
+                        transform: translateX(-120%);
+                      }
+                      60% {
