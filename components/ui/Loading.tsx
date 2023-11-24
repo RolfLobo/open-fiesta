@@ -83,3 +83,21 @@ export default function Loading({ backgroundClass }: { backgroundClass: string }
                     className="opacity-90"
                     d="M22 12a10 10 0 0 1-10 10"
                     stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+
+                <h2 className="mt-4 text-sm font-medium tracking-wide text-white/90">
+                  Open Fiesta
+                </h2>
+                <p className="mt-1 text-xs text-white/60">Preparing your workspace…</p>
+                <span className="sr-only">Loading</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
