@@ -257,3 +257,29 @@ export default function LaunchScreen({
                           ? "ring-white/15 bg-black/30" 
                           : "ring-gray-300/30 bg-gray-100/50"
                       )}
+                      style={{ boxShadow: '0 0 36px 2px var(--accent-primary)' }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={logoSrc} alt="Brand" className="h-16 w-16 rounded-xl" />
+                    </div>
+                  )}
+
+                  {/* Title & subtitle */}
+                  <h2 className={cn(
+                    "mt-3 text-base font-semibold tracking-wide",
+                    isDark ? "text-white/95" : "text-gray-800/95"
+                  )}>
+                    {title}
+                  </h2>
+                  <p className={cn(
+                    "mt-1 text-sm",
+                    isDark ? "text-white/70" : "text-gray-600/80"
+                  )}>{subtitle}</p>
+
+                  {/* Subtle accent progress with sheen */}
+                  <div className={cn(
+                    "mt-6 relative h-1.5 w-full overflow-hidden rounded-full",
+                    isDark ? "bg-black/30" : "bg-gray-300/40"
+                  )}>
+                    {/* Base accent line */}
+                    <div
