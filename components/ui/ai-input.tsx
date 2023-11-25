@@ -338,3 +338,29 @@ const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
 
 export default function AiInput() {
   const [value, setValue] = useState('');
+  const { textareaRef, adjustHeight } = useAutoResizeTextarea({
+    minHeight: MIN_HEIGHT,
+    maxHeight: MAX_HEIGHT,
+  });
+  const [showSearch, setShowSearch] = useState(true);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handelClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Reset file input
+    }
+    setImagePreview(null); // Use null instead of empty string
+  };
+
+  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSubmit = () => {
+    setValue('');
