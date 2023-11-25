@@ -312,3 +312,29 @@ function useAutoResizeTextarea({ minHeight, maxHeight }: UseAutoResizeTextareaPr
   useEffect(() => {
     const handleResize = () => adjustHeight();
     window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [adjustHeight]);
+
+  return { textareaRef, adjustHeight };
+}
+
+const MIN_HEIGHT = 48;
+const MAX_HEIGHT = 164;
+
+const AnimatedPlaceholder = ({ showSearch }: { showSearch: boolean }) => (
+  <AnimatePresence mode="wait">
+    <motion.p
+      key={showSearch ? 'search' : 'ask'}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -5 }}
+      transition={{ duration: 0.1 }}
+      className="pointer-events-none w-[150px] text-sm absolute text-black/70 dark:text-white/70"
+    >
+      {showSearch ? 'Search the web...' : 'Ask Skiper Ai...'}
+    </motion.p>
+  </AnimatePresence>
+);
+
+export default function AiInput() {
+  const [value, setValue] = useState('');
