@@ -364,3 +364,29 @@ export default function AiInput() {
 
   const handleSubmit = () => {
     setValue('');
+    adjustHeight(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+  return (
+    <div className="w-full py-4">
+      <div className="relative max-w-xl border rounded-[22px] border-black/5 p-1 w-full mx-auto chat-input-shell">
+        <div className="relative rounded-2xl border border-black/5 bg-neutral-800/5 flex flex-col">
+          <div
+            className="overflow-y-auto ai-grow-area"
+            style={{ '--ai-input-max': `${MAX_HEIGHT}px` } as React.CSSProperties}
+          >
+            <div className="relative">
+              <Textarea
+                id="ai-input-04"
+                value={value}
+                placeholder=""
+                className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/10 dark:bg-black/20 border-none dark:text-white resize-none focus-visible:ring-0 leading-[1.2]"
+                ref={textareaRef}
+                onKeyDown={(e) => {
