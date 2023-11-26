@@ -468,3 +468,29 @@ export default function AiInput() {
                     whileHover={{
                       rotate: showSearch ? 180 : 15,
                       scale: 1.1,
+                      transition: {
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 10,
+                      },
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 25,
+                    }}
+                  >
+                    <Globe
+                      className={cn(
+                        'w-4 h-4',
+                        showSearch ? 'text-white' : 'text-black/60 dark:text-white/50',
+                      )}
+                    />
+                  </motion.div>
+                </div>
+                <AnimatePresence>
+                  {showSearch && (
+                    <motion.span
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{
+                        width: 'auto',
