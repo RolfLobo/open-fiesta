@@ -390,3 +390,29 @@ export default function AiInput() {
                 className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/10 dark:bg-black/20 border-none dark:text-white resize-none focus-visible:ring-0 leading-[1.2]"
                 ref={textareaRef}
                 onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  adjustHeight();
+                }}
+              />
+              {!value && (
+                <div className="absolute left-4 top-3">
+                  <AnimatedPlaceholder showSearch={showSearch} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="h-12 bg-black/10 dark:bg-black/20 rounded-b-xl">
+            <div className="absolute left-3 bottom-3 flex items-center gap-2">
+              <label
+                className={cn(
+                  'cursor-pointer relative rounded-full p-2 bg-black/10 dark:bg-black/20',
+                  imagePreview ? 'accent-chip-active' : 'accent-chip',
+                )}
+              >
