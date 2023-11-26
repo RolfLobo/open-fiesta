@@ -442,3 +442,29 @@ export default function AiInput() {
                       onClick={handelClose}
                       className="bg-[#e8e8e8] text-[#464646] absolute -top-1 -left-1 shadow-3xl rounded-full rotate-45"
                     >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowSearch(!showSearch)}
+                className={cn(
+                  'rounded-full transition-all flex items-center gap-2 px-2 py-1.5 h-8 search-toggle',
+                  showSearch && 'data-[active=true]:shadow',
+                )}
+                data-active={showSearch}
+                aria-pressed={showSearch ? 'true' : 'false'}
+                aria-label={showSearch ? 'Disable web search' : 'Enable web search'}
+                title={showSearch ? 'Disable web search' : 'Enable web search'}
+              >
+                <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                  <motion.div
+                    animate={{
+                      rotate: showSearch ? 180 : 0,
+                      scale: showSearch ? 1.1 : 1,
+                    }}
+                    whileHover={{
+                      rotate: showSearch ? 180 : 15,
+                      scale: 1.1,
