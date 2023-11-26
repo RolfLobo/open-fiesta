@@ -416,3 +416,29 @@ export default function AiInput() {
                   imagePreview ? 'accent-chip-active' : 'accent-chip',
                 )}
               >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handelChange}
+                  className="hidden"
+                  aria-label="Attach file"
+                />
+                <Paperclip
+                  className={cn(
+                    'w-4 h-4 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors',
+                    imagePreview && 'text-[var(--accent-interactive-primary)]',
+                  )}
+                />
+                {imagePreview && (
+                  <div className="absolute w-[100px] h-[100px] top-14 -left-4">
+                    <Image
+                      className="object-cover rounded-2xl"
+                      src={imagePreview || '/picture1.jpeg'}
+                      height={500}
+                      width={500}
+                      alt="additional image"
+                    />
+                    <button
+                      onClick={handelClose}
+                      className="bg-[#e8e8e8] text-[#464646] absolute -top-1 -left-1 shadow-3xl rounded-full rotate-45"
+                    >
