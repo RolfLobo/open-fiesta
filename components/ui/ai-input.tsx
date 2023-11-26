@@ -494,3 +494,29 @@ export default function AiInput() {
                       initial={{ width: 0, opacity: 0 }}
                       animate={{
                         width: 'auto',
+                        opacity: 1,
+                      }}
+                      exit={{ width: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-sm overflow-hidden whitespace-nowrap search-toggle-label flex-shrink-0"
+                    >
+                      Search
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
+            <div className="absolute right-3 bottom-3">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                aria-label="Send message"
+                className={cn(
+                  'rounded-full p-2 transition-colors',
+                  value
+                    ? 'bg-[var(--accent-interactive-primary)] text-white hover:bg-[var(--accent-interactive-hover)] accent-glow-soft'
+                    : 'bg-black/10 dark:bg-black/20 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white',
+                )}
+              >
+                <Send className="w-4 h-4" />
+              </button>
