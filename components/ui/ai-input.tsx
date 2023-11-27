@@ -520,3 +520,10 @@ export default function AiInput() {
               >
                 <Send className="w-4 h-4" />
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
