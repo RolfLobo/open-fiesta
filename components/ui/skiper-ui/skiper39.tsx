@@ -330,3 +330,30 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const config = {
+      src,
+      rows,
+      cols,
+    };
+
+    // UTILS
+    const randomRange = (min: number, max: number) =>
+      min + Math.random() * (max - min);
+    const randomIndex = (array: any[]) => randomRange(0, array.length) | 0;
+    const removeFromArray = (array: any[], i: number) => array.splice(i, 1)[0];
+    const removeItemFromArray = (array: any[], item: any) =>
+      removeFromArray(array, array.indexOf(item));
+    const removeRandomFromArray = (array: any[]) =>
+      removeFromArray(array, randomIndex(array));
+    const getRandomFromArray = (array: any[]) => array[randomIndex(array) | 0];
+
+    // TWEEN FACTORIES
+    const resetPeep = ({ stage, peep }: { stage: any; peep: any }) => {
+      const direction = Math.random() > 0.5 ? 1 : -1;
+      const offsetY = 100 - 250 * gsap.parseEase("power2.in")(Math.random());
+      const startY = stage.height - peep.height + offsetY;
+      let startX: number;
