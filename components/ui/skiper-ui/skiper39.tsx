@@ -357,3 +357,29 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
       const offsetY = 100 - 250 * gsap.parseEase("power2.in")(Math.random());
       const startY = stage.height - peep.height + offsetY;
       let startX: number;
+      let endX: number;
+
+      if (direction === 1) {
+        startX = -peep.width;
+        endX = stage.width;
+        peep.scaleX = 1;
+      } else {
+        startX = stage.width + peep.width;
+        endX = 0;
+        peep.scaleX = -1;
+      }
+
+      peep.x = startX;
+      peep.y = startY;
+      peep.anchorY = startY;
+
+      return {
+        startX,
+        startY,
+        endX,
+      };
+    };
+
+    const normalWalk = ({ peep, props }: { peep: any; props: any }) => {
+      const { startX, startY, endX } = props;
+      const xDuration = 10;
