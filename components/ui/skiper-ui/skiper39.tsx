@@ -409,3 +409,29 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
 
       return tl;
     };
+
+    const walks = [normalWalk];
+
+    // TYPES
+    type Peep = {
+      image: HTMLImageElement;
+      rect: number[];
+      width: number;
+      height: number;
+      drawArgs: any[];
+      x: number;
+      y: number;
+      anchorY: number;
+      scaleX: number;
+      walk: any;
+      setRect: (rect: number[]) => void;
+      render: (ctx: CanvasRenderingContext2D) => void;
+    };
+
+    // FACTORY FUNCTIONS
+    const createPeep = ({
+      image,
+      rect,
+    }: {
+      image: HTMLImageElement;
+      rect: number[];
