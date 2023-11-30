@@ -312,3 +312,21 @@ export { CrowdCanvas, Skiper39 };
  * Website: https://gxuri.in
  * Twitter: https://x.com/Gur__vi
  */
+
+"use client";
+
+import { gsap } from "gsap";
+import React, { useEffect, useRef } from "react";
+
+interface CrowdCanvasProps {
+  src: string;
+  rows?: number;
+  cols?: number;
+}
+
+const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
