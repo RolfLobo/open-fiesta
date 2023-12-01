@@ -617,3 +617,13 @@ export { CrowdCanvas, Skiper39 };
  * These animations aren’t associated with the codepen.io . They’re independent recreations meant to study interaction design
  *
  * License & Usage:
+ * - Free to use and modify in both personal and commercial projects.
+ * - Attribution to Skiper UI is required when using the free version.
+ * - No attribution required with Skiper UI Pro.
+ *
+ * Feedback and contributions are welcome.
+ *
+ * Author: @gurvinder-singh02
+ * Website: https://gxuri.in
+ * Twitter: https://x.com/Gur__vi
+ */
