@@ -513,3 +513,29 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
       while (availablePeeps.length) {
         addPeepToCrowd().walk.progress(Math.random());
       }
+    };
+
+    const addPeepToCrowd = () => {
+      const peep = removeRandomFromArray(availablePeeps);
+      const walk = getRandomFromArray(walks)({
+        peep,
+        props: resetPeep({
+          peep,
+          stage,
+        }),
+      }).eventCallback("onComplete", () => {
+        removePeepFromCrowd(peep);
+        addPeepToCrowd();
+      });
+
+      peep.walk = walk;
+
+      crowd.push(peep);
+      crowd.sort((a, b) => a.anchorY - b.anchorY);
+
+      return peep;
+    };
+
+    const removePeepFromCrowd = (peep: Peep) => {
+      removeItemFromArray(crowd, peep);
+      availablePeeps.push(peep);
