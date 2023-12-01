@@ -461,3 +461,28 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
             peep.image,
             peep.rect[0],
             peep.rect[1],
+            peep.rect[2],
+            peep.rect[3],
+            0,
+            0,
+            peep.width,
+            peep.height,
+          );
+          ctx.restore();
+        },
+      };
+
+      peep.setRect(rect);
+      return peep;
+    };
+
+    // MAIN
+    const img = document.createElement("img");
+    const stage = {
+      width: 0,
+      height: 0,
+    };
+
+    const allPeeps: Peep[] = [];
+    const availablePeeps: Peep[] = [];
+    const crowd: Peep[] = [];
