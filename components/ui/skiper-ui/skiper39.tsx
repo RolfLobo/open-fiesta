@@ -486,3 +486,30 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
     const allPeeps: Peep[] = [];
     const availablePeeps: Peep[] = [];
     const crowd: Peep[] = [];
+
+    const createPeeps = () => {
+      const { rows, cols } = config;
+      const { naturalWidth: width, naturalHeight: height } = img;
+      const total = rows * cols;
+      const rectWidth = width / rows;
+      const rectHeight = height / cols;
+
+      for (let i = 0; i < total; i++) {
+        allPeeps.push(
+          createPeep({
+            image: img,
+            rect: [
+              (i % rows) * rectWidth,
+              ((i / rows) | 0) * rectHeight,
+              rectWidth,
+              rectHeight,
+            ],
+          }),
+        );
+      }
+    };
+
+    const initCrowd = () => {
+      while (availablePeeps.length) {
+        addPeepToCrowd().walk.progress(Math.random());
+      }
