@@ -564,3 +564,30 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
       crowd.forEach((peep) => {
         peep.walk.kill();
       });
+
+      crowd.length = 0;
+      availablePeeps.length = 0;
+      availablePeeps.push(...allPeeps);
+
+      initCrowd();
+    };
+
+    const init = () => {
+      createPeeps();
+      resize();
+      gsap.ticker.add(render);
+    };
+
+    img.onload = init;
+    img.src = config.src;
+
+    const handleResize = () => resize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      gsap.ticker.remove(render);
+      crowd.forEach((peep) => {
+        if (peep.walk) peep.walk.kill();
+      });
+    };
