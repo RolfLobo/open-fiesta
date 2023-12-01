@@ -591,3 +591,29 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
         if (peep.walk) peep.walk.kill();
       });
     };
+  }, []);
+  return (
+    <canvas ref={canvasRef} className="absolute bottom-0 left-0 w-full h-full" />
+  );
+};
+
+const Skiper39 = () => {
+  return (
+    <div className="relative h-full w-full bg-black text-white">
+      <div className="absolute bottom-0 h-full w-screen">
+        <CrowdCanvas src="/images/peeps/all-peeps.png" rows={15} cols={7} />
+      </div>
+    </div>
+  );
+};
+
+export { CrowdCanvas, Skiper39 };
+
+/**
+ * Skiper 39 Canvas_Landing_004 — React + Canvas
+ * Inspired by and adapted from https://codepen.io/zadvorsky/pen/xxwbBQV
+ * illustration by https://www.openpeeps.com/
+ * We respect the original creators. This is an inspired rebuild with our own taste and does not claim any ownership.
+ * These animations aren’t associated with the codepen.io . They’re independent recreations meant to study interaction design
+ *
+ * License & Usage:
