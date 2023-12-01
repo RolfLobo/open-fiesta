@@ -539,3 +539,28 @@ const CrowdCanvas = ({ src, rows = 15, cols = 7 }: CrowdCanvasProps) => {
     const removePeepFromCrowd = (peep: Peep) => {
       removeItemFromArray(crowd, peep);
       availablePeeps.push(peep);
+    };
+
+    const render = () => {
+      if (!canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+
+      crowd.forEach((peep) => {
+        peep.render(ctx);
+      });
+
+      ctx.restore();
+    };
+
+    const resize = () => {
+      if (!canvas) return;
+      stage.width = canvas.clientWidth;
+      stage.height = canvas.clientHeight;
+      canvas.width = stage.width * devicePixelRatio;
+      canvas.height = stage.height * devicePixelRatio;
+
+      crowd.forEach((peep) => {
+        peep.walk.kill();
+      });
