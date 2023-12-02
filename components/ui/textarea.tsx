@@ -33,3 +33,5 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
     />
   );
 }
+
+export { Textarea };
