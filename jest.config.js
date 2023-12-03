@@ -35,3 +35,30 @@ const customJestConfig = {
 export default createJestConfig(customJestConfig);
 
 import nextJest from 'next/jest.js';
+
+const createJestConfig = nextJest({
+  dir: './',
+});
+
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testEnvironment: 'jest-environment-jsdom',
+  useESM: true,
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+  },
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  collectCoverageFrom: [
+    'lib/**/*.{js,jsx,ts,tsx}',
+    'components/**/*.{js,jsx,ts,tsx}',
+    'app/**/*.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
+    '!**/node_modules/**',
+  ],
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.json',
+      },
+    ],
