@@ -279,3 +279,29 @@ global.Response = class Response {
   }
   
   async json() {
+    return JSON.parse(this.body)
+  }
+  
+  async text() {
+    return this.body
+  }
+}
+
+global.Headers = class Headers {
+  constructor(init = {}) {
+    this.headers = new Map()
+    if (init) {
+      if (init instanceof Headers) {
+        // Copy from another Headers instance
+        init.headers.forEach((value, key) => {
+          this.headers.set(key, value)
+        })
+      } else {
+        // Copy from object
+        Object.entries(init).forEach(([key, value]) => {
+          this.headers.set(key.toLowerCase(), value)
+        })
+      }
+    }
+  }
+  
