@@ -253,3 +253,29 @@ global.Request = class Request {
     this.url = url
     this.method = options.method || 'GET'
     this.headers = new Headers(options.headers)
+  }
+}
+
+global.Response = class Response {
+  constructor(body, options = {}) {
+    this.body = body
+    this.status = options.status || 200
+    this.statusText = options.statusText || 'OK'
+    this.headers = new Headers(options.headers)
+    this.ok = this.status >= 200 && this.status < 300
+    this.type = 'basic'
+  }
+  
+  clone() {
+    return new Response(this.body, {
+      status: this.status,
+      statusText: this.statusText,
+      headers: this.headers
+    })
+  }
+  
+  async blob() {
+    return { size: this.body ? this.body.length : 0 }
+  }
+  
+  async json() {
