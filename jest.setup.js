@@ -227,3 +227,29 @@ jest.mock('next/navigation', () => ({
     return '/'
   },
 }))
+
+// Mock environment variables
+process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
+process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
+process.env.NEXT_PUBLIC_ENCRYPTION_KEY = 'test-encryption-key-32-characters'
+
+// Global test setup
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}))
+
+// Mock IntersectionObserver
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}))
+
+// Mock Web APIs for PWA tests
+global.Request = class Request {
+  constructor(url, options = {}) {
+    this.url = url
+    this.method = options.method || 'GET'
+    this.headers = new Headers(options.headers)
