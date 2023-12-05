@@ -331,3 +331,29 @@ global.Headers = class Headers {
 if (typeof globalThis.URL === 'undefined') {
   global.URL = class URL {
     constructor(url, base) {
+      this.href = url
+      this.protocol = 'https:'
+      this.host = 'example.com'
+      this.hostname = 'example.com'
+      this.port = ''
+      this.pathname = '/test'
+      this.search = ''
+      this.hash = ''
+      this.searchParams = {
+        delete: jest.fn(),
+        get: jest.fn(),
+        set: jest.fn(),
+      }
+    }
+    
+    toString() {
+      return this.href
+    }
+  }
+}
+
+// Mock matchMedia (only in jsdom environment)
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation(query => ({
