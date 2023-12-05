@@ -305,3 +305,29 @@ global.Headers = class Headers {
     }
   }
   
+  get(name) {
+    return this.headers.get(name.toLowerCase()) || null
+  }
+  
+  set(name, value) {
+    this.headers.set(name.toLowerCase(), value)
+    return this
+  }
+  
+  has(name) {
+    return this.headers.has(name.toLowerCase())
+  }
+  
+  delete(name) {
+    this.headers.delete(name.toLowerCase())
+  }
+  
+  forEach(callback) {
+    this.headers.forEach(callback)
+  }
+}
+
+// Use the native URL if available, otherwise provide a simple mock
+if (typeof globalThis.URL === 'undefined') {
+  global.URL = class URL {
+    constructor(url, base) {
