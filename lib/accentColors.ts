@@ -255,3 +255,29 @@ export interface AccentColorDefinition {
     focus: string;
   };
   // Highlight Elements (status indicators, badges)
+  highlight: {
+    primary: string;
+    secondary: string;
+    subtle: string;
+  };
+  // Status Colors (success, warning, error, info)
+  status: {
+    success: string;
+    warning: string;
+    error: string;
+    info: string;
+  };
+  // Glow Effects (soft, medium, strong)
+  glow: {
+    soft: string;
+    medium: string;
+    strong: string;
+  };
+}
+
+// Accent Color System for each main accent
+export const ACCENT_COLOR_SYSTEM: Record<AccentColor, AccentColorDefinition> = {
+  black: {
+    interactive: {
+      primary: '#141414',
+      hover: '#1f1f1f',
