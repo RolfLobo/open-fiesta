@@ -45,3 +45,11 @@ describe('generateThemeClasses', () => {
     const config = {
       mode: 'dark' as const,
       accent: 'emerald' as const,
+      font: 'inter' as const,
+      background: 'minimal' as const,
+      badgePair: 'purple-blue' as const,
+      chatInputStyle: 'frosty' as const,
+    };
+    expect(generateThemeClasses(config)).toMatchSnapshot();
+  });
+});

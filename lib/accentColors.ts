@@ -237,3 +237,21 @@ export const ACCENT_UTILITY_CLASSES = {
     strong: 'shadow-2xl shadow-[var(--accent-glow-strong)]',
   },
 };
+
+/**
+ * Dedicated Accent Color System
+ * Provides structured accent colors for interactive elements, highlights, and effects
+ */
+
+import { AccentColor } from './themes';
+
+// Accent Color Categories
+export interface AccentColorDefinition {
+  // Interactive Elements (buttons, links, inputs)
+  interactive: {
+    primary: string;
+    hover: string;
+    active: string;
+    focus: string;
+  };
+  // Highlight Elements (status indicators, badges)
