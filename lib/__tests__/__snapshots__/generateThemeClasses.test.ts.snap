@@ -35,3 +35,9 @@ exports[`generateThemeClasses should generate correct class names for custom the
 exports[`generateThemeClasses should generate correct class names for default theme config 1`] = `
 [
   "light",
+  "accent-crimson",
+  "font-geist",
+  "bg-gradient-theme",
+  "chatinput-default",
+]
+`;
