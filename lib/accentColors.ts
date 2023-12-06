@@ -281,3 +281,29 @@ export const ACCENT_COLOR_SYSTEM: Record<AccentColor, AccentColorDefinition> = {
     interactive: {
       primary: '#141414',
       hover: '#1f1f1f',
+      active: '#000000',
+      focus: 'rgba(255,255,255,0.35)',
+    },
+    highlight: {
+      primary: '#ffffff',
+      secondary: '#d9d9d9',
+      subtle: 'rgba(255,255,255,0.12)',
+    },
+    status: {
+      success: '#10b981',
+      warning: '#f59e0b',
+      error: '#ef4444',
+      info: '#3b82f6',
+    },
+    glow: {
+      soft: 'rgba(255,255,255,0.15)',
+      medium: 'rgba(255,255,255,0.28)',
+      strong: 'rgba(255,255,255,0.45)',
+    },
+  },
+  crimson: {
+    interactive: {
+      primary: '#9d1c2b',
+      hover: '#821624',
+      active: '#66111b',
+      focus: 'rgba(157, 28, 43, 0.5)',
