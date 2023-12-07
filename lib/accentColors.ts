@@ -307,3 +307,29 @@ export const ACCENT_COLOR_SYSTEM: Record<AccentColor, AccentColorDefinition> = {
       hover: '#821624',
       active: '#66111b',
       focus: 'rgba(157, 28, 43, 0.5)',
+    },
+    highlight: {
+      primary: '#b7851c',
+      secondary: '#946414',
+      subtle: 'rgba(183, 133, 28, 0.16)',
+    },
+    status: {
+      success: '#0e9f71',
+      warning: '#d28a17',
+      error: '#d13b3b',
+      info: '#3374dd',
+    },
+    glow: {
+      soft: 'rgba(192, 34, 52, 0.28)',
+      medium: 'rgba(192, 34, 52, 0.45)',
+      strong: 'rgba(192, 34, 52, 0.65)',
+    },
+  },
+  emerald: {
+    interactive: {
+      primary: '#0b7f5a',
+      hover: '#086247',
+      active: '#044432',
+      focus: 'rgba(11, 127, 90, 0.5)',
+    },
+    highlight: {
