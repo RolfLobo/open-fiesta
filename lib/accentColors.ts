@@ -437,3 +437,29 @@ export const generateAccentColorVariables = (accent: AccentColor): Record<string
 export const ACCENT_UTILITY_CLASSES = {
   // Interactive Elements
   button: {
+    primary:
+      'bg-[var(--accent-interactive-primary)] hover:bg-[var(--accent-interactive-hover)] active:bg-[var(--accent-interactive-active)] focus:ring-2 focus:ring-[var(--accent-interactive-focus)]',
+    secondary:
+      'border border-[var(--accent-interactive-primary)] text-[var(--accent-interactive-primary)] hover:bg-[var(--accent-interactive-primary)] hover:text-white',
+    ghost: 'text-[var(--accent-interactive-primary)] hover:bg-[var(--accent-highlight-subtle)]',
+  },
+
+  // Input Elements
+  input: {
+    focus:
+      'focus:border-[var(--accent-interactive-primary)] focus:ring-2 focus:ring-[var(--accent-interactive-focus)]',
+    error:
+      'border-[var(--accent-error)] focus:border-[var(--accent-error)] focus:ring-[var(--accent-error)]',
+  },
+
+  // Link Elements
+  link: {
+    primary:
+      'text-[var(--accent-interactive-primary)] hover:text-[var(--accent-interactive-hover)]',
+    underline:
+      'text-[var(--accent-interactive-primary)] hover:text-[var(--accent-interactive-hover)] underline decoration-[var(--accent-interactive-primary)]',
+  },
+
+  // Status Elements
+  status: {
+    success:
