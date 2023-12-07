@@ -411,3 +411,29 @@ export const generateAccentColorVariables = (accent: AccentColor): Record<string
   return {
     // Interactive
     '--accent-interactive-primary': colors.interactive.primary,
+    '--accent-interactive-hover': colors.interactive.hover,
+    '--accent-interactive-active': colors.interactive.active,
+    '--accent-interactive-focus': colors.interactive.focus,
+
+    // Highlight
+    '--accent-highlight-primary': colors.highlight.primary,
+    '--accent-highlight-secondary': colors.highlight.secondary,
+    '--accent-highlight-subtle': colors.highlight.subtle,
+
+    // Status
+    '--accent-success': colors.status.success,
+    '--accent-warning': colors.status.warning,
+    '--accent-error': colors.status.error,
+    '--accent-info': colors.status.info,
+
+    // Glow
+    '--accent-glow-soft': colors.glow.soft,
+    '--accent-glow-medium': colors.glow.medium,
+    '--accent-glow-strong': colors.glow.strong,
+  };
+};
+
+// Utility classes for accent elements
+export const ACCENT_UTILITY_CLASSES = {
+  // Interactive Elements
+  button: {
