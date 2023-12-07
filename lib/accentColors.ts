@@ -385,3 +385,29 @@ export const ACCENT_COLOR_SYSTEM: Record<AccentColor, AccentColorDefinition> = {
       secondary: '#a484e3',
       subtle: 'rgba(116, 79, 190, 0.16)',
     },
+    status: {
+      success: '#0e9f71',
+      warning: '#d28a17',
+      error: '#d13b3b',
+      info: '#3374dd',
+    },
+    glow: {
+      soft: 'rgba(123, 76, 217, 0.28)',
+      medium: 'rgba(123, 76, 217, 0.45)',
+      strong: 'rgba(123, 76, 217, 0.65)',
+    },
+  },
+};
+
+// Helper function to get accent colors for a specific theme
+export const getAccentColors = (accent: AccentColor): AccentColorDefinition => {
+  return ACCENT_COLOR_SYSTEM[accent];
+};
+
+// CSS Variable Generator for Accent Colors
+export const generateAccentColorVariables = (accent: AccentColor): Record<string, string> => {
+  const colors = getAccentColors(accent);
+
+  return {
+    // Interactive
+    '--accent-interactive-primary': colors.interactive.primary,
