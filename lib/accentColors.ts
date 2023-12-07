@@ -333,3 +333,29 @@ export const ACCENT_COLOR_SYSTEM: Record<AccentColor, AccentColorDefinition> = {
       focus: 'rgba(11, 127, 90, 0.5)',
     },
     highlight: {
+      primary: '#1f8c67',
+      secondary: '#47b993',
+      subtle: 'rgba(31, 140, 103, 0.16)',
+    },
+    status: {
+      success: '#0e9f71',
+      warning: '#d28a17',
+      error: '#d13b3b',
+      info: '#3374dd',
+    },
+    glow: {
+      soft: 'rgba(14, 159, 113, 0.28)',
+      medium: 'rgba(14, 159, 113, 0.45)',
+      strong: 'rgba(14, 159, 113, 0.65)',
+    },
+  },
+  blue: {
+    interactive: {
+      primary: '#2a62ba',
+      hover: '#1e4c91',
+      active: '#16386c',
+      focus: 'rgba(42, 98, 186, 0.5)',
+    },
+    highlight: {
+      primary: '#3d72b8',
+      secondary: '#6e9edb',
