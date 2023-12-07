@@ -463,3 +463,17 @@ export const ACCENT_UTILITY_CLASSES = {
   // Status Elements
   status: {
     success:
+      'text-[var(--accent-success)] bg-[var(--accent-success)]/10 border-[var(--accent-success)]/20',
+    warning:
+      'text-[var(--accent-warning)] bg-[var(--accent-warning)]/10 border-[var(--accent-warning)]/20',
+    error: 'text-[var(--accent-error)] bg-[var(--accent-error)]/10 border-[var(--accent-error)]/20',
+    info: 'text-[var(--accent-info)] bg-[var(--accent-info)]/10 border-[var(--accent-info)]/20',
+  },
+
+  // Glow Effects
+  glow: {
+    soft: 'shadow-lg shadow-[var(--accent-glow-soft)]',
+    medium: 'shadow-xl shadow-[var(--accent-glow-medium)]',
+    strong: 'shadow-2xl shadow-[var(--accent-glow-strong)]',
+  },
+};

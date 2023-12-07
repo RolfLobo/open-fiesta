@@ -104,3 +104,15 @@ export function useAuth() {
   }
   return context
 }
+
+'use client'
+
+import { createContext, useContext, useEffect, useState } from 'react'
+import { User, Session, AuthChangeEvent } from '@supabase/supabase-js'
+import { supabase } from '@/lib/db/client'
+
+interface AuthContextType {
+  user: User | null
+  session: Session | null
+  loading: boolean
+  signInWithProvider: (provider: 'google' | 'github') => Promise<void>
