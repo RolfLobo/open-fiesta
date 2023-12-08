@@ -142,3 +142,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email_confirmed_at: new Date().toISOString(),
         last_sign_in_at: new Date().toISOString(),
         app_metadata: { provider: 'bypass', providers: ['bypass'] },
+        user_metadata: { name: 'Dev Bypass' },
+        identities: [],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        is_anonymous: false,
+      } as unknown as User
+
+      setUser(mockUser)
+      setSession(null)
+      setLoading(false)
+      return
+    }
+
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
+      setSession(session)
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, newSession: Session | null) => {
+      setSession(newSession)
+      setUser(newSession?.user ?? null)
