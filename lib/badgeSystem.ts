@@ -262,3 +262,29 @@ export const BADGE_PAIRS: Record<BadgePair, BadgePairDefinition> = {
       text: 'rgb(253, 230, 138)' /* amber-200 */,
       border: 'rgba(251, 191, 36, 0.38)',
       glow: 'rgba(251, 191, 36, 0.45)',
+    },
+    free: {
+      /* Green styled for Free */
+      background: 'rgba(16, 185, 129, 0.18)',
+      text: 'rgb(167, 243, 208)',
+      border: 'rgba(16, 185, 129, 0.38)',
+      glow: 'rgba(16, 185, 129, 0.45)',
+    },
+  },
+  'orange-yellow': {
+    id: 'orange-yellow',
+    name: 'Orange & Yellow',
+    description: 'Warm energy pairing - Enthusiasm and optimism',
+    pro: {
+      background: 'rgba(249, 115, 22, 0.15)',
+      text: 'rgb(254, 215, 170)',
+      border: 'rgba(249, 115, 22, 0.3)',
+      glow: 'rgba(249, 115, 22, 0.3)',
+    },
+    free: {
+      background: 'rgba(234, 179, 8, 0.15)',
+      text: 'rgb(254, 240, 138)',
+      border: 'rgba(234, 179, 8, 0.3)',
+      glow: 'rgba(234, 179, 8, 0.3)',
+    },
+  },
