@@ -314,3 +314,28 @@ export const generateBadgeVariables = (pairId: BadgePair): Record<string, string
     '--badge-free-text': pair.free.text,
     '--badge-free-border': pair.free.border,
     '--badge-free-glow': pair.free.glow || 'transparent',
+  };
+};
+
+// Badge CSS Classes
+export const BADGE_CSS_CLASSES = {
+  base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border transition-all duration-200',
+
+  pro: 'bg-[var(--badge-pro-background)] text-[var(--badge-pro-text)] border-[var(--badge-pro-border)] shadow-sm hover:shadow-[0_0_0_1px_var(--badge-pro-glow)]',
+
+  free: 'bg-[var(--badge-free-background)] text-[var(--badge-free-text)] border-[var(--badge-free-border)] shadow-sm hover:shadow-[0_0_0_1px_var(--badge-free-glow)]',
+
+  // Size variations
+  sizes: {
+    sm: 'px-2 py-0.5 text-xs',
+    md: 'px-2.5 py-0.5 text-xs',
+    lg: 'px-3 py-1 text-sm',
+  },
+
+  // Style variations
+  styles: {
+    solid: '', // Default solid style
+    outline: 'bg-transparent border-2',
+    ghost: 'bg-transparent border-transparent hover:border-current',
+  },
+};
