@@ -236,3 +236,29 @@ export const BADGE_PAIRS: Record<BadgePair, BadgePairDefinition> = {
     },
   },
   'purple-blue': {
+    id: 'purple-blue',
+    name: 'Purple & Blue',
+    description: 'Modern tech gradient - Creative and professional',
+    pro: {
+      background: 'rgba(139, 92, 246, 0.15)',
+      text: 'rgb(196, 181, 253)',
+      border: 'rgba(139, 92, 246, 0.3)',
+      glow: 'rgba(139, 92, 246, 0.3)',
+    },
+    free: {
+      background: 'rgba(59, 130, 246, 0.15)',
+      text: 'rgb(147, 197, 253)',
+      border: 'rgba(59, 130, 246, 0.3)',
+      glow: 'rgba(59, 130, 246, 0.3)',
+    },
+  },
+  'gold-green': {
+    id: 'gold-green',
+    name: 'Gold & Green',
+    description: 'Owner original theme - Premium gold & vibrant green',
+    pro: {
+      /* Gold / amber styled for Pro */
+      background: 'rgba(251, 191, 36, 0.16)' /* amber-400 */,
+      text: 'rgb(253, 230, 138)' /* amber-200 */,
+      border: 'rgba(251, 191, 36, 0.38)',
+      glow: 'rgba(251, 191, 36, 0.45)',
