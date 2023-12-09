@@ -175,3 +175,12 @@ export const BADGE_PAIR_OPTIONS = Object.values(BADGE_PAIRS).map((pair) => ({
     free: pair.free,
   },
 }));
+
+/**
+ * Badge Pairing System
+ * Provides structured Pro/Free badge combinations with consistent theming
+ */
+
+import { BadgePair, BadgeType } from './themes';
+
+export interface BadgeStyle {
