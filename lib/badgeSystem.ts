@@ -210,3 +210,29 @@ export const BADGE_PAIRS: Record<BadgePair, BadgePairDefinition> = {
       border: 'rgba(255,255,255,0.7)',
       glow: 'rgba(255,255,255,0.5)',
     },
+    free: {
+      background: 'rgba(255,255,255,0.22)',
+      text: '#161616',
+      border: 'rgba(255,255,255,0.55)',
+      glow: 'rgba(255,255,255,0.4)',
+    },
+  },
+  'red-gold': {
+    id: 'red-gold',
+    name: 'Red & Gold',
+    description: 'Current Pro/Free styling - Bold and premium',
+    pro: {
+      background: 'rgba(228, 42, 66, 0.15)',
+      text: 'rgb(252, 211, 77)',
+      border: 'rgba(228, 42, 66, 0.3)',
+      glow: 'rgba(228, 42, 66, 0.3)',
+    },
+    free: {
+      /* Gold (amber) tones replacing previous green */
+      background: 'rgba(251, 191, 36, 0.15)' /* amber-400 */,
+      text: 'rgb(253, 230, 138)' /* amber-200 */,
+      border: 'rgba(251, 191, 36, 0.3)',
+      glow: 'rgba(251, 191, 36, 0.35)',
+    },
+  },
+  'purple-blue': {
