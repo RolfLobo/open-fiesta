@@ -168,3 +168,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, newSession: Session | null) => {
       setSession(newSession)
       setUser(newSession?.user ?? null)
+      setLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const signInWithProvider = async (provider: 'google' | 'github') => {
+    if (BYPASS) {
+      // No-op in bypass mode
+      return
+    }
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`
+      }
+    })
+    if (error) throw error
+  }
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
+  }
+
+  const value = {
