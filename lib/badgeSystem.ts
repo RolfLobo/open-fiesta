@@ -184,3 +184,29 @@ export const BADGE_PAIR_OPTIONS = Object.values(BADGE_PAIRS).map((pair) => ({
 import { BadgePair, BadgeType } from './themes';
 
 export interface BadgeStyle {
+  background: string;
+  text: string;
+  border: string;
+  glow?: string;
+}
+
+export interface BadgePairDefinition {
+  id: BadgePair;
+  name: string;
+  description: string;
+  pro: BadgeStyle;
+  free: BadgeStyle;
+}
+
+// Badge Pair Definitions
+export const BADGE_PAIRS: Record<BadgePair, BadgePairDefinition> = {
+  'white-white': {
+    id: 'white-white',
+    name: 'White & White',
+    description: 'Monochrome minimal pairing - neutral presentation',
+    pro: {
+      background: 'rgba(255,255,255,0.28)',
+      text: '#111111',
+      border: 'rgba(255,255,255,0.7)',
+      glow: 'rgba(255,255,255,0.5)',
+    },
