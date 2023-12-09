@@ -339,3 +339,17 @@ export const BADGE_CSS_CLASSES = {
     ghost: 'bg-transparent border-transparent hover:border-current',
   },
 };
+
+// Current Badge Pair (matches existing design)
+export const CURRENT_BADGE_PAIR: BadgePair = 'gold-green';
+
+// Badge Pair Options for Theme Selector
+export const BADGE_PAIR_OPTIONS = Object.values(BADGE_PAIRS).map((pair) => ({
+  id: pair.id,
+  name: pair.name,
+  description: pair.description,
+  preview: {
+    pro: pair.pro,
+    free: pair.free,
+  },
+}));

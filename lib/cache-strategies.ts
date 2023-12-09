@@ -397,3 +397,15 @@ export const CacheUtils = {
     return (now - cachedTime) > (maxAgeSeconds * 1000);
   },
 };
+/**
+ * Cache strategies and management utilities for PWA service worker
+ */
+
+export interface CacheConfig {
+  name: string;
+  maxEntries?: number;
+  maxAgeSeconds?: number;
+  purgeOnQuotaError?: boolean;
+}
+
+export interface CacheStrategy {
