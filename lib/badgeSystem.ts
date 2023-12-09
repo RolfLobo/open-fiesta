@@ -288,3 +288,29 @@ export const BADGE_PAIRS: Record<BadgePair, BadgePairDefinition> = {
       glow: 'rgba(234, 179, 8, 0.3)',
     },
   },
+};
+
+// Helper Functions
+export const getBadgePair = (pairId: BadgePair): BadgePairDefinition => {
+  return BADGE_PAIRS[pairId];
+};
+
+export const getBadgeStyle = (pairId: BadgePair, type: BadgeType): BadgeStyle => {
+  const pair = getBadgePair(pairId);
+  return pair[type];
+};
+
+// CSS Variable Generator for Badge Pairs
+export const generateBadgeVariables = (pairId: BadgePair): Record<string, string> => {
+  const pair = getBadgePair(pairId);
+
+  return {
+    '--badge-pro-background': pair.pro.background,
+    '--badge-pro-text': pair.pro.text,
+    '--badge-pro-border': pair.pro.border,
+    '--badge-pro-glow': pair.pro.glow || 'transparent',
+
+    '--badge-free-background': pair.free.background,
+    '--badge-free-text': pair.free.text,
+    '--badge-free-border': pair.free.border,
+    '--badge-free-glow': pair.free.glow || 'transparent',
