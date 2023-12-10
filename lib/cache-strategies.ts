@@ -409,3 +409,29 @@ export interface CacheConfig {
 }
 
 export interface CacheStrategy {
+  name: string;
+  handler: 'CacheFirst' | 'NetworkFirst' | 'StaleWhileRevalidate' | 'NetworkOnly' | 'CacheOnly';
+  urlPattern: RegExp | string;
+  options: CacheConfig;
+}
+
+export interface CacheStatus {
+  name: string;
+  size: number;
+  entryCount: number;
+  lastAccessed: Date;
+  quota: {
+    used: number;
+    available: number;
+    percentage: number;
+  };
+}
+
+export interface CacheManager {
+  getStatus(): Promise<CacheStatus[]>;
+  cleanup(): Promise<void>;
+  clearExpired(): Promise<void>;
+  enforceQuota(): Promise<void>;
+  warmCache(urls: string[]): Promise<void>;
+  getCacheSize(cacheName: string): Promise<number>;
+  deleteCacheEntry(cacheName: string, url: string): Promise<boolean>;
