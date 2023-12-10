@@ -435,3 +435,29 @@ export interface CacheManager {
   warmCache(urls: string[]): Promise<void>;
   getCacheSize(cacheName: string): Promise<number>;
   deleteCacheEntry(cacheName: string, url: string): Promise<boolean>;
+}
+
+/**
+ * Default cache strategies for different resource types
+ */
+export const DEFAULT_CACHE_STRATEGIES: CacheStrategy[] = [
+  // Static assets - Cache First
+  {
+    name: 'static-assets',
+    handler: 'CacheFirst',
+    urlPattern: /\.(js|css|woff|woff2|ttf|eot|ico|png|jpg|jpeg|gif|svg|webp)$/i,
+    options: {
+      name: 'static-assets-cache',
+      maxEntries: 100,
+      maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+      purgeOnQuotaError: true,
+    },
+  },
+  // API calls - Network First
+  {
+    name: 'api-calls',
+    handler: 'NetworkFirst',
+    urlPattern: /\/api\//,
+    options: {
+      name: 'api-cache',
+      maxEntries: 50,
