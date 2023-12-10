@@ -565,3 +565,29 @@ class CacheManagerImpl implements CacheManager {
 
     for (const cacheName of cacheNames) {
       const cache = await caches.open(cacheName);
+      const keys = await cache.keys();
+      const strategy = this.findStrategyForCache(cacheName);
+
+      if (!strategy?.options.maxAgeSeconds) continue;
+
+      const maxAge = strategy.options.maxAgeSeconds * 1000;
+
+      for (const request of keys) {
+        const response = await cache.match(request);
+        if (!response) continue;
+
+        const dateHeader = response.headers.get('date');
+        if (!dateHeader) continue;
+
+        const responseDate = new Date(dateHeader).getTime();
+        if (now - responseDate > maxAge) {
+          await cache.delete(request);
+        }
+      }
+    }
+  }
+
+  /**
+   * Enforce storage quota by removing oldest entries
+   */
+  async enforceQuota(): Promise<void> {
