@@ -461,3 +461,29 @@ export const DEFAULT_CACHE_STRATEGIES: CacheStrategy[] = [
     options: {
       name: 'api-cache',
       maxEntries: 50,
+      maxAgeSeconds: 60 * 60 * 24, // 24 hours
+      purgeOnQuotaError: false,
+    },
+  },
+  // HTML pages - Stale While Revalidate
+  {
+    name: 'html-pages',
+    handler: 'StaleWhileRevalidate',
+    urlPattern: /\.html$|\/$/,
+    options: {
+      name: 'pages-cache',
+      maxEntries: 20,
+      maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+      purgeOnQuotaError: true,
+    },
+  },
+  // Fonts - Cache First with long expiration
+  {
+    name: 'fonts',
+    handler: 'CacheFirst',
+    urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com/,
+    options: {
+      name: 'fonts-cache',
+      maxEntries: 20,
+      maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+      purgeOnQuotaError: false,
