@@ -487,3 +487,29 @@ export const DEFAULT_CACHE_STRATEGIES: CacheStrategy[] = [
       maxEntries: 20,
       maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
       purgeOnQuotaError: false,
+    },
+  },
+  // Images - Stale While Revalidate
+  {
+    name: 'images',
+    handler: 'StaleWhileRevalidate',
+    urlPattern: /\/_next\/image\?/,
+    options: {
+      name: 'images-cache',
+      maxEntries: 60,
+      maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+      purgeOnQuotaError: true,
+    },
+  },
+];
+
+/**
+ * Cache management implementation
+ */
+class CacheManagerImpl implements CacheManager {
+  private readonly QUOTA_THRESHOLD = 0.8; // 80% of available quota
+  private readonly CLEANUP_BATCH_SIZE = 10;
+
+  /**
+   * Get status of all caches
+   */
