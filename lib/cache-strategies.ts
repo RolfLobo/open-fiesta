@@ -513,3 +513,29 @@ class CacheManagerImpl implements CacheManager {
   /**
    * Get status of all caches
    */
+  async getStatus(): Promise<CacheStatus[]> {
+    if (!('caches' in window) || !('storage' in navigator) || !navigator.storage) {
+      return [];
+    }
+
+    const cacheNames = await caches.keys();
+    const quota = await navigator.storage.estimate();
+    const totalQuota = quota.quota || 0;
+    const usedQuota = quota.usage || 0;
+
+    const statuses: CacheStatus[] = [];
+
+    for (const cacheName of cacheNames) {
+      const cache = await caches.open(cacheName);
+      const keys = await cache.keys();
+      const size = await this.calculateCacheSize(cache, keys);
+
+      statuses.push({
+        name: cacheName,
+        size,
+        entryCount: keys.length,
+        lastAccessed: new Date(), // Would need to track this separately in real implementation
+        quota: {
+          used: usedQuota,
+          available: totalQuota,
+          percentage: totalQuota > 0 ? (usedQuota / totalQuota) * 100 : 0,
