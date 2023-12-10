@@ -539,3 +539,29 @@ class CacheManagerImpl implements CacheManager {
           used: usedQuota,
           available: totalQuota,
           percentage: totalQuota > 0 ? (usedQuota / totalQuota) * 100 : 0,
+        },
+      });
+    }
+
+    return statuses;
+  }
+
+  /**
+   * Perform cache cleanup based on age and quota
+   */
+  async cleanup(): Promise<void> {
+    await this.clearExpired();
+    await this.enforceQuota();
+  }
+
+  /**
+   * Clear expired cache entries
+   */
+  async clearExpired(): Promise<void> {
+    if (!('caches' in window)) return;
+
+    const cacheNames = await caches.keys();
+    const now = Date.now();
+
+    for (const cacheName of cacheNames) {
+      const cache = await caches.open(cacheName);
