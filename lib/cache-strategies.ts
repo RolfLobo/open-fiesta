@@ -616,3 +616,30 @@ class CacheManagerImpl implements CacheManager {
       for (let i = 0; i < entriesToRemove; i++) {
         await cache.delete(keys[i]);
       }
+
+      // Check if we're under quota threshold
+      const newQuota = await navigator.storage.estimate();
+      const newUsed = newQuota.usage || 0;
+      if (newUsed / totalQuota < this.QUOTA_THRESHOLD) {
+        break;
+      }
+    }
+  }
+
+  /**
+   * Warm cache with specified URLs
+   */
+  async warmCache(urls: string[]): Promise<void> {
+    if (!('caches' in window)) return;
+
+    const promises = urls.map(async (url) => {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const strategy = this.findStrategyForUrl(url);
+          if (strategy) {
+            const cache = await caches.open(strategy.options.name);
+            await cache.put(url, response.clone());
+          }
+        }
+      } catch (error) {
