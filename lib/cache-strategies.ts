@@ -695,3 +695,29 @@ class CacheManagerImpl implements CacheManager {
           } else {
             // Estimate size if content-length is not available
             const blob = await response.blob();
+            totalSize += blob.size;
+          }
+        }
+      } catch {
+        // Skip entries that can't be read
+      }
+    }
+
+    return totalSize;
+  }
+
+  /**
+   * Find cache strategy for a given cache name
+   */
+  private findStrategyForCache(cacheName: string): CacheStrategy | undefined {
+    return DEFAULT_CACHE_STRATEGIES.find(
+      strategy => strategy.options.name === cacheName
+    );
+  }
+
+  /**
+   * Find cache strategy for a given URL
+   */
+  private findStrategyForUrl(url: string): CacheStrategy | undefined {
+    return DEFAULT_CACHE_STRATEGIES.find(strategy => {
+      if (typeof strategy.urlPattern === 'string') {
