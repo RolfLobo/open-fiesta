@@ -721,3 +721,29 @@ class CacheManagerImpl implements CacheManager {
   private findStrategyForUrl(url: string): CacheStrategy | undefined {
     return DEFAULT_CACHE_STRATEGIES.find(strategy => {
       if (typeof strategy.urlPattern === 'string') {
+        return url.includes(strategy.urlPattern);
+      }
+      return strategy.urlPattern.test(url);
+    });
+  }
+}
+
+// Singleton instance
+let cacheManager: CacheManager | null = null;
+
+/**
+ * Get the cache manager instance
+ */
+export function getCacheManager(): CacheManager {
+  if (!cacheManager) {
+    cacheManager = new CacheManagerImpl();
+  }
+  return cacheManager;
+}
+
+/**
+ * Utility functions for cache operations
+ */
+export const CacheUtils = {
+  /**
+   * Check if a response is cacheable
