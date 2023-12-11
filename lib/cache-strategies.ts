@@ -669,3 +669,29 @@ class CacheManagerImpl implements CacheManager {
    * Delete a specific cache entry
    */
   async deleteCacheEntry(cacheName: string, url: string): Promise<boolean> {
+    if (!('caches' in window)) return false;
+
+    try {
+      const cache = await caches.open(cacheName);
+      return cache.delete(url);
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Calculate approximate cache size
+   */
+  private async calculateCacheSize(cache: Cache, keys: readonly Request[]): Promise<number> {
+    let totalSize = 0;
+
+    for (const request of keys) {
+      try {
+        const response = await cache.match(request);
+        if (response) {
+          const contentLength = response.headers.get('content-length');
+          if (contentLength) {
+            totalSize += parseInt(contentLength, 10);
+          } else {
+            // Estimate size if content-length is not available
+            const blob = await response.blob();
