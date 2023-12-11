@@ -643,3 +643,29 @@ class CacheManagerImpl implements CacheManager {
           }
         }
       } catch (error) {
+        console.warn(`Failed to warm cache for ${url}:`, error);
+      }
+    });
+
+    await Promise.allSettled(promises);
+  }
+
+  /**
+   * Get size of a specific cache
+   */
+  async getCacheSize(cacheName: string): Promise<number> {
+    if (!('caches' in window)) return 0;
+
+    try {
+      const cache = await caches.open(cacheName);
+      const keys = await cache.keys();
+      return this.calculateCacheSize(cache, keys);
+    } catch {
+      return 0;
+    }
+  }
+
+  /**
+   * Delete a specific cache entry
+   */
+  async deleteCacheEntry(cacheName: string, url: string): Promise<boolean> {
