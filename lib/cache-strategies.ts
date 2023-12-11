@@ -747,3 +747,29 @@ export function getCacheManager(): CacheManager {
 export const CacheUtils = {
   /**
    * Check if a response is cacheable
+   */
+  isCacheable(response: Response): boolean {
+    return (
+      response.status === 200 &&
+      response.type === 'basic' &&
+      !response.headers.get('cache-control')?.includes('no-store')
+    );
+  },
+
+  /**
+   * Create a cache key from request
+   */
+  createCacheKey(request: Request): string {
+    const url = new URL(request.url);
+    // Remove cache-busting parameters
+    url.searchParams.delete('_t');
+    url.searchParams.delete('v');
+    return url.toString();
+  },
+
+  /**
+   * Add timestamp to response headers for expiration tracking
+   */
+  addTimestamp(response: Response): Response {
+    const headers = new Headers(response.headers);
+    if (!headers.has('date')) {
