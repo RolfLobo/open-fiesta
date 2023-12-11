@@ -591,3 +591,28 @@ class CacheManagerImpl implements CacheManager {
    * Enforce storage quota by removing oldest entries
    */
   async enforceQuota(): Promise<void> {
+    if (!('storage' in navigator) || !navigator.storage) return;
+
+    const quota = await navigator.storage.estimate();
+    const totalQuota = quota.quota || 0;
+    const usedQuota = quota.usage || 0;
+
+    if (totalQuota === 0 || usedQuota / totalQuota < this.QUOTA_THRESHOLD) {
+      return;
+    }
+
+    // Remove entries from caches that allow purging
+    const cacheNames = await caches.keys();
+    
+    for (const cacheName of cacheNames) {
+      const strategy = this.findStrategyForCache(cacheName);
+      if (!strategy?.options.purgeOnQuotaError) continue;
+
+      const cache = await caches.open(cacheName);
+      const keys = await cache.keys();
+
+      // Remove oldest entries in batches
+      const entriesToRemove = Math.min(this.CLEANUP_BATCH_SIZE, keys.length);
+      for (let i = 0; i < entriesToRemove; i++) {
+        await cache.delete(keys[i]);
+      }
