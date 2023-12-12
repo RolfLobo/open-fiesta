@@ -1276,3 +1276,29 @@ export function createChatActions({
     };
     setThreads((prev) => [t, ...prev]);
     setActiveId(t.id);
+    return t;
+  }
+
+  function prepareMessages(messages: ChatMessage[]): ChatMessage[] {
+    // If there's an active project with a system prompt, inject it at the beginning
+    if (activeProject?.systemPrompt?.trim()) {
+      const systemMsg: ChatMessage = {
+        role: 'system',
+        content: activeProject.systemPrompt.trim(),
+        ts: Date.now() - 1000000, // Ensure it's at the beginning
+      };
+
+      // Check if there's already a system message at the start
+      const hasSystemMessage = messages.length > 0 && messages[0].role === 'system';
+
+      if (hasSystemMessage) {
+        // Replace the existing system message
+        return [systemMsg, ...messages.slice(1)];
+      } else {
+        // Add system message at the beginning
+        return [systemMsg, ...messages];
+      }
+    }
+
+    return messages;
+  }
