@@ -773,3 +773,26 @@ export const CacheUtils = {
   addTimestamp(response: Response): Response {
     const headers = new Headers(response.headers);
     if (!headers.has('date')) {
+      headers.set('date', new Date().toISOString());
+    }
+    headers.set('sw-cached-at', new Date().toISOString());
+    
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  },
+
+  /**
+   * Check if cached response is expired
+   */
+  isExpired(response: Response, maxAgeSeconds: number): boolean {
+    const cachedAt = response.headers.get('sw-cached-at');
+    if (!cachedAt) return false;
+
+    const cachedTime = new Date(cachedAt).getTime();
+    const now = Date.now();
+    return (now - cachedTime) > (maxAgeSeconds * 1000);
+  },
+};
