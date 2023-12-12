@@ -1224,3 +1224,28 @@ export type ChatDeps = {
   activeThread: ChatThread | null;
   setThreads: (updater: (prev: ChatThread[]) => ChatThread[]) => void;
   setActiveId: (id: string) => void;
+  setLoadingIds: (updater: (prev: string[]) => string[]) => void;
+  setLoadingIdsInit: (ids: string[]) => void;
+  activeProject?: Project | null;
+  selectedVoice?: string;
+  userId?: string;
+  pageType?: 'home' | 'compare';
+};
+
+type ApiTextResult = {
+  text?: string;
+  error?: string;
+  code?: number;
+  provider?: string;
+  usedKeyType?: 'user' | 'shared' | 'none';
+};
+
+function extractText(res: unknown): string {
+  if (res && typeof res === 'object') {
+    const r = res as Partial<ApiTextResult>;
+    const t = typeof r.text === 'string' ? r.text : undefined;
+    const e = typeof r.error === 'string' ? r.error : undefined;
+    return t || e || 'No response';
+  }
+  return 'No response';
+}
