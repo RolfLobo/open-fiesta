@@ -1249,3 +1249,30 @@ function extractText(res: unknown): string {
   }
   return 'No response';
 }
+
+export function createChatActions({
+  selectedModels,
+  keys,
+  threads,
+  activeThread,
+  setThreads,
+  setActiveId,
+  setLoadingIds,
+  setLoadingIdsInit,
+  activeProject,
+  selectedVoice,
+  userId,
+  pageType,
+}: ChatDeps) {
+  function ensureThread(): ChatThread {
+    if (activeThread) return activeThread;
+    const t: ChatThread = {
+      id: safeUUID(),
+      title: 'New Chat',
+      messages: [],
+      createdAt: Date.now(),
+      projectId: activeProject?.id,
+      pageType: pageType,
+    };
+    setThreads((prev) => [t, ...prev]);
+    setActiveId(t.id);
