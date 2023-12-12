@@ -1198,3 +1198,29 @@ export function createChatActions({
 import { callGemini, callOpenRouter, callOpenProvider, callUnstable, callMistral, callOllama, streamOpenRouter } from './client';
 import { safeUUID } from './uuid';
 import type { AiModel, ApiKeys, ChatMessage, ChatThread } from './types';
+import type { Project } from './projects';
+import { toast } from 'react-toastify';
+import { addMessage as addMessageDb, updateThreadTitle } from '@/lib/db';
+
+const abortControllers: Record<string, AbortController> = {};
+
+function abortAll() {
+  Object.values(abortControllers).forEach((controller) => {
+    try {
+      controller.abort();
+    } catch {
+      // ignore
+    }
+  });
+  for (const key in abortControllers) {
+    delete abortControllers[key];
+  }
+}
+
+export type ChatDeps = {
+  selectedModels: AiModel[];
+  keys: ApiKeys;
+  threads: ChatThread[];
+  activeThread: ChatThread | null;
+  setThreads: (updater: (prev: ChatThread[]) => ChatThread[]) => void;
+  setActiveId: (id: string) => void;
