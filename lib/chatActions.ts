@@ -1328,3 +1328,29 @@ export function createChatActions({
           ? {
               ...t,
               title: newTitle,
+              messages: nextHistory,
+            }
+          : t,
+      ),
+    );
+    
+    // Update thread title in database if it changed
+    if (userId && thread.id && newTitle !== thread.title) {
+      try {
+        await updateThreadTitle(userId, thread.id, newTitle);
+      } catch (e) {
+        console.error('Failed to update thread title in DB:', e);
+      }
+    }
+
+    // Skip internal loading - using ChatInterface loading animation instead
+    // setLoadingIdsInit(selectedModels.map((m) => m.id));
+    await Promise.allSettled(
+      selectedModels.map(async (m) => {
+        const controller = new AbortController();
+        abortControllers[m.id] = controller;
+        try {
+          if (m.provider === 'gemini') {
+            const res = await callGemini({
+              apiKey: keys.gemini || undefined,
+              model: m.model,
