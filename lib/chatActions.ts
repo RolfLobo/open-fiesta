@@ -1406,3 +1406,29 @@ export function createChatActions({
                     const finalMsg: ChatMessage = {
                       role: 'assistant',
                       content: full,
+                      modelId: m.id,
+                      ts: placeholderTs,
+                    };
+                    addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                      console.error('Failed to save assistant message to DB:', e)
+                    );
+                  }
+                }
+              };
+              requestAnimationFrame(animate);
+            }
+          } else if (m.provider === 'open-provider') {
+            // No placeholder - using ChatInterface loading animation
+
+            const res = await callOpenProvider({
+              apiKey: keys['open-provider'] || undefined,
+              model: m.model,
+              messages: prepareMessages(nextHistory),
+              imageDataUrl,
+              voice: selectedVoice,
+            });
+            const full = String(extractText(res) || '').trim();
+            if (full) {
+              // Add placeholder for super fast typing animation
+              const placeholderTs = Date.now();
+              const placeholder: ChatMessage = {
