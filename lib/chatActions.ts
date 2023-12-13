@@ -1484,3 +1484,29 @@ export function createChatActions({
                     addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
                       console.error('Failed to save open-provider assistant message to DB:', e)
                     );
+                  }
+                }
+              };
+              requestAnimationFrame(animate);
+            }
+          } else if (m.provider === 'unstable') {
+            // No placeholder - using ChatInterface loading animation
+
+            const res = await callUnstable({
+              apiKey: keys['unstable'] || undefined,
+              model: m.model,
+              messages: prepareMessages(nextHistory),
+              imageDataUrl,
+            });
+            
+            let content = '';
+            if (res && typeof (res as { error?: unknown })?.error === 'string') {
+              content = String((res as { error: unknown }).error).trim();
+            } else {
+              content = String(extractText(res) || '').trim() || 'No response';
+            }
+            
+            if (content) {
+              // Add placeholder for super fast typing animation
+              const placeholderTs = Date.now();
+              const placeholder: ChatMessage = {
