@@ -1302,3 +1302,29 @@ export function createChatActions({
 
     return messages;
   }
+
+  async function send(text: string, imageDataUrl?: string) {
+    const prompt = text.trim();
+    if (!prompt) return;
+
+    abortAll();
+
+    if (selectedModels.length === 0) {
+      toast.warn('Select at least one model.', {
+        style: {
+          background: '#ff4d4f',
+          color: '#fff',
+        },
+      });
+    }
+
+    const userMsg: ChatMessage = { role: 'user', content: prompt, ts: Date.now() };
+    const thread = ensureThread();
+    const nextHistory = [...(thread.messages ?? []), userMsg];
+    const newTitle = thread.title === 'New Chat' ? prompt.slice(0, 40) : thread.title;
+    setThreads((prev) =>
+      prev.map((t) =>
+        t.id === thread.id
+          ? {
+              ...t,
+              title: newTitle,
