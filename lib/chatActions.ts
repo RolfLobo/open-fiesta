@@ -1562,3 +1562,29 @@ export function createChatActions({
                   }
                 }
               };
+              requestAnimationFrame(animate);
+            } else {
+              // Add response directly without typewriter effect
+              const assistantMsg: ChatMessage = {
+                role: 'assistant',
+                content,
+                modelId: m.id,
+                ts: Date.now(),
+                provider: (res as any)?.provider,
+                usedKeyType: (res as any)?.usedKeyType,
+                tokens: (res as any)?.tokens,
+                code: (res as any)?.code,
+              };
+              setThreads((prev) =>
+                prev.map((t) =>
+                  t.id === thread.id
+                    ? { ...t, messages: [...(t.messages ?? nextHistory), assistantMsg] }
+                    : t,
+                ),
+              );
+              
+              // Save to database
+              if (userId && thread.id) {
+                try {
+                  await addMessageDb({
+                    userId,
