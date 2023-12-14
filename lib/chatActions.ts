@@ -1536,3 +1536,29 @@ export function createChatActions({
                       if (t.id !== thread.id) return t;
                       const msgs = (t.messages ?? []).map((msg) =>
                         msg.ts === placeholderTs && msg.modelId === m.id
+                          ? { ...msg, content: chunk }
+                          : msg,
+                      );
+                      return { ...t, messages: msgs };
+                    }),
+                  );
+                  lastUpdate = timestamp;
+                }
+                
+                if (i < content.length) {
+                  requestAnimationFrame(animate);
+                } else {
+                  // Save to database after typing completes
+                  if (userId && thread.id) {
+                    const finalMsg: ChatMessage = {
+                      role: 'assistant',
+                      content,
+                      modelId: m.id,
+                      ts: placeholderTs,
+                    };
+                    addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                      console.error('Failed to save unstable assistant message to DB:', e)
+                    );
+                  }
+                }
+              };
