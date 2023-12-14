@@ -1588,3 +1588,29 @@ export function createChatActions({
                 try {
                   await addMessageDb({
                     userId,
+                    chatId: thread.id,
+                    message: assistantMsg,
+                  });
+                } catch (e) {
+                  console.error('Failed to save unstable assistant message to DB:', e);
+                }
+              }
+            }
+          } else if (m.provider === 'mistral') {
+            // No placeholder - using ChatInterface loading animation
+
+            const res = await callMistral({ apiKey: keys['mistral'] || undefined, model: m.model, messages: prepareMessages(nextHistory), imageDataUrl });
+            const full = String(extractText(res) || '').trim() || 'No response';
+            if (full) {
+              // Add placeholder for super fast typing animation
+              const placeholderTs = Date.now();
+              const placeholder: ChatMessage = {
+                role: 'assistant',
+                content: '',
+                modelId: m.id,
+                ts: placeholderTs,
+              };
+              setThreads((prev) =>
+                prev.map((t) =>
+                  t.id === thread.id
+                    ? { ...t, messages: [...(t.messages ?? nextHistory), placeholder] }
