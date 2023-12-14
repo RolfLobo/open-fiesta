@@ -1640,3 +1640,29 @@ export function createChatActions({
                   lastUpdate = timestamp;
                 }
                 
+                if (i < full.length) {
+                  requestAnimationFrame(animate);
+                } else {
+                  // Save to database after typing completes
+                  if (userId && thread.id) {
+                    const finalMsg: ChatMessage = {
+                      role: 'assistant',
+                      content: full,
+                      modelId: m.id,
+                      ts: placeholderTs,
+                    };
+                    addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                      console.error('Failed to save mistral assistant message to DB:', e)
+                    );
+                  }
+                }
+              };
+              requestAnimationFrame(animate);
+            } else {
+              // Add response directly without typewriter effect
+              const assistantMsg: ChatMessage = {
+                role: 'assistant',
+                content: full,
+                modelId: m.id,
+                ts: Date.now(),
+                provider: (res as any)?.provider,
