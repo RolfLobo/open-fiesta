@@ -1692,3 +1692,29 @@ export function createChatActions({
             }
           } else if (m.provider === 'ollama') {
             // No placeholder - using ChatInterface loading animation
+
+            const res = await callOllama({ baseUrl: keys['ollama'] || undefined, model: m.model, messages: prepareMessages(nextHistory), signal: controller.signal });
+            const full = String(extractText(res) || '').trim() || 'No response';
+            if (full) {
+              // Add placeholder for super fast typing animation
+              const placeholderTs = Date.now();
+              const placeholder: ChatMessage = {
+                role: 'assistant',
+                content: '',
+                modelId: m.id,
+                ts: placeholderTs,
+              };
+              setThreads((prev) =>
+                prev.map((t) =>
+                  t.id === thread.id
+                    ? { ...t, messages: [...(t.messages ?? nextHistory), placeholder] }
+                    : t,
+                ),
+              );
+              
+              // Super fast typing effect with requestAnimationFrame for smooth scrolling
+              let i = 0;
+              const step = Math.max(2, Math.ceil(full.length / 40)); // Smaller steps for smoother animation
+              let lastUpdate = 0;
+              const animate = (timestamp: number) => {
+                if (timestamp - lastUpdate >= 12) { // Throttle to ~83fps for smoothness
