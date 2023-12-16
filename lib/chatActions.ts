@@ -1770,3 +1770,29 @@ export function createChatActions({
                     : t,
                 ),
               );
+              
+              // Save to database
+              if (userId && thread.id) {
+                try {
+                  await addMessageDb({
+                    userId,
+                    chatId: thread.id,
+                    message: assistantMsg,
+                  });
+                } catch (e) {
+                  console.error('Failed to save ollama assistant message to DB:', e);
+                }
+              }
+            }
+          } else {
+            // No placeholder - using ChatInterface loading animation
+
+            let buffer = '';
+            let flushTimer: number | null = null;
+            let gotAny = false;
+            const flush = () => {
+              if (!buffer) return;
+              const chunk = buffer;
+              buffer = '';
+              // Skip updating placeholder - using ChatInterface loading animation instead
+            };
