@@ -1744,3 +1744,29 @@ export function createChatActions({
                       content: full,
                       modelId: m.id,
                       ts: placeholderTs,
+                    };
+                    addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                      console.error('Failed to save ollama assistant message to DB:', e)
+                    );
+                  }
+                }
+              };
+              requestAnimationFrame(animate);
+            } else {
+              // Add response directly without typewriter effect
+              const assistantMsg: ChatMessage = {
+                role: 'assistant',
+                content: full,
+                modelId: m.id,
+                ts: Date.now(),
+                provider: (res as any)?.provider,
+                usedKeyType: (res as any)?.usedKeyType,
+                tokens: (res as any)?.tokens,
+              };
+              setThreads((prev) =>
+                prev.map((t) =>
+                  t.id === thread.id
+                    ? { ...t, messages: [...(t.messages ?? nextHistory), assistantMsg] }
+                    : t,
+                ),
+              );
