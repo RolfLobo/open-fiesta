@@ -1848,3 +1848,28 @@ export function createChatActions({
                         );
                         return { ...t, messages: msgs };
                       }),
+                    );
+                    lastUpdate = timestamp;
+                  }
+                  
+                  if (i < full.length) {
+                    requestAnimationFrame(animate);
+                  } else {
+                    // Save to database after typing completes
+                    if (userId && thread.id) {
+                      const finalMsg: ChatMessage = {
+                        role: 'assistant',
+                        content: full,
+                        modelId: m.id,
+                        ts: placeholderTs,
+                      };
+                      addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                        console.error('Failed to save openrouter assistant message to DB:', e)
+                      );
+                    }
+                  }
+                };
+                requestAnimationFrame(animate);
+              }
+              return;
+            }
