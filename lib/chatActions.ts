@@ -1796,3 +1796,29 @@ export function createChatActions({
               buffer = '';
               // Skip updating placeholder - using ChatInterface loading animation instead
             };
+            const mt =
+              typeof imageDataUrl === 'string'
+                ? /^data:(.*?);base64/.exec(imageDataUrl)?.[1] || ''
+                : '';
+            const isImage = !!mt && /^image\//i.test(mt);
+            // Treat attachments with missing/unknown MIME type as non-image to force non-stream (server-side extraction)
+            const isNonImageAttachment = !!imageDataUrl && (!mt || !isImage); // txt/pdf/docx or unknown
+
+            if (isNonImageAttachment) {
+              const res = await callOpenRouter({
+                apiKey: keys.openrouter || undefined,
+                model: m.model,
+                messages: prepareMessages(nextHistory),
+                imageDataUrl,
+                signal: controller.signal,
+              });
+              const full = String(extractText(res) || '').trim();
+              if (full) {
+                // Add placeholder for super fast typing animation
+                const placeholderTs = Date.now();
+                const placeholder: ChatMessage = {
+                  role: 'assistant',
+                  content: '',
+                  modelId: m.id,
+                  ts: placeholderTs,
+                };
