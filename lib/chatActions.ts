@@ -1873,3 +1873,30 @@ export function createChatActions({
               }
               return;
             }
+
+            await streamOpenRouter(
+              {
+                apiKey: keys.openrouter || undefined,
+                model: m.model,
+                messages: prepareMessages(nextHistory),
+                imageDataUrl,
+                signal: controller.signal,
+              },
+              {
+                onToken: (delta) => {
+                  gotAny = true;
+                  buffer += delta;
+                  // Skip token-by-token updates - using ChatInterface loading animation instead
+                },
+                onMeta: (meta) => {
+                  // Skip meta updates - using ChatInterface loading animation instead
+                },
+                onError: (err) => {
+                  // Skip error updates - using ChatInterface loading animation instead
+                },
+                onDone: async () => {
+                  if (flushTimer != null) {
+                    window.clearTimeout(flushTimer);
+                    flushTimer = null;
+                  }
+                  
