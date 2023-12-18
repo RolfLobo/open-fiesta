@@ -2082,3 +2082,29 @@ export function createChatActions({
               const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: 'No response' } : msg);
               return { ...tt, messages: msgs };
             }));
+          } else {
+            // typewriter effect
+            let i = 0;
+            const step = Math.max(2, Math.ceil(full.length / 80));
+            const timer = window.setInterval(() => {
+              i = Math.min(full.length, i + step);
+              const chunk = full.slice(0, i);
+              setThreads(prev => prev.map(tt => {
+                if (tt.id !== t.id) return tt;
+                const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: chunk } : msg);
+                return { ...tt, messages: msgs };
+              }));
+              if (i >= full.length) window.clearInterval(timer);
+            }, 24);
+          }
+        } else if (m.provider === 'open-provider') {
+          const res = await callOpenProvider({ apiKey: keys['open-provider'] || undefined, model: m.model, messages: baseHistory, voice: selectedVoice });
+          const full = String(extractText(res) || '').trim();
+          if (!full) {
+            setThreads(prev => prev.map(tt => {
+              if (tt.id !== t.id) return tt;
+              const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id)
+                ? { ...msg, content: 'No response', provider: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.provider, usedKeyType: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.usedKeyType, tokens: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.tokens } as ChatMessage
+                : msg);
+              return { ...tt, messages: msgs };
+            }));
