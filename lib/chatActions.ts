@@ -1952,3 +1952,29 @@ export function createChatActions({
                             ts: placeholderTs,
                           };
                           addMessageDb({ userId, chatId: thread.id, message: finalMsg }).catch(e => 
+                            console.error('Failed to save openrouter assistant message to DB:', e)
+                          );
+                        }
+                      }
+                    };
+                    requestAnimationFrame(animate);
+                  }
+                  
+                  if (!gotAny) {
+                    try {
+                      const res = await callOpenRouter({
+                        apiKey: keys.openrouter || undefined,
+                        model: m.model,
+                        messages: nextHistory,
+                        imageDataUrl,
+                        signal: controller.signal,
+                      });
+                      const text = extractText(res);
+                      if (text && text.trim()) {
+                        const assistantMsg: ChatMessage = {
+                          role: 'assistant',
+                          content: String(text).trim(),
+                          modelId: m.id,
+                          ts: Date.now(),
+                        };
+                        setThreads((prev) =>
