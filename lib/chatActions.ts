@@ -2004,3 +2004,29 @@ export function createChatActions({
               },
             );
           }
+        } finally {
+          delete abortControllers[m.id];
+          // Skip internal loading - using ChatInterface loading animation instead
+          // setLoadingIds((prev) => prev.filter((x) => x !== m.id));
+        }
+      }),
+    );
+  }
+
+  function onEditUser(turnIndex: number, newText: string) {
+    if (!activeThread) return;
+    const t = threads.find((tt) => tt.id === activeThread.id);
+    if (!t) return;
+    const original = [...(t.messages ?? [])];
+
+    abortAll();
+
+    let userCount = -1;
+    let userIdx = -1;
+    for (let i = 0; i < original.length; i++) {
+      if (original[i].role === 'user') {
+        userCount += 1;
+        if (userCount === turnIndex) {
+          userIdx = i;
+          break;
+        }
