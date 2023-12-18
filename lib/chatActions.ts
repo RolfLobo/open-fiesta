@@ -2056,3 +2056,29 @@ export function createChatActions({
         : t.title;
     setThreads((prev) =>
       prev.map((tt) => (tt.id === t.id ? { ...tt, messages: updated, title: newTitle } : tt)),
+    );
+
+    const baseHistory = updated.slice(0, userIdx + 1);
+
+    // Skip internal loading - using ChatInterface loading animation instead
+    // setLoadingIdsInit(selectedModels.map(m => m.id));
+    Promise.allSettled(selectedModels.map(async (m) => {
+      const controller = new AbortController();
+      abortControllers[m.id] = controller;
+      const ph = placeholders.find(p => p.model.id === m.id);
+      if (!ph) { 
+        // Skip internal loading - using ChatInterface loading animation instead
+        // setLoadingIds(prev => prev.filter(x => x !== m.id)); 
+        return; 
+      }
+      const placeholderTs = ph.ts;
+      try {
+        if (m.provider === 'gemini') {
+          const res = await callGemini({ apiKey: keys.gemini || undefined, model: m.model, messages: baseHistory, signal: controller.signal });
+          const full = String(extractText(res) || '').trim();
+          if (!full) {
+            setThreads(prev => prev.map(tt => {
+              if (tt.id !== t.id) return tt;
+              const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: 'No response' } : msg);
+              return { ...tt, messages: msgs };
+            }));
