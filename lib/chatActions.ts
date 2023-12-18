@@ -1978,3 +1978,29 @@ export function createChatActions({
                           ts: Date.now(),
                         };
                         setThreads((prev) =>
+                          prev.map((t) =>
+                            t.id === thread.id
+                              ? { ...t, messages: [...(t.messages ?? nextHistory), assistantMsg] }
+                              : t,
+                          ),
+                        );
+                        
+                        // Save to database
+                        if (userId && thread.id) {
+                          try {
+                            await addMessageDb({
+                              userId,
+                              chatId: thread.id,
+                              message: assistantMsg,
+                            });
+                          } catch (e) {
+                            console.error('Failed to save assistant message to DB:', e);
+                          }
+                        }
+                      }
+                    } catch {}
+                  }
+                },
+              },
+            );
+          }
