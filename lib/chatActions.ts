@@ -2030,3 +2030,29 @@ export function createChatActions({
           userIdx = i;
           break;
         }
+      }
+    }
+    if (userIdx < 0) return;
+
+    const updated: ChatMessage[] = [...original];
+    updated[userIdx] = { ...updated[userIdx], content: newText };
+    let j = userIdx + 1;
+    while (j < updated.length && updated[j].role !== 'user') j++;
+    updated.splice(userIdx + 1, j - (userIdx + 1));
+
+    const placeholders: { model: AiModel; ts: number }[] = [];
+    const inserts: ChatMessage[] = [];
+    for (const m of selectedModels) {
+      const ts = Date.now() + Math.floor(Math.random() * 1000);
+      placeholders.push({ model: m, ts });
+      inserts.push({ role: 'assistant', content: '', modelId: m.id, ts });
+    }
+    updated.splice(userIdx + 1, 0, ...inserts);
+
+    const newTitle =
+      t.title === 'New Chat' ||
+      t.title === ((t.messages?.[0]?.content as string | undefined)?.slice?.(0, 40) ?? t.title)
+        ? (updated.find((mm) => mm.role === 'user')?.content ?? 'New Chat').slice(0, 40)
+        : t.title;
+    setThreads((prev) =>
+      prev.map((tt) => (tt.id === t.id ? { ...tt, messages: updated, title: newTitle } : tt)),
