@@ -2212,3 +2212,29 @@ export function createChatActions({
               i = Math.min(full.length, i + step);
               const chunk = full.slice(0, i);
               setThreads(prev => prev.map(tt => {
+                if (tt.id !== t.id) return tt;
+                const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: chunk } : msg);
+                return { ...tt, messages: msgs };
+              }));
+              if (i >= full.length) {
+                window.clearInterval(timer);
+                // attach provider meta and token info once complete
+                setThreads(prev => prev.map(tt => {
+                  if (tt.id !== t.id) return tt;
+                  const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id)
+                    ? { ...msg, provider: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.provider, usedKeyType: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.usedKeyType, tokens: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.tokens } as ChatMessage
+                    : msg);
+                  return { ...tt, messages: msgs };
+                }));
+              }
+            }, 24);
+          }
+        } else if (m.provider === 'ollama') {
+          const res = await callOllama({ baseUrl: keys['ollama'] || undefined, model: m.model, messages: baseHistory });
+          const full = String(extractText(res) || '').trim();
+          // Check for empty response or literal "No response"
+          if (!full || full === 'No response') {
+            setThreads(prev => prev.map(tt => {
+              if (tt.id !== t.id) return tt;
+              const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id)
+                ? { ...msg, content: 'No response', provider: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.provider, usedKeyType: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.usedKeyType, tokens: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.tokens } as ChatMessage
