@@ -2342,3 +2342,29 @@ export function createChatActions({
     let userCount = -1;
     let userIdx = -1;
     for (let i = 0; i < original.length; i++) {
+      if (original[i].role === 'user') {
+        userCount += 1;
+        if (userCount === turnIndex) { userIdx = i; break; }
+      }
+    }
+    if (userIdx < 0) return;
+
+    const updated: ChatMessage[] = [...original];
+    // Find the next user message to determine deletion range
+    let j = userIdx + 1;
+    while (j < updated.length && updated[j].role !== 'user') j++;
+    // Remove the user message and all assistant responses until the next user message
+    updated.splice(userIdx, j - userIdx);
+
+    setThreads(prev => prev.map(tt => tt.id === t.id ? { ...tt, messages: updated } : tt));
+  }
+
+  function onDeleteAnswer(turnIndex: number, modelId: string) {
+    if (!activeThread) return;
+    const t = threads.find(tt => tt.id === activeThread.id);
+    if (!t) return;
+    const original = [...(t.messages ?? [])];
+
+    abortAll();
+
+    let userCount = -1;
