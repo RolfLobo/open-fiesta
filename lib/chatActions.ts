@@ -2264,3 +2264,29 @@ export function createChatActions({
                   return { ...tt, messages: msgs };
                 }));
               }
+            }, 24);
+          }
+        } else {
+          let buffer = '';
+          let flushTimer: number | null = null;
+          let gotAny = false;
+          const flush = () => {
+            if (!buffer) return;
+            const chunk = buffer; buffer = '';
+            setThreads(prev => prev.map(tt => {
+              if (tt.id !== t.id) return tt;
+              const msgs = (tt.messages ?? []).map(msg => {
+                if (!(msg.ts === placeholderTs && msg.modelId === m.id)) return msg;
+                const cur = msg.content || '';
+                const next = cur === 'Thinking…' ? chunk : cur + chunk;
+                return { ...msg, content: next };
+              });
+              return { ...tt, messages: msgs };
+            }));
+          };
+          await streamOpenRouter({ apiKey: keys.openrouter || undefined, model: m.model, messages: baseHistory, signal: controller.signal }, {
+            onToken: (delta) => {
+              gotAny = true;
+              buffer += delta;
+              if (flushTimer == null) flushTimer = window.setTimeout(() => { flushTimer = null; flush(); }, 24);
+            },
