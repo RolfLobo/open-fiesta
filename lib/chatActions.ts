@@ -2316,3 +2316,29 @@ export function createChatActions({
                   setThreads(prev => prev.map(tt => {
                     if (tt.id !== t.id) return tt;
                     const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: String(text).trim() } : msg);
+                    return { ...tt, messages: msgs };
+                  }));
+                } catch {}
+              }
+            }
+          });
+        }
+        } finally {
+          delete abortControllers[m.id];
+          // Skip internal loading - using ChatInterface loading animation instead
+          // setLoadingIds(prev => prev.filter(x => x !== m.id));
+        }
+    }));
+  }
+
+  function onDeleteUser(turnIndex: number) {
+    if (!activeThread) return;
+    const t = threads.find(tt => tt.id === activeThread.id);
+    if (!t) return;
+    const original = [...(t.messages ?? [])];
+
+    abortAll();
+
+    let userCount = -1;
+    let userIdx = -1;
+    for (let i = 0; i < original.length; i++) {
