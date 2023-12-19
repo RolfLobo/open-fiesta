@@ -2290,3 +2290,29 @@ export function createChatActions({
               buffer += delta;
               if (flushTimer == null) flushTimer = window.setTimeout(() => { flushTimer = null; flush(); }, 24);
             },
+            onMeta: (meta) => {
+              setThreads(prev => prev.map(tt => {
+                if (tt.id !== t.id) return tt;
+                const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, provider: meta.provider, usedKeyType: meta.usedKeyType } as ChatMessage : msg);
+                return { ...tt, messages: msgs };
+              }));
+            },
+            onError: (err) => {
+              if (flushTimer != null) { window.clearTimeout(flushTimer); flushTimer = null; }
+              const text = err.error || 'Error';
+              setThreads(prev => prev.map(tt => {
+                if (tt.id !== t.id) return tt;
+                const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: text, code: err.code, provider: err.provider, usedKeyType: err.usedKeyType } as ChatMessage : msg);
+                return { ...tt, messages: msgs };
+              }));
+            },
+            onDone: async () => {
+              if (flushTimer != null) { window.clearTimeout(flushTimer); flushTimer = null; }
+              flush();
+              if (!gotAny) {
+                try {
+                  const res = await callOpenRouter({ apiKey: keys.openrouter || undefined, model: m.model, messages: baseHistory, signal: controller.signal });
+                  const text = extractText(res);
+                  setThreads(prev => prev.map(tt => {
+                    if (tt.id !== t.id) return tt;
+                    const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id) ? { ...msg, content: String(text).trim() } : msg);
