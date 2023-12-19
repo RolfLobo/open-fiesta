@@ -2134,3 +2134,29 @@ export function createChatActions({
                 // Save final message to database
                 if (userId && t.id) {
                   const finalMsg: ChatMessage = {
+                    role: 'assistant',
+                    content: full,
+                    modelId: m.id,
+                    ts: placeholderTs,
+                  };
+                  addMessageDb({ userId, chatId: t.id, message: finalMsg }).catch(e => 
+                    console.error('Failed to save assistant message to DB:', e)
+                  );
+                }
+              }
+            }, 24);
+          }
+        } else if (m.provider === 'unstable') {
+          const res = await callUnstable({ apiKey: keys['unstable'] || undefined, model: m.model, messages: baseHistory });
+          if (res && typeof (res as { error?: unknown })?.error === 'string') {
+            const errText = String((res as { error: unknown }).error).trim();
+            setThreads(prev => prev.map(tt => {
+              if (tt.id !== t.id) return tt;
+              const msgs = (tt.messages ?? []).map(msg => (msg.ts === placeholderTs && msg.modelId === m.id)
+                ? { ...msg, content: errText, provider: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.provider, usedKeyType: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.usedKeyType, code: (res as { provider?: string; usedKeyType?: 'user' | 'shared' | 'none'; tokens?: object; code?: number; error?: string })?.code } as ChatMessage
+                : msg);
+              return { ...tt, messages: msgs };
+            }));
+            return;
+          }
+          const full = String(extractText(res) || '').trim();
