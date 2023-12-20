@@ -237,3 +237,30 @@ export async function callOpenProvider(args: {
   });
   return res.json();
 }
+
+export async function callUnstable(args: {
+  apiKey?: string;
+  model: string;
+  messages: ChatMessage[];
+  imageDataUrl?: string;
+}) {
+  const res = await fetch('/api/unstable', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  });
+  return res.json();
+}
+
+export async function callMistral(args: {
+  apiKey?: string;
+  model: string;
+  messages: ChatMessage[];
+  imageDataUrl?: string;
+}) {
+  const res = await fetch('/api/mistral', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  });
+  return res.json();
