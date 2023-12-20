@@ -290,3 +290,29 @@ export type ORStreamHandlers = {
     code?: number;
     provider?: string;
     usedKeyType?: 'user' | 'shared' | 'none';
+  }) => void;
+  onDone?: () => void;
+};
+
+export async function streamOpenRouter(
+  args: {
+    apiKey?: string;
+    model: string;
+    messages: ChatMessage[];
+    imageDataUrl?: string;
+    signal?: AbortSignal;
+  },
+  handlers: ORStreamHandlers,
+) {
+  try {
+    const res = await fetch('/api/openrouter/stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...args,
+        referer: typeof window !== 'undefined' ? window.location.origin : undefined,
+        title: 'AI Fiesta',
+      }),
+      signal: args.signal,
+    });
+    if (!res.body) {
