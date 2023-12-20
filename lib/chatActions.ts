@@ -2368,3 +2368,27 @@ export function createChatActions({
     abortAll();
 
     let userCount = -1;
+    let userIdx = -1;
+    for (let i = 0; i < original.length; i++) {
+      if (original[i].role === 'user') {
+        userCount += 1;
+        if (userCount === turnIndex) { userIdx = i; break; }
+      }
+    }
+    if (userIdx < 0) return;
+
+    // Find the assistant message with the specific modelId after this user message
+    const updated: ChatMessage[] = [...original];
+    for (let i = userIdx + 1; i < updated.length; i++) {
+      if (updated[i].role === 'user') break; // Stop at next user message
+      if (updated[i].role === 'assistant' && updated[i].modelId === modelId) {
+        updated.splice(i, 1);
+        break;
+      }
+    }
+
+    setThreads(prev => prev.map(tt => tt.id === t.id ? { ...tt, messages: updated } : tt));
+  }
+
+  return { send, onEditUser, onDeleteUser, onDeleteAnswer };
+}

@@ -183,3 +183,5 @@ export async function streamOpenRouter(
     handlers.onDone?.();
   }
 }
+
+import { ChatMessage } from './types';
