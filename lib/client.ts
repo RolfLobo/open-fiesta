@@ -316,3 +316,29 @@ export async function streamOpenRouter(
       signal: args.signal,
     });
     if (!res.body) {
+      handlers.onError?.({ error: 'No stream body', code: res.status, provider: 'openrouter' });
+      handlers.onDone?.();
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    const pump = async (): Promise<void> => {
+      const { value, done } = await reader.read();
+      if (done) {
+        handlers.onDone?.();
+        return;
+      }
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split('\n\n');
+      buffer = parts.pop() || '';
+      for (const part of parts) {
+        const line = part.trim();
+        if (!line.startsWith('data:')) continue;
+        const payload = line.slice(5).trim();
+        if (payload === '[DONE]') {
+          handlers.onDone?.();
+          return;
+        }
+        try {
+          const json = JSON.parse(payload);
