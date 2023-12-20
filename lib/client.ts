@@ -212,3 +212,28 @@ export async function callOpenRouter(args: {
 }) {
   const res = await fetch('/api/openrouter', {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...args,
+      referer: typeof window !== 'undefined' ? window.location.origin : undefined,
+      title: 'AI Fiesta',
+    }),
+    signal: args.signal,
+  });
+  return res.json();
+}
+
+export async function callOpenProvider(args: {
+  apiKey?: string;
+  model: string;
+  messages: ChatMessage[];
+  imageDataUrl?: string;
+  voice?: string;
+}) {
+  const res = await fetch('/api/open-provider', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  });
+  return res.json();
+}
