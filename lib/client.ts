@@ -185,3 +185,30 @@ export async function streamOpenRouter(
 }
 
 import { ChatMessage } from './types';
+
+export async function callGemini(args: {
+  apiKey?: string;
+  model: string;
+  messages: ChatMessage[];
+  imageDataUrl?: string;
+  signal?: AbortSignal;
+}) {
+  const endpoint = args.model === 'gemini-2.5-pro' ? '/api/gemini-pro' : '/api/gemini';
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+    signal: args.signal,
+  });
+  return res.json();
+}
+
+export async function callOpenRouter(args: {
+  apiKey?: string;
+  model: string;
+  messages: ChatMessage[];
+  imageDataUrl?: string;
+  signal?: AbortSignal;
+}) {
+  const res = await fetch('/api/openrouter', {
+    method: 'POST',
