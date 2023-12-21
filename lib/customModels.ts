@@ -52,3 +52,20 @@ export function mergeModels(customs: CustomModel[]): AiModel[] {
 }
 
 export function makeCustomModel(label: string, slug: string): CustomModel {
+  const cleanedLabel = label.trim();
+  const cleanedSlug = slug.trim();
+  // Use the model slug as a stable id to avoid collisions
+  const id = cleanedSlug
+
+  // Determine provider based on the slug format
+  // If it contains a slash, it's OpenRouter; otherwise, it's Ollama
+  const provider = cleanedSlug.includes('/') ? 'openrouter' : 'ollama'
+
+  return {
+    id,
+    label: cleanedLabel || cleanedSlug,
+    provider,
+    model: cleanedSlug,
+    custom: true,
+  };
+}

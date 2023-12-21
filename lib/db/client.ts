@@ -25,3 +25,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 export const supabase = (supabaseUrl && supabaseAnonKey)
   ? createClient(supabaseUrl, supabaseAnonKey)
   : createStubClient()
+
+'use client'
+
+import { createClient } from '@supabase/supabase-js'
