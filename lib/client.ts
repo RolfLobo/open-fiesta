@@ -368,3 +368,4 @@ export async function streamOpenRouter(
     handlers.onError?.({ error: e?.message || 'Stream failed', provider: 'openrouter' });
     handlers.onDone?.();
   }
+}
