@@ -342,3 +342,29 @@ export async function streamOpenRouter(
         }
         try {
           const json = JSON.parse(payload);
+          if (typeof json?.delta === 'string' && json.delta) handlers.onToken(json.delta);
+          if (json?.provider || json?.usedKeyType) handlers.onMeta?.(json);
+          if (json?.error)
+            handlers.onError?.({
+              error: json.error,
+              code: json.code,
+              provider: json.provider,
+              usedKeyType: json.usedKeyType,
+            });
+        } catch {
+          // ignore individual event parse errors
+        }
+      }
+      return pump();
+    };
+    await pump();
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      // Abort is expected, no need to show an error.
+      handlers.onDone?.();
+      return;
+    }
+    const e = err as Error | undefined;
+    handlers.onError?.({ error: e?.message || 'Stream failed', provider: 'openrouter' });
+    handlers.onDone?.();
+  }
