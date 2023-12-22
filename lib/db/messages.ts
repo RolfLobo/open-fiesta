@@ -47,3 +47,28 @@ export async function addMessage(params: {
     console.error('⚠️ Failed to update chat timestamp:', updateError)
   }
 }
+
+import { supabase } from '@/lib/db/client'
+import type { ChatMessage } from '@/lib/types'
+
+export async function addMessage(params: {
+  userId: string
+  chatId: string
+  message: ChatMessage
+}): Promise<void> {
+  const { userId, chatId, message } = params
+
+  console.log('🔍 addMessage called:', {
+    userId: userId?.substring(0, 8) + '...',
+    chatId: chatId?.substring(0, 8) + '...',
+    role: message.role,
+    content: message.content?.substring(0, 50) + '...',
+    modelId: message.modelId,
+  })
+
+  const { data, error } = await supabase
+    .from('messages')
+    .insert({
+      chat_id: chatId,
+      owner_id: userId,
+      role: message.role,
