@@ -165,3 +165,29 @@ export async function fetchThreads(userId: string): Promise<ChatThread[]> {
 
   return chats.map((c: { id: string }) => mapChatRowToThread(c, messageMap.get(c.id) || []))
 }
+
+export async function createThread(params: {
+  userId: string
+  title?: string
+  projectId?: string | null
+  pageType?: 'home' | 'compare'
+  initialMessage?: ChatMessage | null
+}): Promise<ChatThread> {
+  const { userId, title, projectId, pageType = 'home', initialMessage } = params
+
+  const { data: chat, error } = await supabase
+    .from('chats')
+    .insert({
+      owner_id: userId,
+      project_id: projectId ?? null,
+      title: title ?? 'New Chat',
+      page_type: pageType,
+    })
+    .select('*')
+    .single()
+
+  if (error) throw error
+
+  let messages: any[] = []
+  if (initialMessage) {
+    const { data: msg, error: msgErr } = await supabase
