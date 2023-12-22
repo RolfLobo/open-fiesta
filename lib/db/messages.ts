@@ -72,3 +72,28 @@ export async function addMessage(params: {
       chat_id: chatId,
       owner_id: userId,
       role: message.role,
+      content: message.content,
+      model: message.modelId ?? null,
+      content_json: null,
+      metadata: null,
+      created_at: message.ts ? new Date(message.ts).toISOString() : new Date().toISOString(),
+    })
+    .select()
+
+  if (error) {
+    console.error('❌ Database error inserting message:', error)
+    throw error
+  }
+
+  console.log('✅ Message inserted successfully:', data?.[0]?.id)
+
+  // Touch chat updated_at
+  const { error: updateError } = await supabase
+    .from('chats')
+    .update({ updated_at: new Date().toISOString() })
+    .eq('id', chatId)
+
+  if (updateError) {
+    console.error('⚠️ Failed to update chat timestamp:', updateError)
+  }
+}
