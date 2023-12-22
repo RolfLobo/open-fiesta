@@ -191,3 +191,29 @@ export async function createThread(params: {
   let messages: any[] = []
   if (initialMessage) {
     const { data: msg, error: msgErr } = await supabase
+      .from('messages')
+      .insert({
+        chat_id: chat.id,
+        owner_id: userId,
+        role: initialMessage.role,
+        content: initialMessage.content,
+        model: initialMessage.modelId ?? null,
+        content_json: null,
+        metadata: null,
+      })
+      .select('*')
+      .single()
+    if (msgErr) throw msgErr
+    messages = [msg]
+  }
+
+  return mapChatRowToThread(chat, messages)
+}
+
+export async function deleteThread(userId: string, chatId: string): Promise<void> {
+  const { error } = await supabase
+    .from('chats')
+    .delete()
+    .eq('id', chatId)
+    .eq('owner_id', userId)
+  if (error) throw error
