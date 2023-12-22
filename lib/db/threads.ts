@@ -112,3 +112,30 @@ export async function updateThreadTitle(userId: string, chatId: string, title: s
     .eq('owner_id', userId)
   if (error) throw error
 }
+
+import { supabase } from '@/lib/db/client'
+import type { ChatMessage, ChatThread } from '@/lib/types'
+
+// Map DB rows to UI types
+function mapChatRowToThread(row: any, messages: any[] = []): ChatThread {
+  return {
+    id: row.id,
+    title: row.title || 'New Chat',
+    createdAt: new Date(row.created_at).getTime(),
+    projectId: row.project_id || undefined,
+    pageType: row.page_type || 'home',
+    messages: messages.map(mapMessageRowToChatMessage),
+  }
+}
+
+function mapMessageRowToChatMessage(row: any): ChatMessage {
+  return {
+    role: row.role,
+    content: row.content,
+    ts: new Date(row.created_at).getTime(),
+    modelId: row.model || undefined,
+  }
+}
+
+export async function fetchThreads(userId: string): Promise<ChatThread[]> {
+  const { data: chats, error } = await supabase
