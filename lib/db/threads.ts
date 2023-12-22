@@ -139,3 +139,29 @@ function mapMessageRowToChatMessage(row: any): ChatMessage {
 
 export async function fetchThreads(userId: string): Promise<ChatThread[]> {
   const { data: chats, error } = await supabase
+    .from('chats')
+    .select('*')
+    .eq('owner_id', userId)
+    .order('updated_at', { ascending: false })
+
+  if (error) throw error
+  if (!chats || chats.length === 0) return []
+
+  const chatIds = chats.map((c: { id: any }) => c.id)
+  const { data: messages, error: msgErr } = await supabase
+    .from('messages')
+    .select('*')
+    .in('chat_id', chatIds)
+    .order('created_at', { ascending: true })
+
+  if (msgErr) throw msgErr
+
+  const messageMap = new Map<string, any[]>()
+  for (const m of messages || []) {
+    const list = messageMap.get(m.chat_id) || []
+    list.push(m)
+    messageMap.set(m.chat_id, list)
+  }
+
+  return chats.map((c: { id: string }) => mapChatRowToThread(c, messageMap.get(c.id) || []))
+}
