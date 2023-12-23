@@ -315,3 +315,30 @@ export function formatChatForExport(thread: ChatThread, selectedModels: AiModel[
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  // Group messages by conversation pairs
+  const pairs: { user: ChatMessage; answers: ChatMessage[] }[] = [];
+  let currentPair: { user: ChatMessage; answers: ChatMessage[] } | null = null;
+
+  for (const msg of thread.messages) {
+    if (msg.role === 'user') {
+      if (currentPair) {
+        pairs.push(currentPair);
+      }
+      currentPair = { user: msg, answers: [] };
+    } else if (msg.role === 'assistant' && currentPair) {
+      currentPair.answers.push(msg);
+    }
+  }
+
+  if (currentPair) {
+    pairs.push(currentPair);
+  }
+
+  // Build markdown content
+  let markdown = `# ${title}\n\n`;
+  markdown += `**Date:** ${date}\n\n`;
+
+  if (selectedModels.length > 0) {
+    markdown += `**Models Used:** ${selectedModels.map((m) => m.label).join(', ')}\n\n`;
+  }
