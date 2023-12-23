@@ -368,3 +368,29 @@ export function formatChatForExport(thread: ChatThread, selectedModels: AiModel[
           markdown += `${answer.content}\n\n`;
         });
       }
+    }
+
+    if (index < pairs.length - 1) {
+      markdown += `---\n\n`;
+    }
+  });
+
+  return markdown;
+}
+
+/**
+ * Download a text file
+ */
+export function downloadTextFile(content: string, filename: string): void {
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+/**
