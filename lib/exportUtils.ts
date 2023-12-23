@@ -420,3 +420,29 @@ function markdownToHtml(markdown: string): string {
     // Links (basic)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
     // Line breaks - handle paragraphs properly
+    .split('\n\n')
+    .map((para) => para.trim())
+    .filter((para) => para)
+    .map((para) => {
+      // Don't wrap headers, hrs, or pre blocks in p tags
+      if (para.match(/^<(h[1-6]|hr|pre)/)) {
+        return para;
+      }
+      return `<p>${para.replace(/\n/g, '<br>')}</p>`;
+    })
+    .join('\n');
+
+  return html;
+}
+
+/**
+ * Generate and download PDF using browser's print functionality
+ */
+export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): void {
+  const markdown = formatChatForExport(thread, selectedModels);
+  const html = markdownToHtml(markdown);
+
+  // Create a new window for PDF generation
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    alert('Popup blocked. Please allow popups for this site to download PDF.');
