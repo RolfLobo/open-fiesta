@@ -342,3 +342,29 @@ export function formatChatForExport(thread: ChatThread, selectedModels: AiModel[
   if (selectedModels.length > 0) {
     markdown += `**Models Used:** ${selectedModels.map((m) => m.label).join(', ')}\n\n`;
   }
+
+  markdown += `---\n\n`;
+
+  pairs.forEach((pair, index) => {
+    // User message
+    markdown += `## Question ${index + 1}\n\n`;
+    markdown += `${pair.user.content}\n\n`;
+
+    // Assistant responses
+    if (pair.answers.length > 0) {
+      if (pair.answers.length === 1) {
+        const answer = pair.answers[0];
+        const model = selectedModels.find((m) => m.id === answer.modelId);
+        const modelLabel = model ? model.label : answer.modelId || 'Assistant';
+        markdown += `### ${modelLabel}\n\n`;
+        markdown += `${answer.content}\n\n`;
+      } else {
+        markdown += `### Responses\n\n`;
+        pair.answers.forEach((answer) => {
+          const model = selectedModels.find((m) => m.id === answer.modelId);
+          const modelLabel = model ? model.label : answer.modelId || 'Assistant';
+
+          markdown += `#### ${modelLabel}\n\n`;
+          markdown += `${answer.content}\n\n`;
+        });
+      }
