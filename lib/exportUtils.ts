@@ -446,3 +446,29 @@ export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): vo
   const printWindow = window.open('', '_blank');
   if (!printWindow) {
     alert('Popup blocked. Please allow popups for this site to download PDF.');
+    return;
+  }
+
+  const title = thread.title || 'Untitled Chat';
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>${title}</title>
+        <style>
+            * { box-sizing: border-box; }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 40px;
+                color: #1f2937;
+                max-width: 100%;
+            }
+            h1 { 
+                color: #2563eb; 
+                border-bottom: 3px solid #e5e7eb; 
+                padding-bottom: 15px; 
+                margin-bottom: 25px;
+                font-size: 2rem;
