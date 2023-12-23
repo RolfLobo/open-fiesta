@@ -394,3 +394,29 @@ export function downloadTextFile(content: string, filename: string): void {
 }
 
 /**
+ * Convert markdown to HTML for PDF generation
+ */
+function markdownToHtml(markdown: string): string {
+  // Simple markdown to HTML conversion with improved formatting
+  const html = markdown
+    // Headers
+    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Code blocks with syntax highlighting preservation
+    .replace(
+      /```(\w*)\n([\s\S]*?)```/g,
+      '<pre class="code-block"><code class="language-$1">$2</code></pre>',
+    )
+    // Inline code
+    .replace(/`(.*?)`/g, '<code class="inline-code">$1</code>')
+    // Horizontal rules
+    .replace(/^---$/gm, '<hr>')
+    // Links (basic)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    // Line breaks - handle paragraphs properly
