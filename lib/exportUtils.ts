@@ -300,3 +300,18 @@ export function downloadAsMarkdown(thread: ChatThread, selectedModels: AiModel[]
 
   downloadTextFile(markdown, filename);
 }
+
+import type { ChatThread, AiModel, ChatMessage } from './types';
+
+/**
+ * Formats a chat thread for export
+ */
+export function formatChatForExport(thread: ChatThread, selectedModels: AiModel[]): string {
+  const title = thread.title || 'Untitled Chat';
+  const date = new Date(thread.createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });

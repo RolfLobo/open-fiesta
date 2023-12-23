@@ -217,3 +217,13 @@ export async function deleteThread(userId: string, chatId: string): Promise<void
     .eq('id', chatId)
     .eq('owner_id', userId)
   if (error) throw error
+}
+
+export async function updateThreadTitle(userId: string, chatId: string, title: string): Promise<void> {
+  const { error } = await supabase
+    .from('chats')
+    .update({ title })
+    .eq('id', chatId)
+    .eq('owner_id', userId)
+  if (error) throw error
+}
