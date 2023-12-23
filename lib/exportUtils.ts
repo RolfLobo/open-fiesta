@@ -498,3 +498,29 @@ export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): vo
                 text-align: justify;
             }
             .code-block { 
+                background: #f8fafc; 
+                padding: 20px; 
+                border-radius: 8px; 
+                overflow-x: auto;
+                border: 1px solid #e2e8f0;
+                margin: 20px 0;
+                font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.875rem;
+                line-height: 1.5;
+            }
+            .code-block code {
+                background: none;
+                padding: 0;
+                border: none;
+                font-size: inherit;
+            }
+            .inline-code { 
+                background: #f1f5f9; 
+                padding: 3px 6px; 
+                border-radius: 4px; 
+                font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+                font-size: 0.875em;
+                color: #e11d48;
+                border: 1px solid #e2e8f0;
+            }
+            hr { 
