@@ -251,3 +251,29 @@ export const usePWAUI = () => {
         orientation,
         isInstallable,
       });
+    };
+
+    updatePWAState();
+
+    // Listen for orientation changes with debounce
+    let orientationTimeout: NodeJS.Timeout;
+    const handleOrientationChange = () => {
+      clearTimeout(orientationTimeout);
+      orientationTimeout = setTimeout(updatePWAState, 100); // Small delay to ensure dimensions are updated
+    };
+
+    // Listen for display mode changes
+    const standaloneMediaQuery = window.matchMedia('(display-mode: standalone)');
+    const fullscreenMediaQuery = window.matchMedia('(display-mode: fullscreen)');
+    const minimalUIMediaQuery = window.matchMedia('(display-mode: minimal-ui)');
+
+    const handleDisplayModeChange = () => {
+      updatePWAState();
+    };
+
+    // Listen for install prompt
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      (window as any).deferredPrompt = e;
+      updatePWAState();
+    };
