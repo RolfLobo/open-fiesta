@@ -576,3 +576,29 @@ export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): vo
             }
         </style>
     </head>
+    <body>
+        ${html}
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+
+  // Wait for content to load, then trigger print
+  printWindow.onload = () => {
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
+  };
+}
+
+/**
+ * Download chat thread as Markdown file
+ */
+export function downloadAsMarkdown(thread: ChatThread, selectedModels: AiModel[]): void {
+  const markdown = formatChatForExport(thread, selectedModels);
+  const title = thread.title || 'Untitled Chat';
+  const filename = `${title.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.md`;
+
+  downloadTextFile(markdown, filename);
