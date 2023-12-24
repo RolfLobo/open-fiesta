@@ -550,3 +550,29 @@ export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): vo
                     margin: 15mm; 
                     padding: 0;
                     font-size: 12pt;
+                }
+                @page { 
+                    margin: 15mm; 
+                    size: A4;
+                }
+                h1 { 
+                    font-size: 18pt; 
+                    page-break-after: avoid;
+                }
+                h2, h3, h4 { 
+                    page-break-after: avoid; 
+                    page-break-inside: avoid;
+                }
+                .code-block { 
+                    page-break-inside: avoid; 
+                    background: #fafafa !important;
+                    border: 1px solid #ccc !important;
+                }
+                hr {
+                    page-break-after: always;
+                    visibility: hidden;
+                    margin: 0;
+                }
+            }
+        </style>
+    </head>
