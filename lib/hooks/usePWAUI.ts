@@ -225,3 +225,29 @@ export const usePWAUI = () => {
       } else if (window.matchMedia('(display-mode: fullscreen)').matches) {
         displayMode = 'fullscreen';
       } else if (window.matchMedia('(display-mode: minimal-ui)').matches) {
+        displayMode = 'minimal-ui';
+      }
+
+      // Detect orientation
+      const orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+
+      // Get safe area insets (for devices with notches)
+      const computedStyle = getComputedStyle(document.documentElement);
+      const safeAreaInsets = {
+        top: parseInt(computedStyle.getPropertyValue('env(safe-area-inset-top)') || '0', 10),
+        bottom: parseInt(computedStyle.getPropertyValue('env(safe-area-inset-bottom)') || '0', 10),
+        left: parseInt(computedStyle.getPropertyValue('env(safe-area-inset-left)') || '0', 10),
+        right: parseInt(computedStyle.getPropertyValue('env(safe-area-inset-right)') || '0', 10),
+      };
+
+      // Check if app is installable
+      const isInstallable = !!(window as any).deferredPrompt;
+
+      setState({
+        isStandalone: standalone,
+        installSource: source,
+        safeAreaInsets,
+        displayMode,
+        orientation,
+        isInstallable,
+      });
