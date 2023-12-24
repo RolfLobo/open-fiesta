@@ -199,3 +199,29 @@ interface PWAUIState {
  * 
  * @returns {Object} PWA UI state and utility functions
  * @example
+ * ```tsx
+ * const { isStandalone, getStandaloneStyles, shouldShowInstallPrompt } = usePWAUI();
+ * ```
+ */
+export const usePWAUI = () => {
+  const [state, setState] = useState<PWAUIState>({
+    isStandalone: false,
+    installSource: 'unknown',
+    safeAreaInsets: { top: 0, bottom: 0, left: 0, right: 0 },
+    displayMode: 'browser',
+    orientation: 'portrait',
+    isInstallable: false,
+  });
+
+  useEffect(() => {
+    const updatePWAState = () => {
+      const standalone = isStandalone();
+      const source = getInstallSource();
+      
+      // Detect display mode
+      let displayMode: PWAUIState['displayMode'] = 'browser';
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        displayMode = 'standalone';
+      } else if (window.matchMedia('(display-mode: fullscreen)').matches) {
+        displayMode = 'fullscreen';
+      } else if (window.matchMedia('(display-mode: minimal-ui)').matches) {
