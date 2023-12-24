@@ -175,3 +175,27 @@ export const usePWAUI = () => {
 };
 
 export default usePWAUI;
+'use client';
+
+import { useState, useEffect } from 'react';
+import { isStandalone, getInstallSource } from '@/lib/pwa-config';
+
+interface PWAUIState {
+  isStandalone: boolean;
+  installSource: string;
+  safeAreaInsets: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+  displayMode: 'standalone' | 'fullscreen' | 'minimal-ui' | 'browser';
+  orientation: 'portrait' | 'landscape';
+  isInstallable: boolean;
+}
+
+/**
+ * Custom hook for PWA UI adjustments and responsive behavior
+ * 
+ * @returns {Object} PWA UI state and utility functions
+ * @example

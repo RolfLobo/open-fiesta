@@ -602,3 +602,4 @@ export function downloadAsMarkdown(thread: ChatThread, selectedModels: AiModel[]
   const filename = `${title.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.md`;
 
   downloadTextFile(markdown, filename);
+}
