@@ -524,3 +524,29 @@ export function downloadAsPdf(thread: ChatThread, selectedModels: AiModel[]): vo
                 border: 1px solid #e2e8f0;
             }
             hr { 
+                border: none; 
+                border-top: 2px solid #e5e7eb; 
+                margin: 40px 0; 
+                opacity: 0.6;
+            }
+            strong { 
+                color: #1f2937; 
+                font-weight: 600;
+            }
+            em {
+                color: #374151;
+                font-style: italic;
+            }
+            a {
+                color: #2563eb;
+                text-decoration: none;
+                border-bottom: 1px dotted #2563eb;
+            }
+            a:hover {
+                border-bottom-style: solid;
+            }
+            @media print {
+                body { 
+                    margin: 15mm; 
+                    padding: 0;
+                    font-size: 12pt;
