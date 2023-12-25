@@ -329,3 +329,26 @@ export const usePWAUI = () => {
     const classes = [];
     
     if (state.isStandalone) {
+      classes.push('pwa-standalone');
+    }
+    
+    classes.push(`pwa-display-${state.displayMode}`);
+    classes.push(`pwa-orientation-${state.orientation}`);
+    
+    if (state.safeAreaInsets.top > 0) {
+      classes.push('pwa-has-notch');
+    }
+    
+    return classes.join(' ');
+  };
+
+  return {
+    ...state,
+    getStandaloneStyles,
+    getViewportHeight,
+    shouldShowInstallPrompt,
+    getResponsiveClasses,
+  };
+};
+
+export default usePWAUI;

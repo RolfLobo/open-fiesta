@@ -752,3 +752,7 @@ export const MODEL_CATALOG: AiModel[] = [
     category: 'text',
   },
 ];
+
+import { AiModel } from './types';
+
+// Base catalog; user can toggle/select up to 5
