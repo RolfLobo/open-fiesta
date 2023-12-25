@@ -303,3 +303,29 @@ export const usePWAUI = () => {
       standaloneMediaQuery.removeEventListener('change', handleDisplayModeChange);
       fullscreenMediaQuery.removeEventListener('change', handleDisplayModeChange);
       minimalUIMediaQuery.removeEventListener('change', handleDisplayModeChange);
+    };
+  }, []);
+
+  // Helper functions for UI adjustments
+  const getStandaloneStyles = () => ({
+    paddingTop: state.safeAreaInsets.top,
+    paddingBottom: state.safeAreaInsets.bottom,
+    paddingLeft: state.safeAreaInsets.left,
+    paddingRight: state.safeAreaInsets.right,
+  });
+
+  const getViewportHeight = () => {
+    if (state.isStandalone) {
+      return `calc(100vh - ${state.safeAreaInsets.top + state.safeAreaInsets.bottom}px)`;
+    }
+    return '100vh';
+  };
+
+  const shouldShowInstallPrompt = () => {
+    return !state.isStandalone && state.isInstallable;
+  };
+
+  const getResponsiveClasses = () => {
+    const classes = [];
+    
+    if (state.isStandalone) {
