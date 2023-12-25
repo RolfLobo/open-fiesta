@@ -834,3 +834,29 @@ export const MODEL_CATALOG: AiModel[] = [
   {
     id: 'glm-4.5-air',
     label: 'GLM 4.5 Air (free)',
+    provider: 'openrouter',
+    model: 'z-ai/glm-4.5-air:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'glm-4.5-air-paid',
+    label: 'GLM 4.5 Air (paid)',
+    provider: 'openrouter',
+    model: 'z-ai/glm-4.5-air',
+  },
+  {
+    id: 'hunyuan-a13b-instruct',
+    label: 'Tencent Hunyuan A13B Instruct',
+    provider: 'openrouter',
+    model: 'tencent/hunyuan-a13b-instruct:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'gemma-3n-e2b-it',
+    label: 'Google Gemma 3n e2B IT',
+    provider: 'openrouter',
+    model: 'google/gemma-3n-e2b-it:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'gemma-3-27b-it',
