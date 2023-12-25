@@ -808,3 +808,29 @@ export const MODEL_CATALOG: AiModel[] = [
     provider: 'openrouter',
     model: 'mistralai/mistral-small-24b-instruct-2501:free',
     // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'qwen-2.5-72b-instruct',
+    label: 'Qwen 2.5 72B Instruct (free)',
+    provider: 'openrouter',
+    model: 'qwen/qwen-2.5-72b-instruct:free',
+    good: true,
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'moonshot-kimi-k2',
+    label: 'Moonshot Kimi K2 (free)',
+    provider: 'openrouter',
+    model: 'moonshotai/kimi-k2:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'reka-flash-3',
+    label: 'Reka Flash 3',
+    provider: 'openrouter',
+    model: 'reka/reka-flash-3:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'glm-4.5-air',
+    label: 'GLM 4.5 Air (free)',
