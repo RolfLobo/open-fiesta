@@ -756,3 +756,29 @@ export const MODEL_CATALOG: AiModel[] = [
 import { AiModel } from './types';
 
 // Base catalog; user can toggle/select up to 5
+export const MODEL_CATALOG: AiModel[] = [
+  {
+    id: 'gemini-2.5-pro',
+    label: 'Gemini 2.5 Pro',
+    provider: 'gemini',
+    model: 'gemini-2.5-pro',
+    good: true,
+  },
+  {
+    id: 'gemini-2.5-flash',
+    label: 'Gemini 2.5 Flash',
+    provider: 'gemini',
+    model: 'gemini-2.5-flash',
+  },
+  {
+    id: 'deepcoder-14b-preview',
+    label: 'DeepCoder 14B Preview',
+    provider: 'openrouter',
+    model: 'agentica-org/deepcoder-14b-preview:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'deepseek-r1',
+    label: 'DeepSeek R1',
+    provider: 'openrouter',
+    model: 'deepseek/deepseek-r1:free',
