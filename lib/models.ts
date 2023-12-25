@@ -782,3 +782,29 @@ export const MODEL_CATALOG: AiModel[] = [
     label: 'DeepSeek R1',
     provider: 'openrouter',
     model: 'deepseek/deepseek-r1:free',
+    good: true,
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'deepseek-chat-v3-0324-free',
+    label: 'DeepSeek Chat v3 0324',
+    provider: 'openrouter',
+    model: 'deepseek/deepseek-chat-v3-0324:free',
+    good: true,
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'llama-3.3-70b-instruct',
+    label: 'Llama 3.3 70B Instruct',
+    provider: 'openrouter',
+    model: 'meta-llama/llama-3.3-70b-instruct:free',
+    good: true,
+    // OpenRouter models require API key (BYOK)
+  },
+  // Additional OpenRouter models requested
+  {
+    id: 'mistral-small-24b-instruct-2501',
+    label: 'Mistral Small 24B Instruct 2501',
+    provider: 'openrouter',
+    model: 'mistralai/mistral-small-24b-instruct-2501:free',
+    // OpenRouter models require API key (BYOK)
