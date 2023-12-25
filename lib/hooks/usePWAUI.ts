@@ -277,3 +277,29 @@ export const usePWAUI = () => {
       (window as any).deferredPrompt = e;
       updatePWAState();
     };
+
+    const handleAppInstalled = () => {
+      (window as any).deferredPrompt = null;
+      updatePWAState();
+    };
+
+    // Add event listeners
+    window.addEventListener('orientationchange', handleOrientationChange, { passive: true });
+    window.addEventListener('resize', handleOrientationChange, { passive: true });
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+    
+    standaloneMediaQuery.addEventListener('change', handleDisplayModeChange);
+    fullscreenMediaQuery.addEventListener('change', handleDisplayModeChange);
+    minimalUIMediaQuery.addEventListener('change', handleDisplayModeChange);
+
+    return () => {
+      clearTimeout(orientationTimeout);
+      window.removeEventListener('orientationchange', handleOrientationChange);
+      window.removeEventListener('resize', handleOrientationChange);
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+      
+      standaloneMediaQuery.removeEventListener('change', handleDisplayModeChange);
+      fullscreenMediaQuery.removeEventListener('change', handleDisplayModeChange);
+      minimalUIMediaQuery.removeEventListener('change', handleDisplayModeChange);
