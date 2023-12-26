@@ -886,3 +886,29 @@ export const MODEL_CATALOG: AiModel[] = [
     model: 'shisa-ai/shisa-v2-llama3.3-70b:free',
     // OpenRouter models require API key (BYOK)
   },
+  {
+    id: 'deepseek-r1t-chimera',
+    label: 'DeepSeek R1T Chimera',
+    provider: 'openrouter',
+    model: 'tngtech/deepseek-r1t-chimera:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'microsoft-mai-ds-r1',
+    label: 'Microsoft MAI DS-R1',
+    provider: 'openrouter',
+    model: 'microsoft/mai-ds-r1:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  // Newly requested models
+  {
+    id: 'baidu-ernie-4.5-21b-a3b',
+    label: 'Baidu ERNIE 4.5 21B A3B',
+    provider: 'openrouter',
+    model: 'baidu/ernie-4.5-21b-a3b',
+  },
+  {
+    id: 'openai-gpt-oss-20b',
+    label: 'OpenAI GPT-OSS 20B',
+    provider: 'openrouter',
+    model: 'openai/gpt-oss-20b',
