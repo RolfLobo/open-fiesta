@@ -860,3 +860,29 @@ export const MODEL_CATALOG: AiModel[] = [
   },
   {
     id: 'gemma-3-27b-it',
+    label: 'Google Gemma 3 27B IT',
+    provider: 'openrouter',
+    model: 'google/gemma-3-27b-it:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'dolphin3-mistral-24b',
+    label: 'Dolphin 3.0 Mistral 24B',
+    provider: 'openrouter',
+    model: 'cognitivecomputations/dolphin3.0-mistral-24b:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'gemma-2-9b-it',
+    label: 'Google Gemma 2 9B IT',
+    provider: 'openrouter',
+    model: 'google/gemma-2-9b-it:free',
+    // OpenRouter models require API key (BYOK)
+  },
+  {
+    id: 'shisa-v2-llama33-70b',
+    label: 'Shisa v2 Llama 3.3 70B',
+    provider: 'openrouter',
+    model: 'shisa-ai/shisa-v2-llama3.3-70b:free',
+    // OpenRouter models require API key (BYOK)
+  },
