@@ -964,3 +964,29 @@ export const MODEL_CATALOG: AiModel[] = [
     model: 'x-ai/grok-beta',
     good: true,
     tags: ['new', 'coding'],
+    category: 'text',
+  },
+  {
+    id: 'nousresearch-hermes-4-70b',
+    label: 'Nous Hermes 4 70B',
+    provider: 'openrouter',
+    model: 'nousresearch/hermes-4-70b',
+    category: 'text',
+  },
+  {
+    id: 'gemini-2.5-flash-image-preview',
+    label: 'Gemini 2.5 Flash Image Preview (free)',
+    provider: 'openrouter',
+    model: 'google/gemini-2.5-flash-image-preview:free',
+    good: true,
+    category: 'image',
+    // OpenRouter models require API key (BYOK)
+  },
+
+  // Open Provider Text Models - Official Models
+  {
+    id: 'open-deepseek-reasoning',
+    label: 'DeepSeek R1 Reasoning',
+    provider: 'open-provider',
+    model: 'deepseek-reasoning',
+    free: true,
