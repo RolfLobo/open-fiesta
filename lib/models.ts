@@ -1093,3 +1093,30 @@ export const MODEL_CATALOG: AiModel[] = [
     good: true,
     category: 'text',
   },
+
+  {
+    id: 'open-openai-roblox',
+    label: 'GPT-4.1 Nano Roblox',
+    provider: 'open-provider',
+    model: 'openai-roblox',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-qwen-coder',
+    label: 'Qwen 2.5 Coder 32B',
+    provider: 'open-provider',
+    model: 'qwen-coder',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-roblox-rp',
+    label: 'Roblox RP Multi-Model',
+    provider: 'open-provider',
+    model: 'roblox-rp',
+    free: true,
+    category: 'text',
+  },
+
+  // Open Provider Community Models
