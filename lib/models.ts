@@ -1120,3 +1120,29 @@ export const MODEL_CATALOG: AiModel[] = [
   },
 
   // Open Provider Community Models
+  {
+    id: 'open-bidara',
+    label: 'BIDARA NASA Biomimetic Designer',
+    provider: 'open-provider',
+    model: 'bidara',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-elixposearch',
+    label: 'Elixpo Search',
+    provider: 'open-provider',
+    model: 'elixposearch',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-evil',
+    label: 'Evil Uncensored',
+    provider: 'open-provider',
+    model: 'evil',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-midijourney',
