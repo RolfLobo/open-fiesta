@@ -1328,3 +1328,29 @@ export const MODEL_CATALOG: AiModel[] = [
     category: 'text',
   },
   {
+    id: 'unstable-claude-opus-4-1-thinking',
+    label: 'Claude Opus 4.1 Thinking',
+    provider: 'unstable',
+    model: 'claude-opus-4-1-thinking',
+    good: true,
+    category: 'text',
+  },
+
+  {
+    id: 'unstable-claude-opus-4',
+    label: 'Claude Opus 4',
+    provider: 'unstable',
+    model: 'claude-opus-4',
+    good: true,
+    category: 'text',
+  },
+
+  {
+    id: 'unstable-claude-sonnet-4',
+    label: 'Claude Sonnet 4',
+    provider: 'unstable',
+    model: 'claude-sonnet-4',
+    good: true,
+    category: 'text',
+  },
+  {
