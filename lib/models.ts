@@ -1276,3 +1276,29 @@ export const MODEL_CATALOG: AiModel[] = [
     provider: 'unstable',
     model: 'gpt-4.1-mini',
     category: 'text',
+  },
+  {
+    id: 'unstable-o3',
+    label: 'O3',
+    provider: 'unstable',
+    model: 'o3',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'unstable-o3-mini',
+    label: 'O3 Mini',
+    provider: 'unstable',
+    model: 'o3-mini',
+    category: 'text',
+  },
+
+  {
+    id: 'unstable-o4-mini',
+    label: 'O4 Mini',
+    provider: 'unstable',
+    model: 'o4-mini',
+    category: 'text',
+  },
+
+  // Unstable Provider Models - Gemini Series
