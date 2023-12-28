@@ -1302,3 +1302,29 @@ export const MODEL_CATALOG: AiModel[] = [
   },
 
   // Unstable Provider Models - Gemini Series
+  {
+    id: 'unstable-gemini-2-5-pro',
+    label: 'Gemini 2.5 Pro',
+    provider: 'unstable',
+    model: 'gemini-2.5-pro',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'unstable-gemini-2-5-flash',
+    label: 'Gemini 2.5 Flash',
+    provider: 'unstable',
+    model: 'gemini-2.5-flash',
+    category: 'text',
+  },
+
+  // Unstable Provider Models - Claude Series
+  {
+    id: 'unstable-claude-opus-4-1',
+    label: 'Claude Opus 4.1',
+    provider: 'unstable',
+    model: 'claude-opus-4-1',
+    good: true,
+    category: 'text',
+  },
+  {
