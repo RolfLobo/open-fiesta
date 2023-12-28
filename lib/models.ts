@@ -1172,3 +1172,29 @@ export const MODEL_CATALOG: AiModel[] = [
     id: 'open-sur',
     label: 'Sur AI Assistant',
     provider: 'open-provider',
+    model: 'sur',
+    free: true,
+    category: 'text',
+  },
+  {
+    id: 'open-unity',
+    label: 'Unity Unrestricted Agent Uncensored',
+    provider: 'open-provider',
+    model: 'unity',
+    free: true,
+    category: 'text',
+  },
+
+  // Open Provider Audio Models
+  {
+    id: 'open-openai-audio',
+    label: 'GPT-4o Mini Audio Voice',
+    provider: 'open-provider',
+    model: 'openai-audio',
+    free: true,
+    good: true,
+    category: 'audio',
+  },
+
+  // Open Provider Image Models
+  {
