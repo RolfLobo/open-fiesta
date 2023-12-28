@@ -1224,3 +1224,29 @@ export const MODEL_CATALOG: AiModel[] = [
   },
 
   // Unstable Provider Models - GPT Series
+  {
+    id: 'unstable-gpt-5-high',
+    label: 'GPT-5 High',
+    provider: 'unstable',
+    model: 'gpt-5-high',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'unstable-gpt-5-chat',
+    label: 'GPT-5 Chat',
+    provider: 'unstable',
+    model: 'gpt-5-chat',
+    good: true,
+    category: 'text',
+  },
+
+  {
+    id: 'unstable-gpt-5-mini-high',
+    label: 'GPT-5 Mini High',
+    provider: 'unstable',
+    model: 'gpt-5-mini-high',
+    category: 'text',
+  },
+  {
+    id: 'unstable-gpt-5-nano-high',
