@@ -1198,3 +1198,29 @@ export const MODEL_CATALOG: AiModel[] = [
 
   // Open Provider Image Models
   {
+    id: 'open-flux',
+    label: 'FLUX Image Generator',
+    provider: 'open-provider',
+    model: 'flux',
+    free: true,
+    good: true,
+    category: 'image',
+  },
+  {
+    id: 'open-kontext',
+    label: 'Kontext Image Generator',
+    provider: 'open-provider',
+    model: 'kontext',
+    free: true,
+    category: 'image',
+  },
+  {
+    id: 'open-turbo',
+    label: 'Turbo Image Generator',
+    provider: 'open-provider',
+    model: 'turbo',
+    free: true,
+    category: 'image',
+  },
+
+  // Unstable Provider Models - GPT Series
