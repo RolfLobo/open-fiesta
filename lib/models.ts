@@ -1354,3 +1354,28 @@ export const MODEL_CATALOG: AiModel[] = [
     category: 'text',
   },
   {
+    id: 'unstable-claude-sonnet-4-thinking',
+    label: 'Claude Sonnet 4 Thinking',
+    provider: 'unstable',
+    model: 'claude-sonnet-4-thinking',
+    good: true,
+    category: 'text',
+  },
+
+  // Unstable Provider Models - Grok Series
+  {
+    id: 'unstable-grok-4',
+    label: 'Grok 4',
+    provider: 'unstable',
+    model: 'grok-4',
+    good: true,
+    category: 'text',
+  },
+
+  {
+    id: 'unstable-grok-3-mini-high',
+    label: 'Grok 3 Mini High',
+    provider: 'unstable',
+    model: 'grok-3-mini-high',
+    category: 'text',
+  },
