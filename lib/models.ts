@@ -1432,3 +1432,29 @@ export const MODEL_CATALOG: AiModel[] = [
   {
     id: 'devstral-medium-latest',
     label: 'Devstral Medium Enterprise Coding',
+    provider: 'mistral',
+    model: 'devstral-medium-latest',
+    category: 'text',
+  },
+  {
+    id: 'devstral-small-latest',
+    label: 'Devstral Small Open Source Coding',
+    provider: 'mistral',
+    model: 'devstral-small-latest',
+    free: true,
+    category: 'text',
+  },
+
+  // Mistral Provider Models - Multimodal
+  {
+    id: 'pixtral-large-latest',
+    label: 'Pixtral Large Vision',
+    provider: 'mistral',
+    model: 'pixtral-large-latest',
+    good: true,
+    category: 'image',
+  },
+  {
+    id: 'pixtral-12b',
+    label: 'Pixtral 12B Open Vision',
+    provider: 'mistral',
