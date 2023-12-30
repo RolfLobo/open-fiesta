@@ -1379,3 +1379,30 @@ export const MODEL_CATALOG: AiModel[] = [
     model: 'grok-3-mini-high',
     category: 'text',
   },
+
+  // Mistral Provider Models - Core Text Models
+  {
+    id: 'mistral-large-latest',
+    label: 'Mistral Large 2.1',
+    provider: 'mistral',
+    model: 'mistral-large-latest',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'mistral-medium-latest',
+    label: 'Mistral Medium 3.1',
+    provider: 'mistral',
+    model: 'mistral-medium-latest',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'mistral-small-latest',
+    label: 'Mistral Small 3.2',
+    provider: 'mistral',
+    model: 'mistral-small-latest',
+    category: 'text',
+  },
+  {
+    id: 'magistral-medium-latest',
