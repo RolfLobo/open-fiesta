@@ -1458,3 +1458,29 @@ export const MODEL_CATALOG: AiModel[] = [
     id: 'pixtral-12b',
     label: 'Pixtral 12B Open Vision',
     provider: 'mistral',
+    model: 'pixtral-12b',
+    free: true,
+    category: 'image',
+  },
+
+  // Mistral Provider Models - Edge Models
+  {
+    id: 'ministral-8b-latest',
+    label: 'Ministral 8B Edge',
+    provider: 'mistral',
+    model: 'ministral-8b-latest',
+    category: 'text',
+  },
+  {
+    id: 'ministral-3b-latest',
+    label: 'Ministral 3B Efficient Edge',
+    provider: 'mistral',
+    model: 'ministral-3b-latest',
+    category: 'text',
+  },
+
+  // Mistral Provider Models - Audio
+  {
+    id: 'voxtral-small-latest',
+    label: 'Voxtral Small Audio Input',
+    provider: 'mistral',
