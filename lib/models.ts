@@ -1406,3 +1406,29 @@ export const MODEL_CATALOG: AiModel[] = [
   },
   {
     id: 'magistral-medium-latest',
+    label: 'Magistral Medium 1.1 Reasoning',
+    provider: 'mistral',
+    model: 'magistral-medium-latest',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'magistral-small-latest',
+    label: 'Magistral Small 1.1 Reasoning',
+    provider: 'mistral',
+    model: 'magistral-small-latest',
+    category: 'text',
+  },
+
+  // Mistral Provider Models - Coding Specialists
+  {
+    id: 'codestral-latest',
+    label: 'Codestral 2508 Coding',
+    provider: 'mistral',
+    model: 'codestral-latest',
+    good: true,
+    category: 'text',
+  },
+  {
+    id: 'devstral-medium-latest',
+    label: 'Devstral Medium Enterprise Coding',
