@@ -205,3 +205,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
 export const offlineChatActions = new OfflineChatActionsImpl();
 // Enhanced chat actions with offline support
 import { offlineManager } from './manager';
+import { addMessage as addMessageDb, updateThreadTitle as updateTitleDb } from '@/lib/db';
+import type { ChatMessage, ChatThread } from '@/lib/types';
+import { safeUUID } from '@/lib/uuid';
+
+export interface OfflineChatActions {
+  sendMessage: (
+    userId: string,
+    chatId: string,
+    message: ChatMessage,
+    updateUI: (thread: ChatThread) => void
+  ) => Promise<void>;
+  
+  createThread: (
+    userId: string,
+    title: string,
+    projectId?: string,
+    pageType?: 'home' | 'compare',
+    initialMessage?: ChatMessage
+  ) => Promise<ChatThread>;
+  
+  updateThreadTitle: (
+    userId: string,
+    chatId: string,
+    title: string,
+    updateUI: (chatId: string, title: string) => void
+  ) => Promise<void>;
