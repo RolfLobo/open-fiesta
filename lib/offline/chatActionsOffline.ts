@@ -203,3 +203,5 @@ class OfflineChatActionsImpl implements OfflineChatActions {
 }
 
 export const offlineChatActions = new OfflineChatActionsImpl();
+// Enhanced chat actions with offline support
+import { offlineManager } from './manager';

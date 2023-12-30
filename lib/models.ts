@@ -1484,3 +1484,26 @@ export const MODEL_CATALOG: AiModel[] = [
     id: 'voxtral-small-latest',
     label: 'Voxtral Small Audio Input',
     provider: 'mistral',
+    model: 'voxtral-small-latest',
+    free: true,
+    category: 'audio',
+  },
+  {
+    id: 'voxtral-mini-latest',
+    label: 'Voxtral Mini Audio Input',
+    provider: 'mistral',
+    model: 'voxtral-mini-latest',
+    free: true,
+    category: 'audio',
+  },
+
+  // Mistral Provider Models - Specialized
+  {
+    id: 'open-mistral-nemo',
+    label: 'Mistral Nemo 12B Multilingual',
+    provider: 'mistral',
+    model: 'open-mistral-nemo',
+    free: true,
+    category: 'text',
+  },
+];
