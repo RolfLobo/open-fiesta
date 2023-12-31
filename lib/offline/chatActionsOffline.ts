@@ -231,3 +231,29 @@ export interface OfflineChatActions {
     title: string,
     updateUI: (chatId: string, title: string) => void
   ) => Promise<void>;
+  
+  deleteThread: (
+    userId: string,
+    chatId: string,
+    updateUI: (chatId: string) => void
+  ) => Promise<void>;
+}
+
+class OfflineChatActionsImpl implements OfflineChatActions {
+  async sendMessage(
+    userId: string,
+    chatId: string,
+    message: ChatMessage,
+    updateUI: (thread: ChatThread) => void
+  ): Promise<void> {
+    try {
+      if (offlineManager.isOnline()) {
+        // Online: send directly to database
+        await addMessageDb({ userId, chatId, message });
+        
+        // Also cache locally for offline access
+        const cachedThread = await offlineManager.getCachedConversation(chatId);
+        if (cachedThread) {
+          cachedThread.messages.push(message);
+          await offlineManager.cacheConversation(cachedThread);
+          updateUI(cachedThread);
