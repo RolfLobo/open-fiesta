@@ -257,3 +257,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
           cachedThread.messages.push(message);
           await offlineManager.cacheConversation(cachedThread);
           updateUI(cachedThread);
+        }
+      } else {
+        // Offline: queue action and update local cache
+        await offlineManager.sendMessageOffline(userId, chatId, message);
+        
+        // Update UI with cached data
+        const cachedThread = await offlineManager.getCachedConversation(chatId);
+        if (cachedThread) {
+          updateUI(cachedThread);
+        }
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      
+      // Fallback to offline mode if online operation fails
+      if (offlineManager.isOnline()) {
+        await offlineManager.sendMessageOffline(userId, chatId, message);
+        
+        const cachedThread = await offlineManager.getCachedConversation(chatId);
+        if (cachedThread) {
+          updateUI(cachedThread);
+        }
+      }
+      
+      throw error;
+    }
