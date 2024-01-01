@@ -178,3 +178,29 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
         this.lastSyncTimes.set(userId, new Date());
         return serverThreads;
       } else {
+        // Offline or data is fresh: use cached data
+        const cachedThreads = await offlineManager.getCachedConversations();
+        
+        // If no cached data and we're online, fetch from server
+        if (cachedThreads.length === 0 && offlineManager.isOnline()) {
+          return this.loadThreads(userId, true);
+        }
+        
+        return cachedThreads;
+      }
+    } catch (error) {
+      console.error('Error loading threads:', error);
+      
+      // Fallback to cached data
+      const cachedThreads = await offlineManager.getCachedConversations();
+      return cachedThreads;
+    }
+  }
+
+  async getThread(threadId: string, userId?: string): Promise<ChatThread | null> {
+    try {
+      // First try to get from cache
+      const cachedThread = await offlineManager.getCachedConversation(threadId);
+      
+      if (cachedThread) {
+        return cachedThread;
