@@ -309,3 +309,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
         return thread;
       } else {
         // Offline: create locally and queue for sync
+        const { thread } = await offlineManager.createThreadOffline(
+          userId,
+          title,
+          projectId,
+          pageType,
+          initialMessage
+        );
+        return thread;
+      }
+    } catch (error) {
+      console.error('Error creating thread:', error);
+      
+      // Fallback to offline mode
+      const { thread } = await offlineManager.createThreadOffline(
+        userId,
+        title,
+        projectId,
+        pageType,
+        initialMessage
+      );
+      return thread;
+    }
+  }
+
+  async updateThreadTitle(
+    userId: string,
