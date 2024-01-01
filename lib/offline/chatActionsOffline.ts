@@ -335,3 +335,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
 
   async updateThreadTitle(
     userId: string,
+    chatId: string,
+    title: string,
+    updateUI: (chatId: string, title: string) => void
+  ): Promise<void> {
+    try {
+      if (offlineManager.isOnline()) {
+        // Online: update database
+        await updateTitleDb(userId, chatId, title);
+        
+        // Update local cache
+        const cachedThread = await offlineManager.getCachedConversation(chatId);
+        if (cachedThread) {
+          cachedThread.title = title;
+          await offlineManager.cacheConversation(cachedThread);
+        }
+        
+        updateUI(chatId, title);
+      } else {
+        // Offline: queue action and update local cache
+        await offlineManager.updateThreadTitleOffline(userId, chatId, title);
+        updateUI(chatId, title);
+      }
+    } catch (error) {
+      console.error('Error updating thread title:', error);
+      
+      // Fallback to offline mode
