@@ -151,3 +151,30 @@ export const offlineDataLayer = new OfflineDataLayerImpl();
 import { offlineManager } from './manager';
 import { fetchThreads } from '@/lib/db/threads';
 import type { ChatThread } from '@/lib/types';
+
+export interface OfflineDataLayer {
+  loadThreads: (userId: string, forceRefresh?: boolean) => Promise<ChatThread[]>;
+  getThread: (threadId: string, userId?: string) => Promise<ChatThread | null>;
+  syncWithServer: (userId: string) => Promise<void>;
+  isDataStale: (userId: string) => Promise<boolean>;
+  getLastSyncTime: () => Promise<Date | null>;
+}
+
+class OfflineDataLayerImpl implements OfflineDataLayer {
+  private lastSyncTimes = new Map<string, Date>();
+  private readonly STALE_THRESHOLD = 5 * 60 * 1000; // 5 minutes
+
+  async loadThreads(userId: string, forceRefresh = false): Promise<ChatThread[]> {
+    try {
+      if (offlineManager.isOnline() && (forceRefresh || await this.isDataStale(userId))) {
+        // Online and data is stale: fetch from server and cache
+        const serverThreads = await fetchThreads(userId);
+        
+        // Cache all threads locally
+        for (const thread of serverThreads) {
+          await offlineManager.cacheConversation(thread);
+        }
+        
+        this.lastSyncTimes.set(userId, new Date());
+        return serverThreads;
+      } else {
