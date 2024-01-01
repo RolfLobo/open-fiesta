@@ -361,3 +361,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
       console.error('Error updating thread title:', error);
       
       // Fallback to offline mode
+      if (offlineManager.isOnline()) {
+        await offlineManager.updateThreadTitleOffline(userId, chatId, title);
+        updateUI(chatId, title);
+      }
+      
+      throw error;
+    }
+  }
+
+  async deleteThread(
+    userId: string,
+    chatId: string,
+    updateUI: (chatId: string) => void
+  ): Promise<void> {
+    try {
+      if (offlineManager.isOnline()) {
+        // Online: delete from database
+        const { deleteThread } = await import('@/lib/db/threads');
+        await deleteThread(userId, chatId);
+        
+        // Remove from local cache
+        const cachedThread = await offlineManager.getCachedConversation(chatId);
+        if (cachedThread) {
+          await offlineManager.deleteThreadOffline(userId, chatId);
+        }
+        
