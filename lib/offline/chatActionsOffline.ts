@@ -283,3 +283,29 @@ class OfflineChatActionsImpl implements OfflineChatActions {
       
       throw error;
     }
+  }
+
+  async createThread(
+    userId: string,
+    title: string,
+    projectId?: string,
+    pageType?: 'home' | 'compare',
+    initialMessage?: ChatMessage
+  ): Promise<ChatThread> {
+    try {
+      if (offlineManager.isOnline()) {
+        // Online: create in database
+        const { createThread } = await import('@/lib/db/threads');
+        const thread = await createThread({
+          userId,
+          title,
+          projectId,
+          pageType,
+          initialMessage
+        });
+        
+        // Cache locally
+        await offlineManager.cacheConversation(thread);
+        return thread;
+      } else {
+        // Offline: create locally and queue for sync
