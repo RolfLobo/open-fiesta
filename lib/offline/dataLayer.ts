@@ -147,3 +147,7 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
 }
 
 export const offlineDataLayer = new OfflineDataLayerImpl();
+// Offline-first data layer with automatic synchronization
+import { offlineManager } from './manager';
+import { fetchThreads } from '@/lib/db/threads';
+import type { ChatThread } from '@/lib/types';

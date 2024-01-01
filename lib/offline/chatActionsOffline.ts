@@ -387,3 +387,24 @@ class OfflineChatActionsImpl implements OfflineChatActions {
           await offlineManager.deleteThreadOffline(userId, chatId);
         }
         
+        updateUI(chatId);
+      } else {
+        // Offline: queue action and remove from local cache
+        await offlineManager.deleteThreadOffline(userId, chatId);
+        updateUI(chatId);
+      }
+    } catch (error) {
+      console.error('Error deleting thread:', error);
+      
+      // Fallback to offline mode
+      if (offlineManager.isOnline()) {
+        await offlineManager.deleteThreadOffline(userId, chatId);
+        updateUI(chatId);
+      }
+      
+      throw error;
+    }
+  }
+}
+
+export const offlineChatActions = new OfflineChatActionsImpl();
