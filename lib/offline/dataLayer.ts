@@ -282,3 +282,17 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
     try {
       if (offlineManager.isOnline()) {
         await this.loadThreads(userId, true);
+      }
+    } catch (error) {
+      console.error('Error resolving conflicts:', error);
+    }
+  }
+
+  // Method to clear all cached data
+  async clearCache(): Promise<void> {
+    await offlineManager.clearOfflineData();
+    this.lastSyncTimes.clear();
+  }
+}
+
+export const offlineDataLayer = new OfflineDataLayerImpl();
