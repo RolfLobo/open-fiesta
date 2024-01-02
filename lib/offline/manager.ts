@@ -454,3 +454,29 @@ class OfflineManager {
     return {
       isOnline: this.isOnlineState,
       queuedActionsCount: pendingActions.length,
+      syncInProgress: this.syncInProgress,
+      hasConflicts
+    };
+  }
+
+  async queueAction(action: Omit<OfflineAction, 'id'>): Promise<string> {
+    const queueItem: OfflineQueueItem = {
+      ...action,
+      id: safeUUID(),
+      status: 'pending',
+      retryCount: 0,
+      maxRetries: action.maxRetries || 3
+    };
+
+    await offlineStorage.addToQueue(queueItem);
+    this.notifyListeners();
+
+    // If online, try to sync immediately
+    if (this.isOnlineState) {
+      setTimeout(() => this.syncQueuedActions(), 100);
+    }
+
+    return queueItem.id;
+  }
+
+  async cacheConversation(thread: ChatThread): Promise<void> {
