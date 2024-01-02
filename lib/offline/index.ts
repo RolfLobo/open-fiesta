@@ -27,3 +27,8 @@ export type {
   CachedConversation,
   OfflineStorage,
   SyncResult,
+  OfflineStatus
+} from './types';
+
+// Re-export components
+export { OfflineIndicator } from '../../components/offline/OfflineIndicator';

@@ -355,3 +355,23 @@ class OfflineManager {
 }
 
 export const offlineManager = new OfflineManager();
+// Offline manager for handling offline functionality and synchronization
+import { offlineStorage } from './storage';
+import { safeUUID } from '@/lib/uuid';
+import type { ChatThread, ChatMessage } from '@/lib/types';
+import type { OfflineAction, OfflineQueueItem, CachedConversation, OfflineStatus, SyncResult } from './types';
+import { addMessage, createThread, deleteThread, updateThreadTitle, fetchThreads } from '@/lib/db';
+
+class OfflineManager {
+  private isOnlineState = typeof navigator !== 'undefined' ? navigator.onLine : true;
+  private syncInProgress = false;
+  private listeners: Set<(status: OfflineStatus) => void> = new Set();
+  private syncInterval: NodeJS.Timeout | null = null;
+  private initialized = false;
+
+  constructor() {
+    // Only initialize in browser environment
+    if (typeof window !== 'undefined') {
+      this.init();
+    }
+  }
