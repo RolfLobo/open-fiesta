@@ -428,3 +428,29 @@ class OfflineManager {
     if (this.syncInterval) {
       clearInterval(this.syncInterval);
       this.syncInterval = null;
+    }
+  }
+
+  isOnline(): boolean {
+    return typeof navigator !== 'undefined' ? navigator.onLine : true;
+  }
+
+  addStatusListener(listener: (status: OfflineStatus) => void): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  private async notifyListeners(): Promise<void> {
+    const status = await this.getStatus();
+    this.listeners.forEach(listener => listener(status));
+  }
+
+  async getStatus(): Promise<OfflineStatus> {
+    const queuedActions = await offlineStorage.getQueuedActions();
+    const pendingActions = queuedActions.filter(action => action.status === 'pending');
+    const conversations = await offlineStorage.getAllConversations();
+    const hasConflicts = conversations.some(conv => conv.syncStatus === 'conflict');
+
+    return {
+      isOnline: this.isOnlineState,
+      queuedActionsCount: pendingActions.length,
