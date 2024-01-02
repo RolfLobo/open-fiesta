@@ -375,3 +375,30 @@ class OfflineManager {
       this.init();
     }
   }
+
+  private async init(): Promise<void> {
+    if (this.initialized) return;
+    
+    try {
+      await offlineStorage.init();
+      
+      // Set up online/offline event listeners
+      if (typeof window !== 'undefined') {
+        window.addEventListener('online', this.handleOnline.bind(this));
+        window.addEventListener('offline', this.handleOffline.bind(this));
+      }
+      
+      // Start periodic sync when online
+      if (this.isOnlineState) {
+        this.startPeriodicSync();
+      }
+      
+      this.initialized = true;
+    } catch (error) {
+      console.warn('Failed to initialize offline manager:', error);
+    }
+  }
+
+  private handleOnline(): void {
+    this.isOnlineState = true;
+    this.notifyListeners();
