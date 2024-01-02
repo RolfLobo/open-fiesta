@@ -204,3 +204,29 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
       
       if (cachedThread) {
         return cachedThread;
+      }
+      
+      // If not in cache and we're online, try to fetch all threads
+      if (offlineManager.isOnline() && userId) {
+        const threads = await this.loadThreads(userId, true);
+        return threads.find(t => t.id === threadId) || null;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error getting thread:', error);
+      return null;
+    }
+  }
+
+  async syncWithServer(userId: string): Promise<void> {
+    if (!offlineManager.isOnline()) {
+      throw new Error('Cannot sync while offline');
+    }
+
+    try {
+      // Sync queued actions first
+      await offlineManager.syncQueuedActions();
+      
+      // Then refresh data from server
+      await this.loadThreads(userId, true);
