@@ -256,3 +256,29 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
       return null;
     }
     
+    return new Date(Math.max(...syncTimes.map(d => d.getTime())));
+  }
+
+  // Method to preload data for offline use
+  async preloadForOffline(userId: string): Promise<void> {
+    if (!offlineManager.isOnline()) {
+      return;
+    }
+
+    try {
+      // Load all threads and cache them
+      await this.loadThreads(userId, true);
+      
+      console.log('Data preloaded for offline use');
+    } catch (error) {
+      console.error('Error preloading data for offline:', error);
+    }
+  }
+
+  // Method to handle conflict resolution
+  async resolveConflicts(userId: string): Promise<void> {
+    // This would implement conflict resolution logic
+    // For now, we'll use a simple "server wins" strategy
+    try {
+      if (offlineManager.isOnline()) {
+        await this.loadThreads(userId, true);
