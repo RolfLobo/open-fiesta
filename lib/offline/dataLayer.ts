@@ -230,3 +230,29 @@ class OfflineDataLayerImpl implements OfflineDataLayer {
       
       // Then refresh data from server
       await this.loadThreads(userId, true);
+      
+      this.lastSyncTimes.set(userId, new Date());
+    } catch (error) {
+      console.error('Error syncing with server:', error);
+      throw error;
+    }
+  }
+
+  async isDataStale(userId: string): Promise<boolean> {
+    const lastSync = this.lastSyncTimes.get(userId);
+    if (!lastSync) {
+      return true; // No sync time recorded, consider stale
+    }
+    
+    const now = new Date();
+    const timeSinceSync = now.getTime() - lastSync.getTime();
+    return timeSinceSync > this.STALE_THRESHOLD;
+  }
+
+  async getLastSyncTime(): Promise<Date | null> {
+    // Return the most recent sync time across all users
+    const syncTimes = Array.from(this.lastSyncTimes.values());
+    if (syncTimes.length === 0) {
+      return null;
+    }
+    
