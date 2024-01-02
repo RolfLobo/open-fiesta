@@ -402,3 +402,29 @@ class OfflineManager {
   private handleOnline(): void {
     this.isOnlineState = true;
     this.notifyListeners();
+    this.startPeriodicSync();
+    // Trigger immediate sync when coming back online
+    this.syncQueuedActions();
+  }
+
+  private handleOffline(): void {
+    this.isOnlineState = false;
+    this.notifyListeners();
+    this.stopPeriodicSync();
+  }
+
+  private startPeriodicSync(): void {
+    if (this.syncInterval) return;
+    
+    // Sync every 30 seconds when online
+    this.syncInterval = setInterval(() => {
+      if (this.isOnlineState && !this.syncInProgress) {
+        this.syncQueuedActions();
+      }
+    }, 30000);
+  }
+
+  private stopPeriodicSync(): void {
+    if (this.syncInterval) {
+      clearInterval(this.syncInterval);
+      this.syncInterval = null;
