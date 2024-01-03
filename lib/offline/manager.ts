@@ -531,3 +531,30 @@ class OfflineManager {
           } else {
             action.status = 'pending';
           }
+
+          await offlineStorage.updateQueueItem(action);
+        }
+      }
+    } finally {
+      this.syncInProgress = false;
+      this.notifyListeners();
+    }
+  }
+
+  private async executeAction(action: OfflineQueueItem): Promise<void> {
+    if (!action.userId) {
+      throw new Error('User ID required for sync action');
+    }
+
+    switch (action.type) {
+      case 'SEND_MESSAGE':
+        await addMessage({
+          userId: action.userId,
+          chatId: action.payload.chatId,
+          message: action.payload.message
+        });
+        break;
+
+      case 'CREATE_THREAD':
+        await createThread({
+          userId: action.userId,
