@@ -480,3 +480,29 @@ class OfflineManager {
   }
 
   async cacheConversation(thread: ChatThread): Promise<void> {
+    const cachedConversation: CachedConversation = {
+      id: thread.id,
+      thread,
+      lastModified: Date.now(),
+      syncStatus: 'synced'
+    };
+
+    await offlineStorage.storeConversation(cachedConversation);
+  }
+
+  async getCachedConversation(id: string): Promise<ChatThread | null> {
+    const cached = await offlineStorage.getConversation(id);
+    return cached ? cached.thread : null;
+  }
+
+  async getCachedConversations(): Promise<ChatThread[]> {
+    const cached = await offlineStorage.getAllConversations();
+    return cached.map(c => c.thread).sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  async syncQueuedActions(): Promise<void> {
+    if (this.syncInProgress || !this.isOnlineState) {
+      return;
+    }
+
+    this.syncInProgress = true;
