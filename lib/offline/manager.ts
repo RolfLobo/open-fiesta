@@ -558,3 +558,29 @@ class OfflineManager {
       case 'CREATE_THREAD':
         await createThread({
           userId: action.userId,
+          title: action.payload.title,
+          projectId: action.payload.projectId,
+          pageType: action.payload.pageType,
+          initialMessage: action.payload.initialMessage
+        });
+        break;
+
+      case 'UPDATE_TITLE':
+        await updateThreadTitle(
+          action.userId,
+          action.payload.chatId,
+          action.payload.title
+        );
+        break;
+
+      case 'DELETE_THREAD':
+        await deleteThread(action.userId, action.payload.chatId);
+        break;
+
+      case 'UPDATE_THREAD':
+        // Handle thread updates - this might involve multiple operations
+        if (action.payload.messages) {
+          for (const message of action.payload.messages) {
+            await addMessage({
+              userId: action.userId,
+              chatId: action.payload.chatId,
