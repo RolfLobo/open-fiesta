@@ -584,3 +584,29 @@ class OfflineManager {
             await addMessage({
               userId: action.userId,
               chatId: action.payload.chatId,
+              message
+            });
+          }
+        }
+        break;
+
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
+    }
+  }
+
+  async sendMessageOffline(
+    userId: string,
+    chatId: string,
+    message: ChatMessage
+  ): Promise<string> {
+    // Cache the message locally first
+    const cachedConversation = await offlineStorage.getConversation(chatId);
+    if (cachedConversation) {
+      cachedConversation.thread.messages.push(message);
+      cachedConversation.lastModified = Date.now();
+      cachedConversation.syncStatus = 'pending';
+      await offlineStorage.storeConversation(cachedConversation);
+    }
+
+    // Queue the action for sync
