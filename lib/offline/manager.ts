@@ -506,3 +506,28 @@ class OfflineManager {
     }
 
     this.syncInProgress = true;
+    this.notifyListeners();
+
+    try {
+      const queuedActions = await offlineStorage.getQueuedActions();
+      const pendingActions = queuedActions
+        .filter(action => action.status === 'pending' || action.status === 'failed')
+        .sort((a, b) => a.timestamp - b.timestamp);
+
+      for (const action of pendingActions) {
+        try {
+          await this.executeAction(action);
+          action.status = 'completed';
+          await offlineStorage.updateQueueItem(action);
+          // Remove completed actions from queue
+          await offlineStorage.removeFromQueue(action.id);
+        } catch (error) {
+          action.retryCount++;
+          action.lastAttempt = Date.now();
+          action.error = error instanceof Error ? error.message : 'Unknown error';
+
+          if (action.retryCount >= action.maxRetries) {
+            action.status = 'failed';
+          } else {
+            action.status = 'pending';
+          }
