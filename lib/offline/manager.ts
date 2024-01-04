@@ -610,3 +610,29 @@ class OfflineManager {
     }
 
     // Queue the action for sync
+    return this.queueAction({
+      type: 'SEND_MESSAGE',
+      payload: { chatId, message },
+      timestamp: Date.now(),
+      userId,
+      threadId: chatId,
+      maxRetries: 3
+    });
+  }
+
+  async createThreadOffline(
+    userId: string,
+    title: string,
+    projectId?: string,
+    pageType?: 'home' | 'compare',
+    initialMessage?: ChatMessage
+  ): Promise<{ thread: ChatThread; actionId: string }> {
+    // Create thread locally
+    const thread: ChatThread = {
+      id: safeUUID(),
+      title,
+      messages: initialMessage ? [initialMessage] : [],
+      createdAt: Date.now(),
+      projectId,
+      pageType
+    };
