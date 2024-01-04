@@ -636,3 +636,29 @@ class OfflineManager {
       projectId,
       pageType
     };
+
+    // Cache locally
+    await this.cacheConversation(thread);
+
+    // Queue for sync
+    const actionId = await this.queueAction({
+      type: 'CREATE_THREAD',
+      payload: { title, projectId, pageType, initialMessage },
+      timestamp: Date.now(),
+      userId,
+      threadId: thread.id,
+      maxRetries: 3
+    });
+
+    return { thread, actionId };
+  }
+
+  async deleteThreadOffline(userId: string, chatId: string): Promise<string> {
+    // Remove from local cache
+    await offlineStorage.deleteConversation(chatId);
+
+    // Queue for sync
+    return this.queueAction({
+      type: 'DELETE_THREAD',
+      payload: { chatId },
+      timestamp: Date.now(),
