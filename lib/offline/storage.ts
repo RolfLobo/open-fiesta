@@ -276,3 +276,30 @@ class OfflineStorage {
       request.onsuccess = () => resolve(request.result || null);
     });
   }
+
+  async getAllConversations(): Promise<CachedConversation[]> {
+    if (!this.db) {
+      return [];
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([CONVERSATIONS_STORE], 'readonly');
+      const store = transaction.objectStore(CONVERSATIONS_STORE);
+      const request = store.getAll();
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result || []);
+    });
+  }
+
+  async deleteConversation(id: string): Promise<void> {
+    if (!this.db) {
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([CONVERSATIONS_STORE], 'readwrite');
+      const store = transaction.objectStore(CONVERSATIONS_STORE);
+      const request = store.delete(id);
+
+      request.onerror = () => reject(request.error);
