@@ -199,3 +199,28 @@ class OfflineStorage {
 export const offlineStorage = new OfflineStorage();
 // IndexedDB storage for offline functionality
 import type { ChatThread } from '@/lib/types';
+import type { OfflineQueueItem, CachedConversation } from './types';
+
+const DB_NAME = 'OpenFiestaOffline';
+const DB_VERSION = 1;
+const CONVERSATIONS_STORE = 'conversations';
+const QUEUE_STORE = 'offlineQueue';
+
+class OfflineStorage {
+  private db: IDBDatabase | null = null;
+
+  async init(): Promise<void> {
+    // Check if we're in a browser environment with IndexedDB support
+    if (typeof window === 'undefined' || !window.indexedDB) {
+      console.warn('IndexedDB not available, offline storage disabled');
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        this.db = request.result;
+        resolve();
+      };
