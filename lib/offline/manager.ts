@@ -662,3 +662,29 @@ class OfflineManager {
       type: 'DELETE_THREAD',
       payload: { chatId },
       timestamp: Date.now(),
+      userId,
+      threadId: chatId,
+      maxRetries: 3
+    });
+  }
+
+  async updateThreadTitleOffline(
+    userId: string,
+    chatId: string,
+    title: string
+  ): Promise<string> {
+    // Update local cache
+    const cachedConversation = await offlineStorage.getConversation(chatId);
+    if (cachedConversation) {
+      cachedConversation.thread.title = title;
+      cachedConversation.lastModified = Date.now();
+      cachedConversation.syncStatus = 'pending';
+      await offlineStorage.storeConversation(cachedConversation);
+    }
+
+    // Queue for sync
+    return this.queueAction({
+      type: 'UPDATE_TITLE',
+      payload: { chatId, title },
+      timestamp: Date.now(),
+      userId,
