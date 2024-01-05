@@ -329,3 +329,29 @@ class OfflineStorage {
 
     return new Promise((resolve, reject) => {
       const transaction = this.db!.transaction([QUEUE_STORE], 'readonly');
+      const store = transaction.objectStore(QUEUE_STORE);
+      const index = store.index('timestamp');
+      const request = index.getAll();
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result || []);
+    });
+  }
+
+  async updateQueueItem(action: OfflineQueueItem): Promise<void> {
+    if (!this.db) {
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([QUEUE_STORE], 'readwrite');
+      const store = transaction.objectStore(QUEUE_STORE);
+      const request = store.put(action);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  async removeFromQueue(actionId: string): Promise<void> {
+    if (!this.db) {
