@@ -224,3 +224,30 @@ class OfflineStorage {
         this.db = request.result;
         resolve();
       };
+
+      request.onupgradeneeded = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+
+        // Create conversations store
+        if (!db.objectStoreNames.contains(CONVERSATIONS_STORE)) {
+          const conversationsStore = db.createObjectStore(CONVERSATIONS_STORE, { keyPath: 'id' });
+          conversationsStore.createIndex('lastModified', 'lastModified', { unique: false });
+          conversationsStore.createIndex('syncStatus', 'syncStatus', { unique: false });
+        }
+
+        // Create offline queue store
+        if (!db.objectStoreNames.contains(QUEUE_STORE)) {
+          const queueStore = db.createObjectStore(QUEUE_STORE, { keyPath: 'id' });
+          queueStore.createIndex('timestamp', 'timestamp', { unique: false });
+          queueStore.createIndex('status', 'status', { unique: false });
+          queueStore.createIndex('type', 'type', { unique: false });
+        }
+      };
+    });
+  }
+
+  async storeConversation(conversation: CachedConversation): Promise<void> {
+    if (!this.db) {
+      console.warn('Database not available, skipping conversation storage');
+      return;
+    }
