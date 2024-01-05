@@ -251,3 +251,28 @@ class OfflineStorage {
       console.warn('Database not available, skipping conversation storage');
       return;
     }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([CONVERSATIONS_STORE], 'readwrite');
+      const store = transaction.objectStore(CONVERSATIONS_STORE);
+      const request = store.put(conversation);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  async getConversation(id: string): Promise<CachedConversation | null> {
+    if (!this.db) {
+      return null;
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([CONVERSATIONS_STORE], 'readonly');
+      const store = transaction.objectStore(CONVERSATIONS_STORE);
+      const request = store.get(id);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve(request.result || null);
+    });
+  }
