@@ -197,3 +197,5 @@ class OfflineStorage {
 }
 
 export const offlineStorage = new OfflineStorage();
+// IndexedDB storage for offline functionality
+import type { ChatThread } from '@/lib/types';

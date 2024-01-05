@@ -688,3 +688,27 @@ class OfflineManager {
       payload: { chatId, title },
       timestamp: Date.now(),
       userId,
+      threadId: chatId,
+      maxRetries: 3
+    });
+  }
+
+  async clearOfflineData(): Promise<void> {
+    await offlineStorage.clearQueue();
+    const conversations = await offlineStorage.getAllConversations();
+    for (const conv of conversations) {
+      await offlineStorage.deleteConversation(conv.id);
+    }
+    this.notifyListeners();
+  }
+
+  async getStorageUsage(): Promise<{ used: number; quota: number; percentage: number }> {
+    const usage = await offlineStorage.getStorageUsage();
+    return {
+      ...usage,
+      percentage: usage.quota > 0 ? (usage.used / usage.quota) * 100 : 0
+    };
+  }
+}
+
+export const offlineManager = new OfflineManager();
