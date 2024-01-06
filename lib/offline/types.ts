@@ -83,3 +83,14 @@ export interface SyncResult {
   error?: string;
   retryAfter?: number;
   conflictResolution?: 'local' | 'remote' | 'merge';
+}
+
+export interface OfflineStatus {
+  isOnline: boolean;
+  queuedActionsCount: number;
+  lastSyncTime?: Date;
+  syncInProgress: boolean;
+  hasConflicts: boolean;
+}
+
+import type { ChatThread } from '@/lib/types';

@@ -126,3 +126,18 @@ export function useOffline(): UseOfflineReturn {
     getStorageUsage
   };
 }
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import { offlineManager } from './manager';
+import type { OfflineStatus } from './types';
+import type { ChatThread, ChatMessage } from '@/lib/types';
+
+export interface UseOfflineReturn {
+  status: OfflineStatus;
+  isOnline: boolean;
+  sendMessage: (userId: string, chatId: string, message: ChatMessage) => Promise<string>;
+  createThread: (
+    userId: string,
+    title: string,
+    projectId?: string,
