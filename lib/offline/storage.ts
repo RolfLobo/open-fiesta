@@ -381,3 +381,18 @@ class OfflineStorage {
       request.onerror = () => reject(request.error);
       request.onsuccess = () => resolve();
     });
+  }
+
+  async getStorageUsage(): Promise<{ used: number; quota: number }> {
+    if ('storage' in navigator && 'estimate' in navigator.storage) {
+      const estimate = await navigator.storage.estimate();
+      return {
+        used: estimate.usage || 0,
+        quota: estimate.quota || 0
+      };
+    }
+    return { used: 0, quota: 0 };
+  }
+}
+
+export const offlineStorage = new OfflineStorage();

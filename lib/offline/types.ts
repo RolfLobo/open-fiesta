@@ -46,3 +46,14 @@ export interface OfflineStatus {
 }
 
 import type { ChatThread } from '@/lib/types';
+// Offline functionality types and interfaces
+
+export interface OfflineAction {
+  id: string;
+  type: 'SEND_MESSAGE' | 'UPDATE_THREAD' | 'DELETE_THREAD' | 'CREATE_THREAD' | 'UPDATE_TITLE';
+  payload: any;
+  timestamp: number;
+  retryCount: number;
+  maxRetries: number;
+  threadId?: string;
+  userId?: string;
