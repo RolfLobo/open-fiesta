@@ -192,3 +192,30 @@ export function useOffline(): UseOfflineReturn {
   ): Promise<string> => {
     return offlineManager.sendMessageOffline(userId, chatId, message);
   }, []);
+
+  const createThread = useCallback(async (
+    userId: string,
+    title: string,
+    projectId?: string,
+    pageType?: 'home' | 'compare',
+    initialMessage?: ChatMessage
+  ): Promise<{ thread: ChatThread; actionId: string }> => {
+    return offlineManager.createThreadOffline(userId, title, projectId, pageType, initialMessage);
+  }, []);
+
+  const deleteThread = useCallback(async (
+    userId: string,
+    chatId: string
+  ): Promise<string> => {
+    return offlineManager.deleteThreadOffline(userId, chatId);
+  }, []);
+
+  const updateThreadTitle = useCallback(async (
+    userId: string,
+    chatId: string,
+    title: string
+  ): Promise<string> => {
+    return offlineManager.updateThreadTitleOffline(userId, chatId, title);
+  }, []);
+
+  const getCachedConversations = useCallback(async (): Promise<ChatThread[]> => {
