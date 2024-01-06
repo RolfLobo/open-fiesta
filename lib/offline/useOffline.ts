@@ -167,3 +167,28 @@ export interface UseOfflineReturn {
  */
 export function useOffline(): UseOfflineReturn {
   const [status, setStatus] = useState<OfflineStatus>({
+    isOnline: navigator.onLine,
+    queuedActionsCount: 0,
+    syncInProgress: false,
+    hasConflicts: false
+  });
+
+  useEffect(() => {
+    const updateStatus = async () => {
+      const currentStatus = await offlineManager.getStatus();
+      setStatus(currentStatus);
+    };
+
+    updateStatus();
+    const unsubscribe = offlineManager.addStatusListener(setStatus);
+
+    return unsubscribe;
+  }, []);
+
+  const sendMessage = useCallback(async (
+    userId: string,
+    chatId: string,
+    message: ChatMessage
+  ): Promise<string> => {
+    return offlineManager.sendMessageOffline(userId, chatId, message);
+  }, []);
