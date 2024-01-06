@@ -355,3 +355,29 @@ class OfflineStorage {
 
   async removeFromQueue(actionId: string): Promise<void> {
     if (!this.db) {
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([QUEUE_STORE], 'readwrite');
+      const store = transaction.objectStore(QUEUE_STORE);
+      const request = store.delete(actionId);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  async clearQueue(): Promise<void> {
+    if (!this.db) {
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction([QUEUE_STORE], 'readwrite');
+      const store = transaction.objectStore(QUEUE_STORE);
+      const request = store.clear();
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve();
+    });
