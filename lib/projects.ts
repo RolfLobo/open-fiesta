@@ -106,3 +106,24 @@ export function createProject(name: string, systemPrompt: string = ''): Project 
 export function updateProject(
   project: Project,
   updates: Partial<Pick<Project, 'name' | 'systemPrompt' | 'isActive'>>,
+): Project {
+  return {
+    ...project,
+    ...updates,
+    name: updates.name?.trim() || project.name,
+    systemPrompt: updates.systemPrompt?.trim() ?? project.systemPrompt,
+    updatedAt: Date.now(),
+  };
+}
+
+export function validateProjectName(name: string): string | null {
+  const trimmed = name.trim();
+  if (!trimmed) return 'Project name is required';
+  if (trimmed.length > 50) return 'Project name must be 50 characters or less';
+  return null;
+}
+
+export function validateSystemPrompt(prompt: string): string | null {
+  if (prompt.length > 1000) return 'System prompt must be 1000 characters or less';
+  return null;
+}
