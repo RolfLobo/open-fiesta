@@ -80,3 +80,29 @@ export const DEFAULT_PROJECT: Omit<Project, 'id' | 'createdAt' | 'updatedAt'> = 
 
 // Generate UUID for projects
 export function generateProjectId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback UUID v4 generator
+  return 'proj-xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+export function createProject(name: string, systemPrompt: string = ''): Project {
+  const now = Date.now();
+  return {
+    id: generateProjectId(),
+    name: name.trim() || 'Untitled Project',
+    systemPrompt: systemPrompt.trim(),
+    createdAt: now,
+    updatedAt: now,
+    isActive: false,
+  };
+}
+
+export function updateProject(
+  project: Project,
+  updates: Partial<Pick<Project, 'name' | 'systemPrompt' | 'isActive'>>,
