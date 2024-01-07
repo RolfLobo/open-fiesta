@@ -219,3 +219,29 @@ export function useOffline(): UseOfflineReturn {
   }, []);
 
   const getCachedConversations = useCallback(async (): Promise<ChatThread[]> => {
+    return offlineManager.getCachedConversations();
+  }, []);
+
+  const getCachedConversation = useCallback(async (id: string): Promise<ChatThread | null> => {
+    return offlineManager.getCachedConversation(id);
+  }, []);
+
+  const syncNow = useCallback(async (): Promise<void> => {
+    if (status.isOnline && !status.syncInProgress) {
+      await offlineManager.syncQueuedActions();
+    }
+  }, [status.isOnline, status.syncInProgress]);
+
+  const clearOfflineData = useCallback(async (): Promise<void> => {
+    await offlineManager.clearOfflineData();
+  }, []);
+
+  const getStorageUsage = useCallback(async () => {
+    return offlineManager.getStorageUsage();
+  }, []);
+
+  return {
+    status,
+    isOnline: status.isOnline,
+    sendMessage,
+    createThread,
