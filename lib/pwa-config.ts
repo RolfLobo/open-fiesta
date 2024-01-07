@@ -226,3 +226,18 @@ export const DEFAULT_MANIFEST = {
   lang: 'en',
   categories: ['productivity', 'utilities', 'education'],
 } as const;
+/**
+ * PWA Configuration utilities
+ * Handles PWA-specific settings and environment variables
+ */
+
+export interface PWAConfig {
+  name: string;
+  shortName: string;
+  themeColor: string;
+  backgroundColor: string;
+  display: 'standalone' | 'fullscreen' | 'minimal-ui' | 'browser';
+  startUrl: string;
+  scope: string;
+  disableInDev: boolean;
+}
