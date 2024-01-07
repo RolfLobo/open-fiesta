@@ -62,3 +62,21 @@ export function validateSystemPrompt(prompt: string): string | null {
   if (prompt.length > 1000) return 'System prompt must be 1000 characters or less';
   return null;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  systemPrompt: string;
+  createdAt: number;
+  updatedAt: number;
+  isActive?: boolean;
+}
+
+export const DEFAULT_PROJECT: Omit<Project, 'id' | 'createdAt' | 'updatedAt'> = {
+  name: '',
+  systemPrompt: '',
+  isActive: false,
+};
+
+// Generate UUID for projects
+export function generateProjectId(): string {

@@ -245,3 +245,12 @@ export function useOffline(): UseOfflineReturn {
     isOnline: status.isOnline,
     sendMessage,
     createThread,
+    deleteThread,
+    updateThreadTitle,
+    getCachedConversations,
+    getCachedConversation,
+    syncNow,
+    clearOfflineData,
+    getStorageUsage
+  };
+}
