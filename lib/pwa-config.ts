@@ -268,3 +268,29 @@ export interface PushNotificationConfig {
  * - NEXT_PUBLIC_PWA_DISPLAY (cast to PWAConfig['display'])
  * - NEXT_PUBLIC_PWA_START_URL
  * - NEXT_PUBLIC_PWA_SCOPE
+ * - NEXT_PUBLIC_PWA_DISABLE_DEV ('true' to set `disableInDev` true)
+ *
+ * @returns The resolved PWAConfig object with defaults applied when variables are unset.
+ */
+export function getPWAConfig(): PWAConfig {
+  return {
+    name: process.env.NEXT_PUBLIC_PWA_NAME || 'Open Fiesta - AI Chat Platform',
+    shortName: process.env.NEXT_PUBLIC_PWA_SHORT_NAME || 'Open Fiesta',
+    themeColor: process.env.NEXT_PUBLIC_PWA_THEME_COLOR || '#000000',
+    backgroundColor: process.env.NEXT_PUBLIC_PWA_BACKGROUND_COLOR || '#000000',
+    display: (process.env.NEXT_PUBLIC_PWA_DISPLAY as PWAConfig['display']) || 'standalone',
+    startUrl: process.env.NEXT_PUBLIC_PWA_START_URL || '/',
+    scope: process.env.NEXT_PUBLIC_PWA_SCOPE || '/',
+    disableInDev: process.env.NEXT_PUBLIC_PWA_DISABLE_DEV === 'true',
+  };
+}
+
+/**
+ * Returns the service worker runtime configuration derived from environment variables.
+ *
+ * Reads NEXT_PUBLIC_SW_UPDATE_CHECK_INTERVAL and parses it as an integer (milliseconds).
+ * If the variable is not set or not a valid integer, a default of 60000 ms is used.
+ *
+ * @returns The resolved ServiceWorkerConfig with `updateCheckInterval`, and booleans `skipWaiting` and `clientsClaim` (both true).
+ */
+export function getServiceWorkerConfig(): ServiceWorkerConfig {
