@@ -241,3 +241,30 @@ export interface PWAConfig {
   scope: string;
   disableInDev: boolean;
 }
+
+export interface ServiceWorkerConfig {
+  updateCheckInterval: number;
+  skipWaiting: boolean;
+  clientsClaim: boolean;
+}
+
+export interface PushNotificationConfig {
+  vapidPublicKey?: string;
+  vapidPrivateKey?: string;
+  vapidSubject?: string;
+}
+
+/**
+ * Build a PWAConfig from environment variables.
+ *
+ * Reads NEXT_PUBLIC_PWA_* environment variables and returns a PWAConfig populated
+ * from those values or sensible defaults.
+ *
+ * Environment variables:
+ * - NEXT_PUBLIC_PWA_NAME
+ * - NEXT_PUBLIC_PWA_SHORT_NAME
+ * - NEXT_PUBLIC_PWA_THEME_COLOR
+ * - NEXT_PUBLIC_PWA_BACKGROUND_COLOR
+ * - NEXT_PUBLIC_PWA_DISPLAY (cast to PWAConfig['display'])
+ * - NEXT_PUBLIC_PWA_START_URL
+ * - NEXT_PUBLIC_PWA_SCOPE
