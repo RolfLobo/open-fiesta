@@ -294,3 +294,29 @@ export function getPWAConfig(): PWAConfig {
  * @returns The resolved ServiceWorkerConfig with `updateCheckInterval`, and booleans `skipWaiting` and `clientsClaim` (both true).
  */
 export function getServiceWorkerConfig(): ServiceWorkerConfig {
+  return {
+    updateCheckInterval: parseInt(process.env.NEXT_PUBLIC_SW_UPDATE_CHECK_INTERVAL || '60000', 10),
+    skipWaiting: true,
+    clientsClaim: true,
+  };
+}
+
+/**
+ * Reads VAPID push notification settings from environment variables.
+ *
+ * Returns a PushNotificationConfig populated from:
+ * - NEXT_PUBLIC_VAPID_PUBLIC_KEY -> vapidPublicKey
+ * - VAPID_PRIVATE_KEY -> vapidPrivateKey
+ * - VAPID_SUBJECT -> vapidSubject
+ *
+ * Any field will be undefined if the corresponding environment variable is not set.
+ *
+ * @returns The push notification configuration (values may be undefined)
+ */
+export function getPushNotificationConfig(): PushNotificationConfig {
+  return {
+    vapidPublicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    vapidPrivateKey: process.env.VAPID_PRIVATE_KEY,
+    vapidSubject: process.env.VAPID_SUBJECT,
+  };
+}
