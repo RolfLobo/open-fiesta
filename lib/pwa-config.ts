@@ -320,3 +320,29 @@ export function getPushNotificationConfig(): PushNotificationConfig {
     vapidSubject: process.env.VAPID_SUBJECT,
   };
 }
+
+/**
+ * Determine whether PWA features should be active for the current runtime.
+ *
+ * Reads the PWA configuration and returns false when running in Node.js `development`
+ * mode and the PWA config has `disableInDev` set to `true`. In all other cases
+ * it returns `true`.
+ *
+ * @returns `true` if PWA features are allowed in the current environment, otherwise `false`
+ */
+export function isPWAEnabled(): boolean {
+  const config = getPWAConfig();
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
+  // Disable PWA in development if configured to do so
+  if (isDevelopment && config.disableInDev) {
+    return false;
+  }
+  
+  return true;
+}
+
+/**
+ * Check if service worker is supported
+ */
+export function isServiceWorkerSupported(): boolean {
