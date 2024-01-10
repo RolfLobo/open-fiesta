@@ -372,3 +372,29 @@ export function isPushNotificationSupported(): boolean {
  * Returns true when the app is running as an installed/standalone PWA.
  *
  * Performs a safe check (returns false during server-side rendering) and
+ * detects standalone mode via one of:
+ * - the `(display-mode: standalone)` media query,
+ * - iOS `navigator.standalone`,
+ * - an Android referrer beginning with `android-app://`.
+ *
+ * @returns True if running as an installed/standalone PWA, otherwise false.
+ */
+export function isStandalone(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    (window.navigator as any).standalone === true ||
+    document.referrer.includes('android-app://')
+  );
+}
+
+/**
+ * Returns true if the app is currently installable (a pending `beforeinstallprompt` event was captured).
+ *
+ * Checks for a `deferredPrompt` property on `window` (set by a `beforeinstallprompt` handler). Returns false during server-side rendering (when `window` is undefined).
+ *
+ * @returns `true` when a `beforeinstallprompt` event has been captured and installation can be triggered; otherwise `false`.
+ */
+export function canInstall(): boolean {
+  if (typeof window === 'undefined') return false;
