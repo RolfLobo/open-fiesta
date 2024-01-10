@@ -346,3 +346,29 @@ export function isPWAEnabled(): boolean {
  * Check if service worker is supported
  */
 export function isServiceWorkerSupported(): boolean {
+  return typeof window !== 'undefined' && 'serviceWorker' in navigator;
+}
+
+/**
+ * Determines whether the current environment supports web push notifications.
+ *
+ * Returns true only when running in a browser (not SSR) and the following APIs are available:
+ * - Service Workers (`navigator.serviceWorker`)
+ * - Push Manager (`window.PushManager`)
+ * - Notifications (`window.Notification`)
+ *
+ * @returns True if push notifications are supported in the current runtime; otherwise false.
+ */
+export function isPushNotificationSupported(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    'serviceWorker' in navigator &&
+    'PushManager' in window &&
+    'Notification' in window
+  );
+}
+
+/**
+ * Returns true when the app is running as an installed/standalone PWA.
+ *
+ * Performs a safe check (returns false during server-side rendering) and
