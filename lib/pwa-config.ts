@@ -398,3 +398,29 @@ export function isStandalone(): boolean {
  */
 export function canInstall(): boolean {
   if (typeof window === 'undefined') return false;
+  
+  // This will be set by the beforeinstallprompt event handler
+  return !!(window as any).deferredPrompt;
+}
+
+/**
+ * Determine how the current page was or can be installed as a PWA.
+ *
+ * Returns a string describing the installation source/state:
+ * - `'unknown'` — executing outside a browser environment (e.g., SSR).
+ * - `'installed'` — the app is running in a standalone/installed context.
+ * - `'installable'` — the app can be installed (beforeinstallprompt available).
+ * - `'browser'` — running in a regular browser tab with no installability.
+ *
+ * @returns The installation source/state as one of `'unknown' | 'installed' | 'installable' | 'browser'`.
+ */
+export function getInstallSource(): string {
+  if (typeof window === 'undefined') return 'unknown';
+  
+  if (isStandalone()) {
+    return 'installed';
+  }
+  
+  if (canInstall()) {
+    return 'installable';
+  }
