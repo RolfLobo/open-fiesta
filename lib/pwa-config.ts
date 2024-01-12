@@ -424,3 +424,29 @@ export function getInstallSource(): string {
   if (canInstall()) {
     return 'installable';
   }
+  
+  return 'browser';
+}
+
+/**
+ * PWA feature detection utilities
+ */
+export const PWAFeatures = {
+  serviceWorker: isServiceWorkerSupported,
+  pushNotifications: isPushNotificationSupported,
+  standalone: isStandalone,
+  installable: canInstall,
+} as const;
+
+/**
+ * Default PWA manifest data
+ */
+export const DEFAULT_MANIFEST = {
+  name: 'Open Fiesta - AI Chat Platform',
+  short_name: 'Open Fiesta',
+  description: 'A powerful AI chat platform supporting multiple models with offline capabilities',
+  start_url: '/',
+  display: 'standalone' as const,
+  background_color: '#000000',
+  theme_color: '#000000',
+  orientation: 'portrait-primary' as const,
