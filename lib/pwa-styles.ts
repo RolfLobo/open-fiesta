@@ -386,3 +386,29 @@ export const PWA_BASE_STYLES = `
     flex-direction: column;
   }
   
+  .pwa-app-shell-header {
+    flex-shrink: 0;
+  }
+  
+  .pwa-app-shell-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .pwa-app-shell-footer {
+    flex-shrink: 0;
+  }
+  
+  /* PWA Launch Screen */
+  .pwa-launch-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
