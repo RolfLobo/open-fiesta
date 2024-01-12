@@ -334,3 +334,29 @@ export const PWA_CSS_VARIABLES = `
     }
   }
 `;
+
+export const PWA_BASE_STYLES = `
+  /* PWA Standalone Mode Styles */
+  .pwa-standalone {
+    /* Prevent overscroll bounce */
+    overscroll-behavior: none;
+    
+    /* Handle safe areas */
+    padding-top: var(--pwa-safe-area-inset-top);
+    padding-bottom: var(--pwa-safe-area-inset-bottom);
+    padding-left: var(--pwa-safe-area-inset-left);
+    padding-right: var(--pwa-safe-area-inset-right);
+  }
+  
+  /* Display mode specific styles */
+  .pwa-display-standalone {
+    /* Full app experience */
+  }
+  
+  .pwa-display-fullscreen {
+    /* Immersive experience */
+  }
+  
+  .pwa-display-minimal-ui {
+    /* Minimal browser UI */
+  }
