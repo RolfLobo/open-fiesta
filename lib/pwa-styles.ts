@@ -312,3 +312,25 @@ export default {
   injectPWAStyles,
   pwaClasses,
 };
+/**
+ * PWA-specific CSS utilities and styles
+ */
+
+export const PWA_CSS_VARIABLES = `
+  :root {
+    --pwa-safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --pwa-safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --pwa-safe-area-inset-left: env(safe-area-inset-left, 0px);
+    --pwa-safe-area-inset-right: env(safe-area-inset-right, 0px);
+    
+    --pwa-viewport-height: 100vh;
+    --pwa-viewport-width: 100vw;
+  }
+  
+  @supports (height: 100dvh) {
+    :root {
+      --pwa-viewport-height: 100dvh;
+      --pwa-viewport-width: 100dvw;
+    }
+  }
+`;

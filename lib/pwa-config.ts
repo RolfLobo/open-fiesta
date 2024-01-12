@@ -450,3 +450,7 @@ export const DEFAULT_MANIFEST = {
   background_color: '#000000',
   theme_color: '#000000',
   orientation: 'portrait-primary' as const,
+  scope: '/',
+  lang: 'en',
+  categories: ['productivity', 'utilities', 'education'],
+} as const;
