@@ -412,3 +412,29 @@ export const PWA_BASE_STYLES = `
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  /* PWA Install Prompt */
+  .pwa-install-prompt {
+    position: fixed;
+    z-index: 1000;
+  }
+  
+  .pwa-install-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  
+  /* PWA Animations */
+  @keyframes pwa-slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
