@@ -360,3 +360,29 @@ export const PWA_BASE_STYLES = `
   .pwa-display-minimal-ui {
     /* Minimal browser UI */
   }
+  
+  .pwa-display-browser {
+    /* Standard browser experience */
+  }
+  
+  /* Orientation specific styles */
+  .pwa-orientation-portrait {
+    /* Portrait optimizations */
+  }
+  
+  .pwa-orientation-landscape {
+    /* Landscape optimizations */
+  }
+  
+  /* Device specific styles */
+  .pwa-has-notch {
+    /* Devices with notch/dynamic island */
+  }
+  
+  /* PWA App Shell */
+  .pwa-app-shell {
+    min-height: var(--pwa-viewport-height);
+    display: flex;
+    flex-direction: column;
+  }
+  
