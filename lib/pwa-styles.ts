@@ -438,3 +438,29 @@ export const PWA_BASE_STYLES = `
       opacity: 1;
     }
   }
+  
+  @keyframes pwa-slide-down {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pwa-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pwa-scale-in {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
