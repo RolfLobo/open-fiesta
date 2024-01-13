@@ -464,3 +464,29 @@ export const PWA_BASE_STYLES = `
       transform: scale(0.9);
       opacity: 0;
     }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* PWA Utility Classes */
+  .pwa-animate-slide-up {
+    animation: pwa-slide-up 0.3s ease-out;
+  }
+  
+  .pwa-animate-slide-down {
+    animation: pwa-slide-down 0.3s ease-out;
+  }
+  
+  .pwa-animate-fade-in {
+    animation: pwa-fade-in 0.3s ease-out;
+  }
+  
+  .pwa-animate-scale-in {
+    animation: pwa-scale-in 0.3s ease-out;
+  }
+  
+  /* PWA Safe Area Utilities */
+  .pwa-safe-top {
+    padding-top: var(--pwa-safe-area-inset-top);
