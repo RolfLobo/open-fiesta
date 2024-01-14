@@ -516,3 +516,29 @@ export const PWA_BASE_STYLES = `
   
   .pwa-safe-all {
     padding-top: var(--pwa-safe-area-inset-top);
+    padding-bottom: var(--pwa-safe-area-inset-bottom);
+    padding-left: var(--pwa-safe-area-inset-left);
+    padding-right: var(--pwa-safe-area-inset-right);
+  }
+  
+  /* PWA Viewport Utilities */
+  .pwa-h-screen {
+    height: var(--pwa-viewport-height);
+  }
+  
+  .pwa-min-h-screen {
+    min-height: var(--pwa-viewport-height);
+  }
+  
+  .pwa-max-h-screen {
+    max-height: var(--pwa-viewport-height);
+  }
+  
+  .pwa-w-screen {
+    width: var(--pwa-viewport-width);
+  }
+  
+  /* PWA Touch Optimizations */
+  .pwa-touch-manipulation {
+    touch-action: manipulation;
+  }
