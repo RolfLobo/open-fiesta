@@ -345,3 +345,29 @@ export interface ServiceWorkerManager {
   warmCache(urls: string[]): Promise<void>;
   getCacheManager(): CacheManager;
 }
+
+class ServiceWorkerManagerImpl implements ServiceWorkerManager {
+  private registration: ServiceWorkerRegistration | null = null;
+  private updateCheckInterval: number;
+  private cacheManager: CacheManager;
+
+  constructor() {
+    const config = getServiceWorkerConfig();
+    this.updateCheckInterval = config.updateCheckInterval;
+    this.cacheManager = getCacheManager();
+  }
+
+  /**
+   * Register the service worker
+   */
+  async register(): Promise<ServiceWorkerRegistration | null> {
+    if (!isPWAEnabled() || !('serviceWorker' in navigator)) {
+      if (process.env.NODE_ENV !== 'test') {
+        console.log('Service Worker not supported or PWA disabled');
+      }
+      return null;
+    }
+
+    try {
+      this.registration = await navigator.serviceWorker.register('/sw.js', {
+        scope: '/',
