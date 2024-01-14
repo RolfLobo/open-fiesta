@@ -542,3 +542,29 @@ export const PWA_BASE_STYLES = `
   .pwa-touch-manipulation {
     touch-action: manipulation;
   }
+  
+  .pwa-no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .pwa-no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* PWA Performance Optimizations */
+  .pwa-will-change-transform {
+    will-change: transform;
+  }
+  
+  .pwa-will-change-opacity {
+    will-change: opacity;
+  }
+  
+  .pwa-gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
