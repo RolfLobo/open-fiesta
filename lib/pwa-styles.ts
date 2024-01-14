@@ -490,3 +490,29 @@ export const PWA_BASE_STYLES = `
   /* PWA Safe Area Utilities */
   .pwa-safe-top {
     padding-top: var(--pwa-safe-area-inset-top);
+  }
+  
+  .pwa-safe-bottom {
+    padding-bottom: var(--pwa-safe-area-inset-bottom);
+  }
+  
+  .pwa-safe-left {
+    padding-left: var(--pwa-safe-area-inset-left);
+  }
+  
+  .pwa-safe-right {
+    padding-right: var(--pwa-safe-area-inset-right);
+  }
+  
+  .pwa-safe-x {
+    padding-left: var(--pwa-safe-area-inset-left);
+    padding-right: var(--pwa-safe-area-inset-right);
+  }
+  
+  .pwa-safe-y {
+    padding-top: var(--pwa-safe-area-inset-top);
+    padding-bottom: var(--pwa-safe-area-inset-bottom);
+  }
+  
+  .pwa-safe-all {
+    padding-top: var(--pwa-safe-area-inset-top);
