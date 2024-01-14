@@ -619,3 +619,10 @@ export const pwaClasses = {
   willChangeOpacity: 'pwa-will-change-opacity',
   gpuAccelerated: 'pwa-gpu-accelerated',
 } as const;
+
+export default {
+  PWA_CSS_VARIABLES,
+  PWA_BASE_STYLES,
+  injectPWAStyles,
+  pwaClasses,
+};

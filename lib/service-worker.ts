@@ -325,3 +325,23 @@ export async function getServiceWorkerStatus(): Promise<{
     installing: !!(registration && registration.installing),
   };
 }
+/**
+ * Service Worker registration and management utilities
+ */
+
+import { getServiceWorkerConfig, isPWAEnabled } from './pwa-config';
+import { getCacheManager, CacheStatus, CacheManager } from './cache-strategies';
+
+export interface ServiceWorkerManager {
+  register(): Promise<ServiceWorkerRegistration | null>;
+  unregister(): Promise<boolean>;
+  update(): Promise<void>;
+  skipWaiting(): Promise<void>;
+  getCacheNames(): Promise<string[]>;
+  clearCache(cacheName?: string): Promise<void>;
+  getRegistration(): Promise<ServiceWorkerRegistration | null>;
+  getCacheStatus(): Promise<CacheStatus[]>;
+  cleanupCaches(): Promise<void>;
+  warmCache(urls: string[]): Promise<void>;
+  getCacheManager(): CacheManager;
+}
