@@ -568,3 +568,29 @@ export const PWA_BASE_STYLES = `
     backface-visibility: hidden;
     perspective: 1000px;
   }
+`;
+
+/**
+ * Inject PWA styles into the document
+ */
+export const injectPWAStyles = (): void => {
+  if (typeof document === 'undefined') return;
+  
+  const existingStyle = document.getElementById('pwa-styles');
+  if (existingStyle) return;
+  
+  const style = document.createElement('style');
+  style.id = 'pwa-styles';
+  style.textContent = PWA_CSS_VARIABLES + PWA_BASE_STYLES;
+  document.head.appendChild(style);
+};
+
+/**
+ * PWA CSS class utilities
+ */
+export const pwaClasses = {
+  standalone: 'pwa-standalone',
+  appShell: 'pwa-app-shell',
+  appShellHeader: 'pwa-app-shell-header',
+  appShellMain: 'pwa-app-shell-main',
+  appShellFooter: 'pwa-app-shell-footer',
