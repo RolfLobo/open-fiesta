@@ -371,3 +371,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
     try {
       this.registration = await navigator.serviceWorker.register('/sw.js', {
         scope: '/',
+      });
+
+      if (process.env.NODE_ENV !== 'test') {
+        console.log('Service Worker registered successfully:', this.registration);
+      }
+
+      // Set up update checking
+      this.setupUpdateChecking();
+
+      // Handle service worker updates
+      this.handleServiceWorkerUpdates();
+
+      return this.registration;
+    } catch (error) {
+      console.error('Service Worker registration failed:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Unregister the service worker
+   */
+  async unregister(): Promise<boolean> {
+    if (!this.registration) {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (registration) {
