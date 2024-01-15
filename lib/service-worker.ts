@@ -527,3 +527,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
       newWorker.addEventListener('statechange', () => {
         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
           // New service worker is available
+          this.dispatchUpdateEvent('available');
+        }
+      });
+    });
+
+    // Listen for service worker messages
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SW_UPDATED') {
+        this.dispatchUpdateEvent('applied');
+      }
+    });
+
+    // Handle controlling service worker changes
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      // Service worker has been updated and is now controlling the page
+      this.dispatchUpdateEvent('controlling');
+    });
+  }
+
+  /**
+   * Dispatch custom events for service worker updates
+   */
+  private dispatchUpdateEvent(type: 'available' | 'applied' | 'controlling'): void {
+    const event = new CustomEvent('sw-update', {
+      detail: { type },
+    });
