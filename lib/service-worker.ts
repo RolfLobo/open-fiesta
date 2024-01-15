@@ -397,3 +397,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
     if (!this.registration) {
       const registration = await navigator.serviceWorker.getRegistration();
       if (registration) {
+        return registration.unregister();
+      }
+      return false;
+    }
+
+    return this.registration.unregister();
+  }
+
+  /**
+   * Update the service worker
+   */
+  async update(): Promise<void> {
+    if (!this.registration) {
+      throw new Error('Service Worker not registered');
+    }
+
+    await this.registration.update();
+  }
+
+  /**
+   * Skip waiting for the new service worker
+   */
+  async skipWaiting(): Promise<void> {
+    if (!this.registration || !this.registration.waiting) {
+      return;
+    }
