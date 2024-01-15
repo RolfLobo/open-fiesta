@@ -449,3 +449,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
 
     if (cacheName) {
       await caches.delete(cacheName);
+    } else {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(name => caches.delete(name)));
+    }
+  }
+
+  /**
+   * Get the current service worker registration
+   */
+  async getRegistration(): Promise<ServiceWorkerRegistration | null> {
+    if (this.registration) {
+      return this.registration;
+    }
+
+    if ('serviceWorker' in navigator) {
+      return navigator.serviceWorker.getRegistration();
+    }
+
+    return null;
+  }
+
+  /**
+   * Get cache status for all caches
+   */
+  async getCacheStatus(): Promise<CacheStatus[]> {
+    return this.cacheManager.getStatus();
