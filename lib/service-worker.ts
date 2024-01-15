@@ -501,3 +501,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
   /**
    * Set up periodic update checking
    */
+  private setupUpdateChecking(): void {
+    if (!this.registration) return;
+
+    // Check for updates periodically
+    setInterval(async () => {
+      try {
+        await this.registration?.update();
+      } catch (error) {
+        console.error('Service Worker update check failed:', error);
+      }
+    }, this.updateCheckInterval);
+  }
+
+  /**
+   * Handle service worker state changes and updates
+   */
+  private handleServiceWorkerUpdates(): void {
+    if (!this.registration) return;
+
+    this.registration.addEventListener('updatefound', () => {
+      const newWorker = this.registration?.installing;
+      if (!newWorker) return;
+
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // New service worker is available
