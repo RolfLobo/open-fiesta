@@ -423,3 +423,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
     if (!this.registration || !this.registration.waiting) {
       return;
     }
+
+    // Send skip waiting message to the waiting service worker
+    this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+  }
+
+  /**
+   * Get all cache names
+   */
+  async getCacheNames(): Promise<string[]> {
+    if (!('caches' in window)) {
+      return [];
+    }
+
+    return caches.keys();
+  }
+
+  /**
+   * Clear cache by name or all caches
+   */
+  async clearCache(cacheName?: string): Promise<void> {
+    if (!('caches' in window)) {
+      return;
+    }
+
+    if (cacheName) {
+      await caches.delete(cacheName);
