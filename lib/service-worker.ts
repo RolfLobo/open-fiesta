@@ -475,3 +475,29 @@ class ServiceWorkerManagerImpl implements ServiceWorkerManager {
    */
   async getCacheStatus(): Promise<CacheStatus[]> {
     return this.cacheManager.getStatus();
+  }
+
+  /**
+   * Cleanup caches (remove expired entries and enforce quota)
+   */
+  async cleanupCaches(): Promise<void> {
+    return this.cacheManager.cleanup();
+  }
+
+  /**
+   * Warm cache with specified URLs
+   */
+  async warmCache(urls: string[]): Promise<void> {
+    return this.cacheManager.warmCache(urls);
+  }
+
+  /**
+   * Get the cache manager instance
+   */
+  getCacheManager(): CacheManager {
+    return this.cacheManager;
+  }
+
+  /**
+   * Set up periodic update checking
+   */
